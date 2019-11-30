@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ddd",
+    "isi",
+    "iii"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:diamond"
+    },
+	"i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "s": [
+      {
+        "item": "teletubbies:tinkywinkystick"
+      },
+      {
+        "item": "teletubbies:dipsystick"
+      },
+      {
+        "item": "teletubbies:laalaastick"
+      },
+      {
+        "item": "teletubbies:postick"
+      }     
+    ]
+  },
+  "result": {
+    "item": "teletubbies:tubbytoastmachine"
+  }
+}

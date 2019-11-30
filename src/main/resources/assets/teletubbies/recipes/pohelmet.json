@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " s ",
+    "isi",
+    "iii"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "s": {
+        "item": "teletubbies:postick"
+    }
+  },
+  "result": {
+    "item": "teletubbies:pohelmet"
+  }
+}

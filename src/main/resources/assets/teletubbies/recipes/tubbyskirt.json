@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "www",
+    "www"
+  ],
+  "key": {
+    "w": {
+      "item": "minecraft:wool",
+	  "data": 6
+    },
+    "s": {
+      "item": "minecraft:string"
+    }     
+  },
+  "result": {
+    "item": "teletubbies:tubbyskirt"
+  }
+}

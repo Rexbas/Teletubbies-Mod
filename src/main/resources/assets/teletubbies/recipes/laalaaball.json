@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "dbd",
+    "bsb",
+    "dbd"
+  ],
+  "key": {
+    "d": {
+      "item": "minecraft:dye",
+	  "data": 11
+    },
+    "b": {
+      "item": "minecraft:slime_ball"
+    },
+	"s": {
+      "item": "teletubbies:laalaastick"
+    }
+  },
+  "result": {
+    "item": "teletubbies:laalaaball"
+  }
+}

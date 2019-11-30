@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "lll",
+    "lsl",
+    "lll"
+  ],
+  "key": {
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "s": {
+      "item": "teletubbies:tinkywinkystick"
+    }     
+  },
+  "result": {
+    "item": "teletubbies:tinkywinkybag"
+  }
+}

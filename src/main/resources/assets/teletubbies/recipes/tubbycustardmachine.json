@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "i i",
+    "isi",
+    "bbb"
+  ],
+  "key": {
+    "b": {
+      "item": "minecraft:wool",
+	  "data": 2
+    },
+	"i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "s": [
+      {
+        "item": "teletubbies:tinkywinkystick"
+      },
+      {
+        "item": "teletubbies:dipsystick"
+      },
+      {
+        "item": "teletubbies:laalaastick"
+      },
+      {
+        "item": "teletubbies:postick"
+      }     
+    ]
+  },
+  "result": {
+    "item": "teletubbies:tubbycustardmachine"
+  }
+}
