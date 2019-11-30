@@ -28,7 +28,6 @@ public class EntityTeletubby extends EntityAnimal {
 	public EntityTeletubby(World world) {
 		super(world);
 		this.addArmor();
-		//this.setCanPickUpLoot(true);
 		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(1, new EntityAIPanic(this, 0.55F));
 		this.tasks.addTask(2, new EntityAITempt(this, 0.45F, Teletubbies.tubbyToast, false));
@@ -87,6 +86,6 @@ public class EntityTeletubby extends EntityAnimal {
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable entity) {
-		return this;
+		return null;
 	}
 }

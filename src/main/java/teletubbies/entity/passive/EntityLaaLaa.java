@@ -2,7 +2,6 @@ package teletubbies.entity.passive;
 
 import java.util.Random;
 
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
@@ -57,10 +56,5 @@ public class EntityLaaLaa extends EntityTeletubby {
 	@Override
 	public SoundEvent getDeathSound() {
 		return Teletubbies.sound_LaaLaa_Living;
-	}
-
-	@Override
-	public EntityAgeable createChild(EntityAgeable entity) {
-		return new EntityLaaLaa(this.worldObj);
 	}
 }

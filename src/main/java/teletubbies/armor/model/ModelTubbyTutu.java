@@ -4,7 +4,7 @@ import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelTubbySkirt extends ModelBiped {
+public class ModelTubbyTutu extends ModelBiped {
 	ModelRenderer Piece1;
 	ModelRenderer skirt1;
 	ModelRenderer skirt2;
@@ -14,7 +14,7 @@ public class ModelTubbySkirt extends ModelBiped {
 	ModelRenderer skirt6;
 	ModelRenderer skirt7;
 
-	public ModelTubbySkirt(float f) {
+	public ModelTubbyTutu(float f) {
 		super(f, 0, 64, 64);
 
 		textureWidth = 64;

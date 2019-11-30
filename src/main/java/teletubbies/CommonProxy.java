@@ -1,7 +1,5 @@
 package teletubbies;
 
-
-
 public class CommonProxy {
 	
 	public void registerRenders() {

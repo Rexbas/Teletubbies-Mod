@@ -10,13 +10,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import teletubbies.Teletubbies;
-import teletubbies.armor.model.ModelTubbySkirt;
+import teletubbies.armor.model.ModelTubbyTutu;
 
-public class ArmorTubbySkirt extends ItemArmor {
+public class ArmorTubbyTutu extends ItemArmor {
 
-	private final String name = "TubbySkirt";
+	private final String name = "TubbyTutu";
 	
-	public ArmorTubbySkirt(ArmorMaterial material, int renderId, EntityEquipmentSlot slot) {
+	public ArmorTubbyTutu(ArmorMaterial material, int renderId, EntityEquipmentSlot slot) {
 		super(material, renderId, slot);
 		this.setCreativeTab(Teletubbies.tabTeletubbies);
 		this.setUnlocalizedName(name);
@@ -26,7 +26,7 @@ public class ArmorTubbySkirt extends ItemArmor {
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
         if(stack.getItem() == Teletubbies.tubbySkirt) {
-        	return "teletubbies:textures/armor/TubbySkirt.png";
+        	return "teletubbies:textures/armor/TubbyTutu.png";
         }
         else {
         	return null;
@@ -36,7 +36,7 @@ public class ArmorTubbySkirt extends ItemArmor {
     @Override
     @SideOnly(Side.CLIENT)
     public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, net.minecraft.client.model.ModelBiped _default) {
-    	ModelBiped armorModel = new ModelTubbySkirt(1.0F);
+    	ModelBiped armorModel = new ModelTubbyTutu(1.0F);
 		return armorModel;
     }
     

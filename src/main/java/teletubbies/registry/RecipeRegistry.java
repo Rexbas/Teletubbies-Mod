@@ -9,22 +9,6 @@ import teletubbies.Teletubbies;
 public class RecipeRegistry {
 
 	public static void registerRecipes(){
-		//TubbyCustard
-	   	/*GameRegistry.addRecipe(new ItemStack(Teletubbies.tubbyCustard), new Object[]{
-	   		" D ",
-	   		" P ",
-	   		" B ",
-	   		'D', new ItemStack(Items.dye, 1, 9), 'P', Items.porkchop, 'B', Teletubbies.tubbyBowl
-	   	});*/
-	   	
-	   	//TubbyToast
-	   	/*GameRegistry.addRecipe(new ItemStack(Teletubbies.tubbyToast), new Object[]{
-	   		"CCC",
-	   		"SWS",
-	   		"CSC",
-	   		'C', new ItemStack(Items.dye, 1, 3), 'S', Items.sugar, 'W', Items.wheat
-	   	});*/
-	   	
 	   	//TubbyBowl
 		GameRegistry.addRecipe(new ItemStack(Teletubbies.tubbyBowl), new Object[]{
 			"   ",

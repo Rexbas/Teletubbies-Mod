@@ -17,7 +17,6 @@ import teletubbies.entity.passive.EntityNooNoo;
 import teletubbies.entity.passive.EntityPo;
 import teletubbies.entity.passive.EntityTinkyWinky;
 import teletubbies.entity.render.RenderFactory;
-import teletubbies.updatechecker.UpdateChecker;
 
 public class ClientProxy extends CommonProxy {
 		
@@ -65,14 +64,6 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerEntityRenderingHandler(EntityZombieLaaLaa.class, new RenderFactory(7));
 		RenderingRegistry.registerEntityRenderingHandler(EntityZombiePo.class, new RenderFactory(8));
 
-	}
-	
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerUpdateChecker(){
-		Teletubbies.updateChecker = new UpdateChecker();
-		Thread updateCheckThread = new Thread(Teletubbies.updateChecker, "Teletubbies Update Checker");
-		updateCheckThread.start();
 	}
 	
 	public void registerItem(Item i) {

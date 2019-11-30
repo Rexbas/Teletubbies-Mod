@@ -2,11 +2,9 @@ package teletubbies.entity.passive;
 
 import java.util.Random;
 
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import teletubbies.Teletubbies;
 
@@ -59,10 +57,5 @@ public class EntityDipsy extends EntityTeletubby {
 	@Override
 	public SoundEvent getDeathSound() {
 		return Teletubbies.sound_Dipsy_Living;
-	}
-
-	@Override
-	public EntityAgeable createChild(EntityAgeable entity) {
-		return new EntityDipsy(this.worldObj);
 	}
 }

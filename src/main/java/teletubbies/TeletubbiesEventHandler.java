@@ -13,13 +13,10 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 import teletubbies.capability.ITeletubbies_CAP;
 import teletubbies.capability.Teletubbies_CAPProvider;
-import teletubbies.configuration.ConfigurationHandler;
 import teletubbies.entity.monster.EntityZombieDipsy;
 import teletubbies.entity.monster.EntityZombieLaaLaa;
 import teletubbies.entity.monster.EntityZombiePo;
@@ -154,20 +151,6 @@ public class TeletubbiesEventHandler {
 					world.spawnEntityInWorld(zombiePo);
 				}
 			}
-		}
-	}
-	
-    @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-    	if(event.getModID().equals(Teletubbies.MODID)) {
-    		ConfigurationHandler.syncConfig();
-    	}
-    }
-	    
-	@SubscribeEvent(priority=EventPriority.HIGHEST, receiveCanceled=true)
-	public void onEvent(PlayerTickEvent event) {
-		if(!Teletubbies.haveWarnedVersionOutOfDate && event.player.worldObj.isRemote && !Teletubbies.updateChecker.isLatestVersion() && ConfigurationHandler.showUpdateCheck) {
-			Teletubbies.updateChecker.updateStatus(event.player);
 		}
 	}
 }

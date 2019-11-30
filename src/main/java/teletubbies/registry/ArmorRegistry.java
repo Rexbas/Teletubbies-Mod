@@ -10,13 +10,13 @@ import teletubbies.armor.ArmorLaaLaaBib;
 import teletubbies.armor.ArmorNooNooEyes;
 import teletubbies.armor.ArmorPoBib;
 import teletubbies.armor.ArmorTinkyWinkyBib;
-import teletubbies.armor.ArmorTubbySkirt;
+import teletubbies.armor.ArmorTubbyTutu;
 
 public class ArmorRegistry {
 
 	public static void registerArmor(){
-		Teletubbies.tubbySkirt = new ArmorTubbySkirt(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
-    	GameRegistry.registerItem(Teletubbies.tubbySkirt, "TubbySkirt");
+		Teletubbies.tubbySkirt = new ArmorTubbyTutu(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
+    	GameRegistry.registerItem(Teletubbies.tubbySkirt, "TubbyTutu");
 		
 		Teletubbies.dipsyHat = new ArmorDipsyHat(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
     	GameRegistry.registerItem(Teletubbies.dipsyHat, "DipsyHat");

@@ -8,14 +8,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import teletubbies.block.BlockTubbyCustardMachine;
 import teletubbies.block.BlockTubbyToastMachine;
@@ -23,8 +21,6 @@ import teletubbies.block.BlockTubbyVoiceTrumpet;
 import teletubbies.capability.ITeletubbies_CAP;
 import teletubbies.capability.Teletubbies_CAPProvider;
 import teletubbies.capability.Teletubbies_CAPStorage;
-import teletubbies.configuration.ConfigurationHandler;
-import teletubbies.gui.GuiHandler;
 import teletubbies.item.DipsyStick;
 import teletubbies.item.LaaLaaBall;
 import teletubbies.item.LaaLaaStick;
@@ -43,18 +39,13 @@ import teletubbies.registry.SoundRegistry;
 import teletubbies.structure.GenTubbyDomeStructure;
 import teletubbies.structure.GenTubbyVoiceTrumpet;
 import teletubbies.tab.TabTeletubbies;
-import teletubbies.updatechecker.UpdateChecker;
 
-@Mod(modid = Teletubbies.MODID, name = Teletubbies.NAME, version = Teletubbies.MODVERSION, guiFactory = "teletubbies.gui.GuiFactory")
+@Mod(modid = Teletubbies.MODID, name = Teletubbies.MODNAME, version = "@{version}", updateJSON = "https://raw.githubusercontent.com/Rexbas/Teletubbies-Mod/update/update.json")
 public class Teletubbies
 {
     public static final String MODID = "teletubbies";
-    public static final String NAME = "Teletubbies";
-    public static final String MODVERSION = "1.1.2.4";
-	public static final String MCVERSION = "1.9.4"; //For update file
-    
-	public static Configuration config;
-	
+    public static final String MODNAME = "Teletubbies";
+    	
 	@CapabilityInject(ITeletubbies_CAP.class)
 	public static final Capability<ITeletubbies_CAP> Teletubbies_CAP = null;
 	
@@ -101,8 +92,6 @@ public class Teletubbies
     
     @Instance(MODID)
     public static Teletubbies instance;
-	public static UpdateChecker updateChecker;
-	public static boolean haveWarnedVersionOutOfDate = false;
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -120,14 +109,9 @@ public class Teletubbies
     public void preinit(FMLPreInitializationEvent event) {
     	commonProxy.registerMobRenders();
     	
-    	config = new Configuration(event.getSuggestedConfigurationFile());
-    	ConfigurationHandler.syncConfig();
-    	
     	MinecraftForge.EVENT_BUS.register(instance);
     	MinecraftForge.EVENT_BUS.register(teletubbiesEventHandler);
-    	
-    	NetworkRegistry.INSTANCE.registerGuiHandler(MODID, new GuiHandler());
-    	
+    	    	
     	CapabilityManager.INSTANCE.register(ITeletubbies_CAP.class, new Teletubbies_CAPStorage(), Teletubbies_CAPProvider.class);
 
     	BlockRegistry.registerBlocks();
