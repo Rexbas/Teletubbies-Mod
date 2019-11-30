@@ -1,0 +1,44 @@
+{"mob.po.say": {
+"category": "neutral",
+ "sounds": [
+"mob/po/say"]},
+
+"mob.laalaa.say": {
+"category": "neutral",
+ "sounds": [
+"mob/laalaa/say"]},
+
+"mob.dipsy.say": {
+"category": "neutral",
+ "sounds": [
+"mob/dipsy/say"]},
+
+"mob.tinkywinky.say": {
+"category": "neutral",
+ "sounds": [
+"mob/tinkywinky/say"]},
+
+"mob.noonoo.say": {
+"category": "neutral",
+ "sounds": [
+"mob/noonoo/say1", "mob/noonoo/say2"]},
+
+"mob.noonoo.hurt": {
+"category": "neutral",
+ "sounds": [
+"mob/noonoo/hurt"]},
+
+"mob.noonoo.dead": {
+"category": "neutral",
+ "sounds": [
+"mob/noonoo/dead"]},
+
+"ball.bounce": {
+"category": "neutral",
+ "sounds": [
+"ball/bounce"]},
+
+"windmill.spin": {
+"category": "neutral",
+ "sounds": [
+"windmill/spin"]}}

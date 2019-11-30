@@ -1,0 +1,38 @@
+teletubbies.TubbyCustardMachine.message=Vous avez besoin d'un Tubby Bol dans votre main
+
+entity.TinkyWinky.name=Tinky Winky
+entity.Dipsy.name=Dipsy
+entity.LaaLaa.name=Laa-Laa
+entity.Po.name=Po
+entity.NooNoo.name=Noo-Noo
+entity.ZombieTinkyWinky.name=Zombie Tinky Winky
+entity.ZombieDipsy.name=Zombie Dipsy
+entity.ZombieLaaLaa.name=Zombie Laa-Laa
+entity.ZombiePo.name=Zombie Po
+
+itemGroup.Teletubbies=Télétubbies
+
+container.TinkyWinkyBag=Sacoche de Tinky Winky
+
+item.TinkyWinkyStick.name=Bâton de Tinky Winky
+item.DipsyStick.name=Bâton de Dipsy
+item.LaaLaaStick.name=Bâton de Laa-Laa
+item.PoStick.name=Bâton de Po
+item.NooNooEyes.name=Yeux de Noo-Noo
+item.TinkyWinkyBag.name=Sacoche de Tinky Winky
+item.LaaLaaBall.name=Balle de Laa-Laa
+item.TubbyCustard.name=Tubby Délice
+item.TubbyToast.name=Tubby Toast
+item.TubbyBowl.name=Tubby Bol
+
+item.TubbySkirt.name=Tubby Jupe
+item.DipsyHat.name=Chapeau de Dipsy
+item.TinkyWinkyBib.name=Bavoir de Tinky Winky
+item.DipsyBib.name=Bavoir de Dipsy
+item.LaaLaaBib.name=Bavoir de Laa-Laa
+item.PoBib.name=Bavoir de Po
+
+tile.TubbyVoiceTrumpet.name=Tubby Voix Trompette
+tile.TubbyToastMachine.name=Tubby Toast Machine
+tile.TubbyCustardMachine.name=Tubby Délice Machine
+tile.TubbyWindMill.name=Tubby Moulin à vent
