@@ -1,0 +1,21 @@
+{
+    "textures": {
+        "0": "teletubbies:blocks/TubbyToastMachine",
+		"particle": "teletubbies:blocks/TubbyToastMachine_particle"
+    },
+    "elements": [
+        {
+            "name": "box0",
+            "from": [ 0.0, 0.0, 0.0 ], 
+            "to": [ 16.0, 16.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 1.5, 4.0, 5.5 ] },
+                "east": { "texture": "#0", "uv": [ 4.0, 1.5, 8.0, 5.5 ] },
+                "south": { "texture": "#0", "uv": [ 8.0, 1.5, 12.0, 5.5 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 1.5, 4.0, 5.5 ] },
+                "up": { "texture": "#-1", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 5.8, 4.0, 9.7 ] }
+            }
+        }
+    ]
+}

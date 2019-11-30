@@ -1,0 +1,28 @@
+{
+    "variants": {
+        "facing=south,position=bottom_left": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineSideBottom", "y": 180 },
+        "facing=west,position=bottom_left": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineSideBottom", "y": 270 },
+        "facing=north,position=bottom_left": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineSideBottom", "y": 0 },
+        "facing=east,position=bottom_left": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineSideBottom", "y": 90 },
+
+        "facing=south,position=bottom_center": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineCenterBottom", "y": 180 },
+        "facing=west,position=bottom_center": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineCenterBottom", "y": 270 },
+        "facing=north,position=bottom_center": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineCenterBottom", "y": 0 },
+        "facing=east,position=bottom_center": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineCenterBottom", "y": 90 },
+
+        "facing=south,position=bottom_right": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineSideBottom", "y": 0 },
+        "facing=west,position=bottom_right": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineSideBottom", "y": 90 },
+        "facing=north,position=bottom_right": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineSideBottom", "y": 180 },
+        "facing=east,position=bottom_right": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineSideBottom", "y": 270 },
+        
+        "facing=south,position=top_left": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineLeftTop", "y": 180 },
+        "facing=west,position=top_left": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineLeftTop", "y": 270 },
+        "facing=north,position=top_left": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineLeftTop", "y": 0 },
+        "facing=east,position=top_left": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineLeftTop", "y": 90 },
+        
+        "facing=south,position=top_right": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineRightTop", "y": 180 },
+        "facing=west,position=top_right": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineRightTop", "y": 270 },
+        "facing=north,position=top_right": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineRightTop", "y": 0 },
+        "facing=east,position=top_right": { "model": "teletubbies:TubbyCustardMachine/TubbyCustardMachineRightTop", "y": 90 }
+    }
+}

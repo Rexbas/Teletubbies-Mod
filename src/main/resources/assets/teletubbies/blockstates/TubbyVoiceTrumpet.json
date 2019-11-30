@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=south,position=bottom": { "model": "teletubbies:TubbyVoiceTrumpet/TubbyVoiceTrumpetBottom", "y": 180 },
+        "facing=west,position=bottom": { "model": "teletubbies:TubbyVoiceTrumpet/TubbyVoiceTrumpetBottom", "y": 270 },
+        "facing=north,position=bottom": { "model": "teletubbies:TubbyVoiceTrumpet/TubbyVoiceTrumpetBottom", "y": 0 },
+        "facing=east,position=bottom": { "model": "teletubbies:TubbyVoiceTrumpet/TubbyVoiceTrumpetBottom", "y": 90 },
+        "facing=south,position=top": { "model": "teletubbies:TubbyVoiceTrumpet/TubbyVoiceTrumpetTop", "y": 180 },
+        "facing=west,position=top": { "model": "teletubbies:TubbyVoiceTrumpet/TubbyVoiceTrumpetTop", "y": 270 },
+        "facing=north,position=top": { "model": "teletubbies:TubbyVoiceTrumpet/TubbyVoiceTrumpetTop", "y": 0 },
+        "facing=east,position=top": { "model": "teletubbies:TubbyVoiceTrumpet/TubbyVoiceTrumpetTop", "y": 90 }
+    }
+}

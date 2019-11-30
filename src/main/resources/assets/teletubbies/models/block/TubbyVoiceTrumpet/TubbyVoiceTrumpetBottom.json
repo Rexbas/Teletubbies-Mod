@@ -1,0 +1,21 @@
+{
+    "textures": {
+        "0": "teletubbies:blocks/TubbyVoiceTrumpet",
+        "particle": "teletubbies:blocks/TubbyVoiceTrumpet_particle"
+    },
+    "elements": [
+        {
+            "name": "box0",
+            "from": [ 7.0, 0.0, 7.0 ], 
+            "to": [ 9.0, 16.0, 9.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 1.0, 1.0, 9.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 1.0, 1.0, 9.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 1.0, 1.0, 9.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 1.0, 1.0, 9.0 ] },
+                "up": { "texture": "#-1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#0", "uv": [ 3.5, 1.0, 4.5, 2.0 ] }
+            }
+        }
+    ]
+}

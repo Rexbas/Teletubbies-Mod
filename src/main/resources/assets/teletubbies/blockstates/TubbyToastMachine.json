@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "facing=south,position=bottom": { "model": "teletubbies:TubbyToastMachine/TubbyToastMachineBottom", "y": 180 },
+        "facing=west,position=bottom": { "model": "teletubbies:TubbyToastMachine/TubbyToastMachineBottom", "y": 270 },
+        "facing=north,position=bottom": { "model": "teletubbies:TubbyToastMachine/TubbyToastMachineBottom", "y": 0 },
+        "facing=east,position=bottom": { "model": "teletubbies:TubbyToastMachine/TubbyToastMachineBottom", "y": 90 },
+        "facing=south,position=top": { "model": "teletubbies:TubbyToastMachine/TubbyToastMachineTop", "y": 180 },
+        "facing=west,position=top": { "model": "teletubbies:TubbyToastMachine/TubbyToastMachineTop", "y": 270 },
+        "facing=north,position=top": { "model": "teletubbies:TubbyToastMachine/TubbyToastMachineTop", "y": 0 },
+        "facing=east,position=top": { "model": "teletubbies:TubbyToastMachine/TubbyToastMachineTop", "y": 90 }
+    }
+}
