@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "facing=south,render=true": { "model": "teletubbies:TubbyCustardMachine", "y": 180 },
+        "facing=west,render=true": { "model": "teletubbies:TubbyCustardMachine", "y": 270 },
+        "facing=north,render=true": { "model": "teletubbies:TubbyCustardMachine", "y": 0 },
+        "facing=east,render=true": { "model": "teletubbies:TubbyCustardMachine", "y": 90 },
+        
+        "facing=south,render=false": { "model": "teletubbies:TubbyCustardMachine", "y": 180 },
+        "facing=west,render=false": { "model": "teletubbies:TubbyCustardMachine", "y": 270 },
+        "facing=north,render=false": { "model": "teletubbies:TubbyCustardMachine", "y": 0 },
+        "facing=east,render=false": { "model": "teletubbies:TubbyCustardMachine", "y": 90 }
+    }
+}

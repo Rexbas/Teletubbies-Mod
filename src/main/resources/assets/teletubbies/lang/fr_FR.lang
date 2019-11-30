@@ -1,0 +1,48 @@
+teletubbies.tubbycustardmachine.message=Vous avez besoin d'un Tubby Bol dans votre main
+
+entity.tinkywinky.name=Tinky Winky
+entity.dipsy.name=Dipsy
+entity.laalaa.name=Laa-Laa
+entity.po.name=Po
+entity.noonoo.name=Noo-Noo
+entity.zombietinkywinky.name=Zombie Tinky Winky
+entity.zombiedipsy.name=Zombie Dipsy
+entity.zombielaalaa.name=Zombie Laa-Laa
+entity.zombiepo.name=Zombie Po
+entity.mimi.name=Mimi
+entity.daadaa.name=Daa-Daa
+entity.ping.name=Ping
+entity.ba.name=Ba
+entity.ruru.name=RuRu
+entity.nin.name=Nin
+entity.duggledee.name=Duggle Dee
+entity.umpiepumpie.name=Umpie Pumpie
+
+itemGroup.teletubbies=TÃ©lÃ©tubbies
+
+container.tinkywinkyBag=Sacoche de Tinky Winky
+
+item.tinkywinkystick.name=BÃ¢ton de Tinky Winky
+item.dipsystick.name=BÃ¢ton de Dipsy
+item.laalaastick.name=BÃ¢ton de Laa-Laa
+item.postick.name=BÃ¢ton de Po
+item.noonooeyes.name=Yeux de Noo-Noo
+item.tinkywinkybag.name=Sacoche de Tinky Winky
+item.laalaaball.name=Balle de Laa-Laa
+item.tubbycustard.name=Tubby DÃ©lice
+item.tubbytoast.name=Tubby Toast
+item.tubbybowl.name=Tubby Bol
+
+item.tubbyskirt.name=Tubby Jupe
+item.dipsyhat.name=Chapeau de Dipsy
+item.tinkywinkybib.name=Bavoir de Tinky Winky
+item.dipsybib.name=Bavoir de Dipsy
+item.laalaabib.name=Bavoir de Laa-Laa
+item.pobib.name=Bavoir de Po
+item.pohelmet.name=Casque de Po
+
+item.poscooter.name=Scooter de Po
+
+tile.tubbyvoicetrumpet.name=Tubby Voix Trompette
+tile.tubbytoastmachine.name=Tubby Toast Machine
+tile.tubbycustardmachine.name=Tubby DÃ©lice Machine
