@@ -1,0 +1,38 @@
+teletubbies.TubbyCustardMachine.message=Se necesita un Tubbi Cuenco en la mano
+
+entity.teletubbies.TinkyWinky.name=Tinky Winky
+entity.teletubbies.Dipsy.name=Dipsy
+entity.teletubbies.LaaLaa.name=Laa-Laa
+entity.teletubbies.Po.name=Po
+entity.teletubbies.NooNoo.name=Noo-Noo
+entity.teletubbies.ZombieTinkyWinky.name=Zombi Tinky Winky
+entity.teletubbies.ZombieDipsy.name=Zombi Dipsy
+entity.teletubbies.ZombieLaaLaa.name=Zombi Laa-Laa
+entity.teletubbies.ZombiePo.name=Zombi Po
+
+itemGroup.Teletubbies=Teletubbies
+
+container.TinkyWinkyBag=Bolsa de Tinky Winky
+
+item.TinkyWinkyStick.name=Palo de Tinky Winky
+item.DipsyStick.name=Palo de Dipsy
+item.LaaLaaStick.name=Palo de Laa-Laa
+item.PoStick.name=Palo de Po
+item.NooNooEyes.name=Ojos de Noo-Noo
+item.TinkyWinkyBag.name=Bolsa de Tinky Winky
+item.LaaLaaBall.name=Pelota de Laa-Laa
+item.TubbyCustard.name=Tubbi Papilla
+item.TubbyToast.name=Tubbi Tostada
+item.TubbyBowl.name=Tubbi Cuenco
+
+item.TubbySkirt.name=Tubbi Falda
+item.DipsyHat.name=Sombrero de Dipsy
+item.TinkyWinkyBib.name=Babero de Tinky Winky
+item.DipsyBib.name=Babero de Dipsy
+item.LaaLaaBib.name=Babero de Laa-Laa
+item.PoBib.name=Babero de Po
+
+tile.TubbyVoiceTrumpet.name=Tubbi Trompeta de Voz
+tile.TubbyToastMachine.name=Tubbi Toast Máquina
+tile.TubbyCustardMachine.name=Tubby Papilla Machine
+tile.TubbyWindMill.name=Tubbi Molino

@@ -1,0 +1,69 @@
+{"mob.tinkywinky.say": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:mob/tinkywinky/say",
+    "stream": true
+    }]},
+
+"mob.dipsy.say": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:mob/dipsy/say",
+    "stream": true
+    }]},
+
+"mob.laalaa.say": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:mob/laalaa/say",
+    "stream": true
+    }]},
+
+"mob.po.say": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:mob/po/say",
+    "stream": true
+    }]},
+
+"mob.noonoo.say1": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:mob/noonoo/say1",
+    "stream": true
+    }]},
+    
+"mob.noonoo.say2": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:mob/noonoo/say2",
+    "stream": true
+    }]},
+
+"mob.noonoo.hurt": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:mob/noonoo/hurt",
+    "stream": true
+    }]},
+
+"mob.noonoo.dead": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:mob/noonoo/dead",
+    "stream": true
+    }]},
+
+"ball.bounce": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:ball/bounce",
+    "stream": true
+    }]},
+    
+"machine.tubbytoast": {
+"category": "neutral",
+ "sounds": [ {
+    "name": "teletubbies:machine/tubbytoast",
+    "stream": true
+    }]}}

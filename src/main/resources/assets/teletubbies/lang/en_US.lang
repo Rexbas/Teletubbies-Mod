@@ -1,0 +1,37 @@
+teletubbies.TubbyCustardMachine.message=You need a Tubby Bowl in your hand
+
+entity.teletubbies.TinkyWinky.name=Tinky Winky
+entity.teletubbies.Dipsy.name=Dipsy
+entity.teletubbies.LaaLaa.name=Laa-Laa
+entity.teletubbies.Po.name=Po
+entity.teletubbies.NooNoo.name=Noo-Noo
+entity.teletubbies.ZombieTinkyWinky.name=Zombie Tinky Winky
+entity.teletubbies.ZombieDipsy.name=Zombie Dipsy
+entity.teletubbies.ZombieLaaLaa.name=Zombie Laa-Laa
+entity.teletubbies.ZombiePo.name=Zombie Po
+
+itemGroup.Teletubbies=Teletubbies
+
+container.TinkyWinkyBag=Tinky Winky's Bag
+
+item.TinkyWinkyStick.name=Tinky Winky's Stick
+item.DipsyStick.name=Dipsy's Stick
+item.LaaLaaStick.name=Laa-Laa's Stick
+item.PoStick.name=Po's Stick
+item.NooNooEyes.name=Noo-Noo's Eyes
+item.TinkyWinkyBag.name=Tinky Winky's Bag
+item.LaaLaaBall.name=Laa-Laa's Ball
+item.TubbyCustard.name=Tubby Custard
+item.TubbyToast.name=Tubby Toast
+item.TubbyBowl.name=Tubby Bowl
+
+item.TubbySkirt.name=Tubby Skirt
+item.DipsyHat.name=Dipsy's Hat
+item.TinkyWinkyBib.name=Tinky Winky's Bib
+item.DipsyBib.name=Dipsy's Bib
+item.LaaLaaBib.name=Laa-Laa's Bib
+item.PoBib.name=Po's Bib
+
+tile.TubbyVoiceTrumpet.name=Tubby Voice Trumpet
+tile.TubbyToastMachine.name=Tubby Toast Machine
+tile.TubbyCustardMachine.name=Tubby Custard Machine

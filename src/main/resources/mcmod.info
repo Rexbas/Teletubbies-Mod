@@ -1,0 +1,16 @@
+[
+{
+  "modid": "teletubbies",
+  "name": "Teletubbies",
+  "description": "Teletubbies for Minecraft",
+  "version": "1.1.2.4",
+  "mcversion": "1.9.4 and 1.10",
+  "url": "http://minecraft.curseforge.com/projects/teletubbies-mod",
+  "updateUrl": "",
+  "authorList": ["Rexbas", "Asterions/TrezionTvS"],
+  "credits": "",
+  "logoFile": "logo.png",
+  "screenshots": [],
+  "dependencies": []
+}
+]

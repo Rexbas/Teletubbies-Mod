@@ -1,0 +1,38 @@
+teletubbies.TubbyCustardMachine.message=Je moet een Tubby Kom in je hand hebben
+
+entity.teletubbies.TinkyWinky.name=Tinky Winky
+entity.teletubbies.Dipsy.name=Dipsy
+entity.teletubbies.LaaLaa.name=Laa-Laa
+entity.teletubbies.Po.name=Po
+entity.teletubbies.NooNoo.name=Noo-Noo
+entity.teletubbies.ZombieTinkyWinky.name=Zombie Tinky Winky
+entity.teletubbies.ZombieDipsy.name=Zombie Dipsy
+entity.teletubbies.ZombieLaaLaa.name=Zombie Laa-Laa
+entity.teletubbies.ZombiePo.name=Zombie Po
+
+itemGroup.Teletubbies=Teletubbies
+
+container.TinkyWinkyBag=Tinky Winky's Tas
+
+item.TinkyWinkyStick.name=Tinky Winky's Stok
+item.DipsyStick.name=Dipsy's Stok
+item.LaaLaaStick.name=Laa-Laa's Stok
+item.PoStick.name=Po's Stok
+item.NooNooEyes.name=Noo-Noo's Ogen
+item.TinkyWinkyBag.name=Tinky Winky's Tas
+item.LaaLaaBall.name=Laa-Laa's Bal
+item.TubbyCustard.name=Tubby Toetje
+item.TubbyToast.name=Tubby Toast
+item.TubbyBowl.name=Tubby Kom
+
+item.TubbySkirt.name=Tubby Rok
+item.DipsyHat.name=Dipsy's Hoed
+item.TinkyWinkyBib.name=Tinky Winky's Slabbetje
+item.DipsyBib.name=Dipsy's Slabbetje
+item.LaaLaaBib.name=Laa-Laa's Slabbetje
+item.PoBib.name=Po's Slabbetje
+
+tile.TubbyVoiceTrumpet.name=Tubby Voice Trompet
+tile.TubbyToastMachine.name=Tubby Toast Machine
+tile.TubbyCustardMachine.name=Tubby Toetje Machine
+tile.TubbyWindMill.name=Tubby Windmolen

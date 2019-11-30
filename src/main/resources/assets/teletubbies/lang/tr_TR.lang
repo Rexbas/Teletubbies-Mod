@@ -1,0 +1,37 @@
+teletubbies.TubbyCustardMachine.message=Elinizde Tubby Kâsesi olması gerekli
+
+entity.TinkyWinky.name=Tinky Winky
+entity.Dipsy.name=Dipsy
+entity.LaaLaa.name=Laa-Laa
+entity.Po.name=Po
+entity.NooNoo.name=Noo-Noo
+entity.ZombieTinkyWinky.name=Zombi Tinky Winky
+entity.ZombieDipsy.name=Zombi Dipsy
+entity.ZombieLaaLaa.name=Zombi Laa-Laa
+entity.ZombiePo.name=Zombi Po
+
+itemGroup.Teletubbies=Teletubiler
+
+container.TinkyWinkyBag=Tinky Winky'nin Çantası
+
+item.TinkyWinkyStick.name=Tinky Winky'nin Çubuğu
+item.DipsyStick.name=Dipsy'nin Çubuğu
+item.LaaLaaStick.name=Laa-Laa'nın Çubuğu
+item.PoStick.name=Po'nun Çubuğu
+item.NooNooEyes.name=Noo-Noo'nun Gözleri
+item.TinkyWinkyBag.name=Tinky Winky'nin Çantası
+item.LaaLaaBall.name=Laa-Laa'nın Topu
+item.TubbyCustard.name=Tubby Kaymağı
+item.TubbyToast.name=Tubby Tostu
+item.TubbyBowl.name=Tubby Kâsesi
+
+item.TubbySkirt.name=Tubby Eteği
+item.DipsyHat.name=Dipsy'nin Şapkası
+item.TinkyWinkyBib.name=Tinky Winky'nin Önlüğü
+item.DipsyBib.name=Dipsy'nin Önlüğü
+item.LaaLaaBib.name=Laa-Laa'nın Önlüğü
+item.PoBib.name=Po'nun Önlüğü
+
+tile.TubbyVoiceTrumpet.name=Tubby Ses Trompeti
+tile.TubbyToastMachine.name=Tubby Tost Makinesi
+tile.TubbyCustardMachine.name=Tubby Krema Makinesi
