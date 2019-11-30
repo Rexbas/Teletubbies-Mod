@@ -5,7 +5,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import teletubbies.Teletubbies;
-import teletubbies.configuration.ConfigurationHandler;
 
 public class ArmorDipsyBib extends ItemArmor {
 
@@ -22,10 +21,7 @@ public class ArmorDipsyBib extends ItemArmor {
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
         if(stack.getItem() == Teletubbies.dipsyBib) {
-        	if(ConfigurationHandler.use2015) {
-            	return "teletubbies:textures/armor/dipsybib2015.png";
-        	}
-        	else return "teletubbies:textures/armor/dipsybib.png";
+        	return "teletubbies:textures/armor/dipsybib.png";
         }
         else {
         	return null;

@@ -88,6 +88,6 @@ public class EntityTiddlytubby extends EntityAnimal {
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable entity) {
-		return this;
+		return null;
 	}
 }

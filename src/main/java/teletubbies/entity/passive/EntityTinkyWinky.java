@@ -2,7 +2,6 @@ package teletubbies.entity.passive;
 
 import java.util.Random;
 
-import net.minecraft.entity.EntityAgeable;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -29,7 +28,7 @@ public class EntityTinkyWinky extends EntityTeletubby {
 	        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Teletubbies.tinkyWinkyBib));
 		}
 		else if(rand1 == 2) {
-	        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Teletubbies.tubbySkirt));
+	        this.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Teletubbies.tubbyTutu));
 		}
 		this.shouldAddArmor = false;
 	}
@@ -62,9 +61,5 @@ public class EntityTinkyWinky extends EntityTeletubby {
 	@Override
 	public SoundEvent getDeathSound() {
 		return Teletubbies.sound_TinkyWinky_Living;
-	}
-	@Override
-	public EntityAgeable createChild(EntityAgeable entity) {
-		return null;
 	}
 }

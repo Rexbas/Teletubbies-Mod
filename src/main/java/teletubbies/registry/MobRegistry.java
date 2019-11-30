@@ -5,7 +5,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import teletubbies.Teletubbies;
-import teletubbies.configuration.ConfigurationHandler;
 import teletubbies.entity.baby.EntityBa;
 import teletubbies.entity.baby.EntityDaaDaa;
 import teletubbies.entity.baby.EntityDuggleDee;
@@ -40,7 +39,7 @@ public class MobRegistry {
 		EntityRegistry.registerModEntity(new ResourceLocation(Teletubbies.MODID + ":Po"), EntityPo.class, "po", 3, Teletubbies.MODID, 64, 3, true, 0xD62828, 0xFFC9AD);
 		EntityRegistry.addSpawn(EntityPo.class, 20, 1, 1, EnumCreatureType.CREATURE, Biome.getBiome(1));
 
-		EntityRegistry.registerModEntity(new ResourceLocation(Teletubbies.MODID + ":NooNoo"), EntityNooNoo.class, "noonoo", 4, Teletubbies.MODID, 64, 3, true, ConfigurationHandler.use2015 ? 0xFF7B00 : 0x0099FF, 0xE166CC);
+		EntityRegistry.registerModEntity(new ResourceLocation(Teletubbies.MODID + ":NooNoo"), EntityNooNoo.class, "noonoo", 4, Teletubbies.MODID, 64, 3, true, 0x0099FF, 0xE166CC);
 		EntityRegistry.addSpawn(EntityNooNoo.class, 20, 1, 1, EnumCreatureType.CREATURE, Biome.getBiome(1));		
 		
 		//Zombie Teletubbies

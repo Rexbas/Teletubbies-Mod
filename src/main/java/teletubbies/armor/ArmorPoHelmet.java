@@ -5,7 +5,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import teletubbies.Teletubbies;
-import teletubbies.configuration.ConfigurationHandler;
 
 public class ArmorPoHelmet extends ItemArmor {
 
