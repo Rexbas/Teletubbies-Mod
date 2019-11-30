@@ -9,7 +9,6 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import teletubbies.configuration.ConfigurationHandler;
 import teletubbies.entity.baby.EntityBa;
 import teletubbies.entity.baby.EntityDaaDaa;
 import teletubbies.entity.baby.EntityDuggleDee;
@@ -29,7 +28,6 @@ import teletubbies.entity.passive.EntityPo;
 import teletubbies.entity.passive.EntityTinkyWinky;
 import teletubbies.entity.render.RenderFactory;
 import teletubbies.sounds.MovingSoundPoScooter;
-import teletubbies.updatechecker.UpdateChecker;
 import teletubbies.vehicle.EntityPoScooter;
 
 public class ClientProxy extends CommonProxy {
@@ -38,21 +36,13 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerRenders() {
 		//Armor
-		registerItem(Teletubbies.tubbySkirt);
+		registerItem(Teletubbies.tubbyTutu);
 		registerItem(Teletubbies.dipsyHat);
 		registerItem(Teletubbies.nooNooEyes);
-		if(ConfigurationHandler.use2015) {
-			registerItem2015(Teletubbies.tinkyWinkyBib);
-			registerItem2015(Teletubbies.dipsyBib);
-			registerItem2015(Teletubbies.poBib);
-			registerItem2015(Teletubbies.poScooter);
-		}
-		else {
-			registerItem(Teletubbies.tinkyWinkyBib);
-			registerItem(Teletubbies.dipsyBib);
-			registerItem(Teletubbies.poBib);
-			registerItem(Teletubbies.poScooter);
-		}
+		registerItem(Teletubbies.tinkyWinkyBib);
+		registerItem(Teletubbies.dipsyBib);
+		registerItem(Teletubbies.poBib);
+		registerItem(Teletubbies.poScooter);
 		registerItem(Teletubbies.laaLaaBib);
 		registerItem(Teletubbies.poHelmet);
 		
@@ -104,21 +94,8 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	@SideOnly(Side.CLIENT)
-	@Override
-	public void registerUpdateChecker(){
-		Teletubbies.updateChecker = new UpdateChecker();
-		Thread updateCheckThread = new Thread(Teletubbies.updateChecker, "Teletubbies Update Checker");
-		updateCheckThread.start();
-	}
-	
-	@SideOnly(Side.CLIENT)
 	public void registerItem(Item i) {
 		ModelLoader.setCustomModelResourceLocation(i, 0, new ModelResourceLocation(i.getRegistryName(), "inventory"));
-	}
-	
-	@SideOnly(Side.CLIENT)
-	public void registerItem2015(Item i) {
-		ModelLoader.setCustomModelResourceLocation(i, 0, new ModelResourceLocation(i.getRegistryName()  + "2015", "inventory"));
 	}
 	
 	@SideOnly(Side.CLIENT)

@@ -10,20 +10,15 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import teletubbies.Teletubbies;
-import teletubbies.capability.ITeletubbies_CAP;
 
 public class EntityNooNoo extends EntityAnimal {
-
-	//public InventoryNooNoo inventory = new InventoryNooNoo(this);
 	
 	public EntityNooNoo(World world) {
 		super(world);
 		this.setSize(1.0F, 1.0F);
-		//this.tasks.addTask(0, new AISuckItems(this, 20, 5, 20));
 		this.tasks.addTask(1, new EntityAIWander(this, 0.45F));
 		this.tasks.addTask(2, new EntityAIWatchClosest(this,EntityPlayer.class, 10.0F));
 		this.tasks.addTask(3, new EntityAILookIdle(this));
@@ -68,49 +63,6 @@ public class EntityNooNoo extends EntityAnimal {
 	public SoundEvent getDeathSound() {
 		return Teletubbies.sound_NooNoo_Dead;
 	}
-	
-	@Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand) {
-		if(player.isSneaking()) return false;
-		ITeletubbies_CAP capability = player.getCapability(Teletubbies.Teletubbies_CAP, player.getHorizontalFacing());
-		capability.setInteractedNooNoo(this);
-		player.openGui(Teletubbies.instance, 1, this.world, (int) this.posX, (int) this.posY, (int) this.posZ);
-        return false;
-    }
-	
-	/*@Override
-    public void onDeath(DamageSource cause) {
-		super.onDeath(cause);
-		if(!this.worldObj.isRemote) this.inventory.dropAllItems();
-	}
-
-    @Override
-    public void onLivingUpdate() {
-    	super.onLivingUpdate();
-        if(!this.worldObj.isRemote && !this.dead && this.worldObj.getGameRules().getBoolean("mobGriefing") && this.inventory.getFirstEmptyStack() != - 1) {
-            for(EntityItem entityitem : this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.getEntityBoundingBox().expand(1.0D, 1.0D, 1.0D))) {
-                if(!entityitem.isDead && entityitem.getEntityItem() != null && !entityitem.cannotPickup()) {
-                	this.inventory.addItemStackToInventory(entityitem.getEntityItem());
-                    EntityTracker entitytracker = ((WorldServer)this.worldObj).getEntityTracker();
-                    entitytracker.sendToAllTrackingEntity(entityitem, new SPacketCollectItem(entityitem.getEntityId(), this.getEntityId()));
-                    entityitem.setDead();
-                }
-            }
-        }
-    }
-	
-    @Override
-    public void writeEntityToNBT(NBTTagCompound compound) {
-    	super.writeEntityToNBT(compound);
-        compound.setTag("Inventory", this.inventory.writeToNBT(new NBTTagList()));
-    }
-    
-    @Override
-    public void readEntityFromNBT(NBTTagCompound compound) {
-    	super.readEntityFromNBT(compound);
-        NBTTagList nbttaglist = compound.getTagList("Inventory", 10);
-    	this.inventory.readFromNBT(nbttaglist);
-    }*/
 
 	@Override
 	public EntityAgeable createChild(EntityAgeable ageable) {

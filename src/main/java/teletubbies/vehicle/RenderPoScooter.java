@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import teletubbies.configuration.ConfigurationHandler;
 
 @SideOnly(Side.CLIENT)
 public class RenderPoScooter extends RenderLiving<EntityPoScooter> {
@@ -18,10 +17,6 @@ public class RenderPoScooter extends RenderLiving<EntityPoScooter> {
 
 	@Override
 	protected ResourceLocation getEntityTexture(EntityPoScooter entity) {
-		if (ConfigurationHandler.use2015) {
-			return new ResourceLocation("teletubbies:textures/vehicle/poscooter2015.png");
-		}
-		else
-			return new ResourceLocation("teletubbies:textures/vehicle/poscooter.png");
+		return new ResourceLocation("teletubbies:textures/vehicle/poscooter.png");
 	}
 }

@@ -12,14 +12,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import teletubbies.armor.ArmorDipsyBib;
@@ -29,15 +27,13 @@ import teletubbies.armor.ArmorNooNooEyes;
 import teletubbies.armor.ArmorPoBib;
 import teletubbies.armor.ArmorPoHelmet;
 import teletubbies.armor.ArmorTinkyWinkyBib;
-import teletubbies.armor.ArmorTubbySkirt;
+import teletubbies.armor.ArmorTubbyTutu;
 import teletubbies.block.BlockTubbyCustardMachine;
 import teletubbies.block.BlockTubbyToastMachine;
 import teletubbies.block.BlockTubbyVoiceTrumpet;
 import teletubbies.capability.ITeletubbies_CAP;
 import teletubbies.capability.Teletubbies_CAPProvider;
 import teletubbies.capability.Teletubbies_CAPStorage;
-import teletubbies.configuration.ConfigurationHandler;
-import teletubbies.gui.GuiHandler;
 import teletubbies.item.DipsyStick;
 import teletubbies.item.ItemBlockTubbyCustardMachine;
 import teletubbies.item.LaaLaaBall;
@@ -55,38 +51,17 @@ import teletubbies.registry.MobRegistry;
 import teletubbies.registry.RecipeRegistry;
 import teletubbies.registry.SoundRegistry;
 import teletubbies.tab.TabTeletubbies;
-import teletubbies.updatechecker.UpdateChecker;
 import teletubbies.vehicle.EntityPoScooter;
 import teletubbies.vehicle.ItemPoScooter;
 import teletubbies.world.structure.GenTubbyDomeStructure;
 import teletubbies.world.structure.GenTubbyVoiceTrumpet;
 
-@Mod(modid = Teletubbies.MODID, name = Teletubbies.NAME, version = Teletubbies.MODVERSION, guiFactory = "teletubbies.gui.GuiFactory")
+@Mod(modid = Teletubbies.MODID, name = Teletubbies.MODNAME, version = "@{version}", updateJSON = "https://raw.githubusercontent.com/Rexbas/Teletubbies-Mod/update/update.json")
 public class Teletubbies {
 	
     public static final String MODID = "teletubbies";
-    public static final String NAME = "Teletubbies";
-    public static final String MODVERSION = "1.5.0.4";
-	public static final String MCVERSION = "1.11"; //For update file
-	
-	/* TODO FUTURE
-	 * !2015 Textures
-	 * !Block 2015 models
-	 * WINDMILL
-	 * NOONOO SUCKSUCK + Translation name + custom player.openGui
-	 * Tinky winky bag fix
-	 * sun
-	 * 
-	 */
-	
-	/*DONE
-	 * mimi sound
-	 * voicetrumpet sound
-	 * scooter
-	 */
-    
-	public static Configuration config;
-	
+    public static final String MODNAME = "Teletubbies";
+    	
 	@CapabilityInject(ITeletubbies_CAP.class)
 	public static final Capability<ITeletubbies_CAP> Teletubbies_CAP = null;
 	
@@ -94,7 +69,7 @@ public class Teletubbies {
 		
 	public static CreativeTabs tabTeletubbies = new TabTeletubbies("teletubbies");
     
-	public static Item tubbySkirt = new ArmorTubbySkirt(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
+	public static Item tubbyTutu = new ArmorTubbyTutu(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
 	public static Item dipsyHat = new ArmorDipsyHat(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
 	public static Item nooNooEyes = new ArmorNooNooEyes(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
 	public static Item tinkyWinkyBib = new ArmorTinkyWinkyBib(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
@@ -144,8 +119,6 @@ public class Teletubbies {
     
     @Instance(MODID)
     public static Teletubbies instance;
-	public static UpdateChecker updateChecker;
-	public static boolean haveWarnedVersionOutOfDate = false;
     
     @EventHandler
     public void init(FMLInitializationEvent event) {
@@ -160,15 +133,10 @@ public class Teletubbies {
     
     @EventHandler
     public void preinit(FMLPreInitializationEvent event) {
-    	config = new Configuration(event.getSuggestedConfigurationFile());
-    	ConfigurationHandler.syncConfig();
-    	
     	MinecraftForge.EVENT_BUS.register(instance);
     	MinecraftForge.EVENT_BUS.register(teletubbiesEventHandler);
     	MinecraftForge.EVENT_BUS.register(new ClientProxy());
-    	
-    	NetworkRegistry.INSTANCE.registerGuiHandler(MODID, new GuiHandler());
-    	
+    	    	
     	CapabilityManager.INSTANCE.register(ITeletubbies_CAP.class, new Teletubbies_CAPStorage(), Teletubbies_CAPProvider.class);
 
     	BlockRegistry.registerBlocks();

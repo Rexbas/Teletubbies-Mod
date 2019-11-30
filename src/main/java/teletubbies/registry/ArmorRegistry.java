@@ -6,7 +6,7 @@ import teletubbies.Teletubbies;
 public class ArmorRegistry {
 
 	public static void registerArmor() {
-		ForgeRegistries.ITEMS.register(Teletubbies.tubbySkirt);
+		ForgeRegistries.ITEMS.register(Teletubbies.tubbyTutu);
     	ForgeRegistries.ITEMS.register(Teletubbies.dipsyHat);
     	ForgeRegistries.ITEMS.register(Teletubbies.nooNooEyes);
     	ForgeRegistries.ITEMS.register(Teletubbies.tinkyWinkyBib);

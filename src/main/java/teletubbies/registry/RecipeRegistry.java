@@ -76,7 +76,7 @@ public class RecipeRegistry {
 	   	});
 	   	
 	   	//TubbySkirt
-	   	GameRegistry.addRecipe(new ItemStack(Teletubbies.tubbySkirt), new Object[]{
+	   	GameRegistry.addRecipe(new ItemStack(Teletubbies.tubbyTutu), new Object[]{
 	   		"SSS",
 	   		"WWW",
 	   		"WWW",

@@ -11,9 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.0"
-group = "com.yourname.modid" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "modid"
+version = "3.0.0"
 
 sourceCompatibility = targetCompatibility = "1.6" // Need this here so eclipse task generates correctly.
 compileJava {
@@ -24,6 +22,9 @@ minecraft {
     version = "1.11-13.19.1.2199"
     runDir = "run"
     
+    replace "@{version}", project.version
+    replace "@{mcversion}", version
+    
     // the mappings can be changed at any time, and must be in the following format.
     // snapshot_YYYYMMDD   snapshot are built nightly.
     // stable_#            stables are built at the discretion of the MCP team.
@@ -32,6 +33,9 @@ minecraft {
     mappings = "snapshot_20161220"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
+
+group = "com.rexbas.teletubbies" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "Teletubbies-${project.minecraft.version}"
 
 dependencies {
     // you may put jars on which you depend on in ./libs
