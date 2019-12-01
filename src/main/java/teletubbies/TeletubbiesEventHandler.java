@@ -1,93 +1,78 @@
 package teletubbies;
 
-import java.util.Random;
-
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import teletubbies.capability.ITeletubbies_CAP;
-import teletubbies.capability.Teletubbies_CAPProvider;
-import teletubbies.entity.monster.EntityZombieDipsy;
-import teletubbies.entity.monster.EntityZombieLaaLaa;
-import teletubbies.entity.monster.EntityZombiePo;
-import teletubbies.entity.monster.EntityZombieTinkyWinky;
-import teletubbies.entity.passive.EntityDipsy;
-import teletubbies.entity.passive.EntityLaaLaa;
-import teletubbies.entity.passive.EntityPo;
-import teletubbies.entity.passive.EntityTinkyWinky;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import teletubbies.capability.IJumpCapability;
+import teletubbies.capability.JumpProvider;
 import teletubbies.item.LaaLaaBall;
-import teletubbies.vehicle.EntityPoScooter;
 
 public class TeletubbiesEventHandler {
 
 	@SubscribeEvent
 	public void attachtCapabilityEntity (AttachCapabilitiesEvent<Entity> event) {		
-		if(event.getObject() instanceof EntityPlayer) {
-			event.addCapability(new ResourceLocation(Teletubbies.MODID + ":TeletubbiesCap"), new Teletubbies_CAPProvider((EntityPlayer) event.getObject()));
+		if(event.getObject() instanceof PlayerEntity) {
+			event.addCapability(new ResourceLocation(Teletubbies.MODID, "capability.jump"), new JumpProvider());
 		}
 	}
 	
 	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
-		if(event.getEntityLiving() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
-			World world = player.world;
-			ITeletubbies_CAP capability = player.getCapability(Teletubbies.Teletubbies_CAP, player.getHorizontalFacing());
-			float fallDistance = capability.fallDistance();
-			
-			int ticks = capability.ticksOnGround();
-			
-			if(player.onGround && ticks < 50) {
-				capability.setTicksOnGround(ticks + 1);
-			}
-			if(!player.onGround && ticks != 0) {
-				capability.setTicksOnGround(0);
-			}
-			if(player.fallDistance > fallDistance) {
-				capability.setFallDistance(player.fallDistance);
-			}
-			
-			LaaLaaBall ball = null;
-			if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBall &&
-					player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBall) {
-				ball = (LaaLaaBall) player.getHeldItemMainhand().getItem();
-			}
-			else if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBall) {
-				ball = (LaaLaaBall) player.getHeldItemMainhand().getItem();
-			}
-			else if(player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBall) {
-				ball = (LaaLaaBall) player.getHeldItemOffhand().getItem();
-			}
-			
-			if(ball != null) {
-				if(capability.canJump() && fallDistance >= 10) {
-					LaaLaaBall.jump(player, true);
+		if(event.getEntityLiving() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+						
+			LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getHorizontalFacing());
+			cap.ifPresent(c -> {
+				float fallDistance = c.fallDistance();
+				
+				int ticks = c.ticksOnGround();
+				
+				if(player.onGround && ticks < 50) {
+					c.setTicksOnGround(ticks + 1);
 				}
-			}
-			if(player.onGround) {
-				capability.setFallDistance(0);
-			}
-			if(player.isInWater() || player.isInLava()) {
-				capability.setFallDistance(0);
-			}
+				if(!player.onGround && ticks != 0) {
+					c.setTicksOnGround(0);
+				}
+				if(player.fallDistance > fallDistance) {
+					c.setFallDistance(player.fallDistance);
+				}
+				
+				LaaLaaBall ball = null;
+				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBall &&
+						player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBall) {
+					ball = (LaaLaaBall) player.getHeldItemMainhand().getItem();
+				}
+				else if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBall) {
+					ball = (LaaLaaBall) player.getHeldItemMainhand().getItem();
+				}
+				else if(player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBall) {
+					ball = (LaaLaaBall) player.getHeldItemOffhand().getItem();
+				}
+				
+				if(ball != null) {
+					if(c.canJump(player) && fallDistance >= 10) {
+						LaaLaaBall.jump(player, true);
+					}
+				}
+				if(player.onGround) {
+					c.setFallDistance(0);
+				}
+				if(player.isInWater() || player.isInLava()) {
+					c.setFallDistance(0);
+				}
+			});
 		}
 	}
 	
 	@SubscribeEvent
 	public void fallEvent(LivingFallEvent event) {
-		if(event.getEntityLiving() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+		if(event.getEntityLiving() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			if(player.getHeldItemMainhand() != null) {
 				if(player.getHeldItemMainhand().getItem() instanceof LaaLaaBall) {
 					event.setCanceled(true);
@@ -99,13 +84,13 @@ public class TeletubbiesEventHandler {
 				}
 			}
 		}
-		if(event.getEntity() instanceof EntityPoScooter) {
+		/*if(event.getEntity() instanceof EntityPoScooter) {
 			EntityPoScooter scooter = (EntityPoScooter) event.getEntity();
 			event.setCanceled(true);
-		}
+		}*/
 	}
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if(event.getEntity() instanceof EntityZombie) {
 			EntityZombie zombie = (EntityZombie) event.getEntity();
@@ -158,5 +143,5 @@ public class TeletubbiesEventHandler {
 				}
 			}
 		}
-	}
+	}*/
 }

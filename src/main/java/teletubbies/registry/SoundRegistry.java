@@ -1,6 +1,6 @@
 package teletubbies.registry;
 
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
 
 public class SoundRegistry {

@@ -1,48 +1,45 @@
 package teletubbies.armor;
 
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.ResourceLocation;
 import teletubbies.Teletubbies;
 import teletubbies.armor.model.ModelTubbyTutu;
 
-public class ArmorTubbyTutu extends ItemArmor {
-
-	private final String name = "tubbytutu";
+public class ArmorTubbyTutu extends ArmorItem {
 	
-	public ArmorTubbyTutu(ArmorMaterial material, int renderId, EntityEquipmentSlot slot) {
-		super(material, renderId, slot);
-		this.setCreativeTab(Teletubbies.tabTeletubbies);
-		this.setUnlocalizedName(name);
-		this.setRegistryName(name);
-		this.setMaxStackSize(1);
+	public ArmorTubbyTutu(ArmorMaterial material, EquipmentSlotType slot) {
+		super(material, slot, new Item.Properties()
+				.maxStackSize(1)
+				.group(Teletubbies.itemGroup));
+		
+		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "tubbytutu"));
 	}
 
-	@Override
-    public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
+	/*@Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
         if(stack.getItem() == Teletubbies.tubbyTutu) {
-        	return "teletubbies:textures/armor/tubbytutu.png";
+        	return "teletubbies:textures/armor/models/tubbytutu.png";
         }
         else {
         	return null;
         }
-    }
+    }*/
     
     @Override
-    @SideOnly(Side.CLIENT)
-    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, net.minecraft.client.model.ModelBiped _default) {
-    	ModelBiped armorModel = new ModelTubbyTutu(1.0F);
-		return armorModel;
+    public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A defaultModel) {
+    	BipedModel<LivingEntity> armorModel = new ModelTubbyTutu(1.0F);
+		return (A) armorModel;
     }
     
     @Override
     public boolean getIsRepairable(ItemStack stack1, ItemStack stack2) {
-    	return stack2.isItemEqual(new ItemStack(Blocks.WOOL)) || super.getIsRepairable(stack1, stack2);
+    	return stack2.isItemEqual(new ItemStack(Blocks.PINK_WOOL)) || super.getIsRepairable(stack1, stack2);
     }
 }
