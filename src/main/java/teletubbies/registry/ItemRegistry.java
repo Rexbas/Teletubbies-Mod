@@ -21,12 +21,12 @@ public class ItemRegistry {
 
 		event.getRegistry().registerAll(
 				// Items
-				TeletubbiesItems.tinkyWinkyStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "tinkywinkystick"), 
+				TeletubbiesItems.tinkywinkyStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "tinkywinkystick"), 
 				TeletubbiesItems.dipsyStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "dipsystick"),
-				TeletubbiesItems.laaLaaStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "laalaastick"),
+				TeletubbiesItems.laalaaStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "laalaastick"),
 				TeletubbiesItems.poStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "postick"),
-				TeletubbiesItems.tinkyWinkyBag = new TinkyWinkyBag(),
-				TeletubbiesItems.laaLaaBall = new LaaLaaBall(),
+				TeletubbiesItems.tinkywinkyBag = new TinkyWinkyBag(),
+				TeletubbiesItems.laalaaBall = new LaaLaaBall(),
 				TeletubbiesItems.toast = new Item(new Item.Properties().group(Teletubbies.itemGroup).food(Teletubbies.foodToast)).setRegistryName(Teletubbies.MODID, "toast"),
 				TeletubbiesItems.custard = new Custard(),
 				TeletubbiesItems.bowl = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "bowl")

@@ -13,6 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import teletubbies.Teletubbies;
+import teletubbies.TeletubbiesSounds;
 import teletubbies.capability.IJumpCapability;
 import teletubbies.capability.JumpProvider;
 
@@ -71,7 +72,7 @@ public class LaaLaaBall extends Item {
 			player.addVelocity(motionX, motionY, motionZ);
 		    Random rand = new Random();
 		    float pitch1 = (float) (rand.nextFloat() * (1.1 - 0.9) + 0.9);
-			player.playSound(Teletubbies.sound_Ball_Bounce, 1, pitch1);
+			player.playSound(TeletubbiesSounds.bounce, 1, pitch1);
 		});
 	}
 }

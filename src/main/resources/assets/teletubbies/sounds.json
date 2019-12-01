@@ -1,70 +1,70 @@
-{"mob.tinkywinky.say": {
+{"mob.tinkywinky": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/tinkywinky/say",
+    "name": "teletubbies:mob/tinkywinky",
     "stream": true
     }]},
 
-"mob.dipsy.say": {
+"mob.dipsy": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/dipsy/say",
+    "name": "teletubbies:mob/dipsy",
     "stream": true
     }]},
 
-"mob.laalaa.say": {
+"mob.laalaa": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/laalaa/say",
+    "name": "teletubbies:mob/laalaa",
     "stream": true
     }]},
 
-"mob.po.say": {
+"mob.po": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/po/say",
+    "name": "teletubbies:mob/po",
     "stream": true
     }]},
 
-"mob.noonoo.say1": {
+"mob.noonoo_living1": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/noonoo/say1",
+    "name": "teletubbies:mob/noonoo_living1",
     "stream": true
     }]},
     
-"mob.noonoo.say2": {
+"mob.noonoo_living2": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/noonoo/say2",
+    "name": "teletubbies:mob/noonoo_living2",
     "stream": true
     }]},
 
-"mob.noonoo.hurt": {
+"mob.noonoo_hurt": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/noonoo/hurt",
+    "name": "teletubbies:mob/noonoo_hurt",
     "stream": true
     }]},
 
-"mob.noonoo.dead": {
+"mob.noonoo_dead": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/noonoo/dead",
+    "name": "teletubbies:mob/noonoo_dead",
     "stream": true
     }]},
     
-"mob.daadaa.say": {
+"mob.daadaa": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/daadaa/say",
+    "name": "teletubbies:mob/daadaa",
     "stream": true
     }]},
     
-"mob.mimi.say": {
+"mob.mimi": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:mob/mimi/say",
+    "name": "teletubbies:mob/mimi",
     "stream": true
     }]},
 
@@ -82,24 +82,24 @@
     "stream": false
     }]},
     
-"machine.tubbyvoicetrumpet": {
+"machine.voicetrumpet": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:machine/tubbyvoicetrumpet",
+    "name": "teletubbies:machine/voicetrumpet",
     "stream": true
     }]},
     
-"machine.tubbytoast": {
+"machine.toast": {
 "category": "blocks",
  "sounds": [ {
-    "name": "teletubbies:machine/tubbytoast",
+    "name": "teletubbies:machine/toast",
     "stream": true
     }]},
     
-"machine.tubbycustard": {
+"machine.custard": {
 "category": "blocks",
  "sounds": [ {
-    "name": "teletubbies:machine/tubbycustard",
+    "name": "teletubbies:machine/custard",
     "stream": true
     }]}
 }

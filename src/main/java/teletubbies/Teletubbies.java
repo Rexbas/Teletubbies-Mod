@@ -2,12 +2,8 @@ package teletubbies;
 
 import net.minecraft.item.Food;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -15,7 +11,6 @@ import teletubbies.capability.IJumpCapability;
 import teletubbies.capability.JumpCapability;
 import teletubbies.capability.JumpStorage;
 import teletubbies.itemgroup.TeletubbiesItemGroup;
-import teletubbies.registry.SoundRegistry;
 
 @Mod(Teletubbies.MODID)
 public class Teletubbies {
@@ -49,21 +44,7 @@ public class Teletubbies {
 	public static ItemBlock tubbyToastMachineIB = (ItemBlock) new ItemBlock(tubbyToastMachine).setRegistryName("tubbytoastmachine");
 	public static ItemBlock tubbyCustardMachineIB = (ItemBlock) new ItemBlockTubbyCustardMachine(tubbyCustardMachine).setRegistryName("tubbycustardmachine");*/
 	
-	public static SoundEvent sound_TinkyWinky_Living = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.tinkywinky.say")).setRegistryName("mob.tinkywinky.say");
-	public static SoundEvent sound_Dipsy_Living = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.dipsy.say")).setRegistryName("mob.dipsy.say");
-	public static SoundEvent sound_LaaLaa_Living = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.laalaa.say")).setRegistryName("mob.laalaa.say");
-	public static SoundEvent sound_Po_Living = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.po.say")).setRegistryName("mob.po.say");
-	public static SoundEvent sound_NooNoo_Living1 = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.noonoo.say1")).setRegistryName("mob.noonoo.say1");
-	public static SoundEvent sound_NooNoo_Living2 = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.noonoo.say2")).setRegistryName("mob.noonoo.say2");
-	public static SoundEvent sound_NooNoo_Hurt = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.noonoo.hurt")).setRegistryName("mob.noonoo.hurt");
-	public static SoundEvent sound_NooNoo_Dead = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.noonoo.dead")).setRegistryName("mob.noonoo.dead");
-	public static SoundEvent sound_DaaDaa_Living = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.daadaa.say")).setRegistryName("mob.daadaa.say");
-	public static SoundEvent sound_MiMi_Living = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":mob.mimi.say")).setRegistryName("mob.mimi.say");
-	public static SoundEvent sound_Ball_Bounce = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":ball.bounce")).setRegistryName("ball.bounce");
-	public static SoundEvent sound_PoScooter = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":machine.scooter")).setRegistryName("machine.scooter");
-	public static SoundEvent sound_TubbyVoiceTrumpet = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":machine.tubbyvoicetrumpet")).setRegistryName("machine.tubbyvoicetrumpet");
-	public static SoundEvent sound_TubbyToast = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":machine.tubbytoast")).setRegistryName("machine.tubbytoast");
-	public static SoundEvent sound_TubbyCustard = new SoundEvent(new ResourceLocation(Teletubbies.MODID + ":machine.tubbycustard")).setRegistryName("machine.tubbycustard");
+
 	
 	public Teletubbies() {
 		instance = this;
@@ -73,11 +54,6 @@ public class Teletubbies {
 		MinecraftForge.EVENT_BUS.register(instance);
     	MinecraftForge.EVENT_BUS.register(teletubbiesEventHandler);
     	//MinecraftForge.EVENT_BUS.register(new ClientProxy());
-	}
-	
-	@SubscribeEvent
-	public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
-    	SoundRegistry.registerSoundEvents();
 	}
 	
     public void setup(final FMLCommonSetupEvent event) {
