@@ -1,5 +1,7 @@
 package teletubbies.registry;
 
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -7,9 +9,10 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
 import teletubbies.TeletubbiesItems;
+import teletubbies.armor.ArmorSimple;
+import teletubbies.item.Custard;
 import teletubbies.item.LaaLaaBall;
 import teletubbies.item.TinkyWinkyBag;
-import teletubbies.item.Custard;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
@@ -29,19 +32,17 @@ public class ItemRegistry {
 				TeletubbiesItems.laalaaBall = new LaaLaaBall(),
 				TeletubbiesItems.toast = new Item(new Item.Properties().group(Teletubbies.itemGroup).food(Teletubbies.foodToast)).setRegistryName(Teletubbies.MODID, "toast"),
 				TeletubbiesItems.custard = new Custard(),
-				TeletubbiesItems.bowl = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "bowl")
+				TeletubbiesItems.bowl = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "bowl"),
 				
 				// Armor
-
-    	//registry.register(Teletubbies.tubbyTutu);
-    	/*ForgeRegistries.ITEMS.register(Teletubbies.dipsyHat);
-    	ForgeRegistries.ITEMS.register(Teletubbies.nooNooEyes);
-    	ForgeRegistries.ITEMS.register(Teletubbies.tinkyWinkyBib);
-    	ForgeRegistries.ITEMS.register(Teletubbies.dipsyBib);
-    	ForgeRegistries.ITEMS.register(Teletubbies.laaLaaBib);
-    	ForgeRegistries.ITEMS.register(Teletubbies.poBib);
-    	ForgeRegistries.ITEMS.register(Teletubbies.poHelmet);*/
-				
+				/*registry.register(Teletubbies.tubbyTutu);
+		    	ForgeRegistries.ITEMS.register(Teletubbies.dipsyHat);
+		    	ForgeRegistries.ITEMS.register(Teletubbies.nooNooEyes);*/
+				TeletubbiesItems.tinkywinkyBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "tinkywinkybib"),
+				TeletubbiesItems.dipsyBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "dipsybib"),
+				TeletubbiesItems.laalaaBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "laalaabib"),
+				TeletubbiesItems.poBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "pobib"),
+				TeletubbiesItems.poHelmet = new ArmorSimple(ArmorMaterial.IRON, EquipmentSlotType.HEAD, "pohelmet")
 		);
 	}
 }

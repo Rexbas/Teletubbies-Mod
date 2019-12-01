@@ -1,4 +1,4 @@
-package teletubbies.registry;
+package teletubbies.sound;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;

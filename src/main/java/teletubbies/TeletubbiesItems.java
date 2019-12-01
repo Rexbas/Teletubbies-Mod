@@ -13,4 +13,10 @@ public class TeletubbiesItems {
 	public static Item toast;
 	public static Item bowl;
 	//public static Item poScooter = new ItemPoScooter();
+	
+	public static Item tinkywinkyBib;
+	public static Item dipsyBib;
+	public static Item laalaaBib;
+	public static Item poBib;
+	public static Item poHelmet;
 }

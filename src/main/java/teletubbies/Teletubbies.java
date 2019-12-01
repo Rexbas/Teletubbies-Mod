@@ -18,23 +18,11 @@ public class Teletubbies {
 	
     public static final String MODID = "teletubbies";
 	
-	/*@CapabilityInject(IJumpCapability.class)
-	public static final Capability<IJumpCapability> Teletubbies_CAP = null;*/
-	
 	public static TeletubbiesEventHandler teletubbiesEventHandler = new TeletubbiesEventHandler();
 		
 	public static ItemGroup itemGroup = new TeletubbiesItemGroup("teletubbies");
 	public static Food foodCustard;
 	public static Food foodToast;
-    
-	//public static Item tubbyTutu = new ArmorTubbyTutu(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST);
-	/*public static Item dipsyHat = new ArmorDipsyHat(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
-	public static Item nooNooEyes = new ArmorNooNooEyes(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
-	public static Item tinkyWinkyBib = new ArmorTinkyWinkyBib(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
-	public static Item dipsyBib = new ArmorDipsyBib(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
-	public static Item laaLaaBib = new ArmorLaaLaaBib(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
-	public static Item poBib = new ArmorPoBib(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
-	public static Item poHelmet = new ArmorPoHelmet(ArmorMaterial.IRON, 0, EntityEquipmentSlot.HEAD);*/
 		
 	/*public static Block tubbyVoiceTrumpet = new BlockTubbyVoiceTrumpet();
 	public static Block tubbyToastMachine = new BlockTubbyToastMachine();
