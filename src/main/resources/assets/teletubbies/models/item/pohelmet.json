@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "teletubbies:items/pohelmet_icon"
+        "layer0": "teletubbies:items/pohelmet"
     }
 }

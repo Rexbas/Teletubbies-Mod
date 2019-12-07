@@ -1,8 +1,12 @@
-package teletubbies;
+package teletubbies.lists;
 
 import net.minecraft.item.Item;
 
-public class TeletubbiesItems {
+public class ItemList {
+	// Blocks
+	public static Item voiceTrumpet;
+	
+	// Items
 	public static Item tinkywinkyStick;
 	public static Item dipsyStick;
 	public static Item laalaaStick;
@@ -14,6 +18,7 @@ public class TeletubbiesItems {
 	public static Item bowl;
 	//public static Item poScooter = new ItemPoScooter();
 	
+	// Armor
 	public static Item tinkywinkyBib;
 	public static Item dipsyBib;
 	public static Item laalaaBib;

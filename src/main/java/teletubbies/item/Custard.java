@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.world.World;
 import teletubbies.Teletubbies;
-import teletubbies.TeletubbiesItems;
+import teletubbies.lists.ItemList;
 
 public class Custard extends Item {
 	
@@ -27,6 +27,6 @@ public class Custard extends Item {
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
 		super.onItemUseFinish(stack, world, entity);
-		return new ItemStack(TeletubbiesItems.bowl);
+		return new ItemStack(ItemList.bowl);
 	}
 }

@@ -23,7 +23,7 @@ public class Teletubbies {
 	public static ItemGroup itemGroup = new TeletubbiesItemGroup("teletubbies");
 	public static Food foodCustard;
 	public static Food foodToast;
-		
+	//BlockStateProperties e;
 	/*public static Block tubbyVoiceTrumpet = new BlockTubbyVoiceTrumpet();
 	public static Block tubbyToastMachine = new BlockTubbyToastMachine();
 	public static Block tubbyCustardMachine = new BlockTubbyCustardMachine();*/

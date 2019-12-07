@@ -1,8 +1,8 @@
-package teletubbies;
+package teletubbies.lists;
 
 import net.minecraft.util.SoundEvent;
 
-public class TeletubbiesSounds {
+public class SoundList {
 	public static SoundEvent tinkywinky;
 	public static SoundEvent dipsy;
 	public static SoundEvent laalaa;

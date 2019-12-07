@@ -2,7 +2,7 @@ package teletubbies.itemgroup;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import teletubbies.TeletubbiesItems;
+import teletubbies.lists.ItemList;
 
 public class TeletubbiesItemGroup extends ItemGroup {
 
@@ -12,6 +12,6 @@ public class TeletubbiesItemGroup extends ItemGroup {
 
 	@Override
 	public ItemStack createIcon() {
-		return new ItemStack(TeletubbiesItems.poStick);
+		return new ItemStack(ItemList.poStick);
 	}
 }

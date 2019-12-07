@@ -2,17 +2,19 @@ package teletubbies.registry;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
-import teletubbies.TeletubbiesItems;
 import teletubbies.armor.ArmorSimple;
 import teletubbies.item.Custard;
 import teletubbies.item.LaaLaaBall;
 import teletubbies.item.TinkyWinkyBag;
+import teletubbies.lists.BlockList;
+import teletubbies.lists.ItemList;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
@@ -23,26 +25,29 @@ public class ItemRegistry {
 		Teletubbies.foodToast= (new Food.Builder()).hunger(2).saturation(5).fastToEat().build();
 
 		event.getRegistry().registerAll(
+				// Blocks
+				ItemList.voiceTrumpet = new BlockItem(BlockList.voiceTrumpet, new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(BlockList.voiceTrumpet.getRegistryName()),
+				
 				// Items
-				TeletubbiesItems.tinkywinkyStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "tinkywinkystick"), 
-				TeletubbiesItems.dipsyStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "dipsystick"),
-				TeletubbiesItems.laalaaStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "laalaastick"),
-				TeletubbiesItems.poStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "postick"),
-				TeletubbiesItems.tinkywinkyBag = new TinkyWinkyBag(),
-				TeletubbiesItems.laalaaBall = new LaaLaaBall(),
-				TeletubbiesItems.toast = new Item(new Item.Properties().group(Teletubbies.itemGroup).food(Teletubbies.foodToast)).setRegistryName(Teletubbies.MODID, "toast"),
-				TeletubbiesItems.custard = new Custard(),
-				TeletubbiesItems.bowl = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "bowl"),
+				ItemList.tinkywinkyStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "tinkywinkystick"), 
+				ItemList.dipsyStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "dipsystick"),
+				ItemList.laalaaStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "laalaastick"),
+				ItemList.poStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "postick"),
+				ItemList.tinkywinkyBag = new TinkyWinkyBag(),
+				ItemList.laalaaBall = new LaaLaaBall(),
+				ItemList.toast = new Item(new Item.Properties().group(Teletubbies.itemGroup).food(Teletubbies.foodToast)).setRegistryName(Teletubbies.MODID, "toast"),
+				ItemList.custard = new Custard(),
+				ItemList.bowl = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "bowl"),
 				
 				// Armor
 				/*registry.register(Teletubbies.tubbyTutu);
 		    	ForgeRegistries.ITEMS.register(Teletubbies.dipsyHat);
 		    	ForgeRegistries.ITEMS.register(Teletubbies.nooNooEyes);*/
-				TeletubbiesItems.tinkywinkyBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "tinkywinkybib"),
-				TeletubbiesItems.dipsyBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "dipsybib"),
-				TeletubbiesItems.laalaaBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "laalaabib"),
-				TeletubbiesItems.poBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "pobib"),
-				TeletubbiesItems.poHelmet = new ArmorSimple(ArmorMaterial.IRON, EquipmentSlotType.HEAD, "pohelmet")
+				ItemList.tinkywinkyBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "tinkywinkybib"),
+				ItemList.dipsyBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "dipsybib"),
+				ItemList.laalaaBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "laalaabib"),
+				ItemList.poBib = new ArmorSimple(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "pobib"),
+				ItemList.poHelmet = new ArmorSimple(ArmorMaterial.IRON, EquipmentSlotType.HEAD, "pohelmet")
 		);
 	}
 }
