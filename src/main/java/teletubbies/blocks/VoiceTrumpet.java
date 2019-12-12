@@ -1,5 +1,7 @@
 package teletubbies.blocks;
 
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
@@ -15,6 +17,7 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -22,8 +25,12 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import teletubbies.Teletubbies;
+import teletubbies.lists.SoundList;
+import teletubbies.util.Converter;
 import teletubbies.util.VoxelShapeRotation;
 
 public class VoiceTrumpet extends Block {
@@ -116,5 +123,18 @@ public class VoiceTrumpet extends Block {
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING, BOTTOM);
+	}
+	
+	   
+	private int delay;
+	@OnlyIn(Dist.CLIENT)
+	public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+		if (state.get(BOTTOM)) {
+			delay--;
+			if (delay <= 0) {
+				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundList.voiceTrumpet, SoundCategory.AMBIENT, 1, 1, false);
+				delay = rand.nextInt((Converter.SecondsToTicks(30) - Converter.SecondsToTicks(15)) + 1) + Converter.SecondsToTicks(15);
+			}
+		}
 	}
 }
