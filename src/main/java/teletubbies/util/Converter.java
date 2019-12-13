@@ -2,7 +2,7 @@ package teletubbies.util;
 
 public class Converter {
 
-	public static int SecondsToTicks(int seconds) {
-		return seconds * 20;
+	public static long SecondsToTicks(double seconds) {
+		return Math.round(seconds * 20);
 	}
 }

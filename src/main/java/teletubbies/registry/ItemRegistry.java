@@ -28,6 +28,7 @@ public class ItemRegistry {
 				// Blocks
 				ItemList.voiceTrumpet = new BlockItem(BlockList.voiceTrumpet, new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(BlockList.voiceTrumpet.getRegistryName()),
 				ItemList.toastMachine = new BlockItem(BlockList.toastMachine, new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(BlockList.toastMachine.getRegistryName()),
+				ItemList.custardMachine = new BlockItem(BlockList.custardMachine, new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(BlockList.custardMachine.getRegistryName()),
 				
 				// Items
 				ItemList.tinkywinkyStick = new Item(new Item.Properties().group(Teletubbies.itemGroup)).setRegistryName(Teletubbies.MODID, "tinkywinkystick"), 

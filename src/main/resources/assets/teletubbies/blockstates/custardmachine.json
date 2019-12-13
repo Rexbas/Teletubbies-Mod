@@ -1,0 +1,36 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing": {
+            "north": {
+                "y": 0
+            },
+            "east": {
+                "y": 90
+            },
+            "south": {
+                "y": 180
+            },
+            "west": {
+                "y": 270
+            }
+        },
+        "part": {
+            "base": {
+                "model": "teletubbies:block/custardmachine_base"
+            },
+            "bigbase": {
+                "model": "teletubbies:block/custardmachine_bigbase"
+            },
+            "smallbase": {
+                "model": "teletubbies:block/custardmachine_smallbase"
+            },
+            "big": {
+                "model": "teletubbies:block/custardmachine_bigtower"
+            },
+            "small": {
+                "model": "teletubbies:block/custardmachine_smalltower"
+            }
+        }
+    }
+}

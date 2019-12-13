@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ddd",
-    "isi",
-    "iii"
+    "I I",
+    "ISI",
+    "CCC"
   ],
   "key": {
-    "d": {
-      "item": "minecraft:diamond"
+    "I": {
+      "item": "minecraft:iron_block"
     },
-	"i": {
-      "item": "minecraft:iron_ingot"
+    "C": {
+      "item": "minecraft:magenta_concrete"
     },
-    "s": [
+    "S": [
       {
         "item": "teletubbies:tinkywinkystick"
       },
@@ -24,10 +24,10 @@
       },
       {
         "item": "teletubbies:postick"
-      }     
+      }
     ]
   },
   "result": {
-    "item": "teletubbies:tubbytoastmachine"
+    "item": "teletubbies:custardmachine"
   }
 }

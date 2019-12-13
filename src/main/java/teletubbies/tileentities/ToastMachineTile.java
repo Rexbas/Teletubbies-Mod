@@ -10,9 +10,9 @@ import teletubbies.util.Converter;
 
 public class ToastMachineTile extends TileEntity implements ITickableTileEntity {
 
-	private static final int DROPTICKS = Converter.SecondsToTicks(1);
+	private static final long DROPTICKS = Converter.SecondsToTicks(1);
 	
-	private int ticksSinceLastDrop;
+	private long ticksSinceLastDrop;
 	
 	public ToastMachineTile() {
 		super(BlockList.toastMachineTile);

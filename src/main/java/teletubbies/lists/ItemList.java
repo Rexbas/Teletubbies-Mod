@@ -6,6 +6,7 @@ public class ItemList {
 	// Blocks
 	public static Item voiceTrumpet;
 	public static Item toastMachine;
+	public static Item custardMachine;
 	
 	// Items
 	public static Item tinkywinkyStick;

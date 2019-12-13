@@ -47,23 +47,20 @@ public class ToastMachine extends Block {
 	protected static final VoxelShape TOP_AABB_EAST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(270));
 	protected static final VoxelShape TOP_AABB_SOUTH = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(180));
 	protected static final VoxelShape TOP_AABB_WEST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(90));
-	
-	protected static final VoxelShape BOTTOM_AABB = VoxelShapes.fullCube();
-	
+		
 	public ToastMachine() {
 		super(Properties.create(Material.IRON)
 				.hardnessAndResistance(3.0f, 5.0f)
 				.harvestTool(ToolType.PICKAXE));
 		
 		this.setRegistryName(Teletubbies.MODID, "toastmachine");
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BlockStateProperties.BOTTOM, true));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true));
 	}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		boolean isBottom = state.get(BOTTOM);
-		if (isBottom) {
-			return BOTTOM_AABB;
+		if (state.get(BOTTOM)) {
+			return VoxelShapes.fullCube();
 		}
 		switch(state.get(FACING)) {
 		case NORTH:
@@ -135,10 +132,7 @@ public class ToastMachine extends Block {
 	
 	@Override
 	public boolean hasTileEntity(BlockState state) {
-		if (state.get(BOTTOM)) {
-			return true;
-		}
-		return false;
+		return state.get(BOTTOM);
 	}
 	
 	@Nullable

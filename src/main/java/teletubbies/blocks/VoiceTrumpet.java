@@ -60,13 +60,12 @@ public class VoiceTrumpet extends Block {
 				.harvestTool(ToolType.PICKAXE));
 		
 		this.setRegistryName(Teletubbies.MODID, "voicetrumpet");
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BlockStateProperties.BOTTOM, true));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true));
 	}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		boolean isBottom = state.get(BOTTOM);
-		if (isBottom) {
+		if (state.get(BOTTOM)) {
 			return BOTTOM_AABB;
 		}
 		switch(state.get(FACING)) {
@@ -125,14 +124,14 @@ public class VoiceTrumpet extends Block {
 		builder.add(FACING, BOTTOM);
 	}
 	
-	private int delay;
+	private long delay;
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
 		if (state.get(BOTTOM)) {
 			delay--;
 			if (delay <= 0) {
 				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundList.voiceTrumpet, SoundCategory.AMBIENT, 1, 1, false);
-				delay = rand.nextInt((Converter.SecondsToTicks(30) - Converter.SecondsToTicks(15)) + 1) + Converter.SecondsToTicks(15);
+				delay = rand.nextInt((int) ((Converter.SecondsToTicks(30) - Converter.SecondsToTicks(15)) + 1)) + Converter.SecondsToTicks(15);
 			}
 		}
 	}
