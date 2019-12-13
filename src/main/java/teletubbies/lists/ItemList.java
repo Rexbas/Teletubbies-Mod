@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 public class ItemList {
 	// Blocks
 	public static Item voiceTrumpet;
+	public static Item toastMachine;
 	
 	// Items
 	public static Item tinkywinkyStick;

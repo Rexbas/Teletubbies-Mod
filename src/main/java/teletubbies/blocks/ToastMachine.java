@@ -1,7 +1,5 @@
 package teletubbies.blocks;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
@@ -16,50 +14,48 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import teletubbies.Teletubbies;
+import teletubbies.lists.ItemList;
 import teletubbies.lists.SoundList;
-import teletubbies.util.Converter;
+import teletubbies.tileentities.ToastMachineTile;
 import teletubbies.util.VoxelShapeRotation;
 
-public class VoiceTrumpet extends Block {
+public class ToastMachine extends Block {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
 		
 	protected static final VoxelShape TOP_AABB_NORTH = VoxelShapes.or(
-			makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 2.0D, 9.0D), 
-			makeCuboidShape(6.0D, 2.0D, 7.0D, 10.0D, 3.0D, 11.0D), 
-			makeCuboidShape(5.0D, 3.0D, 7.0D, 6.0D, 7.0D, 11.0D), 
-			makeCuboidShape(10.0D, 3.0D, 7.0D, 11.0D, 7.0D, 11.0D), 
-			makeCuboidShape(6.0D, 7.0D, 7.0D, 10.0D, 8.0D, 11.0D),
-			makeCuboidShape(6.0D, 3.0D, 6.0D, 10.0D, 7.0D, 7.0D),
-			makeCuboidShape(6.0D, 3.0D, 9.0D, 10.0D, 7.0D, 10.0D))
+			makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), 
+			makeCuboidShape(2.0D, 6.0D, 7.0D, 3.0D, 7.0D, 9.0D), 
+			makeCuboidShape(13.0D, 6.0D, 7.0D, 14.0D, 7.0D, 9.0D), 
+			makeCuboidShape(3.0D, 6.0D, 6.0D, 13.0D, 8.0D, 10.0D))
 			.simplify();
 	
 	protected static final VoxelShape TOP_AABB_EAST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(270));
 	protected static final VoxelShape TOP_AABB_SOUTH = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(180));
 	protected static final VoxelShape TOP_AABB_WEST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(90));
 	
-	protected static final VoxelShape BOTTOM_AABB = Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
+	protected static final VoxelShape BOTTOM_AABB = VoxelShapes.fullCube();
 	
-	public VoiceTrumpet() {
+	public ToastMachine() {
 		super(Properties.create(Material.IRON)
 				.hardnessAndResistance(3.0f, 5.0f)
-				.harvestLevel(1)
 				.harvestTool(ToolType.PICKAXE));
 		
-		this.setRegistryName(Teletubbies.MODID, "voicetrumpet");
+		this.setRegistryName(Teletubbies.MODID, "toastmachine");
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BlockStateProperties.BOTTOM, true));
 	}
 	
@@ -106,7 +102,7 @@ public class VoiceTrumpet extends Block {
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {		      
 			world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);		      
-		}		
+		}
 		super.onBlockExploded(state, world, pos, explosion);
     }
 	
@@ -125,15 +121,32 @@ public class VoiceTrumpet extends Block {
 		builder.add(FACING, BOTTOM);
 	}
 	
-	private int delay;
-	@OnlyIn(Dist.CLIENT)
-	public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
-		if (state.get(BOTTOM)) {
-			delay--;
-			if (delay <= 0) {
-				world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundList.voiceTrumpet, SoundCategory.AMBIENT, 1, 1, false);
-				delay = rand.nextInt((Converter.SecondsToTicks(30) - Converter.SecondsToTicks(15)) + 1) + Converter.SecondsToTicks(15);
-			}
+	@Override
+	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
+		ToastMachineTile t = (ToastMachineTile) world.getTileEntity(tilePos);
+		if (t.canDrop()) {
+			t.dropToast(new ItemStack(ItemList.toast), player);
+			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundList.toast, SoundCategory.AMBIENT, 1, 1, false);
+			t.reset();
 		}
+		return true;
+	}
+	
+	@Override
+	public boolean hasTileEntity(BlockState state) {
+		if (state.get(BOTTOM)) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Nullable
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+		if (state.get(BOTTOM)) {
+			return new ToastMachineTile();
+		}
+		return null;
 	}
 }
