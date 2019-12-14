@@ -17,7 +17,7 @@ public class ArmorTubbyTutu extends ArmorItem {
 	public ArmorTubbyTutu(ArmorMaterial material, EquipmentSlotType slot) {
 		super(material, slot, new Item.Properties()
 				.maxStackSize(1)
-				.group(Teletubbies.itemGroup));
+				.group(Teletubbies.ITEMGROUP));
 		
 		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "tubbytutu"));
 	}

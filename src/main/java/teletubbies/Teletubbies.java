@@ -5,11 +5,13 @@ import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import teletubbies.capability.IJumpCapability;
 import teletubbies.capability.JumpCapability;
 import teletubbies.capability.JumpStorage;
+import teletubbies.client.renders.RenderRegistry;
 import teletubbies.itemgroup.TeletubbiesItemGroup;
 
 @Mod(Teletubbies.MODID)
@@ -20,14 +22,16 @@ public class Teletubbies {
 	
 	public static TeletubbiesEventHandler teletubbiesEventHandler = new TeletubbiesEventHandler();
 		
-	public static ItemGroup itemGroup = new TeletubbiesItemGroup("teletubbies");
-	public static Food foodCustard;
-	public static Food foodToast;
+	public static ItemGroup ITEMGROUP = new TeletubbiesItemGroup(MODID);
+	public static Food CUSTARD_FOOD;
+	public static Food TOAST_FOOD;
 	
 	public Teletubbies() {
 		instance = this;
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
+
 		
 		MinecraftForge.EVENT_BUS.register(instance);
     	MinecraftForge.EVENT_BUS.register(teletubbiesEventHandler);
@@ -42,5 +46,9 @@ public class Teletubbies {
     	    	
     	GameRegistry.registerWorldGenerator(new GenTubbyDomeStructure(), 1000);
     	GameRegistry.registerWorldGenerator(new GenTubbyVoiceTrumpet(), 1000);*/
+    }
+    
+    public void setupClient(final FMLClientSetupEvent event) {
+    	RenderRegistry.registryEntityRenders();
     }
 }

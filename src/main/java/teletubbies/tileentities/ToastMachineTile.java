@@ -15,7 +15,7 @@ public class ToastMachineTile extends TileEntity implements ITickableTileEntity 
 	private long ticksSinceLastDrop;
 	
 	public ToastMachineTile() {
-		super(BlockList.toastMachineTile);
+		super(BlockList.TOAST_MACHINE_TILE);
 		ticksSinceLastDrop = DROPTICKS;
 	}
 

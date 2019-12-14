@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import teletubbies.capability.IJumpCapability;
 import teletubbies.capability.JumpProvider;
-import teletubbies.item.LaaLaaBall;
+import teletubbies.items.LaaLaaBall;
 
 public class TeletubbiesEventHandler {
 

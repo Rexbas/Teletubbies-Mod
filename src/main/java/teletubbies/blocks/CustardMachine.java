@@ -69,7 +69,7 @@ public class CustardMachine extends Block {
 				.hardnessAndResistance(3.0f, 5.0f)
 				.harvestTool(ToolType.PICKAXE));
 
-		this.setRegistryName(Teletubbies.MODID, "custardmachine");
+		this.setRegistryName(Teletubbies.MODID, "custard_machine");
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(PART, CustardMachinePart.BASE));
 	}
 	
@@ -219,7 +219,7 @@ public class CustardMachine extends Block {
 	@Override
 	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {		
 		if (player.getHeldItemMainhand() != null) {
-			if (player.getHeldItemMainhand().getItem() == ItemList.bowl) {
+			if (player.getHeldItemMainhand().getItem() == ItemList.BOWL) {
 				BlockPos tilePos = getBasePos(pos, state.get(PART), state.get(FACING));
 				CustardMachineTile t = (CustardMachineTile) world.getTileEntity(tilePos);
 				

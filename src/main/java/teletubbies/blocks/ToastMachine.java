@@ -53,7 +53,7 @@ public class ToastMachine extends Block {
 				.hardnessAndResistance(3.0f, 5.0f)
 				.harvestTool(ToolType.PICKAXE));
 		
-		this.setRegistryName(Teletubbies.MODID, "toastmachine");
+		this.setRegistryName(Teletubbies.MODID, "toast_machine");
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true));
 	}
 	
@@ -123,7 +123,7 @@ public class ToastMachine extends Block {
 		BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
 		ToastMachineTile t = (ToastMachineTile) world.getTileEntity(tilePos);
 		if (t.canDrop()) {
-			t.dropToast(new ItemStack(ItemList.toast), player);
+			t.dropToast(new ItemStack(ItemList.TOAST), player);
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundList.toast, SoundCategory.AMBIENT, 1, 1, false);
 			t.reset();
 		}

@@ -16,7 +16,7 @@ public class CustardMachineTile extends TileEntity implements ITickableTileEntit
 	private long ticksSinceLastClick;
 	
 	public CustardMachineTile() {
-		super(BlockList.custardMachineTile);
+		super(BlockList.CUSTARD_MACHINE_TILE);
 		ticksSinceLastClick = CLICKTICKS;
 	}
 
@@ -26,7 +26,7 @@ public class CustardMachineTile extends TileEntity implements ITickableTileEntit
 			ticksSinceLastClick++;
 		}
 		if (ticksSinceLastClick == DROPTICKS) {
-			dropCustard(new ItemStack(ItemList.custard));
+			dropCustard(new ItemStack(ItemList.CUSTARD));
 		}
 	}
 	

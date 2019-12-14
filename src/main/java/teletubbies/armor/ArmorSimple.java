@@ -12,7 +12,7 @@ public class ArmorSimple extends ArmorItem {
 	
 	public ArmorSimple(IArmorMaterial material, EquipmentSlotType slot, String name) {
 		super(material, slot, new Item.Properties()
-				.group(Teletubbies.itemGroup));
+				.group(Teletubbies.ITEMGROUP));
 		
 		this.setRegistryName(Teletubbies.MODID, name);
 	}

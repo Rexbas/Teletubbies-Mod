@@ -59,7 +59,7 @@ public class VoiceTrumpet extends Block {
 				.harvestLevel(1)
 				.harvestTool(ToolType.PICKAXE));
 		
-		this.setRegistryName(Teletubbies.MODID, "voicetrumpet");
+		this.setRegistryName(Teletubbies.MODID, "voice_trumpet");
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true));
 	}
 	

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I I",
+    "ISI",
+    "CCC"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "item": "minecraft:magenta_concrete"
+    },
+    "S": [
+      {
+        "item": "teletubbies:tinkywinky_stick"
+      },
+      {
+        "item": "teletubbies:dipsy_stick"
+      },
+      {
+        "item": "teletubbies:laalaa_stick"
+      },
+      {
+        "item": "teletubbies:po_stick"
+      }
+    ]
+  },
+  "result": {
+    "item": "teletubbies:custard_machine"
+  }
+}
