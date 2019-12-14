@@ -12,9 +12,9 @@ import teletubbies.client.models.TinkyWinkyModel;
 import teletubbies.entities.TinkyWinky;
 
 @OnlyIn(Dist.CLIENT)
-public class TinkyWinkyRender extends LivingRenderer<TinkyWinky, TinkyWinkyModel> {
+public class TinkyWinkyRenderer extends LivingRenderer<TinkyWinky, TinkyWinkyModel> {
 
-	public TinkyWinkyRender(EntityRendererManager manager) {
+	public TinkyWinkyRenderer(EntityRendererManager manager) {
 		super(manager, new TinkyWinkyModel(), 1f);
 	}
 
@@ -27,7 +27,7 @@ public class TinkyWinkyRender extends LivingRenderer<TinkyWinky, TinkyWinkyModel
 		
 		@Override
 		public EntityRenderer<? super TinkyWinky> createRenderFor(EntityRendererManager manager) {
-			return new TinkyWinkyRender(manager);
+			return new TinkyWinkyRenderer(manager);
 		}
 	}
 }

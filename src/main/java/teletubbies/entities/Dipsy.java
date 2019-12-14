@@ -5,10 +5,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.world.World;
 import teletubbies.lists.EntityList;
 
-public class TinkyWinky extends Teletubby {
+public class Dipsy extends Teletubby {
 
 	@SuppressWarnings("unchecked")
-	public TinkyWinky(EntityType<? extends CreatureEntity> type, World world) {
-		super((EntityType<? extends CreatureEntity>) EntityList.TINKYWINKY, world);
+	public Dipsy(EntityType<? extends CreatureEntity> type, World world) {
+		super((EntityType<? extends CreatureEntity>) EntityList.DIPSY, world);
 	}
 }

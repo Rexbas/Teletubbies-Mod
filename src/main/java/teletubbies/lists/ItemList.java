@@ -43,6 +43,7 @@ public class ItemList {
 	
 	// SpawnEggs
 	public static final Item TINKYWINKY_SPAWN_EGG = new SpawnEggItem(EntityList.TINKYWINKY, 0x7E2CD3, 0xFFC9AD, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("tinkywinky_spawn_egg");
+	public static final Item DIPSY_SPAWN_EGG = new SpawnEggItem(EntityList.DIPSY, 0x84CA32, 0xB38A4E, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("dipsy_spawn_egg");
 	
 	@SubscribeEvent
 	public static void registerItemsEvent(final RegistryEvent.Register<Item> event) {
@@ -57,7 +58,7 @@ public class ItemList {
 				
 				TINKYWINKY_BIB, DIPSY_BIB, LAALAA_BIB, PO_BIB, PO_HELMET,
 				
-				TINKYWINKY_SPAWN_EGG
+				TINKYWINKY_SPAWN_EGG, DIPSY_SPAWN_EGG
 				
 		);
 	}
