@@ -39,8 +39,6 @@ public class Teletubbies {
 	
     public void setup(final FMLCommonSetupEvent event) {
     	 CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
-
-    	//MobRegistry.registerMobs();
     	    	
     	/*EntityRegistry.registerModEntity(new ResourceLocation(Teletubbies.MODID + ":PoScooter"), EntityPoScooter.class, "poscooter", 17, Teletubbies.MODID, 40, 1, true);
     	    	

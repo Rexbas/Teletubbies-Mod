@@ -10,37 +10,37 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import teletubbies.Teletubbies;
-import teletubbies.client.models.DipsyModel;
-import teletubbies.entities.Dipsy;
+import teletubbies.client.models.PoModel;
+import teletubbies.entities.Po;
 
 @OnlyIn(Dist.CLIENT)
-public class DipsyRenderer extends LivingRenderer<Dipsy, DipsyModel> {
+public class PoRenderer extends LivingRenderer<Po, PoModel> {
 
-	public DipsyRenderer(EntityRendererManager manager) {
-		super(manager, new DipsyModel(), 0.5F);
+	public PoRenderer(EntityRendererManager manager) {
+		super(manager, new PoModel(), 0.5F);
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(Dipsy entity) {
-		return new ResourceLocation(Teletubbies.MODID, "textures/entity/dipsy.png");
+	protected ResourceLocation getEntityTexture(Po entity) {
+		return new ResourceLocation(Teletubbies.MODID, "textures/entity/po.png");
 	}
 	
 	@Override
-	public float prepareScale(Dipsy entity, float partialTicks) {   
+	public float prepareScale(Po entity, float partialTicks) {   
 		GlStateManager.enableRescaleNormal();      
 		GlStateManager.scalef(-1.0F, -1.0F, 1.0F);
 		this.preRenderCallback(entity, partialTicks);
-		float f = 0.0600F;
+		float f = 0.0550F;
 		GlStateManager.translatef(0.0F, -f * 24, 0.0F);
 		return f;
 	}
 
 	
-	public static class RenderFactory implements IRenderFactory<Dipsy> {
+	public static class RenderFactory implements IRenderFactory<Po> {
 		
 		@Override
-		public EntityRenderer<? super Dipsy> createRenderFor(EntityRendererManager manager) {
-			return new DipsyRenderer(manager);
+		public EntityRenderer<? super Po> createRenderFor(EntityRendererManager manager) {
+			return new PoRenderer(manager);
 		}
 	}
 }

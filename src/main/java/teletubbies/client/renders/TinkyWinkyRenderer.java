@@ -15,7 +15,7 @@ import teletubbies.entities.TinkyWinky;
 public class TinkyWinkyRenderer extends LivingRenderer<TinkyWinky, TinkyWinkyModel> {
 
 	public TinkyWinkyRenderer(EntityRendererManager manager) {
-		super(manager, new TinkyWinkyModel(), 1f);
+		super(manager, new TinkyWinkyModel(), 0.5F);
 	}
 
 	@Override
