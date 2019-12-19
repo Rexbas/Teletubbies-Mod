@@ -1,4 +1,4 @@
-package teletubbies.client.models;
+package teletubbies.client.models.entity;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
@@ -24,12 +24,8 @@ public class TeletubbyModel<T extends Teletubby> extends BipedModel<T> {
 		rightEar.cubeList.add(new ModelBox(rightEar, 56, 21, -2.8333F, -26.5F, 0.3333F, 1, 3, 1, 0.0F, false));
 		rightEar.cubeList.add(new ModelBox(rightEar, 56, 25, -2.8333F, -25.5F, -1.6667F, 1, 3, 2, 0.0F, false));
 		rightEar.cubeList.add(new ModelBox(rightEar, 56, 30, -2.8333F, -26.5F, -0.6667F, 1, 1, 1, 0.0F, false));
-	}
-	
-	@Override
-	public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		leftEar.render(scale);
-		rightEar.render(scale);
-		super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+		
+		this.bipedHead.addChild(leftEar);
+		this.bipedHead.addChild(rightEar);
 	}
 }

@@ -1,4 +1,4 @@
-package teletubbies.client.models;
+package teletubbies.client.models.entity;
 
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.ModelBox;
@@ -20,11 +20,7 @@ public class TinkyWinkyModel extends TeletubbyModel<TinkyWinky> {
 		stick.cubeList.add(new ModelBox(stick, 37, 23, -3.0F, -37.0F, -1.0F, 1, 1, 2, 0.0F, false));
 		stick.cubeList.add(new ModelBox(stick, 37, 26, 2.0F, -37.0F, -1.0F, 1, 1, 2, 0.0F, false));
 		stick.cubeList.add(new ModelBox(stick, 27, 27, -3.0F, -38.0F, -1.0F, 6, 1, 2, 0.0F, false));
-	}
-	
-	@Override
-	public void render(TinkyWinky entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		stick.render(scale);
-		super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+		
+		this.bipedHead.addChild(stick);
 	}
 }

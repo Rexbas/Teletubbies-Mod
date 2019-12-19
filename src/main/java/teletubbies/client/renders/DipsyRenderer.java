@@ -10,7 +10,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import teletubbies.Teletubbies;
-import teletubbies.client.models.DipsyModel;
+import teletubbies.client.models.entity.DipsyModel;
 import teletubbies.entities.Dipsy;
 
 @OnlyIn(Dist.CLIENT)

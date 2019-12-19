@@ -20,7 +20,7 @@ public class Teletubbies {
 	
     public static final String MODID = "teletubbies";
 	
-	public static TeletubbiesEventHandler teletubbiesEventHandler = new TeletubbiesEventHandler();
+	public static TeletubbiesEventHandler EVENT_HANDLER = new TeletubbiesEventHandler();
 		
 	public static ItemGroup ITEMGROUP = new TeletubbiesItemGroup(MODID);
 	public static Food CUSTARD_FOOD;
@@ -34,11 +34,11 @@ public class Teletubbies {
 
 		
 		MinecraftForge.EVENT_BUS.register(instance);
-    	MinecraftForge.EVENT_BUS.register(teletubbiesEventHandler);
+    	MinecraftForge.EVENT_BUS.register(EVENT_HANDLER);
 	}
 	
     public void setup(final FMLCommonSetupEvent event) {
-    	 CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
+    	CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
     	    	
     	/*EntityRegistry.registerModEntity(new ResourceLocation(Teletubbies.MODID + ":PoScooter"), EntityPoScooter.class, "poscooter", 17, Teletubbies.MODID, 40, 1, true);
     	    	

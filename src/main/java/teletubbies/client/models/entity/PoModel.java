@@ -1,4 +1,4 @@
-package teletubbies.client.models;
+package teletubbies.client.models.entity;
 
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.ModelBox;
@@ -18,11 +18,7 @@ public class PoModel extends TeletubbyModel<Po> {
 		stick.cubeList.add(new ModelBox(stick, 27, 27, 1.0F, -37.0F, -1.0F, 1, 2, 2, 0.0F, false));
 		stick.cubeList.add(new ModelBox(stick, 35, 20, -2.0F, -37.0F, -1.0F, 1, 2, 2, 0.0F, false));
 		stick.cubeList.add(new ModelBox(stick, 27, 26, -2.0F, -38.0F, -1.0F, 4, 1, 2, 0.0F, false));
-	}
-	
-	@Override
-	public void render(Po entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		stick.render(scale);
-		super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+		
+		this.bipedHead.addChild(stick);
 	}
 }

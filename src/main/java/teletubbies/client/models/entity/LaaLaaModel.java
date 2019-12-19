@@ -1,4 +1,4 @@
-package teletubbies.client.models;
+package teletubbies.client.models.entity;
 
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.ModelBox;
@@ -15,11 +15,7 @@ public class LaaLaaModel extends TeletubbyModel<LaaLaa> {
 		stick.setRotationPoint(0.0F, 24.0F, 0.0F);
 		stick.cubeList.add(new ModelBox(stick, 27, 20, -1.0F, -35.0F, -1.0F, 2, 3, 2, 0.0F, false));
 		stick.cubeList.add(new ModelBox(stick, 27, 25, 0.0F, -38.0F, 0.0F, 2, 4, 2, 0.0F, false));
-	}
-	
-	@Override
-	public void render(LaaLaa entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		stick.render(scale);
-		super.render(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+		
+		this.bipedHead.addChild(stick);
 	}
 }

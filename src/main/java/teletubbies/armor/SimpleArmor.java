@@ -8,9 +8,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import teletubbies.Teletubbies;
 
-public class ArmorSimple extends ArmorItem {
+public class SimpleArmor extends ArmorItem {
 	
-	public ArmorSimple(IArmorMaterial material, EquipmentSlotType slot, String name) {
+	public SimpleArmor(IArmorMaterial material, EquipmentSlotType slot, String name) {
 		super(material, slot, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
 		

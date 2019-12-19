@@ -1,10 +1,13 @@
-package teletubbies.armor.model;
+package teletubbies.client.models.armor;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.entity.LivingEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ModelTubbyTutu extends BipedModel<LivingEntity> {
+@OnlyIn(Dist.CLIENT)
+public class TutuModel extends BipedModel<LivingEntity> {
 	RendererModel Piece1;
 	RendererModel skirt1;
 	RendererModel skirt2;
@@ -14,7 +17,7 @@ public class ModelTubbyTutu extends BipedModel<LivingEntity> {
 	RendererModel skirt6;
 	RendererModel skirt7;
 
-	public ModelTubbyTutu(float f) {
+	public TutuModel(float f) {
 		super(f, 0, 64, 64);
 
 		textureWidth = 64;
