@@ -10,6 +10,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
+import teletubbies.armor.DipsyHat;
+import teletubbies.armor.NooNooEyes;
 import teletubbies.armor.SimpleArmor;
 import teletubbies.armor.Tutu;
 import teletubbies.items.Custard;
@@ -37,6 +39,8 @@ public class ItemList {
 	
 	// Armor
 	public static final Item TUTU = new Tutu();
+	public static final Item NOONOO_EYES = new NooNooEyes();
+	public static final Item DIPSY_HAT = new DipsyHat();
 	public static final Item TINKYWINKY_BIB = new SimpleArmor(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "tinkywinky_bib");
 	public static final Item DIPSY_BIB = new SimpleArmor(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "dipsy_bib");
 	public static final Item LAALAA_BIB = new SimpleArmor(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, "laalaa_bib");
@@ -60,7 +64,7 @@ public class ItemList {
 				TINKYWINKY_STICK, DIPSY_STICK, LAALAA_STICK, PO_STICK, TINKYWINKY_BAG, LAALAA_BALL,
 				BOWL, CUSTARD, TOAST,
 				
-				TUTU, TINKYWINKY_BIB, DIPSY_BIB, LAALAA_BIB, PO_BIB, PO_HELMET,
+				TUTU, NOONOO_EYES, DIPSY_HAT, TINKYWINKY_BIB, DIPSY_BIB, LAALAA_BIB, PO_BIB, PO_HELMET,
 				
 				TINKYWINKY_SPAWN_EGG, DIPSY_SPAWN_EGG, LAALAA_SPAWN_EGG, PO_SPAWN_EGG
 				

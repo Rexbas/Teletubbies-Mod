@@ -12,22 +12,22 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.Teletubbies;
-import teletubbies.client.models.armor.TutuModel;
+import teletubbies.client.models.armor.DipsyHatModel;
 
-public class Tutu extends ArmorItem {
+public class DipsyHat extends ArmorItem {
 	
-	private static TutuModel model = new TutuModel(1.0F);
+	private static DipsyHatModel model = new DipsyHatModel();
 	
-	public Tutu() {
-		super(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, new Item.Properties()
+	public DipsyHat() {
+		super(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
 		
-		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "tutu"));
+		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "dipsy_hat"));
 	}
-	
+
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return Teletubbies.MODID + ":textures/models/armor/tutu.png";
+		return Teletubbies.MODID + ":textures/models/armor/dipsy_hat.png";
     }
     
     @OnlyIn(Dist.CLIENT)

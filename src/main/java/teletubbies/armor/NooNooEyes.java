@@ -12,22 +12,23 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.Teletubbies;
-import teletubbies.client.models.armor.TutuModel;
+import teletubbies.client.models.armor.NooNooEyesModel;
 
-public class Tutu extends ArmorItem {
+public class NooNooEyes extends ArmorItem {
 	
-	private static TutuModel model = new TutuModel(1.0F);
+	private static NooNooEyesModel model = new NooNooEyesModel();
 	
-	public Tutu() {
-		super(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, new Item.Properties()
+	public NooNooEyes() {
+		super(ArmorMaterial.IRON, EquipmentSlotType.HEAD, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
 		
-		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "tutu"));
-	}
+		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "noonoo_eyes"));
 	
+	}
+
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return Teletubbies.MODID + ":textures/models/armor/tutu.png";
+		return Teletubbies.MODID + ":textures/models/armor/noonoo_eyes.png";
     }
     
     @OnlyIn(Dist.CLIENT)

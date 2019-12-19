@@ -22,7 +22,6 @@ public class TutuModel extends BipedModel<LivingEntity> {
 
 		textureWidth = 64;
 		textureHeight = 64;
-		//setTextureOffset("Piece1.skirt", 0, 0);
 
 		Piece1 = new RendererModel(this, "Piece1");
 		Piece1.setRotationPoint(0F, 0F, 0F);
