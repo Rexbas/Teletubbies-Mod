@@ -39,10 +39,7 @@ public class Teletubbies {
     public void setup(final FMLCommonSetupEvent event) {
     	CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
     	    	
-    	//EntityRegistry.registerModEntity(new ResourceLocation(Teletubbies.MODID + ":PoScooter"), EntityPoScooter.class, "poscooter", 17, Teletubbies.MODID, 40, 1, true);
-    	    	
-    	/*GameRegistry.registerWorldGenerator(new GenTubbyDomeStructure(), 1000);
-    	GameRegistry.registerWorldGenerator(new GenTubbyVoiceTrumpet(), 1000);*/
+    	/*GameRegistry.registerWorldGenerator(new GenTubbyDomeStructure(), 1000);*/
     }
     
     public void setupClient(final FMLClientSetupEvent event) {

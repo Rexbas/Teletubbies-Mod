@@ -55,7 +55,7 @@ public class ItemList {
 	public static final Item PO_SPAWN_EGG = new SpawnEggItem(EntityList.PO, 0xD62828, 0xFFC9AD, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("po_spawn_egg");
 
 	@SubscribeEvent
-	public static void registerItemsEvent(final RegistryEvent.Register<Item> event) {
+	public static void registerItems(final RegistryEvent.Register<Item> event) {
 		Teletubbies.CUSTARD_FOOD= (new Food.Builder()).hunger(4).saturation(5).build();
 		Teletubbies.TOAST_FOOD= (new Food.Builder()).hunger(2).saturation(5).fastToEat().build();
 		

@@ -36,7 +36,7 @@ import teletubbies.item.ItemList;
 import teletubbies.tileentity.CustardMachineTileEntity;
 import teletubbies.util.VoxelShapeRotation;
 
-public class CustardMachine extends Block {
+public class CustardMachineBlock extends Block {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final EnumProperty<CustardMachinePart> PART = EnumProperty.create("part", CustardMachinePart.class);
 		
@@ -64,7 +64,7 @@ public class CustardMachine extends Block {
 	protected static final VoxelShape BIGTOWER_AABB_SOUTH = VoxelShapeRotation.rotateY(BIGTOWER_AABB_NORTH, Math.toRadians(180));
 	protected static final VoxelShape BIGTOWER_AABB_WEST = VoxelShapeRotation.rotateY(BIGTOWER_AABB_NORTH, Math.toRadians(90));
 		
-	public CustardMachine() {
+	public CustardMachineBlock() {
 		super(Properties.create(Material.IRON)
 				.hardnessAndResistance(3.0f, 5.0f)
 				.harvestTool(ToolType.PICKAXE));

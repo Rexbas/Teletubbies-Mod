@@ -5,7 +5,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.TickPriority;
 import teletubbies.block.BlockList;
+import teletubbies.block.ToastMachineBlock;
 import teletubbies.util.Converter;
 
 public class ToastMachineTileEntity extends TileEntity implements ITickableTileEntity {
@@ -25,6 +28,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 			ticksSinceLastDrop++;
 		}
 	}
+	
 	
 	public boolean canDrop() {
 		return ticksSinceLastDrop >= DROPTICKS;
