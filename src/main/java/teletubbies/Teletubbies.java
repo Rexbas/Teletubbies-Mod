@@ -8,11 +8,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import teletubbies.capability.IJumpCapability;
-import teletubbies.capability.JumpCapability;
-import teletubbies.capability.JumpStorage;
-import teletubbies.client.renders.RenderRegistry;
-import teletubbies.itemgroup.TeletubbiesItemGroup;
+import teletubbies.client.renderer.RenderRegistry;
+import teletubbies.common.capabilities.IJumpCapability;
+import teletubbies.common.capabilities.JumpCapability;
+import teletubbies.common.capabilities.JumpStorage;
+import teletubbies.itemgroup.ItemGroupTeletubbies;
 
 @Mod(Teletubbies.MODID)
 public class Teletubbies {
@@ -22,17 +22,16 @@ public class Teletubbies {
 	
 	public static TeletubbiesEventHandler EVENT_HANDLER = new TeletubbiesEventHandler();
 		
-	public static ItemGroup ITEMGROUP = new TeletubbiesItemGroup(MODID);
+	public static ItemGroup ITEMGROUP = new ItemGroupTeletubbies(MODID);
 	public static Food CUSTARD_FOOD;
 	public static Food TOAST_FOOD;
 	
 	public Teletubbies() {
 		instance = this;
-
+		
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
 
-		
 		MinecraftForge.EVENT_BUS.register(instance);
     	MinecraftForge.EVENT_BUS.register(EVENT_HANDLER);
 	}
@@ -40,9 +39,9 @@ public class Teletubbies {
     public void setup(final FMLCommonSetupEvent event) {
     	CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
     	    	
-    	/*EntityRegistry.registerModEntity(new ResourceLocation(Teletubbies.MODID + ":PoScooter"), EntityPoScooter.class, "poscooter", 17, Teletubbies.MODID, 40, 1, true);
+    	//EntityRegistry.registerModEntity(new ResourceLocation(Teletubbies.MODID + ":PoScooter"), EntityPoScooter.class, "poscooter", 17, Teletubbies.MODID, 40, 1, true);
     	    	
-    	GameRegistry.registerWorldGenerator(new GenTubbyDomeStructure(), 1000);
+    	/*GameRegistry.registerWorldGenerator(new GenTubbyDomeStructure(), 1000);
     	GameRegistry.registerWorldGenerator(new GenTubbyVoiceTrumpet(), 1000);*/
     }
     

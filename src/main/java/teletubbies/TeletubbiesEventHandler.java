@@ -1,16 +1,25 @@
 package teletubbies;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import teletubbies.capability.IJumpCapability;
-import teletubbies.capability.JumpProvider;
-import teletubbies.items.LaaLaaBall;
+import teletubbies.client.audio.PoScooterTickableSound;
+import teletubbies.common.capabilities.IJumpCapability;
+import teletubbies.common.capabilities.JumpProvider;
+import teletubbies.entity.item.PoScooterEntity;
+import teletubbies.item.LaaLaaBallItem;
 
 public class TeletubbiesEventHandler {
 
@@ -18,6 +27,14 @@ public class TeletubbiesEventHandler {
 	public void attachtCapabilityEntity (AttachCapabilitiesEvent<Entity> event) {		
 		if(event.getObject() instanceof PlayerEntity) {
 			event.addCapability(new ResourceLocation(Teletubbies.MODID, "capability.jump"), new JumpProvider());
+		}
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public void joinClientWorld(EntityJoinWorldEvent event) {
+		if(event.getEntity() instanceof PoScooterEntity) {
+			Minecraft.getInstance().getSoundHandler().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
 		}
 	}
 	
@@ -42,21 +59,21 @@ public class TeletubbiesEventHandler {
 					c.setFallDistance(player.fallDistance);
 				}
 				
-				LaaLaaBall ball = null;
-				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBall &&
-						player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBall) {
-					ball = (LaaLaaBall) player.getHeldItemMainhand().getItem();
+				LaaLaaBallItem ball = null;
+				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem &&
+						player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBallItem) {
+					ball = (LaaLaaBallItem) player.getHeldItemMainhand().getItem();
 				}
-				else if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBall) {
-					ball = (LaaLaaBall) player.getHeldItemMainhand().getItem();
+				else if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem) {
+					ball = (LaaLaaBallItem) player.getHeldItemMainhand().getItem();
 				}
-				else if(player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBall) {
-					ball = (LaaLaaBall) player.getHeldItemOffhand().getItem();
+				else if(player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBallItem) {
+					ball = (LaaLaaBallItem) player.getHeldItemOffhand().getItem();
 				}
 				
 				if(ball != null) {
 					if(c.canJump(player) && fallDistance >= 10) {
-						LaaLaaBall.jump(player, true);
+						LaaLaaBallItem.jump(player, true);
 					}
 				}
 				if(player.onGround) {
@@ -74,20 +91,28 @@ public class TeletubbiesEventHandler {
 		if(event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			if(player.getHeldItemMainhand() != null) {
-				if(player.getHeldItemMainhand().getItem() instanceof LaaLaaBall) {
+				if(player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem) {
 					event.setCanceled(true);
 				}
 			}
 			if(player.getHeldItemOffhand() != null) {
-				if(player.getHeldItemOffhand().getItem() instanceof LaaLaaBall) {
+				if(player.getHeldItemOffhand().getItem() instanceof LaaLaaBallItem) {
 					event.setCanceled(true);
 				}
 			}
 		}
-		/*if(event.getEntity() instanceof EntityPoScooter) {
-			EntityPoScooter scooter = (EntityPoScooter) event.getEntity();
-			event.setCanceled(true);
-		}*/
+	}
+
+	@SubscribeEvent
+	public void updateRidden(PlayerTickEvent event) {
+		if (event.phase == TickEvent.Phase.START && event.player instanceof ClientPlayerEntity) {
+			ClientPlayerEntity player = (ClientPlayerEntity) event.player;
+			if (player.getRidingEntity() instanceof PoScooterEntity) {
+				PoScooterEntity scooter = (PoScooterEntity) player.getRidingEntity();
+				scooter.updateInputs(player.movementInput.leftKeyDown, player.movementInput.rightKeyDown,
+						player.movementInput.forwardKeyDown, player.movementInput.backKeyDown);
+			}
+		}
 	}
 	
 	/*@SubscribeEvent

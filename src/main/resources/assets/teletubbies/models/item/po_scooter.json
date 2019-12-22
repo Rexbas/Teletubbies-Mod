@@ -1,143 +1,157 @@
 {
-    "textures": {
-        "0": "teletubbies:vehicle/po_scooter"
-    },
-    "elements": [
-        {
-            "name": "board",
-            "from": [ 5.0, 3.0, -2.0 ], 
-            "to": [ 10.0, 4.0, 13.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 3.8, 2.0, 4.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 3.8, 4.0, 4.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 3.8, 2.0, 4.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 3.8, 4.0, 4.0 ] },
-                "up": { "texture": "#0", "uv": [ 5.0, 3.8, 3.8, 0.0 ] },
-                "down": { "texture": "#0", "uv": [ 5.0, 3.7, 6.2, 0.0 ], "rotation": 180 }
-            }
-        },
-        {
-            "name": "backwheel1",
-            "from": [ 9.0, 0.0, -4.0 ], 
-            "to": [ 12.0, 5.0, 1.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 11.3, 1.3, 12.0, 2.5 ] },
-                "east": { "texture": "#0", "uv": [ 10.0, 1.3, 11.3, 2.5 ] },
-                "south": { "texture": "#0", "uv": [ 13.0, 1.3, 14.0, 2.5 ] },
-                "west": { "texture": "#0", "uv": [ 12.0, 1.3, 13.3, 2.5 ] },
-                "up": { "texture": "#0", "uv": [ 11.5, 0.0, 12.0, 1.5 ] },
-                "down": { "texture": "#0", "uv": [ 12.5, 0.0, 12.0, 1.2 ] }
-            }
-        },
-        {
-            "name": "backwheel0",
-            "from": [ 3.0, 0.0, -4.0 ], 
-            "to": [ 6.0, 5.0, 1.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 11.3, 1.3, 12.0, 2.5 ] },
-                "east": { "texture": "#0", "uv": [ 10.0, 1.3, 11.3, 2.5 ] },
-                "south": { "texture": "#0", "uv": [ 13.0, 1.3, 14.0, 2.5 ] },
-                "west": { "texture": "#0", "uv": [ 12.0, 1.3, 13.3, 2.5 ] },
-                "up": { "texture": "#0", "uv": [ 11.5, 0.0, 12.0, 1.5 ] },
-                "down": { "texture": "#0", "uv": [ 12.5, 0.0, 12.0, 1.2 ] }
-            }
-        },
-        {
-            "name": "boardstick1",
-            "from": [ 7.0, 3.0, 13.0 ], 
-            "to": [ 8.0, 5.0, 14.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] }
-            }
-        },
-        {
-            "name": "boardstick0",
-            "from": [ 7.0, 5.0, 13.0 ], 
-            "to": [ 8.0, 6.0, 17.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "east": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] }
-            }
-        },
-        {
-            "name": "frontwheel",
-            "from": [ 6.0, 0.0, 16.0 ], 
-            "to": [ 9.0, 5.0, 21.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 13.3, 1.3, 14.0, 2.5 ] },
-                "east": { "texture": "#0", "uv": [ 12.0, 1.3, 13.3, 2.5 ] },
-                "south": { "texture": "#0", "uv": [ 11.0, 1.3, 12.0, 2.5 ] },
-                "west": { "texture": "#0", "uv": [ 10.0, 1.3, 11.3, 2.5 ] },
-                "up": { "texture": "#0", "uv": [ 11.5, 0.0, 12.0, 1.5 ] },
-                "down": { "texture": "#0", "uv": [ 12.5, 0.0, 12.0, 1.2 ] }
-            }
-        },
-        {
-            "name": "frontwheelstick",
-            "from": [ 7.0, 5.0, 16.0 ], 
-            "to": [ 8.0, 23.0, 17.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 14.0, 0.3, 15.0, 4.7 ] },
-                "east": { "texture": "#0", "uv": [ 14.0, 0.3, 15.0, 4.7 ] },
-                "south": { "texture": "#0", "uv": [ 14.0, 0.3, 15.0, 4.7 ] },
-                "west": { "texture": "#0", "uv": [ 14.0, 0.3, 15.0, 4.7 ] },
-                "up": { "texture": "#0", "uv": [ 13.0, 2.0, 14.0, 2.0 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 5.0, 1.0, 5.0 ] }
-            }
-        },
-        {
-            "name": "wheel",
-            "from": [ 4.0, 22.0, 16.0 ], 
-            "to": [ 11.0, 23.0, 17.0 ], 
-            "faces": {
-                "north": { "texture": "#0", "uv": [ 0.0, 4.3, 2.2, 4.5 ], "rotation": 180 },
-                "east": { "texture": "#0", "uv": [ 0.0, 4.0, 1.0, 3.8 ] },
-                "south": { "texture": "#0", "uv": [ 0.0, 4.3, 2.2, 4.5 ] },
-                "west": { "texture": "#0", "uv": [ 0.0, 4.0, 1.0, 3.8 ] },
-                "up": { "texture": "#0", "uv": [ 0.0, 4.3, 2.2, 4.5 ] },
-                "down": { "texture": "#0", "uv": [ 0.0, 4.3, 2.2, 4.5 ] }
-            }
-        }
-    ],
-    "display": {
-        "gui": {
-            "rotation": [ 30, 315, 0 ],
-            "translation": [ 0, 0, 0],
-            "scale":[ 0.675, 0.675, 0.675 ]
-        },
-        "ground": {
-            "rotation": [ 0, 0, 0 ],
-            "translation": [ 0, 3, 0],
-            "scale":[ 0.25, 0.25, 0.25 ]
-        },
-        "fixed": {
-            "rotation": [ 0, 90, 0 ],
-            "translation": [ 0, 0, 0],
-            "scale":[ 0.5, 0.5, 0.5 ]
-        },
-        "thirdperson_righthand": {
-            "rotation": [ 75, 225, 0 ],
-            "translation": [ 0, 3.5, 0],
-            "scale": [ 0.375, 0.375, 0.375 ]
-        },
-        "firstperson_righthand": {
-            "rotation": [ 0, 225, 0 ],
-            "translation": [ 0, 2, 0 ],
-            "scale": [ 0.40, 0.40, 0.40 ]
-        },
-        "firstperson_lefthand": {
-            "rotation": [ 0, 225, 0 ],
-            "translation": [ 0, 2, 0 ],
-            "scale": [ 0.40, 0.40, 0.40 ]
-        }      
-    }
+	"credit": "Made with Blockbench",
+	"texture_size": [64, 64],
+	"textures": {
+		"0": "teletubbies:vehicle/po_scooter"
+	},
+	"elements": [
+		{
+			"name": "frontwheel",
+			"from": [7, -5, -6],
+			"to": [10, 0, -1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [5.25, 1.25, 6, 2.5], "texture": "#0"},
+				"east": {"uv": [4, 1.25, 5.25, 2.5], "texture": "#0"},
+				"south": {"uv": [7.25, 1.25, 8, 2.5], "texture": "#0"},
+				"west": {"uv": [6, 1.25, 7.25, 2.5], "texture": "#0"},
+				"up": {"uv": [6, 1.25, 5.25, 0], "texture": "#0"},
+				"down": {"uv": [6.75, 0, 6, 1.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "frontwheelstick",
+			"from": [8, 1, -2],
+			"to": [9, 19, -1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0.25, 2.75, 0.5, 7.25], "texture": "#0"},
+				"east": {"uv": [0, 2.75, 0.25, 7.25], "texture": "#0"},
+				"south": {"uv": [0.75, 2.75, 1, 7.25], "texture": "#0"},
+				"west": {"uv": [0.5, 2.75, 0.75, 7.25], "texture": "#0"},
+				"up": {"uv": [0.5, 2.75, 0.25, 2.5], "texture": "#0"},
+				"down": {"uv": [0.75, 2.5, 0.5, 2.75], "texture": "#0"}
+			}
+		},
+		{
+			"name": "steer",
+			"from": [5, 19, -2],
+			"to": [12, 20, -1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0.25, 0.25, 2, 0.5], "texture": "#0"},
+				"east": {"uv": [0, 0.25, 0.25, 0.5], "texture": "#0"},
+				"south": {"uv": [2.25, 0.25, 4, 0.5], "texture": "#0"},
+				"west": {"uv": [2, 0.25, 2.25, 0.5], "texture": "#0"},
+				"up": {"uv": [2, 0.25, 0.25, 0], "texture": "#0"},
+				"down": {"uv": [3.75, 0, 2, 0.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "boardstick0",
+			"from": [8, 0, -2],
+			"to": [9, 1, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [1, 1.5, 1.25, 1.75], "texture": "#0"},
+				"east": {"uv": [0, 1.5, 1, 1.75], "texture": "#0"},
+				"south": {"uv": [2.25, 1.5, 2.5, 1.75], "texture": "#0"},
+				"west": {"uv": [1.25, 1.5, 2.25, 1.75], "texture": "#0"},
+				"up": {"uv": [1.25, 1.5, 1, 0.5], "texture": "#0"},
+				"down": {"uv": [1.5, 0.5, 1.25, 1.5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "boardstick1",
+			"from": [8, -2, 1],
+			"to": [9, 0, 2],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [0.25, 2, 0.5, 2.5], "texture": "#0"},
+				"east": {"uv": [0, 2, 0.25, 2.5], "texture": "#0"},
+				"south": {"uv": [0.75, 2, 1, 2.5], "texture": "#0"},
+				"west": {"uv": [0.5, 2, 0.75, 2.5], "texture": "#0"},
+				"up": {"uv": [0.5, 2, 0.25, 1.75], "texture": "#0"},
+				"down": {"uv": [0.75, 1.75, 0.5, 2], "texture": "#0"}
+			}
+		},
+		{
+			"name": "board",
+			"from": [6, -2, 2],
+			"to": [11, -1, 17],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [3.75, 11.25, 5, 11.5], "texture": "#0"},
+				"east": {"uv": [0, 11.25, 3.75, 11.5], "texture": "#0"},
+				"south": {"uv": [8.75, 11.25, 10, 11.5], "texture": "#0"},
+				"west": {"uv": [5, 11.25, 8.75, 11.5], "texture": "#0"},
+				"up": {"uv": [5, 11.25, 3.75, 7.5], "texture": "#0"},
+				"down": {"uv": [6.25, 7.5, 5, 11.25], "texture": "#0"}
+			}
+		},
+		{
+			"name": "backwheel0",
+			"from": [10, -5, 14],
+			"to": [13, 0, 19],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [5.25, 3.75, 6, 5], "texture": "#0"},
+				"east": {"uv": [4, 3.75, 5.25, 5], "texture": "#0"},
+				"south": {"uv": [7.25, 3.75, 8, 5], "texture": "#0"},
+				"west": {"uv": [6, 3.75, 7.25, 5], "texture": "#0"},
+				"up": {"uv": [6, 3.75, 5.25, 2.5], "texture": "#0"},
+				"down": {"uv": [6.75, 2.5, 6, 3.75], "texture": "#0"}
+			}
+		},
+		{
+			"name": "backwheel1",
+			"from": [4, -5, 14],
+			"to": [7, 0, 19],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 0, 8]},
+			"faces": {
+				"north": {"uv": [5.25, 6.25, 6, 7.5], "texture": "#0"},
+				"east": {"uv": [4, 6.25, 5.25, 7.5], "texture": "#0"},
+				"south": {"uv": [7.25, 6.25, 8, 7.5], "texture": "#0"},
+				"west": {"uv": [6, 6.25, 7.25, 7.5], "texture": "#0"},
+				"up": {"uv": [6, 6.25, 5.25, 5], "texture": "#0"},
+				"down": {"uv": [6.75, 5, 6, 6.25], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [70, 25, 0.75],
+			"translation": [0, -1, 4.25],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [70, 25, 0.75],
+			"translation": [0, -1, 4.25],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"rotation": [24, 24, 0],
+			"translation": [0, 3.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"rotation": [24, 24, 0],
+			"translation": [0, 3.5, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"translation": [0, 4.75, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"gui": {
+			"rotation": [22.5, 135, 0],
+			"translation": [0.5, 1.75, 0],
+			"scale": [0.6, 0.6, 0.6]
+		},
+		"fixed": {
+			"rotation": [0, -90, 0],
+			"translation": [-0.75, 0.25, -3.25],
+			"scale": [0.7, 0.7, 0.7]
+		}
+	}
 }
