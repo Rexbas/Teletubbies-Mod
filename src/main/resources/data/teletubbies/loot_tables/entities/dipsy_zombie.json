@@ -1,0 +1,29 @@
+{
+    "type": "minecraft:entity",
+    "pools":
+    [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                  "type": "minecraft:item",
+                  "name": "teletubbies:dipsy_stick"
+                },
+                {
+                    "type": "minecraft:item",
+                    "functions": [
+                      {
+                        "function": "minecraft:set_count",
+                        "count": {
+                          "min": 0.0,
+                          "max": 2.0,
+                          "type": "minecraft:uniform"
+                        }
+                      }
+                    ],
+                    "name": "minecraft:rotten_flesh"
+                  }
+            ]
+        }
+    ]
+}

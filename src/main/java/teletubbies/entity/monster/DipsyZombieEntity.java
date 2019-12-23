@@ -1,25 +1,17 @@
-package teletubbies.entity.passive;
+package teletubbies.entity.monster;
 
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.client.audio.SoundList;
-import teletubbies.entity.EntityList;
 import teletubbies.item.ItemList;
 
-public class DipsyEntity extends TeletubbyEntity {
+public class DipsyZombieEntity extends TeletubbyZombieEntity {
 
-	public DipsyEntity(EntityType<? extends CreatureEntity> type, World world) {
+	public DipsyZombieEntity(EntityType<? extends ZombieEntity> type, World world) {
 		super(type, world);
-	}
-	
-	@Override
-	protected SoundEvent getAmbientSound() {
-		return SoundList.dipsy;
 	}
 	
 	@Override
@@ -42,10 +34,5 @@ public class DipsyEntity extends TeletubbyEntity {
 			this.setItemStackToSlot(EquipmentSlotType.HEAD, stack);
 			break;
 		}
-	}
-
-	@Override
-	public EntityType<?> getZombie() {
-		return EntityList.DIPSY_ZOMBIE;
 	}
 }

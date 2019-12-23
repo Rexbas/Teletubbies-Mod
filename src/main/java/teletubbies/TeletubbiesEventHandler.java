@@ -1,10 +1,16 @@
 package teletubbies;
 
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
@@ -12,13 +18,20 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import teletubbies.client.audio.PoScooterTickableSound;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.entity.item.PoScooterEntity;
+import teletubbies.entity.passive.DipsyEntity;
+import teletubbies.entity.passive.LaaLaaEntity;
+import teletubbies.entity.passive.PoEntity;
+import teletubbies.entity.passive.TeletubbyEntity;
+import teletubbies.entity.passive.TinkyWinkyEntity;
 import teletubbies.item.LaaLaaBallItem;
 
 public class TeletubbiesEventHandler {
@@ -115,58 +128,31 @@ public class TeletubbiesEventHandler {
 		}
 	}
 	
-	/*@SubscribeEvent
+	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
-		if(event.getEntity() instanceof EntityZombie) {
-			EntityZombie zombie = (EntityZombie) event.getEntity();
-	        zombie.targetTasks.addTask(3, new EntityAINearestAttackableTarget(zombie, EntityPo.class, true));
-	        zombie.targetTasks.addTask(3, new EntityAINearestAttackableTarget(zombie, EntityLaaLaa.class, true));
-	        zombie.targetTasks.addTask(3, new EntityAINearestAttackableTarget(zombie, EntityDipsy.class, true));
-	        zombie.targetTasks.addTask(3, new EntityAINearestAttackableTarget(zombie, EntityTinkyWinky.class, true));
+		if(event.getEntity() instanceof ZombieEntity) {
+			ZombieEntity zombie = (ZombieEntity) event.getEntity();
+	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, TinkyWinkyEntity.class, true));
+	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, DipsyEntity.class, true));
+	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, LaaLaaEntity.class, true));
+	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, PoEntity.class, true));
 		}
 	}
 	
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public void onLivingDeathEvent(LivingDeathEvent event) {
 		Random rand = new Random();
-		int randomNumber = rand.nextInt(5) + 1;
+		int i = rand.nextInt(4);
 		DamageSource damageSource = (DamageSource) event.getSource();
 		World world = event.getEntityLiving().world;
-		double posX = event.getEntityLiving().posX;
-		double posY = event.getEntityLiving().posY;
-		double posZ = event.getEntityLiving().posZ;
 
-		if(!world.isRemote) {
-			if(damageSource.getImmediateSource() instanceof EntityZombie) {
-				
-				if(event.getEntity() instanceof EntityTinkyWinky && randomNumber == 1) {
-					EntityZombieTinkyWinky zombieTinkyWinky = new EntityZombieTinkyWinky(world);
-					EntityTinkyWinky.transferredToZombie = true;
-					zombieTinkyWinky.setLocationAndAngles(posX, posY, posZ, event.getEntityLiving().rotationYaw, event.getEntityLiving().rotationPitch);
-					world.spawnEntity(zombieTinkyWinky);
-				}
-				
-				if(event.getEntity() instanceof EntityDipsy && randomNumber == 1) {
-					EntityZombieDipsy zombieDipsy = new EntityZombieDipsy(world);
-					EntityDipsy.transferredToZombie = true;
-					zombieDipsy.setLocationAndAngles(posX, posY, posZ, event.getEntityLiving().rotationYaw, event.getEntityLiving().rotationPitch);
-					world.spawnEntity(zombieDipsy);
-				}
-				
-				if(event.getEntity() instanceof EntityLaaLaa && randomNumber == 1) {
-					EntityZombieLaaLaa zombieLaaLaa = new EntityZombieLaaLaa(world);
-					EntityLaaLaa.transferredToZombie = true;
-					zombieLaaLaa.setLocationAndAngles(posX, posY, posZ, event.getEntityLiving().rotationYaw, event.getEntityLiving().rotationPitch);
-					world.spawnEntity(zombieLaaLaa);
-				}
-				
-				if(event.getEntity() instanceof EntityPo && randomNumber == 1) {
-					EntityZombiePo zombiePo = new EntityZombiePo(world);
-					EntityPo.transferredToZombie = true;
-					zombiePo.setLocationAndAngles(posX, posY, posZ, event.getEntityLiving().rotationYaw, event.getEntityLiving().rotationPitch);
-					world.spawnEntity(zombiePo);
+		if (!world.isRemote) {
+			if (damageSource.getImmediateSource() instanceof ZombieEntity) {
+				if (event.getEntity() instanceof TeletubbyEntity && i == 0) {
+					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntityLiving();
+					teletubby.transferToZombie();
 				}
 			}
 		}
-	}*/
+	}
 }

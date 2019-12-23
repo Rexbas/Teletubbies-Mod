@@ -8,10 +8,11 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import teletubbies.client.audio.SoundList;
+import teletubbies.entity.EntityList;
 import teletubbies.item.ItemList;
 
 public class TinkyWinkyEntity extends TeletubbyEntity {
-	
+
 	public TinkyWinkyEntity(EntityType<? extends CreatureEntity> type, World world) {
 		super(type, world);
 	}
@@ -36,5 +37,10 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ItemList.TINKYWINKY_BAG));
 			break;
 		}
+	}
+
+	@Override
+	public EntityType<?> getZombie() {
+		return EntityList.TINKYWINKY_ZOMBIE;
 	}
 }

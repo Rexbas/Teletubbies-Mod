@@ -1,25 +1,26 @@
-package teletubbies.entity.passive;
+package teletubbies.entity.monster;
 
-import net.minecraft.entity.CreatureEntity;
+import java.util.Arrays;
+
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.client.audio.SoundList;
-import teletubbies.entity.EntityList;
 import teletubbies.item.ItemList;
 
-public class LaaLaaEntity extends TeletubbyEntity {
+public class TeletubbyZombieEntity extends ZombieEntity {
 
-	public LaaLaaEntity(EntityType<? extends CreatureEntity> type, World world) {
+	protected TeletubbyZombieEntity(EntityType<? extends ZombieEntity> type, World world) {
 		super(type, world);
+		Arrays.fill(this.inventoryArmorDropChances, 1.0F);
+		Arrays.fill(this.inventoryHandsDropChances, 1.0F);
 	}
 	
 	@Override
-	protected SoundEvent getAmbientSound() {
-		return SoundList.laalaa;
+	public boolean isChild() {
+		return false;
 	}
 	
 	@Override
@@ -28,19 +29,11 @@ public class LaaLaaEntity extends TeletubbyEntity {
 		int i = this.rand.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(ItemList.LAALAA_BIB);
+			ItemStack stack = new ItemStack(ItemList.TUTU);
 			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
-		case 1:
-			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ItemList.LAALAA_BALL));
-			break;
 		}
-	}
-
-	@Override
-	public EntityType<?> getZombie() {
-		return EntityList.LAALAA_ZOMBIE;
 	}
 }

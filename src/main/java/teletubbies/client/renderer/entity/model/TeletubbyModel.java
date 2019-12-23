@@ -3,12 +3,12 @@ package teletubbies.client.renderer.entity.model;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.ModelBox;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import teletubbies.entity.passive.TeletubbyEntity;
 
 @OnlyIn(Dist.CLIENT)
-public class TeletubbyModel<T extends TeletubbyEntity> extends BipedModel<T> {
+public class TeletubbyModel<T extends CreatureEntity> extends BipedModel<T> {
 	public RendererModel leftEar;
 	public RendererModel rightEar;
 	

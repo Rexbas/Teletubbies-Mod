@@ -53,6 +53,11 @@ public class ItemList {
 	public static final Item DIPSY_SPAWN_EGG = new SpawnEggItem(EntityList.DIPSY, 0x84CA32, 0xB38A4E, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("dipsy_spawn_egg");	
 	public static final Item LAALAA_SPAWN_EGG = new SpawnEggItem(EntityList.LAALAA, 0xDED32C, 0xFFC9AD, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("laalaa_spawn_egg");
 	public static final Item PO_SPAWN_EGG = new SpawnEggItem(EntityList.PO, 0xD62828, 0xFFC9AD, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("po_spawn_egg");
+	
+	public static final Item TINKYWINKY_ZOMBIE_SPAWN_EGG = new SpawnEggItem(EntityList.TINKYWINKY_ZOMBIE, 0x7E2CD3, 0x660000, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("tinkywinky_zombie_spawn_egg");
+	public static final Item DIPSY_ZOMBIE_SPAWN_EGG = new SpawnEggItem(EntityList.DIPSY_ZOMBIE, 0x84CA32, 0x660000, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("dipsy_zombie_spawn_egg");
+	public static final Item LAALAA_ZOMBIE_SPAWN_EGG = new SpawnEggItem(EntityList.LAALAA_ZOMBIE, 0xDED32C, 0x660000, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("laalaa_zombie_spawn_egg");
+	public static final Item PO_ZOMBIE_SPAWN_EGG = new SpawnEggItem(EntityList.PO_ZOMBIE, 0xD62828, 0x660000, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("po_zombie_spawn_egg");
 
 	@SubscribeEvent
 	public static void registerItems(final RegistryEvent.Register<Item> event) {
@@ -69,7 +74,9 @@ public class ItemList {
 				
 				TUTU, NOONOO_EYES, DIPSY_HAT, TINKYWINKY_BIB, DIPSY_BIB, LAALAA_BIB, PO_BIB, PO_HELMET,
 				
-				TINKYWINKY_SPAWN_EGG, DIPSY_SPAWN_EGG, LAALAA_SPAWN_EGG, PO_SPAWN_EGG
+				TINKYWINKY_SPAWN_EGG, DIPSY_SPAWN_EGG, LAALAA_SPAWN_EGG, PO_SPAWN_EGG,
+				
+				TINKYWINKY_ZOMBIE_SPAWN_EGG, DIPSY_ZOMBIE_SPAWN_EGG, LAALAA_ZOMBIE_SPAWN_EGG, PO_ZOMBIE_SPAWN_EGG
 				
 		);
 	}

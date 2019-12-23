@@ -8,6 +8,7 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
@@ -15,6 +16,7 @@ import net.minecraft.entity.ai.goal.RandomWalkingGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -25,8 +27,10 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import teletubbies.item.ItemList;
 
-public class TeletubbyEntity extends CreatureEntity {
+public abstract class TeletubbyEntity extends CreatureEntity {
 
+	protected boolean hasTransferredToZombie = false;
+	
 	protected TeletubbyEntity(EntityType<? extends CreatureEntity> type, World world) {
 		super(type, world);
 		Arrays.fill(this.inventoryArmorDropChances, 1.0F);
@@ -36,13 +40,18 @@ public class TeletubbyEntity extends CreatureEntity {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new WaterAvoidingRandomWalkingGoal(this, 0.45F));
-		this.goalSelector.addGoal(1, new PanicGoal(this, 0.55F));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(ItemList.TOAST, ItemList.CUSTARD)));
-		this.goalSelector.addGoal(3, new RandomWalkingGoal(this, 0.45F));
-		this.goalSelector.addGoal(4, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
-		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
-		// TODO avoid all zombies
+	    this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, ZombieEntity.class, 8.0F, 0.5D, 0.5D));
+		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.45F));
+		this.goalSelector.addGoal(3, new PanicGoal(this, 0.55F));
+		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(ItemList.TOAST, ItemList.CUSTARD)));
+		this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 0.45F));
+		this.goalSelector.addGoal(6, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
+		this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+	}
+	
+	@Override
+	protected boolean canDropLoot() {
+		return super.canDropLoot() && !hasTransferredToZombie;
 	}
 	
 	@Override
@@ -62,7 +71,6 @@ public class TeletubbyEntity extends CreatureEntity {
 	
 	@Override
 	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		super.setEquipmentBasedOnDifficulty(difficulty);
 		int i = this.rand.nextInt(10);
 		switch (i) {
 		case 0:
@@ -81,5 +89,24 @@ public class TeletubbyEntity extends CreatureEntity {
 		spawnData = super.onInitialSpawn(world, difficulty, reason, spawnData, dataTag);
 		this.setEquipmentBasedOnDifficulty(difficulty);
 		return spawnData;
+	}
+	
+	public abstract EntityType<?> getZombie();
+	
+	public void transferToZombie() {
+		ZombieEntity zombie = (ZombieEntity) this.getZombie().create(world);
+		zombie.copyLocationAndAnglesFrom(this);
+		this.hasTransferredToZombie = true;
+		this.remove();
+		
+		zombie.setChild(false);
+		zombie.setNoAI(this.isAIDisabled());
+		if (this.hasCustomName()) {
+			zombie.setCustomName(this.getCustomName());
+			zombie.setCustomNameVisible(this.isCustomNameVisible());
+		}
+
+		world.addEntity(zombie);
+		world.playEvent(null, 1026, zombie.getPosition(), 0);
 	}
 }
