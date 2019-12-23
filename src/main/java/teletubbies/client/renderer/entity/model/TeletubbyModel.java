@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.ModelBox;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import teletubbies.entity.TeletubbyEntity;
+import teletubbies.entity.passive.TeletubbyEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class TeletubbyModel<T extends TeletubbyEntity> extends BipedModel<T> {

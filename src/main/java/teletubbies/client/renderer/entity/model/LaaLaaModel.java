@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.ModelBox;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import teletubbies.entity.LaaLaaEntity;
+import teletubbies.entity.passive.LaaLaaEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class LaaLaaModel extends TeletubbyModel<LaaLaaEntity> {

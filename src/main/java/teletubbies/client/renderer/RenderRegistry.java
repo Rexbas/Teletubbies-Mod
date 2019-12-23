@@ -8,11 +8,11 @@ import teletubbies.client.renderer.entity.LaaLaaRenderer;
 import teletubbies.client.renderer.entity.PoRenderer;
 import teletubbies.client.renderer.entity.PoScooterRenderer;
 import teletubbies.client.renderer.entity.TinkyWinkyRenderer;
-import teletubbies.entity.DipsyEntity;
-import teletubbies.entity.LaaLaaEntity;
-import teletubbies.entity.PoEntity;
-import teletubbies.entity.TinkyWinkyEntity;
 import teletubbies.entity.item.PoScooterEntity;
+import teletubbies.entity.passive.DipsyEntity;
+import teletubbies.entity.passive.LaaLaaEntity;
+import teletubbies.entity.passive.PoEntity;
+import teletubbies.entity.passive.TinkyWinkyEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class RenderRegistry {
