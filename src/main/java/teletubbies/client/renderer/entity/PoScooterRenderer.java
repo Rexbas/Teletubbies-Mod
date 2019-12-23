@@ -66,7 +66,7 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	
 	@Override
 	protected ResourceLocation getEntityTexture(PoScooterEntity entity) {
-		return new ResourceLocation(Teletubbies.MODID, "textures/vehicle/po_scooter.png");
+		return new ResourceLocation(Teletubbies.MODID, "textures/entity/po_scooter.png");
 	}
 	
 	public static class RenderFactory implements IRenderFactory<PoScooterEntity> {

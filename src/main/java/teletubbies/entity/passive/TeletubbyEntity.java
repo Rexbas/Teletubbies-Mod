@@ -43,7 +43,6 @@ public class TeletubbyEntity extends CreatureEntity {
 		this.goalSelector.addGoal(4, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
 		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
 		// TODO avoid all zombies
-		// TODO textures
 	}
 	
 	@Override
