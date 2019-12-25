@@ -12,7 +12,7 @@ import teletubbies.item.ItemList;
 
 public class TeletubbyZombieEntity extends ZombieEntity {
 
-	protected TeletubbyZombieEntity(EntityType<? extends ZombieEntity> type, World world) {
+	public TeletubbyZombieEntity(EntityType<? extends ZombieEntity> type, World world) {
 		super(type, world);
 		Arrays.fill(this.inventoryArmorDropChances, 1.0F);
 		Arrays.fill(this.inventoryHandsDropChances, 1.0F);

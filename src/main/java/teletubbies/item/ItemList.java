@@ -1,5 +1,6 @@
 package teletubbies.item;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
@@ -53,7 +54,16 @@ public class ItemList {
 	public static final Item DIPSY_SPAWN_EGG = new SpawnEggItem(EntityList.DIPSY, 0x84CA32, 0xB38A4E, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("dipsy_spawn_egg");	
 	public static final Item LAALAA_SPAWN_EGG = new SpawnEggItem(EntityList.LAALAA, 0xDED32C, 0xFFC9AD, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("laalaa_spawn_egg");
 	public static final Item PO_SPAWN_EGG = new SpawnEggItem(EntityList.PO, 0xD62828, 0xFFC9AD, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("po_spawn_egg");
-	
+
+	public static final Item MIMI_SPAWN_EGG = createTiddlytubbySpawnEgg("mimi", EntityList.MIMI, 0x1591B4);
+	public static final Item DAADAA_SPAWN_EGG = createTiddlytubbySpawnEgg("daadaa", EntityList.DAADAA, 0x53AC09);
+	public static final Item PING_SPAWN_EGG = createTiddlytubbySpawnEgg("ping", EntityList.PING, 0xC6419E);
+	public static final Item BA_SPAWN_EGG = createTiddlytubbySpawnEgg("ba", EntityList.BA, 0x062C5E);
+	public static final Item RURU_SPAWN_EGG = createTiddlytubbySpawnEgg("ruru", EntityList.RURU, 0xDA7123);
+	public static final Item NIN_SPAWN_EGG = createTiddlytubbySpawnEgg("nin", EntityList.NIN, 0x9F286E);
+	public static final Item DUGGLEDEE_SPAWN_EGG = createTiddlytubbySpawnEgg("duggledee", EntityList.DUGGLEDEE, 0xB4213E);
+	public static final Item UMPIEPUMPIE_SPAWN_EGG = createTiddlytubbySpawnEgg("umpiepumpie", EntityList.UMPIEPUMPIE, 0xD8BF29);
+
 	public static final Item TINKYWINKY_ZOMBIE_SPAWN_EGG = new SpawnEggItem(EntityList.TINKYWINKY_ZOMBIE, 0x7E2CD3, 0x660000, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("tinkywinky_zombie_spawn_egg");
 	public static final Item DIPSY_ZOMBIE_SPAWN_EGG = new SpawnEggItem(EntityList.DIPSY_ZOMBIE, 0x84CA32, 0x660000, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("dipsy_zombie_spawn_egg");
 	public static final Item LAALAA_ZOMBIE_SPAWN_EGG = new SpawnEggItem(EntityList.LAALAA_ZOMBIE, 0xDED32C, 0x660000, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("laalaa_zombie_spawn_egg");
@@ -75,9 +85,14 @@ public class ItemList {
 				TUTU, NOONOO_EYES, DIPSY_HAT, TINKYWINKY_BIB, DIPSY_BIB, LAALAA_BIB, PO_BIB, PO_HELMET,
 				
 				TINKYWINKY_SPAWN_EGG, DIPSY_SPAWN_EGG, LAALAA_SPAWN_EGG, PO_SPAWN_EGG,
+				MIMI_SPAWN_EGG, DAADAA_SPAWN_EGG, PING_SPAWN_EGG, BA_SPAWN_EGG, RURU_SPAWN_EGG, NIN_SPAWN_EGG, DUGGLEDEE_SPAWN_EGG, UMPIEPUMPIE_SPAWN_EGG,
 				
 				TINKYWINKY_ZOMBIE_SPAWN_EGG, DIPSY_ZOMBIE_SPAWN_EGG, LAALAA_ZOMBIE_SPAWN_EGG, PO_ZOMBIE_SPAWN_EGG
 				
 		);
+	}
+	
+	private static Item createTiddlytubbySpawnEgg(String name, EntityType<?> entity, int primaryColor) {
+		return new SpawnEggItem(entity, primaryColor, 0xC8946A, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(name + "_spawn_egg");
 	}
 }

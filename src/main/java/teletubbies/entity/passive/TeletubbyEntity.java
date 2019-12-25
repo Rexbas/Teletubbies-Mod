@@ -31,7 +31,7 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 
 	protected boolean hasTransferredToZombie = false;
 	
-	protected TeletubbyEntity(EntityType<? extends CreatureEntity> type, World world) {
+	public TeletubbyEntity(EntityType<? extends CreatureEntity> type, World world) {
 		super(type, world);
 		Arrays.fill(this.inventoryArmorDropChances, 1.0F);
 		Arrays.fill(this.inventoryHandsDropChances, 1.0F);
