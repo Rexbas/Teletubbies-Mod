@@ -234,7 +234,7 @@ public class CustardMachineBlock extends Block {
 			}
 			else {
 				if (world.isRemote) {
-					ITextComponent msg = new StringTextComponent("\u00A77").appendSibling(new TranslationTextComponent("teletubbies.custardmachine.message"));
+					ITextComponent msg = new StringTextComponent("\u00A77").appendSibling(new TranslationTextComponent("teletubbies.custard_machine.message"));
 					player.sendMessage(msg);
 				}
 			}
