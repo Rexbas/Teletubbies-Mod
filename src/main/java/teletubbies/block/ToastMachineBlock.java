@@ -124,7 +124,7 @@ public class ToastMachineBlock extends Block {
 		ToastMachineTileEntity t = (ToastMachineTileEntity) world.getTileEntity(tilePos);
 		if (t.canDrop()) {
 			t.dropToast(new ItemStack(ItemList.TOAST), player);
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundList.toast, SoundCategory.AMBIENT, 1, 1, false);
+			world.playSound(player, pos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 1, 1);
 			t.reset();
 		}
 		return true;

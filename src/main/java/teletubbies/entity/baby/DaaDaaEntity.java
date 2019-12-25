@@ -14,6 +14,6 @@ public class DaaDaaEntity extends TiddlytubbyEntity {
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return SoundList.daadaa;
+		return SoundList.ENTITY_DAADAA_VOICE;
     }
 }

@@ -11,7 +11,7 @@ public class PoScooterTickableSound extends TickableSound {
 	private final PoScooterEntity scooter;
 
 	public PoScooterTickableSound(PoScooterEntity scooter) {
-		super(SoundList.scooter, SoundCategory.NEUTRAL);
+		super(SoundList.ENTITY_SCOOTER, SoundCategory.NEUTRAL);
 		this.scooter = scooter;
 		this.repeat = true;
 		this.repeatDelay = 0;

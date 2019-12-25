@@ -19,7 +19,7 @@ public class LaaLaaEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundList.laalaa;
+		return SoundList.ENTITY_LAALAA_VOICE;
 	}
 	
 	@Override

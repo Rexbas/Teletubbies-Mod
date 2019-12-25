@@ -14,6 +14,6 @@ public class MiMiEntity extends TiddlytubbyEntity {
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return SoundList.mimi;
+		return SoundList.ENTITY_MIMI_VOICE;
     }
 }

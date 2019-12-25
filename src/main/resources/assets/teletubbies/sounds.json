@@ -1,70 +1,70 @@
-{"mob.tinkywinky": {
-"category": "neutral",
+{"entity.tinkywinky.voice": {
+"category": "voice",
  "sounds": [ {
-    "name": "teletubbies:mob/tinkywinky",
+    "name": "teletubbies:entity/tinkywinky",
     "stream": true
     }]},
 
-"mob.dipsy": {
-"category": "neutral",
+"entity.dipsy.voice": {
+"category": "voice",
  "sounds": [ {
-    "name": "teletubbies:mob/dipsy",
+    "name": "teletubbies:entity/dipsy",
     "stream": true
     }]},
 
-"mob.laalaa": {
-"category": "neutral",
+"entity.laalaa.voice": {
+"category": "voice",
  "sounds": [ {
-    "name": "teletubbies:mob/laalaa",
+    "name": "teletubbies:entity/laalaa",
     "stream": true
     }]},
 
-"mob.po": {
-"category": "neutral",
+"entity.po.voice": {
+"category": "voice",
  "sounds": [ {
-    "name": "teletubbies:mob/po",
+    "name": "teletubbies:entity/po",
     "stream": true
     }]},
 
-"mob.noonoo_living1": {
-"category": "neutral",
+"entity.noonoo.ambient1": {
+"category": "ambient",
  "sounds": [ {
-    "name": "teletubbies:mob/noonoo_living1",
+    "name": "teletubbies:entity/noonoo_ambient1",
     "stream": true
     }]},
     
-"mob.noonoo_living2": {
-"category": "neutral",
+"entity.noonoo.ambient2": {
+"category": "ambient",
  "sounds": [ {
-    "name": "teletubbies:mob/noonoo_living2",
+    "name": "teletubbies:entity/noonoo_ambient2",
     "stream": true
     }]},
 
-"mob.noonoo_hurt": {
-"category": "neutral",
+"entity.noonoo.hurt": {
+"category": "ambient",
  "sounds": [ {
-    "name": "teletubbies:mob/noonoo_hurt",
+    "name": "teletubbies:entity/noonoo_hurt",
     "stream": true
     }]},
 
-"mob.noonoo_dead": {
-"category": "neutral",
+"entity.noonoo.death": {
+"category": "ambient",
  "sounds": [ {
-    "name": "teletubbies:mob/noonoo_dead",
+    "name": "teletubbies:entity/noonoo_death",
     "stream": true
     }]},
     
-"mob.daadaa": {
-"category": "neutral",
+"entity.mimi.voice": {
+    "category": "voice",
+        "sounds": [ {
+        "name": "teletubbies:entity/mimi",
+        "stream": true
+        }]},
+
+"entity.daadaa.voice": {
+"category": "voice",
  "sounds": [ {
-    "name": "teletubbies:mob/daadaa",
-    "stream": true
-    }]},
-    
-"mob.mimi": {
-"category": "neutral",
- "sounds": [ {
-    "name": "teletubbies:mob/mimi",
+    "name": "teletubbies:entity/daadaa",
     "stream": true
     }]},
 
@@ -75,17 +75,17 @@
     "stream": true
     }]},
     
-"machine.scooter": {
+"entity.scooter": {
 "category": "neutral",
  "sounds": [ {
-    "name": "teletubbies:machine/scooter",
+    "name": "teletubbies:entity/scooter",
     "stream": false
     }]},
     
-"machine.voicetrumpet": {
-"category": "neutral",
+"machine.voice_trumpet": {
+"category": "blocks",
  "sounds": [ {
-    "name": "teletubbies:machine/voicetrumpet",
+    "name": "teletubbies:machine/voice_trumpet",
     "stream": true
     }]},
     

@@ -52,6 +52,6 @@ public class TiddlytubbyEntity extends CreatureEntity {
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return this.rand.nextInt(2) == 0 ? SoundList.daadaa : SoundList.mimi;
+		return this.rand.nextInt(2) == 0 ? SoundList.ENTITY_DAADAA_VOICE : SoundList.ENTITY_MIMI_VOICE;
     }
 }

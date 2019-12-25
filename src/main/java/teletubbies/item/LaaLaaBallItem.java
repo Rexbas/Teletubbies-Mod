@@ -72,7 +72,7 @@ public class LaaLaaBallItem extends Item {
 			player.addVelocity(motionX, motionY, motionZ);
 		    Random rand = new Random();
 		    float pitch1 = (float) (rand.nextFloat() * (1.1 - 0.9) + 0.9);
-			player.playSound(SoundList.bounce, 1, pitch1);
+			player.playSound(SoundList.BALL_BOUNCE, 1, pitch1);
 		});
 	}
 }

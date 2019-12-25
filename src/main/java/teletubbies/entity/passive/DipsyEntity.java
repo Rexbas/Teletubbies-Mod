@@ -19,7 +19,7 @@ public class DipsyEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundList.dipsy;
+		return SoundList.ENTITY_DIPSY_VOICE;
 	}
 	
 	@Override

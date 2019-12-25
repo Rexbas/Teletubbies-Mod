@@ -44,16 +44,16 @@ public class NooNooEntity extends CreatureEntity {
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return this.rand.nextInt(2) == 0 ? SoundList.noonoo_living1 : SoundList.noonoo_living2;
+		return this.rand.nextInt(2) == 0 ? SoundList.ENTITY_NOONOO_AMBIENT1 : SoundList.ENTITY_NOONOO_AMBIENT2;
     }
 	
 	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundList.noonoo_hurt;
+		return SoundList.ENTITY_NOONOO_HURT;
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return SoundList.noonoo_dead;
+		return SoundList.ENTITY_NOONOO_DEATH;
 	}
 }

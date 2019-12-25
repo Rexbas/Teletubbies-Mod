@@ -228,7 +228,7 @@ public class CustardMachineBlock extends Block {
 				
 				if (t.canDrop()) {
 					stack.setCount(stack.getCount() - 1);
-					world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundList.custard, SoundCategory.AMBIENT, 1, 1, false);
+					world.playSound(player, pos, SoundList.MACHINE_CUSTARD, SoundCategory.BLOCKS, 1, 1);
 					t.reset();
 				}
 			}

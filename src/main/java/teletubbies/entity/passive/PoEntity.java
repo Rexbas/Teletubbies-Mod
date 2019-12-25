@@ -19,7 +19,7 @@ public class PoEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundList.po;
+		return SoundList.ENTITY_PO_VOICE;
 	}
 	
 	@Override

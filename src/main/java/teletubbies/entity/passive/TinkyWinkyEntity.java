@@ -19,7 +19,7 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundList.tinkywinky;
+		return SoundList.ENTITY_TINKYWINKY_VOICE;
 	}
 	
 	@Override

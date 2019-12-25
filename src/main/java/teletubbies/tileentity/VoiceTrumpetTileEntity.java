@@ -21,7 +21,7 @@ public class VoiceTrumpetTileEntity extends TileEntity implements ITickableTileE
 	@Override
 	public void tick() {
 		if (--delay <= 0) {
-			world.playSound(null, pos, SoundList.voiceTrumpet, SoundCategory.AMBIENT, 1, 1);
+			world.playSound(null, pos, SoundList.MACHINE_VOICE_TRUMPET, SoundCategory.BLOCKS, 1, 1);
 			delay = rand.nextInt((int) ((Converter.SecondsToTicks(20) - Converter.SecondsToTicks(10)) + 1)) + Converter.SecondsToTicks(10);
 		}
 	}
