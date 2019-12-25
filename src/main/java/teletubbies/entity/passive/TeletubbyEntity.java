@@ -55,11 +55,6 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 	}
 	
 	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-	}
-	
-	@Override
 	public int getMaxSpawnedInChunk() {
 		return 1;
 	}

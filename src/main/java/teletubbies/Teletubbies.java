@@ -36,13 +36,11 @@ public class Teletubbies {
     	MinecraftForge.EVENT_BUS.register(EVENT_HANDLER);
 	}
 	
-    public void setup(final FMLCommonSetupEvent event) {
-    	CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
-    	    	
-    	/*GameRegistry.registerWorldGenerator(new GenTubbyDomeStructure(), 1000);*/
-    }
+	public void setup(final FMLCommonSetupEvent event) {
+		CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
+	}
     
-    public void setupClient(final FMLClientSetupEvent event) {
-    	RenderRegistry.registryEntityRenders();
-    }
+	public void setupClient(final FMLClientSetupEvent event) {
+		RenderRegistry.registryEntityRenders();
+	}
 }

@@ -55,6 +55,8 @@ public class ItemList {
 	public static final Item LAALAA_SPAWN_EGG = new SpawnEggItem(EntityList.LAALAA, 0xDED32C, 0xFFC9AD, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("laalaa_spawn_egg");
 	public static final Item PO_SPAWN_EGG = new SpawnEggItem(EntityList.PO, 0xD62828, 0xFFC9AD, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("po_spawn_egg");
 
+	public static final Item NOONOO_SPAWN_EGG = new SpawnEggItem(EntityList.NOONOO, 0x0099FF, 0xE166CC, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("noonoo_spawn_egg");
+	
 	public static final Item MIMI_SPAWN_EGG = createTiddlytubbySpawnEgg("mimi", EntityList.MIMI, 0x1591B4);
 	public static final Item DAADAA_SPAWN_EGG = createTiddlytubbySpawnEgg("daadaa", EntityList.DAADAA, 0x53AC09);
 	public static final Item PING_SPAWN_EGG = createTiddlytubbySpawnEgg("ping", EntityList.PING, 0xC6419E);
@@ -84,7 +86,7 @@ public class ItemList {
 				
 				TUTU, NOONOO_EYES, DIPSY_HAT, TINKYWINKY_BIB, DIPSY_BIB, LAALAA_BIB, PO_BIB, PO_HELMET,
 				
-				TINKYWINKY_SPAWN_EGG, DIPSY_SPAWN_EGG, LAALAA_SPAWN_EGG, PO_SPAWN_EGG,
+				TINKYWINKY_SPAWN_EGG, DIPSY_SPAWN_EGG, LAALAA_SPAWN_EGG, PO_SPAWN_EGG, NOONOO_SPAWN_EGG,
 				MIMI_SPAWN_EGG, DAADAA_SPAWN_EGG, PING_SPAWN_EGG, BA_SPAWN_EGG, RURU_SPAWN_EGG, NIN_SPAWN_EGG, DUGGLEDEE_SPAWN_EGG, UMPIEPUMPIE_SPAWN_EGG,
 				
 				TINKYWINKY_ZOMBIE_SPAWN_EGG, DIPSY_ZOMBIE_SPAWN_EGG, LAALAA_ZOMBIE_SPAWN_EGG, PO_ZOMBIE_SPAWN_EGG

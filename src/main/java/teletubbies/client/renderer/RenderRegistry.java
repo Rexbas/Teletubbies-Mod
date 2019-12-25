@@ -3,6 +3,7 @@ package teletubbies.client.renderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import teletubbies.client.renderer.entity.NooNooRenderer;
 import teletubbies.client.renderer.entity.PoScooterRenderer;
 import teletubbies.client.renderer.entity.TeletubbyRenderer;
 import teletubbies.client.renderer.entity.TiddlytubbyRenderer;
@@ -29,6 +30,7 @@ import teletubbies.entity.monster.PoZombieEntity;
 import teletubbies.entity.monster.TinkyWinkyZombieEntity;
 import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
+import teletubbies.entity.passive.NooNooEntity;
 import teletubbies.entity.passive.PoEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
 
@@ -40,7 +42,9 @@ public class RenderRegistry {
 		RenderingRegistry.registerEntityRenderingHandler(DipsyEntity.class, new TeletubbyRenderer.RenderFactory<>("dipsy", 0.0595F, new DipsyModel()));
 		RenderingRegistry.registerEntityRenderingHandler(LaaLaaEntity.class, new TeletubbyRenderer.RenderFactory<>("laalaa", 0.0565F, new LaaLaaModel()));
 		RenderingRegistry.registerEntityRenderingHandler(PoEntity.class, new TeletubbyRenderer.RenderFactory<>("po", 0.0535F, new PoModel()));
-		
+				
+		RenderingRegistry.registerEntityRenderingHandler(NooNooEntity.class, new NooNooRenderer.RenderFactory());
+
 		RenderingRegistry.registerEntityRenderingHandler(MiMiEntity.class, new TiddlytubbyRenderer.RenderFactory("mimi"));
 		RenderingRegistry.registerEntityRenderingHandler(DaaDaaEntity.class, new TiddlytubbyRenderer.RenderFactory("daadaa"));
 		RenderingRegistry.registerEntityRenderingHandler(PingEntity.class, new TiddlytubbyRenderer.RenderFactory("ping"));

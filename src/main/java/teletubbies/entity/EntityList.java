@@ -29,6 +29,7 @@ import teletubbies.entity.monster.PoZombieEntity;
 import teletubbies.entity.monster.TinkyWinkyZombieEntity;
 import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
+import teletubbies.entity.passive.NooNooEntity;
 import teletubbies.entity.passive.PoEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
 
@@ -38,6 +39,8 @@ public class EntityList {
 	public static final EntityType<?> DIPSY = EntityType.Builder.create(DipsyEntity::new, EntityClassification.CREATURE).size(0.6F, 1.9F).build(Teletubbies.MODID + ":dipsy").setRegistryName(Teletubbies.MODID, "dipsy");
 	public static final EntityType<?> LAALAA = EntityType.Builder.create(LaaLaaEntity::new, EntityClassification.CREATURE).size(0.6F, 1.8F).build(Teletubbies.MODID + ":laalaa").setRegistryName(Teletubbies.MODID, "laalaa");	
 	public static final EntityType<?> PO = EntityType.Builder.create(PoEntity::new, EntityClassification.CREATURE).size(0.6F, 1.7F).build(Teletubbies.MODID + ":po").setRegistryName(Teletubbies.MODID, "po");
+
+	public static final EntityType<?> NOONOO = EntityType.Builder.create(NooNooEntity::new, EntityClassification.CREATURE).size(1.0F, 1.0F).build(Teletubbies.MODID + ":noonoo").setRegistryName(Teletubbies.MODID, "noonoo");
 
 	public static final EntityType<?> MIMI = createTiddlytubby(MiMiEntity::new, "mimi");
 	public static final EntityType<?> DAADAA = createTiddlytubby(DaaDaaEntity::new, "daadaa");
@@ -58,7 +61,7 @@ public class EntityList {
 	@SubscribeEvent
 	public static void registerEntityEvent(final RegistryEvent.Register<EntityType<?>> event) {
 		event.getRegistry().registerAll(
-				TINKYWINKY, DIPSY, LAALAA, PO,
+				TINKYWINKY, DIPSY, LAALAA, PO, NOONOO,
 				MIMI, DAADAA, PING, BA, RURU, NIN, DUGGLEDEE, UMPIEPUMPIE,
 				TINKYWINKY_ZOMBIE, DIPSY_ZOMBIE, LAALAA_ZOMBIE, PO_ZOMBIE,
 				PO_SCOOTER
@@ -68,6 +71,8 @@ public class EntityList {
 		registerWorldSpawns(DIPSY, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		registerWorldSpawns(LAALAA, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		registerWorldSpawns(PO, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		
+		registerWorldSpawns(NOONOO, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		
 		registerWorldSpawns(MIMI, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		registerWorldSpawns(DAADAA, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
