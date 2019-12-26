@@ -1,0 +1,25 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "FCF",
+      "CSC",
+      "WWW"
+    ],
+    "key": {
+      "W": {
+        "item": "minecraft:white_wool"
+      },
+      "F": {
+        "item": "minecraft:feather"
+      },
+      "C": {
+        "item": "minecraft:coal"
+      },
+      "S": {
+        "item": "teletubbies:dipsy_stick"
+      }
+    },
+    "result": {
+      "item": "teletubbies:dipsy_hat"
+    }
+  }

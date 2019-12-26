@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "SSS",
+      "SCS",
+      "SSS"
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:chest"
+      },
+      "S": {
+        "item": "teletubbies:tinkywinky_stick"
+      }
+    },
+    "result": {
+      "item": "teletubbies:tinkywinky_bag"
+    }
+  }

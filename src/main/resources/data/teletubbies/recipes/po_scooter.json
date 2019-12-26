@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "S  ",
+      "III",
+      "C C"
+    ],
+    "key": {
+      "C": {
+        "item": "minecraft:clay_ball"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "S": {
+        "item": "teletubbies:po_stick"
+      }
+    },
+    "result": {
+      "item": "teletubbies:po_scooter"
+    }
+  }

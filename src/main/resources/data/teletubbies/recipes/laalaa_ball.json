@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "DLD",
+      "LSL",
+      "DLD"
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:yellow_dye"
+      },
+      "L": {
+        "item": "minecraft:slime_ball"
+      },
+      "S": {
+        "item": "teletubbies:laalaa_stick"
+      }
+    },
+    "result": {
+      "item": "teletubbies:laalaa_ball"
+    }
+  }

@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "ITI",
+      "SSS",
+      "SSS"
+    ],
+    "key": {
+      "T": {
+        "item": "minecraft:string"
+      },
+      "I": {
+        "item": "minecraft:iron_ingot"
+      },
+      "S": {
+        "item": "teletubbies:dipsy_stick"
+      }
+    },
+    "result": {
+      "item": "teletubbies:dipsy_bib"
+    }
+  }
