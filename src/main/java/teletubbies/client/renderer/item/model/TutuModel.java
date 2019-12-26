@@ -8,6 +8,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class TutuModel extends BipedModel<LivingEntity> {
+	
+	public static TutuModel model = new TutuModel(1.0F);
+	
 	RendererModel Piece1;
 	RendererModel skirt1;
 	RendererModel skirt2;

@@ -11,6 +11,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class DipsyHatModel extends BipedModel<LivingEntity> {
+	
+	public static DipsyHatModel model = new DipsyHatModel();
+	
 	public RendererModel hat;
 
 	public DipsyHatModel() {

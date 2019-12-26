@@ -15,9 +15,7 @@ import teletubbies.Teletubbies;
 import teletubbies.client.renderer.item.model.TutuModel;
 
 public class TutuItem extends ArmorItem {
-	
-	private static TutuModel model = new TutuModel(1.0F);
-	
+		
 	public TutuItem() {
 		super(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
@@ -33,7 +31,7 @@ public class TutuItem extends ArmorItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A defaultModel) {
-    	BipedModel<LivingEntity> armorModel = model;
+    	BipedModel<LivingEntity> armorModel = TutuModel.model;
 		return (A) armorModel;
     }
 }

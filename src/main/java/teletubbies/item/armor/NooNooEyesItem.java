@@ -15,9 +15,7 @@ import teletubbies.Teletubbies;
 import teletubbies.client.renderer.item.model.NooNooEyesModel;
 
 public class NooNooEyesItem extends ArmorItem {
-	
-	private static NooNooEyesModel model = new NooNooEyesModel();
-	
+		
 	public NooNooEyesItem() {
 		super(ArmorMaterial.IRON, EquipmentSlotType.HEAD, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
@@ -33,7 +31,7 @@ public class NooNooEyesItem extends ArmorItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A defaultModel) {
-    	BipedModel<LivingEntity> armorModel = model;
+    	BipedModel<LivingEntity> armorModel = NooNooEyesModel.model;
 		return (A) armorModel;
     }
 }

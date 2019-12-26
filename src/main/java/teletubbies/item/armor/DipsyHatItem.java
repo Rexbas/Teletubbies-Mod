@@ -15,9 +15,7 @@ import teletubbies.Teletubbies;
 import teletubbies.client.renderer.item.model.DipsyHatModel;
 
 public class DipsyHatItem extends ArmorItem {
-	
-	private static DipsyHatModel model = new DipsyHatModel();
-	
+		
 	public DipsyHatItem() {
 		super(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
@@ -33,7 +31,7 @@ public class DipsyHatItem extends ArmorItem {
     @OnlyIn(Dist.CLIENT)
     @Override
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A defaultModel) {
-    	BipedModel<LivingEntity> armorModel = model;
+    	BipedModel<LivingEntity> armorModel = DipsyHatModel.model;
 		return (A) armorModel;
     }
 }

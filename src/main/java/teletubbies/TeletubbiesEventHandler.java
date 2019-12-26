@@ -116,6 +116,7 @@ public class TeletubbiesEventHandler {
 		}
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public void updateRidden(PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.START && event.player instanceof ClientPlayerEntity) {

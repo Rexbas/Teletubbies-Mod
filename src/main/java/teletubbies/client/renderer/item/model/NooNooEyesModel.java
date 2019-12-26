@@ -11,6 +11,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class NooNooEyesModel extends BipedModel<LivingEntity> {
+	
+	public static NooNooEyesModel model = new NooNooEyesModel();
+	
 	public RendererModel eyes;
 
 	public NooNooEyesModel() {
