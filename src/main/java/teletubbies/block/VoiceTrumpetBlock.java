@@ -5,9 +5,12 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -22,15 +25,17 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import teletubbies.Teletubbies;
 import teletubbies.tileentity.VoiceTrumpetTileEntity;
 import teletubbies.util.VoxelShapeRotation;
 
-public class VoiceTrumpetBlock extends Block {
+public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 		
 	protected static final VoxelShape TOP_AABB_NORTH = VoxelShapes.or(
 			makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 2.0D, 9.0D), 
@@ -55,7 +60,7 @@ public class VoiceTrumpetBlock extends Block {
 				.harvestTool(ToolType.PICKAXE));
 
 		this.setRegistryName(Teletubbies.MODID, "voice_trumpet");
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false));
 	}
 	
 	@Override
@@ -80,10 +85,8 @@ public class VoiceTrumpetBlock extends Block {
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (placer != null) {
-		    world.setBlockState(pos.up(), state.with(FACING, placer.getHorizontalFacing()).with(BOTTOM, false));
-		}
-		if (state.get(BOTTOM)) {
-			world.getPendingBlockTicks().scheduleTick(pos, this, 1);
+		    IFluidState fluidState = world.getFluidState(pos.up());
+		    world.setBlockState(pos.up(), state.with(BOTTOM, false).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER));
 		}
 	}
 	
@@ -91,8 +94,14 @@ public class VoiceTrumpetBlock extends Block {
 	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {	     
 		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
 		BlockState otherState = world.getBlockState(other);	      
-		if (otherState.getBlock() == this) {		      
-			world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);		      
+		if (otherState.getBlock() == this) {
+		    if (otherState.get(WATERLOGGED)) {
+			    IFluidState fluidState = world.getFluidState(other);
+				world.setBlockState(other, fluidState.getBlockState(), 35); 
+		    }
+		    else {
+		    	world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);
+		    }
 		}		      
 		super.onBlockHarvested(world, pos, state, player);
 	}
@@ -102,7 +111,13 @@ public class VoiceTrumpetBlock extends Block {
 		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {		      
-			world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);		      
+		    if (otherState.get(WATERLOGGED)) {
+			    IFluidState fluidState = world.getFluidState(other);
+				world.setBlockState(other, fluidState.getBlockState(), 35); 
+		    }
+		    else {
+		    	world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);
+		    }     
 		}		
 		super.onBlockExploded(state, world, pos, explosion);
     }
@@ -112,14 +127,34 @@ public class VoiceTrumpetBlock extends Block {
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		BlockPos pos = context.getPos();
 		if (pos.getY() < 255 && context.getWorld().getBlockState(pos.up()).isReplaceable(context)) {
-			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(BOTTOM, true);
+		    IFluidState fluidState = context.getWorld().getFluidState(pos);
+			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(BOTTOM, true).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
 		}
 		return null;
 	}
 	
 	@Override
+	public IFluidState getFluidState(BlockState state) {
+		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+	}
+	
+	@Override
+	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+		if (state.get(WATERLOGGED)) {
+			world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+		}
+		return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+	}
+	
+	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING, BOTTOM);
+		builder.add(FACING, BOTTOM, WATERLOGGED);
+	}
+	
+	public boolean isUnderwater(World world, BlockPos pos) {
+		BlockPos tilePos = world.getBlockState(pos).get(BOTTOM) ? pos : pos.down();
+		if (world.getBlockState(tilePos).get(WATERLOGGED) && world.getBlockState(tilePos.up()).get(WATERLOGGED)) return true;
+		return false;
 	}
 	
 	@Override

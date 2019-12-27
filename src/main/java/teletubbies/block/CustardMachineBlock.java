@@ -8,8 +8,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -28,6 +31,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import teletubbies.Teletubbies;
@@ -39,6 +43,7 @@ import teletubbies.util.VoxelShapeRotation;
 public class CustardMachineBlock extends Block {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final EnumProperty<CustardMachinePart> PART = EnumProperty.create("part", CustardMachinePart.class);
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 		
 	protected static final VoxelShape SMALLTOWER_AABB_NORTH = VoxelShapes.or(
 			makeCuboidShape(7.0D, 0.0D, 5.0D, 13.0D, 3.0D, 11.0D), 
@@ -70,7 +75,7 @@ public class CustardMachineBlock extends Block {
 				.harvestTool(ToolType.PICKAXE));
 
 		this.setRegistryName(Teletubbies.MODID, "custard_machine");
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(PART, CustardMachinePart.BASE));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, false));
 	}
 	
 	@Override
@@ -113,10 +118,14 @@ public class CustardMachineBlock extends Block {
 			BlockPos bigbasePos = getBigTowerBasePos(pos, placer.getHorizontalFacing());
 			BlockPos smallPos = getSmallTowerPos(pos, placer.getHorizontalFacing());
 			BlockPos bigPos = getBigTowerPos(pos, placer.getHorizontalFacing());
-			world.setBlockState(smallbasePos, state.with(FACING, placer.getHorizontalFacing()).with(PART, CustardMachinePart.SMALLBASE));
-		    world.setBlockState(bigbasePos, state.with(FACING, placer.getHorizontalFacing()).with(PART, CustardMachinePart.BIGBASE));
-		    world.setBlockState(smallPos, state.with(FACING, placer.getHorizontalFacing()).with(PART, CustardMachinePart.SMALL));
-		    world.setBlockState(bigPos, state.with(FACING, placer.getHorizontalFacing()).with(PART, CustardMachinePart.BIG));
+		    IFluidState smallbaseFluid = world.getFluidState(pos.up());
+		    IFluidState bigbaseFluid = world.getFluidState(pos.up());
+		    IFluidState smallFluid = world.getFluidState(pos.up());
+		    IFluidState bigFluid = world.getFluidState(pos.up());
+			world.setBlockState(smallbasePos, state.with(PART, CustardMachinePart.SMALLBASE).with(WATERLOGGED, smallbaseFluid.getFluid() == Fluids.WATER));
+		    world.setBlockState(bigbasePos, state.with(PART, CustardMachinePart.BIGBASE).with(WATERLOGGED, bigbaseFluid.getFluid() == Fluids.WATER));
+		    world.setBlockState(smallPos, state.with(PART, CustardMachinePart.SMALL).with(WATERLOGGED, smallFluid.getFluid() == Fluids.WATER));
+		    world.setBlockState(bigPos, state.with(PART, CustardMachinePart.BIG).with(WATERLOGGED, bigFluid.getFluid() == Fluids.WATER));
 		}
 	}
 	
@@ -126,32 +135,32 @@ public class CustardMachineBlock extends Block {
 		
 		BlockPos basePos = getBasePos(pos, state.get(PART), facing);
 		BlockState subblockState = world.getBlockState(basePos);
-		if (subblockState.getBlock() == this && !pos.equals(basePos)) {	
-			world.setBlockState(basePos, Blocks.AIR.getDefaultState(), 35);		      
+		if (subblockState.getBlock() == this && !pos.equals(basePos)) {
+			removePart(world, basePos, subblockState);
 		}
 		
 		BlockPos subblock = getSmallTowerBasePos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {	
-			world.setBlockState(subblock, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, subblock, subblockState);
 		}
 		
 		subblock = getBigTowerBasePos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {
-			world.setBlockState(subblock, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, subblock, subblockState);
 		}
 		
 		subblock = getSmallTowerPos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {	
-			world.setBlockState(subblock, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, subblock, subblockState);
 		}
 		
 		subblock = getBigTowerPos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
-			world.setBlockState(subblock, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, subblock, subblockState);
 		}		      
 		super.onBlockHarvested(world, pos, state, player);
 	}
@@ -163,34 +172,44 @@ public class CustardMachineBlock extends Block {
 		BlockPos basePos = getBasePos(pos, state.get(PART), facing);
 		BlockState subblockState = world.getBlockState(basePos);
 		if (subblockState.getBlock() == this && !pos.equals(basePos)) {		      
-			world.setBlockState(basePos, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, basePos, subblockState);
 		}
 		
 		BlockPos subblock = getSmallTowerBasePos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		      
-			world.setBlockState(subblock, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, subblock, subblockState);
 		}
 		
 		subblock = getBigTowerBasePos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		      
-			world.setBlockState(subblock, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, subblock, subblockState);
 		}
 		
 		subblock = getSmallTowerPos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		      
-			world.setBlockState(subblock, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, subblock, subblockState);
 		}
 		
 		subblock = getBigTowerPos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		      
-			world.setBlockState(subblock, Blocks.AIR.getDefaultState(), 35);		      
+			removePart(world, subblock, subblockState);
 		}
 		super.onBlockExploded(state, world, pos, explosion);
     }
+	
+	private void removePart(World world, BlockPos pos, BlockState state) {
+		if (state.get(WATERLOGGED)) {
+		    IFluidState fluidState = world.getFluidState(pos);
+			world.setBlockState(pos, fluidState.getBlockState(), 35); 
+	    }
+	    else {
+	    	world.setBlockState(pos, Blocks.AIR.getDefaultState(), 35);
+	    }
+	}
 	
 	@Nullable
 	@Override
@@ -206,14 +225,28 @@ public class CustardMachineBlock extends Block {
 				smallPos.getY() < 255 && context.getWorld().getBlockState(smallPos).isReplaceable(context) &&
 				bigPos.getY() < 255 && context.getWorld().getBlockState(bigPos).isReplaceable(context)) {
 			
-			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(PART, CustardMachinePart.BASE);
+		    IFluidState fluidState = context.getWorld().getFluidState(pos);
+			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
 		}
 		return null;
 	}
 	
 	@Override
+	public IFluidState getFluidState(BlockState state) {
+		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+	}
+	
+	@Override
+	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+		if (state.get(WATERLOGGED)) {
+			world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+		}
+		return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+	}
+	
+	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING, PART);
+		builder.add(FACING, PART, WATERLOGGED);
 	}
 	
 	@Override
@@ -228,7 +261,8 @@ public class CustardMachineBlock extends Block {
 				
 				if (t.canDrop()) {
 					stack.setCount(stack.getCount() - 1);
-					world.playSound(player, pos, SoundList.MACHINE_CUSTARD, SoundCategory.BLOCKS, 1, 1);
+					float pitch = isUnderwater(world, pos) ? 0.75F : 1F;
+					world.playSound(player, pos, SoundList.MACHINE_CUSTARD, SoundCategory.BLOCKS, 1, pitch);
 					t.reset();
 				}
 			}
@@ -240,6 +274,19 @@ public class CustardMachineBlock extends Block {
 			}
 		}
 		return true;
+	}
+	
+	public boolean isUnderwater(World world, BlockPos pos) {
+		Direction facing = world.getBlockState(pos).get(FACING);
+		BlockPos basePos = getBasePos(pos, world.getBlockState(pos).get(PART), facing);
+		if (world.getBlockState(basePos).get(WATERLOGGED) &&
+				world.getBlockState(getSmallTowerBasePos(basePos, facing)).get(WATERLOGGED) &&
+				world.getBlockState(getBigTowerBasePos(basePos, facing)).get(WATERLOGGED) &&
+				world.getBlockState(getSmallTowerPos(basePos, facing)).get(WATERLOGGED) &&
+				world.getBlockState(getBigTowerPos(basePos, facing)).get(WATERLOGGED)) { 
+			return true; 
+		}
+		return false;
 	}
 	
 	@Override
