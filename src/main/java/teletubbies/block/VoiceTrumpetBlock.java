@@ -95,8 +95,8 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {
-		    if (otherState.get(WATERLOGGED)) {
-			    IFluidState fluidState = world.getFluidState(other);
+			IFluidState fluidState = world.getFluidState(other);
+		    if (fluidState.getFluid() == Fluids.WATER) {
 				world.setBlockState(other, fluidState.getBlockState(), 35); 
 		    }
 		    else {
@@ -111,13 +111,13 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {		      
-		    if (otherState.get(WATERLOGGED)) {
-			    IFluidState fluidState = world.getFluidState(other);
+			IFluidState fluidState = world.getFluidState(other);
+		    if (fluidState.getFluid() == Fluids.WATER) {
 				world.setBlockState(other, fluidState.getBlockState(), 35); 
 		    }
 		    else {
 		    	world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);
-		    }     
+		    }   
 		}		
 		super.onBlockExploded(state, world, pos, explosion);
     }

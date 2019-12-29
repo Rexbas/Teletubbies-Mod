@@ -34,6 +34,7 @@ import teletubbies.Teletubbies;
 import teletubbies.client.audio.SoundList;
 import teletubbies.item.ItemList;
 import teletubbies.tileentity.ToastMachineTileEntity;
+import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
 
 public class ToastMachineBlock extends Block {
@@ -92,9 +93,9 @@ public class ToastMachineBlock extends Block {
 	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {	     
 		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
 		BlockState otherState = world.getBlockState(other);	      
-		if (otherState.getBlock() == this) {		      
-		    if (otherState.get(WATERLOGGED)) {
-			    IFluidState fluidState = world.getFluidState(other);
+		if (otherState.getBlock() == this) {
+			IFluidState fluidState = world.getFluidState(other);
+		    if (fluidState.getFluid() == Fluids.WATER) {
 				world.setBlockState(other, fluidState.getBlockState(), 35); 
 		    }
 		    else {
@@ -109,13 +110,13 @@ public class ToastMachineBlock extends Block {
 		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {		      
-		    if (otherState.get(WATERLOGGED)) {
-			    IFluidState fluidState = world.getFluidState(other);
+			IFluidState fluidState = world.getFluidState(other);
+		    if (fluidState.getFluid() == Fluids.WATER) {
 				world.setBlockState(other, fluidState.getBlockState(), 35); 
 		    }
 		    else {
 		    	world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);
-		    }	      
+		    }		      
 		}
 		super.onBlockExploded(state, world, pos, explosion);
     }
@@ -125,8 +126,7 @@ public class ToastMachineBlock extends Block {
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		BlockPos pos = context.getPos();
 		if (pos.getY() < 255 && context.getWorld().getBlockState(pos.up()).isReplaceable(context)) {
-		    IFluidState fluidState = context.getWorld().getFluidState(pos);
-			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(BOTTOM, true).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(BOTTOM, true).with(WATERLOGGED, false);
 		}
 		return null;
 	}
@@ -164,10 +164,10 @@ public class ToastMachineBlock extends Block {
 	
 	public boolean isUnderwater(World world, BlockPos pos) {
 		BlockPos tilePos = world.getBlockState(pos).get(BOTTOM) ? pos : pos.down();
-		if (world.getBlockState(tilePos).get(WATERLOGGED) && world.getBlockState(tilePos.up()).get(WATERLOGGED)) return true;
+		if (BlocksUtil.isBlockSurrounded(world, tilePos) && world.getBlockState(tilePos.up()).get(WATERLOGGED)) return true;
 		return false;
 	}
-	
+		
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return state.get(BOTTOM);

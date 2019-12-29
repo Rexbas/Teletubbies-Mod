@@ -38,6 +38,7 @@ import teletubbies.Teletubbies;
 import teletubbies.client.audio.SoundList;
 import teletubbies.item.ItemList;
 import teletubbies.tileentity.CustardMachineTileEntity;
+import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
 
 public class CustardMachineBlock extends Block {
@@ -118,12 +119,10 @@ public class CustardMachineBlock extends Block {
 			BlockPos bigbasePos = getBigTowerBasePos(pos, placer.getHorizontalFacing());
 			BlockPos smallPos = getSmallTowerPos(pos, placer.getHorizontalFacing());
 			BlockPos bigPos = getBigTowerPos(pos, placer.getHorizontalFacing());
-		    IFluidState smallbaseFluid = world.getFluidState(pos.up());
-		    IFluidState bigbaseFluid = world.getFluidState(pos.up());
 		    IFluidState smallFluid = world.getFluidState(pos.up());
 		    IFluidState bigFluid = world.getFluidState(pos.up());
-			world.setBlockState(smallbasePos, state.with(PART, CustardMachinePart.SMALLBASE).with(WATERLOGGED, smallbaseFluid.getFluid() == Fluids.WATER));
-		    world.setBlockState(bigbasePos, state.with(PART, CustardMachinePart.BIGBASE).with(WATERLOGGED, bigbaseFluid.getFluid() == Fluids.WATER));
+			world.setBlockState(smallbasePos, state.with(PART, CustardMachinePart.SMALLBASE).with(WATERLOGGED, false));
+		    world.setBlockState(bigbasePos, state.with(PART, CustardMachinePart.BIGBASE).with(WATERLOGGED, false));
 		    world.setBlockState(smallPos, state.with(PART, CustardMachinePart.SMALL).with(WATERLOGGED, smallFluid.getFluid() == Fluids.WATER));
 		    world.setBlockState(bigPos, state.with(PART, CustardMachinePart.BIG).with(WATERLOGGED, bigFluid.getFluid() == Fluids.WATER));
 		}
@@ -202,8 +201,8 @@ public class CustardMachineBlock extends Block {
     }
 	
 	private void removePart(World world, BlockPos pos, BlockState state) {
-		if (state.get(WATERLOGGED)) {
-		    IFluidState fluidState = world.getFluidState(pos);
+		IFluidState fluidState = world.getFluidState(pos);
+	    if (fluidState.getFluid() == Fluids.WATER) {
 			world.setBlockState(pos, fluidState.getBlockState(), 35); 
 	    }
 	    else {
@@ -225,8 +224,7 @@ public class CustardMachineBlock extends Block {
 				smallPos.getY() < 255 && context.getWorld().getBlockState(smallPos).isReplaceable(context) &&
 				bigPos.getY() < 255 && context.getWorld().getBlockState(bigPos).isReplaceable(context)) {
 			
-		    IFluidState fluidState = context.getWorld().getFluidState(pos);
-			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, false);
 		}
 		return null;
 	}
@@ -279,9 +277,9 @@ public class CustardMachineBlock extends Block {
 	public boolean isUnderwater(World world, BlockPos pos) {
 		Direction facing = world.getBlockState(pos).get(FACING);
 		BlockPos basePos = getBasePos(pos, world.getBlockState(pos).get(PART), facing);
-		if (world.getBlockState(basePos).get(WATERLOGGED) &&
-				world.getBlockState(getSmallTowerBasePos(basePos, facing)).get(WATERLOGGED) &&
-				world.getBlockState(getBigTowerBasePos(basePos, facing)).get(WATERLOGGED) &&
+		if (BlocksUtil.isBlockSurrounded(world, basePos) &&
+				BlocksUtil.isBlockSurrounded(world, getSmallTowerBasePos(basePos, facing)) &&
+				BlocksUtil.isBlockSurrounded(world, getBigTowerBasePos(basePos, facing)) &&
 				world.getBlockState(getSmallTowerPos(basePos, facing)).get(WATERLOGGED) &&
 				world.getBlockState(getBigTowerPos(basePos, facing)).get(WATERLOGGED)) { 
 			return true; 
