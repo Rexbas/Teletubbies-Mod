@@ -2,17 +2,23 @@ package teletubbies;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.GrassColors;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -23,6 +29,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import teletubbies.block.BlockList;
 import teletubbies.client.audio.PoScooterTickableSound;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
@@ -32,12 +40,14 @@ import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.PoEntity;
 import teletubbies.entity.passive.TeletubbyEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
+import teletubbies.item.ItemList;
 import teletubbies.item.LaaLaaBallItem;
 
+@Mod.EventBusSubscriber(modid = Teletubbies.MODID)
 public class TeletubbiesEventHandler {
-
+	
 	@SubscribeEvent
-	public void attachtCapabilityEntity (AttachCapabilitiesEvent<Entity> event) {		
+	public static void attachtCapabilityEntity (AttachCapabilitiesEvent<Entity> event) {		
 		if(event.getObject() instanceof PlayerEntity) {
 			event.addCapability(new ResourceLocation(Teletubbies.MODID, "capability.jump"), new JumpProvider());
 		}
@@ -45,14 +55,14 @@ public class TeletubbiesEventHandler {
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public void joinClientWorld(EntityJoinWorldEvent event) {
+	public static void joinClientWorld(EntityJoinWorldEvent event) {
 		if(event.getEntity() instanceof PoScooterEntity) {
 			Minecraft.getInstance().getSoundHandler().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
 		}
 	}
 	
 	@SubscribeEvent
-	public void onLivingUpdate(LivingUpdateEvent event) {
+	public static void onLivingUpdate(LivingUpdateEvent event) {
 		if(event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 						
@@ -100,7 +110,7 @@ public class TeletubbiesEventHandler {
 	}
 	
 	@SubscribeEvent
-	public void fallEvent(LivingFallEvent event) {
+	public static void fallEvent(LivingFallEvent event) {
 		if(event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			if(player.getHeldItemMainhand() != null) {
@@ -118,7 +128,7 @@ public class TeletubbiesEventHandler {
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public void updateRidden(PlayerTickEvent event) {
+	public static void updateRidden(PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.START && event.player instanceof ClientPlayerEntity) {
 			ClientPlayerEntity player = (ClientPlayerEntity) event.player;
 			if (player.getRidingEntity() instanceof PoScooterEntity) {
@@ -130,7 +140,7 @@ public class TeletubbiesEventHandler {
 	}
 	
 	@SubscribeEvent
-	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if(event.getEntity() instanceof ZombieEntity) {
 			ZombieEntity zombie = (ZombieEntity) event.getEntity();
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, TinkyWinkyEntity.class, true));
@@ -141,7 +151,7 @@ public class TeletubbiesEventHandler {
 	}
 	
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
-	public void onLivingDeathEvent(LivingDeathEvent event) {
+	public static void onLivingDeathEvent(LivingDeathEvent event) {
 		Random rand = new Random();
 		int i = rand.nextInt(4);
 		DamageSource damageSource = (DamageSource) event.getSource();
@@ -154,6 +164,28 @@ public class TeletubbiesEventHandler {
 					teletubby.transferToZombie();
 				}
 			}
+		}
+	}
+	
+	@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+	public static class TeletubbiesBus {
+		@OnlyIn(Dist.CLIENT)
+	    @SubscribeEvent
+	    public static void registerBlockColorHandlers(final ColorHandlerEvent.Block event) {
+	        event.getBlockColors().register((state, reader, pos, tint) -> reader != null
+	                && pos != null ? BiomeColors.getGrassColor(reader, pos)
+	                : GrassColors.get(0.5D, 1.0D), BlockList.FULL_GRASS);
+	    }
+	    
+	    @OnlyIn(Dist.CLIENT)
+		@SubscribeEvent
+		public static void registerItemColourHandlers(final ColorHandlerEvent.Item event) { 	
+			final IItemColor itemBlockColourHandler = (stack, tint) -> {
+				final BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
+				return event.getBlockColors().getColor(state, null, null, tint);
+			};
+
+			event.getItemColors().register(itemBlockColourHandler, ItemList.FULL_GRASS);
 		}
 	}
 }

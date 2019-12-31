@@ -119,8 +119,8 @@ public class CustardMachineBlock extends Block {
 			BlockPos bigbasePos = getBigTowerBasePos(pos, placer.getHorizontalFacing());
 			BlockPos smallPos = getSmallTowerPos(pos, placer.getHorizontalFacing());
 			BlockPos bigPos = getBigTowerPos(pos, placer.getHorizontalFacing());
-		    IFluidState smallFluid = world.getFluidState(pos.up());
-		    IFluidState bigFluid = world.getFluidState(pos.up());
+		    IFluidState smallFluid = world.getFluidState(smallPos);
+		    IFluidState bigFluid = world.getFluidState(bigPos);
 			world.setBlockState(smallbasePos, state.with(PART, CustardMachinePart.SMALLBASE).with(WATERLOGGED, false));
 		    world.setBlockState(bigbasePos, state.with(PART, CustardMachinePart.BIGBASE).with(WATERLOGGED, false));
 		    world.setBlockState(smallPos, state.with(PART, CustardMachinePart.SMALL).with(WATERLOGGED, smallFluid.getFluid() == Fluids.WATER));

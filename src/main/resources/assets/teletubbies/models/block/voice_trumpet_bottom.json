@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "teletubbies:blocks/voice_trumpet",
-		"particle": "teletubbies:blocks/voice_trumpet"
+		"0": "teletubbies:block/voice_trumpet",
+		"particle": "teletubbies:block/voice_trumpet"
 	},
 	"elements": [
 		{

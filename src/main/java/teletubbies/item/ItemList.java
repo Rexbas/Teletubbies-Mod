@@ -21,10 +21,12 @@ import teletubbies.item.armor.TutuItem;
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemList {
 	// Blocks
+	public static Item FULL_GRASS;
 	public static final Item VOICE_TRUMPET = new BlockItem(BlockList.VOICE_TRUMPET, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.VOICE_TRUMPET.getRegistryName());
 	public static final Item TOAST_MACHINE = new BlockItem(BlockList.TOAST_MACHINE, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.TOAST_MACHINE.getRegistryName());
 	public static final Item CUSTARD_MACHINE = new BlockItem(BlockList.CUSTARD_MACHINE, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.CUSTARD_MACHINE.getRegistryName());
-	
+	public static final Item WINDOW = new BlockItem(BlockList.WINDOW, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.WINDOW.getRegistryName());
+
 	// Items
 	public static final Item TINKYWINKY_STICK = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(Teletubbies.MODID, "tinkywinky_stick");
 	public static final Item DIPSY_STICK = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(Teletubbies.MODID, "dipsy_stick");
@@ -76,8 +78,9 @@ public class ItemList {
 		Teletubbies.CUSTARD_FOOD= (new Food.Builder()).hunger(4).saturation(5).build();
 		Teletubbies.TOAST_FOOD= (new Food.Builder()).hunger(2).saturation(5).fastToEat().build();
 		
-		event.getRegistry().registerAll(			
-				VOICE_TRUMPET, TOAST_MACHINE, CUSTARD_MACHINE,
+		event.getRegistry().registerAll(
+				FULL_GRASS = new BlockItem(BlockList.FULL_GRASS, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.FULL_GRASS.getRegistryName()),
+				VOICE_TRUMPET, TOAST_MACHINE, CUSTARD_MACHINE, WINDOW,
 				
 				TINKYWINKY_STICK, DIPSY_STICK, LAALAA_STICK, PO_STICK, TINKYWINKY_BAG, LAALAA_BALL,
 				BOWL, CUSTARD, TOAST,

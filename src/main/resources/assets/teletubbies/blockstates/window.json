@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "part=ha,x_axis=true":  { "model": "teletubbies:block/window_horizontal", "y": 90 },
+        "part=ha,x_axis=false":  { "model": "teletubbies:block/window_horizontal"  },
+        "part=c,x_axis=true":  { "model": "teletubbies:block/window_center", "y": 90 },
+        "part=c,x_axis=false":  { "model": "teletubbies:block/window_center"  },
+        "part=hb,x_axis=true":  { "model": "teletubbies:block/window_horizontal", "y": 270 },
+        "part=hb,x_axis=false":  { "model": "teletubbies:block/window_horizontal", "y": 180  },
+        "part=sa,x_axis=true":  { "model": "teletubbies:block/window_slanted", "y": 90 },
+        "part=sa,x_axis=false":  { "model": "teletubbies:block/window_slanted"  },
+        "part=v,x_axis=true":  { "model": "teletubbies:block/window_vertical", "y": 90 },
+        "part=v,x_axis=false":  { "model": "teletubbies:block/window_vertical"  },
+        "part=sb,x_axis=true":  { "model": "teletubbies:block/window_slanted", "y": 270 },
+        "part=sb,x_axis=false":  { "model": "teletubbies:block/window_slanted", "y": 180  }
+    }
+}

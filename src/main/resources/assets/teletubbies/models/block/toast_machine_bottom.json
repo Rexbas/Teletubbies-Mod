@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "teletubbies:blocks/toast_machine",
-		"particle": "teletubbies:blocks/toast_machine"
+		"0": "teletubbies:block/toast_machine",
+		"particle": "teletubbies:block/toast_machine"
 	},
 	"elements": [
 		{
