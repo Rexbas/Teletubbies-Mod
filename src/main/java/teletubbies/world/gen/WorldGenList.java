@@ -40,8 +40,6 @@ public class WorldGenList {
 				VOICE_TRUMPET_FEATURE, DOME_STRUCTURE
 		);
 	}
-	
-
 
 	private static <T extends IFeatureConfig> Feature<T> registerFeature(Feature<T> feature, String registryName) {
 		feature.setRegistryName(registryName);

@@ -35,7 +35,7 @@ public class DomeStructure extends ScatteredStructure<NoFeatureConfig> {
 	
 	@Override
 	protected int getSeedModifier() {
-		return 0;
+		return 12345;
 	}
 
 	@Override
