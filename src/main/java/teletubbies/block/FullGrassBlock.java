@@ -53,16 +53,16 @@ public class FullGrassBlock extends GrassBlock {
 	@Override
 	public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
 		if (!worldIn.isRemote) {
-			if (!worldIn.isAreaLoaded(pos, 3))
-				return;
-		} else {
-			if (worldIn.getLight(pos.up()) >= 9) {
-				BlockState blockstate = this.getDefaultState();
+			if (!worldIn.isAreaLoaded(pos, 3)) return; 
+			if (func_220257_b(state, worldIn, pos)) {
+				if (worldIn.getLight(pos.up()) >= 9) {
+					BlockState blockstate = this.getDefaultState();
 
-				for (int i = 0; i < 4; ++i) {
-					BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-					if (worldIn.getBlockState(blockpos).getBlock() == Blocks.DIRT && func_220256_c(blockstate, worldIn, blockpos)) {
-						worldIn.setBlockState(blockpos,	blockstate);
+					for (int i = 0; i < 4; ++i) {
+						BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
+						if (worldIn.getBlockState(blockpos).getBlock() == Blocks.DIRT && func_220256_c(blockstate, worldIn, blockpos)) {
+							worldIn.setBlockState(blockpos, blockstate);
+						}
 					}
 				}
 			}

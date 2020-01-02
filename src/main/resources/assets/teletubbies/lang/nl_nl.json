@@ -58,7 +58,9 @@
     "item.teletubbies.po_helmet": "Po's Helm",
     "item.teletubbies.po_scooter": "Po's Scooter",
 
-    "block.teletubbies.voice_trumpet": "Tubby Voice Trompet",
+    "block.teletubbies.full_grass": "Grasblok",
+    "block.teletubbies.voice_trumpet": "Voice Trompet",
     "block.teletubbies.toast_machine": "Tubby Toast Machine",
-    "block.teletubbies.custard_machine": "Tubby Toetje Machine"
+    "block.teletubbies.custard_machine": "Tubby Toetje Machine",
+    "block.teletubbies.window": "Raam"
 }

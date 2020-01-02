@@ -32,10 +32,7 @@ public class WorldGenList {
 	@SubscribeEvent
 	public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
 		addFeature(Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(VOICE_TRUMPET_FEATURE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.FOREST_ROCK, new FrequencyConfig(2)), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		
-		//Biomes.PLAINS.addStructure(DOME_STRUCTURE, IFeatureConfig.NO_FEATURE_CONFIG);
-	    //Biomes.PLAINS.addFeature(Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(DOME_STRUCTURE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
-		
+				
 		addStructure(DOME_STRUCTURE, IFeatureConfig.NO_FEATURE_CONFIG, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 	    addFeature(Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(DOME_STRUCTURE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 	    

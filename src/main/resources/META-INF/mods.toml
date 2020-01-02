@@ -35,7 +35,7 @@ updateJSONURL="https://raw.githubusercontent.com/Rexbas/Teletubbies-Mod/update/u
 displayURL="https://www.curseforge.com/minecraft/mc-mods/teletubbies-mod" #optional
 
 # A text field displayed in the mod UI
-credits="" #optional
+credits="McHorse (Dome parts)" #optional
 
 # A text field displayed in the mod UI
 authors="Rexbas" #optional

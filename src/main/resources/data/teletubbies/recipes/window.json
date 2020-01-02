@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+      "WWW",
+      "WCW",
+      "CCC"
+    ],
+    "key": {
+      "W": {
+        "item": "minecraft:white_stained_glass_pane"
+      },
+      "C": {
+        "item": "minecraft:cyan_stained_glass_pane"
+      }
+    },
+    "result": {
+      "item": "teletubbies:window"
+    }
+  }
