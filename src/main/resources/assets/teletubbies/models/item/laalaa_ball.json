@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "teletubbies:items/laalaa_ball"
+        "layer0": "teletubbies:item/laalaa_ball"
     },
     "display": {
         "ground": {

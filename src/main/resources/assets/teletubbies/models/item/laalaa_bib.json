@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "teletubbies:items/laalaa_bib"
+        "layer0": "teletubbies:item/laalaa_bib"
     }
 }

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "teletubbies:items/po_stick"
+        "layer0": "teletubbies:item/po_stick"
     }
 }

@@ -82,23 +82,13 @@ public class TeletubbiesEventHandler {
 					c.setFallDistance(player.fallDistance);
 				}
 				
-				LaaLaaBallItem ball = null;
-				if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem &&
-						player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBallItem) {
-					ball = (LaaLaaBallItem) player.getHeldItemMainhand().getItem();
-				}
-				else if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem) {
-					ball = (LaaLaaBallItem) player.getHeldItemMainhand().getItem();
-				}
-				else if(player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBallItem) {
-					ball = (LaaLaaBallItem) player.getHeldItemOffhand().getItem();
-				}
-				
-				if(ball != null) {
-					if(c.canJump(player) && fallDistance >= 10) {
+				if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem
+						|| player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBallItem) {
+					if (c.canJump(player) && fallDistance >= 10) {
 						LaaLaaBallItem.jump(player, true);
 					}
 				}
+
 				if(player.onGround) {
 					c.setFallDistance(0);
 				}
@@ -171,21 +161,24 @@ public class TeletubbiesEventHandler {
 	public static class TeletubbiesBus {
 		@OnlyIn(Dist.CLIENT)
 	    @SubscribeEvent
-	    public static void registerBlockColorHandlers(final ColorHandlerEvent.Block event) {
+	    public static void BlockColorHandler(final ColorHandlerEvent.Block event) {
+			if (BlockList.FULL_GRASS != null) {
 	        event.getBlockColors().register((state, reader, pos, tint) -> reader != null
 	                && pos != null ? BiomeColors.getGrassColor(reader, pos)
 	                : GrassColors.get(0.5D, 1.0D), BlockList.FULL_GRASS);
+			}
 	    }
 	    
 	    @OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
-		public static void registerItemColourHandlers(final ColorHandlerEvent.Item event) { 	
-			final IItemColor itemBlockColourHandler = (stack, tint) -> {
-				final BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
-				return event.getBlockColors().getColor(state, null, null, tint);
-			};
-
-			event.getItemColors().register(itemBlockColourHandler, ItemList.FULL_GRASS);
+		public static void ItemColorHandler(final ColorHandlerEvent.Item event) {
+	    	if (ItemList.FULL_GRASS != null) {
+				final IItemColor colorHandler = (stack, tint) -> {
+					final BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
+					return event.getBlockColors().getColor(state, null, null, tint);
+				};
+				event.getItemColors().register(colorHandler, ItemList.FULL_GRASS);
+	    	}
 		}
 	}
 }

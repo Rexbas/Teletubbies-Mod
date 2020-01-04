@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "teletubbies:items/bowl"
+        "layer0": "teletubbies:item/bowl"
     }
 }

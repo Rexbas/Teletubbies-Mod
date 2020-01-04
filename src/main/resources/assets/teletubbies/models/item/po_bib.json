@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "teletubbies:items/po_bib"
+        "layer0": "teletubbies:item/po_bib"
     }
 }

@@ -25,7 +25,7 @@ public class TutuItem extends ArmorItem {
 	
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return Teletubbies.MODID + ":textures/models/armor/tutu.png";
+		return Teletubbies.MODID + ":textures/model/armor/tutu.png";
     }
     
     @OnlyIn(Dist.CLIENT)

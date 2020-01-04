@@ -25,7 +25,7 @@ public class DipsyHatItem extends ArmorItem {
 
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return Teletubbies.MODID + ":textures/models/armor/dipsy_hat.png";
+		return Teletubbies.MODID + ":textures/model/armor/dipsy_hat.png";
     }
     
     @OnlyIn(Dist.CLIENT)

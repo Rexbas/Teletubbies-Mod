@@ -19,6 +19,6 @@ public class SimpleArmorItem extends ArmorItem {
 	
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return Teletubbies.MODID + ":textures/models/armor/" + this.getRegistryName().getPath() + ".png";
+		return Teletubbies.MODID + ":textures/model/armor/" + this.getRegistryName().getPath() + ".png";
     }
 }

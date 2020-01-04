@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "teletubbies:items/tinkywinky_bag"
+        "layer0": "teletubbies:item/tinkywinky_bag"
     }
 }

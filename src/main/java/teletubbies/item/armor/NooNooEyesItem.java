@@ -25,7 +25,7 @@ public class NooNooEyesItem extends ArmorItem {
 
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
-		return Teletubbies.MODID + ":textures/models/armor/noonoo_eyes.png";
+		return Teletubbies.MODID + ":textures/model/armor/noonoo_eyes.png";
     }
     
     @OnlyIn(Dist.CLIENT)
