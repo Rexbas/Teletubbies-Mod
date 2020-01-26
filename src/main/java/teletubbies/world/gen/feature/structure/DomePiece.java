@@ -11,6 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.structure.ScatteredStructurePiece;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.Template;
@@ -35,7 +36,7 @@ public class DomePiece extends ScatteredStructurePiece {
 	}
 
 	@Override
-	public boolean addComponentParts(IWorld world, Random rand, MutableBoundingBox bb, ChunkPos chunk) {
+	public boolean func_225577_a_(IWorld world, ChunkGenerator<?> gen, Random rand, MutableBoundingBox bb, ChunkPos chunk) {
 		for (int k1 = 0; k1 < this.width; ++k1) {
 			for (int j = 0; j < this.depth; ++j) {
 				this.replaceLiquidDownwards(world, BlockList.FULL_GRASS.getDefaultState(), k1, this.height, j, bb);

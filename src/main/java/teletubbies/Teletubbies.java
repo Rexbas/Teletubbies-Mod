@@ -1,5 +1,7 @@
 package teletubbies;
 
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.Food;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -7,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import teletubbies.block.BlockList;
 import teletubbies.client.renderer.RenderRegistry;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpCapability;
@@ -32,5 +35,6 @@ public class Teletubbies {
     
 	public void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
+		RenderTypeLookup.setRenderLayer(BlockList.WINDOW, RenderType.translucent());
 	}
 }

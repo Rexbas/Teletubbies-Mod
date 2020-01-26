@@ -22,11 +22,6 @@ public class DomeStructure extends ScatteredStructure<NoFeatureConfig> {
 	public DomeStructure(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory) {
 		super(configFactory);
 	}
-	
-	@Override
-	public IStartFactory getStartFactory() {
-		return Start::new;
-	}
 
 	@Override
 	public String getStructureName() {
@@ -43,14 +38,19 @@ public class DomeStructure extends ScatteredStructure<NoFeatureConfig> {
 		return 1;
 	}
 	
+	@Override
+	public IStartFactory getStartFactory() {
+		return Start::new;
+	}
+	
 	public static class Start extends StructureStart {
 		
-		public Start(Structure<?> structure, int chunkX, int chunkZ, Biome biome, MutableBoundingBox bounds, int reference, long seed) {
-			super(structure, chunkX, chunkZ, biome, bounds, reference, seed);
+		public Start(Structure<?> structure, int chunkX, int chunkZ, MutableBoundingBox bounds, int reference, long seed) {
+			super(structure, chunkX, chunkZ, bounds, reference, seed);
 		}
 		
 		@Override
-		public void generateStructure(IWorld world, Random rand, MutableBoundingBox bb, ChunkPos pos) {
+		public void func_225565_a_(IWorld world, ChunkGenerator<?> gen, Random rand, MutableBoundingBox bb, ChunkPos pos) {
 			MutableBoundingBox fullBB = this.getBoundingBox();
 			if (this.components.iterator().hasNext()) {
 				if (this.components.iterator().next() instanceof DomePiece) {
@@ -60,7 +60,7 @@ public class DomeStructure extends ScatteredStructure<NoFeatureConfig> {
 					}
 				}
 			}
-			super.generateStructure(world, rand, bb, pos);
+			super.func_225565_a_(world, gen, rand, bb, pos);
 		}
 
 		@Override

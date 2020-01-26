@@ -11,7 +11,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.IStructurePieceType;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.placement.FrequencyConfig;
-import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.gen.placement.NoPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,10 +31,10 @@ public class WorldGenList {
 	
 	@SubscribeEvent
 	public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-		addFeature(Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(VOICE_TRUMPET_FEATURE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.FOREST_ROCK, new FrequencyConfig(2)), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		addFeature(Decoration.SURFACE_STRUCTURES, VOICE_TRUMPET_FEATURE.func_225566_b_(new NoFeatureConfig()).func_227228_a_(Placement.FOREST_ROCK.func_227446_a_(new FrequencyConfig(2))), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 				
-		addStructure(DOME_STRUCTURE, IFeatureConfig.NO_FEATURE_CONFIG, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-	    addFeature(Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(DOME_STRUCTURE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		addStructure(DOME_STRUCTURE, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+	    addFeature(Decoration.SURFACE_STRUCTURES, DOME_STRUCTURE.func_225566_b_(new NoFeatureConfig()).func_227228_a_(Placement.NOPE.func_227446_a_(new NoPlacementConfig())), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 	    
 		event.getRegistry().registerAll(
 				VOICE_TRUMPET_FEATURE, DOME_STRUCTURE
@@ -51,15 +51,15 @@ public class WorldGenList {
 		return structure;
 	}
 	
-	private static void addFeature(Decoration decorationStage, ConfiguredFeature<?> config, Biome...biomes) {
+	private static void addFeature(Decoration decorationStage, ConfiguredFeature<?, ?> config, Biome...biomes) {
 		for (Biome b : biomes) {
 			b.addFeature(decorationStage, config);
-		}
+		}		
 	}
 	
-	private static void addStructure(Structure<NoFeatureConfig> structure, NoFeatureConfig config, Biome...biomes) {
+	private static void addStructure(Structure<NoFeatureConfig> structure, Biome...biomes) {
 		for (Biome b : biomes) {
-			b.addStructure(structure, config);
+			b.addStructure(structure.func_225566_b_(new NoFeatureConfig()));
 		}
 	}
 }
