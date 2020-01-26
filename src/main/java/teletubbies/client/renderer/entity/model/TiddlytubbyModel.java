@@ -1,8 +1,10 @@
 package teletubbies.client.renderer.entity.model;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.RendererModel;
-import net.minecraft.client.renderer.model.ModelBox;
+import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -10,64 +12,52 @@ import teletubbies.entity.baby.TiddlytubbyEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class TiddlytubbyModel<T extends TiddlytubbyEntity> extends EntityModel<T> {
-	public RendererModel rightArm;
-	public RendererModel leftArm;
-	public  RendererModel rightLeg;
-	public  RendererModel leftLeg;
-	public  RendererModel head;
-	public  RendererModel body;
+	public ModelRenderer rightArm;
+	public ModelRenderer leftArm;
+	public ModelRenderer rightLeg;
+	public ModelRenderer leftLeg;
+	public ModelRenderer head;
+	public ModelRenderer body;
 
 	public TiddlytubbyModel() {
 		textureWidth = 32;
 		textureHeight = 32;
 
-		rightArm = new RendererModel(this);
+		rightArm = new ModelRenderer(this);
 		rightArm.setRotationPoint(-4.0F, 18.0F, 0.0F);
-		rightArm.cubeList.add(new ModelBox(rightArm, 0, 21, -1.0F, -1.0F, -1.0F, 2, 5, 2, 0.0F, false));
+		rightArm.addBox(null, -1.0F, -1.0F, -1.0F, 2, 5, 2, 0.0F, 0, 21);
 
-		leftArm = new RendererModel(this);
+		leftArm = new ModelRenderer(this);
 		leftArm.setRotationPoint(4.0F, 18.0F, 0.0F);
-		leftArm.cubeList.add(new ModelBox(leftArm, 0, 21, -1.0F, -1.0F, -1.0F, 2, 5, 2, 0.0F, false));
+		leftArm.addBox(null, -1.0F, -1.0F, -1.0F, 2, 5, 2, 0.0F, 0, 21);
 
-		rightLeg = new RendererModel(this);
+		rightLeg = new ModelRenderer(this);
 		rightLeg.setRotationPoint(-2.0F, 23.0F, -3.0F);
-		rightLeg.cubeList.add(new ModelBox(rightLeg, 0, 16, -1.0F, -1.0F, -2.0F, 2, 2, 3, 0.0F, false));
+		rightLeg.addBox(null, -1.0F, -1.0F, -2.0F, 2, 2, 3, 0.0F, 0, 16);
 
-		leftLeg = new RendererModel(this);
+		leftLeg = new ModelRenderer(this);
 		leftLeg.setRotationPoint(2.0F, 23.0F, -3.0F);
-		leftLeg.cubeList.add(new ModelBox(leftLeg, 0, 16, -1.0F, -1.0F, -2.0F, 2, 2, 3, 0.0F, false));
+		leftLeg.addBox(null, -1.0F, -1.0F, -2.0F, 2, 2, 3, 0.0F, 0, 16);
 
-		head = new RendererModel(this);
+		head = new ModelRenderer(this);
 		head.setRotationPoint(0.0F, 17.0F, 0.0F);
-		head.cubeList.add(new ModelBox(head, 0, 24, -1.0F, -10.0F, -1.0F, 2, 2, 2, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 18, 28, -5.0F, -7.0F, 0.0F, 1, 3, 1, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 22, 27, -5.0F, -6.0F, -2.0F, 1, 3, 2, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 28, 30, -5.0F, -7.0F, -1.0F, 1, 1, 1, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 18, 28, 4.0F, -7.0F, 0.0F, 1, 3, 1, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 22, 27, 4.0F, -6.0F, -2.0F, 1, 3, 2, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 28, 30, 4.0F, -7.0F, -1.0F, 1, 1, 1, 0.0F, false));
-		head.cubeList.add(new ModelBox(head, 0, 0, -4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F, false));
+		head.addBox(null, -1.0F, -10.0F, -1.0F, 2, 2, 2, 0.0F, 0, 24);
+		head.addBox(null, -5.0F, -7.0F, 0.0F, 1, 3, 1, 0.0F, 18, 28);
+		head.addBox(null, -5.0F, -6.0F, -2.0F, 1, 3, 2, 0.0F, 22, 27);
+		head.addBox(null, -5.0F, -7.0F, -1.0F, 1, 1, 1, 0.0F, 28, 30);
+		head.addBox(null, 4.0F, -7.0F, 0.0F, 1, 3, 1, 0.0F, 18, 28);
+		head.addBox(null, 4.0F, -6.0F, -2.0F, 1, 3, 2, 0.0F, 22, 27);
+		head.addBox(null, 4.0F, -7.0F, -1.0F, 1, 1, 1, 0.0F, 28, 30);
+		head.addBox(null, -4.0F, -8.0F, -4.0F, 8, 8, 8, 0.0F, 0, 0);
 
-		body = new RendererModel(this);
+		body = new ModelRenderer(this);
 		body.setRotationPoint(0.0F, 17.0F, 0.0F);
-		body.cubeList.add(new ModelBox(body, 10, 16, -3.0F, 0.0F, -2.0F, 6, 7, 4, 0.0F, false));
+		body.addBox(null, -3.0F, 0.0F, -2.0F, 6, 7, 4, 0.0F, 10, 16);
 	}
 	
 	@Override
-	public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		this.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-		rightArm.render(scale);
-		leftArm.render(scale);
-		rightLeg.render(scale);
-		leftLeg.render(scale);
-		head.render(scale);
-		body.render(scale);
-	}
-	
-	@Override
-	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-		super.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
-		boolean isMoving = entity.posX != entity.prevPosX || entity.posY != entity.prevPosY || entity.posZ != entity.prevPosZ;
+	public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		boolean isMoving = entity.getPosX() != entity.prevPosX || entity.getPosY() != entity.prevPosY || entity.getPosZ() != entity.prevPosZ;
 		
 		this.head.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
 		this.head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
@@ -113,5 +103,15 @@ public class TiddlytubbyModel<T extends TiddlytubbyEntity> extends EntityModel<T
 			this.rightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
 			this.leftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
 		}
+	}
+	
+	@Override
+	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+		rightArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		leftArm.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		rightLeg.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		leftLeg.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		head.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		body.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 }

@@ -18,7 +18,7 @@ public class TiddlytubbyRenderer extends MobRenderer<TiddlytubbyEntity, Tiddlytu
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(TiddlytubbyEntity entity) {
+	public ResourceLocation getEntityTexture(TiddlytubbyEntity entity) {
 		return new ResourceLocation(Teletubbies.MODID, "textures/entity/" + name + ".png");
 	}
 	

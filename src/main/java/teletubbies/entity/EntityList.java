@@ -35,28 +35,28 @@ import teletubbies.entity.passive.TinkyWinkyEntity;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EntityList {
-	public static final EntityType<?> TINKYWINKY = EntityType.Builder.create(TinkyWinkyEntity::new, EntityClassification.CREATURE).size(0.6F, 2.0F).build(Teletubbies.MODID + ":tinkywinky").setRegistryName(Teletubbies.MODID, "tinkywinky");
-	public static final EntityType<?> DIPSY = EntityType.Builder.create(DipsyEntity::new, EntityClassification.CREATURE).size(0.6F, 1.9F).build(Teletubbies.MODID + ":dipsy").setRegistryName(Teletubbies.MODID, "dipsy");
-	public static final EntityType<?> LAALAA = EntityType.Builder.create(LaaLaaEntity::new, EntityClassification.CREATURE).size(0.6F, 1.8F).build(Teletubbies.MODID + ":laalaa").setRegistryName(Teletubbies.MODID, "laalaa");	
-	public static final EntityType<?> PO = EntityType.Builder.create(PoEntity::new, EntityClassification.CREATURE).size(0.6F, 1.7F).build(Teletubbies.MODID + ":po").setRegistryName(Teletubbies.MODID, "po");
+	public static final EntityType<TinkyWinkyEntity> TINKYWINKY = (EntityType<TinkyWinkyEntity>) EntityType.Builder.create(TinkyWinkyEntity::new, EntityClassification.CREATURE).size(0.6F, 2.0F).build(Teletubbies.MODID + ":tinkywinky").setRegistryName(Teletubbies.MODID, "tinkywinky");
+	public static final EntityType<DipsyEntity> DIPSY = (EntityType<DipsyEntity>) EntityType.Builder.create(DipsyEntity::new, EntityClassification.CREATURE).size(0.6F, 1.9F).build(Teletubbies.MODID + ":dipsy").setRegistryName(Teletubbies.MODID, "dipsy");
+	public static final EntityType<LaaLaaEntity> LAALAA = (EntityType<LaaLaaEntity>) EntityType.Builder.create(LaaLaaEntity::new, EntityClassification.CREATURE).size(0.6F, 1.8F).build(Teletubbies.MODID + ":laalaa").setRegistryName(Teletubbies.MODID, "laalaa");	
+	public static final EntityType<PoEntity> PO = (EntityType<PoEntity>) EntityType.Builder.create(PoEntity::new, EntityClassification.CREATURE).size(0.6F, 1.7F).build(Teletubbies.MODID + ":po").setRegistryName(Teletubbies.MODID, "po");
 
-	public static final EntityType<?> NOONOO = EntityType.Builder.create(NooNooEntity::new, EntityClassification.CREATURE).size(1.0F, 1.0F).build(Teletubbies.MODID + ":noonoo").setRegistryName(Teletubbies.MODID, "noonoo");
+	public static final EntityType<NooNooEntity> NOONOO = (EntityType<NooNooEntity>) EntityType.Builder.create(NooNooEntity::new, EntityClassification.CREATURE).size(1.0F, 1.0F).build(Teletubbies.MODID + ":noonoo").setRegistryName(Teletubbies.MODID, "noonoo");
 
-	public static final EntityType<?> MIMI = createTiddlytubby(MiMiEntity::new, "mimi");
-	public static final EntityType<?> DAADAA = createTiddlytubby(DaaDaaEntity::new, "daadaa");
-	public static final EntityType<?> PING = createTiddlytubby(PingEntity::new, "ping");
-	public static final EntityType<?> BA = createTiddlytubby(BaEntity::new, "ba");
-	public static final EntityType<?> RURU = createTiddlytubby(RuRuEntity::new, "ruru");
-	public static final EntityType<?> NIN = createTiddlytubby(NinEntity::new, "nin");
-	public static final EntityType<?> DUGGLEDEE = createTiddlytubby(DuggleDeeEntity::new, "duggledee");
-	public static final EntityType<?> UMPIEPUMPIE = createTiddlytubby(UmpiePumpieEntity::new, "umpiepumpie");
+	public static final EntityType<MiMiEntity> MIMI = (EntityType<MiMiEntity>) createTiddlytubby(MiMiEntity::new, "mimi");
+	public static final EntityType<DaaDaaEntity> DAADAA = (EntityType<DaaDaaEntity>) createTiddlytubby(DaaDaaEntity::new, "daadaa");
+	public static final EntityType<PingEntity> PING = (EntityType<PingEntity>) createTiddlytubby(PingEntity::new, "ping");
+	public static final EntityType<BaEntity> BA = (EntityType<BaEntity>) createTiddlytubby(BaEntity::new, "ba");
+	public static final EntityType<RuRuEntity> RURU = (EntityType<RuRuEntity>) createTiddlytubby(RuRuEntity::new, "ruru");
+	public static final EntityType<NinEntity> NIN = (EntityType<NinEntity>) createTiddlytubby(NinEntity::new, "nin");
+	public static final EntityType<DuggleDeeEntity> DUGGLEDEE = (EntityType<DuggleDeeEntity>) createTiddlytubby(DuggleDeeEntity::new, "duggledee");
+	public static final EntityType<UmpiePumpieEntity> UMPIEPUMPIE = (EntityType<UmpiePumpieEntity>) createTiddlytubby(UmpiePumpieEntity::new, "umpiepumpie");
 
 	public static final EntityType<TinkyWinkyZombieEntity> TINKYWINKY_ZOMBIE = (EntityType<TinkyWinkyZombieEntity>) EntityType.Builder.create(TinkyWinkyZombieEntity::new, EntityClassification.MONSTER).size(0.6F, 2.0F).build(Teletubbies.MODID + ":tinkywinky_zombie").setRegistryName(Teletubbies.MODID, "tinkywinky_zombie");
 	public static final EntityType<DipsyZombieEntity> DIPSY_ZOMBIE = (EntityType<DipsyZombieEntity>) EntityType.Builder.create(DipsyZombieEntity::new, EntityClassification.MONSTER).size(0.6F, 1.9F).build(Teletubbies.MODID + ":dipsy_zombie").setRegistryName(Teletubbies.MODID, "dipsy_zombie");
 	public static final EntityType<LaaLaaZombieEntity> LAALAA_ZOMBIE = (EntityType<LaaLaaZombieEntity>) EntityType.Builder.create(LaaLaaZombieEntity::new, EntityClassification.MONSTER).size(0.6F, 1.8F).build(Teletubbies.MODID + ":laalaa_zombie").setRegistryName(Teletubbies.MODID, "laalaa_zombie");
 	public static final EntityType<PoZombieEntity> PO_ZOMBIE = (EntityType<PoZombieEntity>) EntityType.Builder.create(PoZombieEntity::new, EntityClassification.MONSTER).size(0.6F, 1.7F).build(Teletubbies.MODID + ":po_zombie").setRegistryName(Teletubbies.MODID, "po_zombie");
 
-	public static final EntityType<?> PO_SCOOTER = EntityType.Builder.create(PoScooterEntity::new, EntityClassification.MISC).size(1.15F, 0.3F).setCustomClientFactory((entity, world) -> new PoScooterEntity(world)).build(Teletubbies.MODID + ":po_scooter").setRegistryName(Teletubbies.MODID, "po_scooter");
+	public static final EntityType<PoScooterEntity> PO_SCOOTER = (EntityType<PoScooterEntity>) EntityType.Builder.create(PoScooterEntity::new, EntityClassification.MISC).size(1.15F, 0.3F).setCustomClientFactory((entity, world) -> new PoScooterEntity(world)).build(Teletubbies.MODID + ":po_scooter").setRegistryName(Teletubbies.MODID, "po_scooter");
 	
 	@SubscribeEvent
 	public static void registerEntityEvent(final RegistryEvent.Register<EntityType<?>> event) {
