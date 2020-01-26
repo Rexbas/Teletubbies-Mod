@@ -35,10 +35,10 @@ import teletubbies.entity.passive.TinkyWinkyEntity;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EntityList {
-	public static final EntityType<TinkyWinkyEntity> TINKYWINKY = (EntityType<TinkyWinkyEntity>) EntityType.Builder.create(TinkyWinkyEntity::new, EntityClassification.CREATURE).size(0.6F, 2.0F).build(Teletubbies.MODID + ":tinkywinky").setRegistryName(Teletubbies.MODID, "tinkywinky");
-	public static final EntityType<DipsyEntity> DIPSY = (EntityType<DipsyEntity>) EntityType.Builder.create(DipsyEntity::new, EntityClassification.CREATURE).size(0.6F, 1.9F).build(Teletubbies.MODID + ":dipsy").setRegistryName(Teletubbies.MODID, "dipsy");
-	public static final EntityType<LaaLaaEntity> LAALAA = (EntityType<LaaLaaEntity>) EntityType.Builder.create(LaaLaaEntity::new, EntityClassification.CREATURE).size(0.6F, 1.8F).build(Teletubbies.MODID + ":laalaa").setRegistryName(Teletubbies.MODID, "laalaa");	
-	public static final EntityType<PoEntity> PO = (EntityType<PoEntity>) EntityType.Builder.create(PoEntity::new, EntityClassification.CREATURE).size(0.6F, 1.7F).build(Teletubbies.MODID + ":po").setRegistryName(Teletubbies.MODID, "po");
+	public static final EntityType<TinkyWinkyEntity> TINKYWINKY = (EntityType<TinkyWinkyEntity>) EntityType.Builder.create(TinkyWinkyEntity::new, EntityClassification.CREATURE).size(0.6F, 1.9F).build(Teletubbies.MODID + ":tinkywinky").setRegistryName(Teletubbies.MODID, "tinkywinky");
+	public static final EntityType<DipsyEntity> DIPSY = (EntityType<DipsyEntity>) EntityType.Builder.create(DipsyEntity::new, EntityClassification.CREATURE).size(0.6F, 1.8F).build(Teletubbies.MODID + ":dipsy").setRegistryName(Teletubbies.MODID, "dipsy");
+	public static final EntityType<LaaLaaEntity> LAALAA = (EntityType<LaaLaaEntity>) EntityType.Builder.create(LaaLaaEntity::new, EntityClassification.CREATURE).size(0.6F, 1.7F).build(Teletubbies.MODID + ":laalaa").setRegistryName(Teletubbies.MODID, "laalaa");	
+	public static final EntityType<PoEntity> PO = (EntityType<PoEntity>) EntityType.Builder.create(PoEntity::new, EntityClassification.CREATURE).size(0.6F, 1.6F).build(Teletubbies.MODID + ":po").setRegistryName(Teletubbies.MODID, "po");
 
 	public static final EntityType<NooNooEntity> NOONOO = (EntityType<NooNooEntity>) EntityType.Builder.create(NooNooEntity::new, EntityClassification.CREATURE).size(1.0F, 1.0F).build(Teletubbies.MODID + ":noonoo").setRegistryName(Teletubbies.MODID, "noonoo");
 
