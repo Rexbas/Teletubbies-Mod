@@ -29,7 +29,6 @@ public class PoScooterItem extends Item {
 				.group(Teletubbies.ITEMGROUP));
 
 		this.setRegistryName(Teletubbies.MODID, "po_scooter");
-
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class PoScooterItem extends Item {
 				PoScooterEntity entity = new PoScooterEntity(worldIn, raytraceresult.getHitVec().x,
 						raytraceresult.getHitVec().y, raytraceresult.getHitVec().z);
 				entity.rotationYaw = playerIn.rotationYaw;
-				if (!worldIn.isCollisionBoxesEmpty(entity, entity.getBoundingBox().grow(-0.1D))) {
+				if (!worldIn.func_226665_a__(entity, entity.getBoundingBox().grow(-0.1D))) {
 					return new ActionResult<>(ActionResultType.FAIL, itemstack);
 				} else {
 					if (!worldIn.isRemote) {

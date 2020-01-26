@@ -59,49 +59,49 @@ public class TiddlytubbyModel<T extends TiddlytubbyEntity> extends EntityModel<T
 	public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		boolean isMoving = entity.getPosX() != entity.prevPosX || entity.getPosY() != entity.prevPosY || entity.getPosZ() != entity.prevPosZ;
 		
-		this.head.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
-		this.head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
-		
+		head.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);
+		head.rotateAngleX = headPitch * ((float) Math.PI / 180F);
+
 		if (isMoving) {
-			this.rightArm.setRotationPoint(-4.0F, 20.0F, 0.0F);
-			this.leftArm.setRotationPoint(4.0F, 20.0F, 0.0F);
-			this.body.setRotationPoint(0.0F, 18.0F, -2.0F);
-			this.rightLeg.setRotationPoint(-2.0F, 21.0F, 5.0F);
-			this.leftLeg.setRotationPoint(2.0F, 21.0F, 5.0F);
+			rightArm.setRotationPoint(-4.0F, 20.0F, 0.0F);
+			leftArm.setRotationPoint(4.0F, 20.0F, 0.0F);
+			body.setRotationPoint(0.0F, 18.0F, -2.0F);
+			rightLeg.setRotationPoint(-2.0F, 21.0F, 5.0F);
+			leftLeg.setRotationPoint(2.0F, 21.0F, 5.0F);
 
-			this.body.rotateAngleX = (float) (0.5 * Math.PI);
-			this.rightLeg.rotateAngleX = (float) (0.5 * Math.PI);
-			this.leftLeg.rotateAngleX = (float) (0.5 * Math.PI);
-			
-			this.rightLeg.rotateAngleX = (float) (MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount + (0.5 * Math.PI));
-			this.leftLeg.rotateAngleX = (float) (MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount + (0.5 * Math.PI));
-			this.rightArm.rotateAngleZ = 0.0F;
-			this.leftArm.rotateAngleZ = 0.0F;
-			
-			this.rightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F;
-			this.leftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
-			this.rightArm.rotateAngleZ = 0.0F;
-			this.leftArm.rotateAngleZ = 0.0F;
-			
+			body.rotateAngleX = (float) (0.5 * Math.PI);
+			rightLeg.rotateAngleX = (float) (0.5 * Math.PI);
+			leftLeg.rotateAngleX = (float) (0.5 * Math.PI);
+
+			rightLeg.rotateAngleX = (float) (MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount + (0.5 * Math.PI));
+			leftLeg.rotateAngleX = (float) (MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount + (0.5 * Math.PI));
+			rightArm.rotateAngleZ = 0.0F;
+			leftArm.rotateAngleZ = 0.0F;
+
+			rightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F;
+			leftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;
+			rightArm.rotateAngleZ = 0.0F;
+			leftArm.rotateAngleZ = 0.0F;
+
 		} else {
-			this.rightArm.setRotationPoint(-4.0F, 18.0F, 0.0F);
-			this.leftArm.setRotationPoint(4.0F, 18.0F, 0.0F);
-			this.body.setRotationPoint(0.0F, 17.0F, 0.0F);
-			this.rightLeg.setRotationPoint(-2.0F, 23.0F, -3.0F);
-			this.leftLeg.setRotationPoint(2.0F, 23.0F, -3.0F);
-			
-			this.body.rotateAngleX = 0;
-			this.rightLeg.rotateAngleX = 0;
-			this.leftLeg.rotateAngleX = 0;			
+			rightArm.setRotationPoint(-4.0F, 18.0F, 0.0F);
+			leftArm.setRotationPoint(4.0F, 18.0F, 0.0F);
+			body.setRotationPoint(0.0F, 17.0F, 0.0F);
+			rightLeg.setRotationPoint(-2.0F, 23.0F, -3.0F);
+			leftLeg.setRotationPoint(2.0F, 23.0F, -3.0F);
 
-			this.rightArm.rotateAngleZ = 0;
-			this.leftArm.rotateAngleZ = 0;
-			this.rightArm.rotateAngleX = 0;
-			this.leftArm.rotateAngleX = 0;
-			this.rightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
-			this.leftArm.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
-			this.rightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
-			this.leftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+			body.rotateAngleX = 0;
+			rightLeg.rotateAngleX = 0;
+			leftLeg.rotateAngleX = 0;
+
+			rightArm.rotateAngleZ = 0;
+			leftArm.rotateAngleZ = 0;
+			rightArm.rotateAngleX = 0;
+			leftArm.rotateAngleX = 0;
+			rightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+			leftArm.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+			rightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+			leftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
 		}
 	}
 	

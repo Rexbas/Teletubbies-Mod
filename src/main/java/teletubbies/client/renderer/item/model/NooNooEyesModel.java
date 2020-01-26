@@ -31,7 +31,7 @@ public class NooNooEyesModel extends BipedModel<LivingEntity> {
 	
 	@Override
 	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		eyes.copyModelAngles(this.bipedHead);
+		eyes.copyModelAngles(bipedHead);
 		eyes.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 }
