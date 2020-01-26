@@ -46,7 +46,7 @@ public class LaaLaaBallItem extends Item {
 		cap.ifPresent(c -> {
 			if(c.canJump(player) && c.check()) {
 				LaaLaaBallItem.jump(player, false);
-				ar.set(ActionResultType.SUCCESS);
+				ar.set(ActionResultType.PASS);
 			}
 		});
 		
