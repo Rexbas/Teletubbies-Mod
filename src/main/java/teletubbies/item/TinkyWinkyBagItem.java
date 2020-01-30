@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -20,6 +21,8 @@ import teletubbies.common.capabilities.TinkyWinkyBagProvider;
 import teletubbies.inventory.container.TinkyWinkyBagContainer;
 
 public class TinkyWinkyBagItem extends Item {
+	
+	public static final ResourceLocation LOOTTABLE = new ResourceLocation(Teletubbies.MODID, "tinkywinky_bag");
 	
 	public TinkyWinkyBagItem() {
 		super(new Item.Properties()
