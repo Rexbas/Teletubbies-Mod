@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.client.renderer.model.ModelBox;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Pose;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -199,7 +200,7 @@ public class TutuModel extends BipedModel<LivingEntity> {
 	public void setRotationAngles(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		super.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 
-		if (entity.isSneaking()) {
+		if (entity.getPose() == Pose.SNEAKING) {
 			tutu.rotationPointY = 8.0F;
 			tutu.rotationPointZ = 2.0F;
 			tutu.rotateAngleX = (float) (Math.PI * 0.16667F);
