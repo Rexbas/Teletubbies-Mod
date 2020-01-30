@@ -66,8 +66,8 @@ public class PoScooterEntity extends Entity {
 	public PoScooterEntity(EntityType<? extends Entity> type, World world) {
 		super(type, world);
 		this.preventEntitySpawning = true;
-		this.stepHeight = 1.0F;
-		this.maxFallDistance = 5;
+		stepHeight = 1.0F;
+		maxFallDistance = 5;
 	}
 
 	public PoScooterEntity(World world) {
@@ -127,7 +127,7 @@ public class PoScooterEntity extends Entity {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (this.isInvulnerableTo(source)) {
 			return false;
-		} else if (!this.world.isRemote && !this.removed) {
+		} else if (!this.world.isRemote && this.isAlive()) {
 			if (source instanceof IndirectEntityDamageSource && source.getTrueSource() != null && this.isPassenger(source.getTrueSource())) {
 				return false;
 			} else {
@@ -173,7 +173,7 @@ public class PoScooterEntity extends Entity {
 
 	@Override
 	public boolean canBeCollidedWith() {
-		return !this.removed;
+		return this.isAlive();
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -212,9 +212,6 @@ public class PoScooterEntity extends Entity {
 			this.setDamageTaken(this.getDamageTaken() - 1.0F);
 		}
 
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
 		super.tick();
 		this.tickLerp();
 		if (this.canPassengerSteer()) {
@@ -231,8 +228,7 @@ public class PoScooterEntity extends Entity {
 		this.updateRocking();
 
 		this.doBlockCollisions();
-		List<Entity> list = this.world.getEntitiesInAABBexcluding(this, this.getBoundingBox().grow((double) 0.2F, (double) -0.01F, (double) 0.2F),
-				EntityPredicates.pushableBy(this));
+		List<Entity> list = this.world.getEntitiesInAABBexcluding(this, this.getBoundingBox().grow((double) 0.2F, (double) -0.01F, (double) 0.2F), EntityPredicates.pushableBy(this));
 		if (!list.isEmpty()) {
 			boolean flag = !this.world.isRemote && !(this.getControllingPassenger() instanceof PlayerEntity);
 
@@ -285,10 +281,15 @@ public class PoScooterEntity extends Entity {
 	}
 
 	private void tickLerp() {
-		if (this.lerpSteps > 0 && !this.canPassengerSteer()) {
-			double d0 = this.posX + (this.lerpX - this.posX) / (double) this.lerpSteps;
-			double d1 = this.posY + (this.lerpY - this.posY) / (double) this.lerpSteps;
-			double d2 = this.posZ + (this.lerpZ - this.posZ) / (double) this.lerpSteps;
+		if (this.canPassengerSteer()) {
+			this.lerpSteps = 0;
+			this.setPacketCoordinates(this.getPosX(), this.getPosY(), this.getPosZ());
+		}
+
+		if (this.lerpSteps > 0) {
+			double d0 = this.getPosX() + (this.lerpX - this.getPosX()) / (double) this.lerpSteps;
+			double d1 = this.getPosY() + (this.lerpY - this.getPosY()) / (double) this.lerpSteps;
+			double d2 = this.getPosZ() + (this.lerpZ - this.getPosZ()) / (double) this.lerpSteps;
 			double d3 = MathHelper.wrapDegrees(this.lerpYaw - (double) this.rotationYaw);
 			this.rotationYaw = (float) ((double) this.rotationYaw + d3 / (double) this.lerpSteps);
 			this.rotationPitch = (float) ((double) this.rotationPitch + (this.lerpPitch - (double) this.rotationPitch) / (double) this.lerpSteps);
@@ -307,7 +308,7 @@ public class PoScooterEntity extends Entity {
 		int i1 = MathHelper.floor(axisalignedbb.minZ);
 		int j1 = MathHelper.ceil(axisalignedbb.maxZ);
 
-		try (BlockPos.PooledMutableBlockPos blockpos$pooledmutableblockpos = BlockPos.PooledMutableBlockPos.retain()) {
+		try (BlockPos.PooledMutable blockpos$pooledmutableblockpos = BlockPos.PooledMutable.retain()) {
 			label161: for (int k1 = k; k1 < l; ++k1) {
 				float f = 0.0F;
 
@@ -316,7 +317,7 @@ public class PoScooterEntity extends Entity {
 						blockpos$pooledmutableblockpos.setPos(l1, k1, i2);
 						IFluidState ifluidstate = this.world.getFluidState(blockpos$pooledmutableblockpos);
 						if (ifluidstate.isTagged(FluidTags.WATER)) {
-							f = Math.max(f, ifluidstate.func_215679_a(this.world, blockpos$pooledmutableblockpos));
+							f = Math.max(f, ifluidstate.getActualHeight(this.world, blockpos$pooledmutableblockpos));
 						}
 
 						if (f >= 1.0F) {
@@ -377,7 +378,7 @@ public class PoScooterEntity extends Entity {
 	public void updatePassenger(Entity passenger) {
 		if (this.isPassenger(passenger)) {
 			float f = 0.0F;
-			float f1 = (float) ((this.removed ? (double) 0.01F : this.getMountedYOffset()) + passenger.getYOffset());
+			float f1 = (float) ((!this.isAlive() ? (double) 0.01F : this.getMountedYOffset()) + passenger.getYOffset());
 			if (this.getPassengers().size() > 1) {
 				int i = this.getPassengers().indexOf(passenger);
 				if (i == 0) {
@@ -392,7 +393,7 @@ public class PoScooterEntity extends Entity {
 			}
 
 			Vec3d vec3d = (new Vec3d((double) f, 0.0D, 0.0D)).rotateYaw(-this.rotationYaw * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
-			passenger.setPosition(this.posX + vec3d.x, this.posY + (double) f1, this.posZ + vec3d.z);
+			passenger.setPosition(this.getPosX() + vec3d.x, this.getPosY() + (double) f1, this.getPosZ() + vec3d.z);
 			passenger.rotationYaw += this.deltaRotation;
 			passenger.setRotationYawHead(passenger.getRotationYawHead() + this.deltaRotation);
 			this.applyYawToEntity(passenger);
@@ -422,13 +423,10 @@ public class PoScooterEntity extends Entity {
 
 	@Override
 	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-		if (player.isSneaking()) {
+		if (player.func_226563_dT_()) {
 			return false;
 		} else {
-			if (!this.world.isRemote && this.outOfControlTicks < 60.0F) {
-				player.startRiding(this);
-			}
-			return true;
+			return !this.world.isRemote && this.outOfControlTicks < 60.0F ? player.startRiding(this) : false;
 		}
 	}
 
@@ -438,8 +436,8 @@ public class PoScooterEntity extends Entity {
 		if (!this.isPassenger()) {
 			if (onGroundIn) {
 				if (this.fallDistance > maxFallDistance) {
-					this.fall(this.fallDistance, 1.0F);
-					if (!this.world.isRemote && !this.removed) {
+					this.func_225503_b_(this.fallDistance, 1.0F);
+					if (!this.world.isRemote && this.isAlive()) {
 						this.remove();
 						if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
 							this.entityDropItem(ItemList.PO_SCOOTER);
@@ -522,11 +520,7 @@ public class PoScooterEntity extends Entity {
 		super.addPassenger(passenger);
 		if (this.canPassengerSteer() && this.lerpSteps > 0) {
 			this.lerpSteps = 0;
-			this.posX = this.lerpX;
-			this.posY = this.lerpY;
-			this.posZ = this.lerpZ;
-			this.rotationYaw = (float) this.lerpYaw;
-			this.rotationPitch = (float) this.lerpPitch;
+	         this.setPositionAndRotation(this.lerpX, this.lerpY, this.lerpZ, (float)this.lerpYaw, (float)this.lerpPitch);
 		}
 	}
 

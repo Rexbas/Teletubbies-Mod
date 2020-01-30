@@ -13,25 +13,25 @@ public class PoScooterTickableSound extends TickableSound {
 	public PoScooterTickableSound(PoScooterEntity scooter) {
 		super(SoundList.ENTITY_SCOOTER, SoundCategory.NEUTRAL);
 		this.scooter = scooter;
-		this.repeat = true;
-		this.repeatDelay = 0;
+		repeat = true;
+		repeatDelay = 0;
+		volume = Float.MIN_VALUE;
 	}
 
 	@Override
 	public void tick() {
-		if (this.scooter.removed) {
-			this.donePlaying = true;
+		if (!scooter.isAlive()) {
+			donePlaying = true;
 		}
 		else {
-			this.x = (float) this.scooter.posX;
-			this.y = (float) this.scooter.posY;
-			this.z = (float) this.scooter.posZ;			
-			
-			if((this.scooter.prevPosX != this.scooter.posX || this.scooter.prevPosZ != this.scooter.posZ) && this.scooter.isBeingRidden()) {
-				this.volume = 1f;
+			x = (float) scooter.getPosX();
+			y = (float) scooter.getPosY();
+			z = (float) scooter.getPosZ();
+			if(((float)scooter.prevPosX != x || (float)scooter.prevPosZ != z) && scooter.isBeingRidden()) {
+				volume = 1.0F;
 			}
 			else {
-				this.volume = 0.0F;
+				volume = 0.0F;
 			}
 		}		
 	}
