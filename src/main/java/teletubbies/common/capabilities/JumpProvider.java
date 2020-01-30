@@ -17,5 +17,4 @@ public class JumpProvider implements ICapabilityProvider {
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 		return cap == JUMP_CAPABILITY ? instance.cast() : LazyOptional.empty();
 	}
-
 }

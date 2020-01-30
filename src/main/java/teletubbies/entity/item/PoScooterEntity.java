@@ -316,7 +316,7 @@ public class PoScooterEntity extends Entity {
 						blockpos$pooledmutableblockpos.setPos(l1, k1, i2);
 						IFluidState ifluidstate = this.world.getFluidState(blockpos$pooledmutableblockpos);
 						if (ifluidstate.isTagged(FluidTags.WATER)) {
-							f = Math.max(f, ifluidstate.getActualHeight(this.world, blockpos$pooledmutableblockpos));
+							f = Math.max(f, ifluidstate.func_215679_a(this.world, blockpos$pooledmutableblockpos));
 						}
 
 						if (f >= 1.0F) {
