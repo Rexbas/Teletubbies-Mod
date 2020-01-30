@@ -32,7 +32,7 @@ public class TeletubbyZombieEntity extends ZombieEntity {
 			ItemStack stack = new ItemStack(ItemList.TUTU);
 			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
-			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
+			this.setItemStackToSlot(EquipmentSlotType.LEGS, stack);
 			break;
 		}
 	}
