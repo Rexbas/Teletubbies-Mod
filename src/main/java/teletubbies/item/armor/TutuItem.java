@@ -17,7 +17,7 @@ import teletubbies.client.renderer.item.model.TutuModel;
 public class TutuItem extends ArmorItem {
 		
 	public TutuItem() {
-		super(ArmorMaterial.LEATHER, EquipmentSlotType.CHEST, new Item.Properties()
+		super(ArmorMaterial.LEATHER, EquipmentSlotType.LEGS, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
 		
 		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "tutu"));

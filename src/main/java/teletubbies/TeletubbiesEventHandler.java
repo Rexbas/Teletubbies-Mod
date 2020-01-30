@@ -47,7 +47,7 @@ import teletubbies.item.LaaLaaBallItem;
 public class TeletubbiesEventHandler {
 	
 	@SubscribeEvent
-	public static void attachtCapabilityEntity (AttachCapabilitiesEvent<Entity> event) {		
+	public static void attachtCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {		
 		if(event.getObject() instanceof PlayerEntity) {
 			event.addCapability(new ResourceLocation(Teletubbies.MODID, "capability.jump"), new JumpProvider());
 		}

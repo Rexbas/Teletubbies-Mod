@@ -76,5 +76,4 @@ public class PoScooterItem extends Item {
 			}
 		}
 	}
-
 }
