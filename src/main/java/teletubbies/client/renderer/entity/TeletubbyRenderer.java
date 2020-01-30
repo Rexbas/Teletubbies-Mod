@@ -20,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import teletubbies.Teletubbies;
@@ -45,7 +46,7 @@ public class TeletubbyRenderer<T extends CreatureEntity, M extends TeletubbyMode
 	
 	@Override
 	public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-		if (MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Pre<T, M>(entityIn, this, partialTicks, matrixStackIn)))
+		if (MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Pre<T, M>(entityIn, this, partialTicks, matrixStackIn, bufferIn, packedLightIn)))
 			return;
 		matrixStackIn.push();
 		this.entityModel.swingProgress = this.getSwingProgress(entityIn, partialTicks);
@@ -123,7 +124,7 @@ public class TeletubbyRenderer<T extends CreatureEntity, M extends TeletubbyMode
 		}
 
 		matrixStackIn.pop();
-		MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.RenderLivingEvent.Post<T, M>(entityIn, this, partialTicks, matrixStackIn));
+		MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post<T, M>(entityIn, this, partialTicks, matrixStackIn, bufferIn, packedLightIn));
 	}
 
 	public static class RenderFactory<T extends CreatureEntity, M extends TeletubbyModel<T>> implements IRenderFactory<T> {
