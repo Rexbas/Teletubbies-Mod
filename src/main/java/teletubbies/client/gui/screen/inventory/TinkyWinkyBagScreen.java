@@ -18,7 +18,7 @@ public class TinkyWinkyBagScreen extends ContainerScreen<TinkyWinkyBagContainer>
 	public TinkyWinkyBagScreen(TinkyWinkyBagContainer container, PlayerInventory playerInv, ITextComponent title) {
 		super(container, playerInv, title);
 		this.passEvents = false;
-		this.inventoryRows = 3;
+		this.inventoryRows = container.numRows;
 		this.ySize = 114 + this.inventoryRows * 18;
 	}
 

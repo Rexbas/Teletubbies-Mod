@@ -12,7 +12,7 @@ import teletubbies.item.TinkyWinkyBagItem;
 // https://github.com/Flanks255/simplybackpacks/tree/master/src/main/java/com/flanks255/simplybackpacks
 
 public class TinkyWinkyBagContainer extends Container {
-	private final int numRows = 3;
+	public final int numRows = 6;
 	private final PlayerInventory playerInventory;
 	public TinkyWinkyBagItemHandler handler;
 	public ItemStack bag;
