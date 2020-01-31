@@ -19,7 +19,7 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
 	private ItemStack stack;
 	
 	public TinkyWinkyBagItemHandler(ItemStack stack) {
-		super(27);
+		super(54);
 		this.stack = stack;
 	}
 	
