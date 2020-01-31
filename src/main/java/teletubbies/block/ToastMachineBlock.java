@@ -17,6 +17,7 @@ import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -150,7 +151,7 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
 		ToastMachineTileEntity t = (ToastMachineTileEntity) world.getTileEntity(tilePos);
 		if (t.canDrop()) {
@@ -159,7 +160,7 @@ public class ToastMachineBlock extends Block {
 			world.playSound(player, tilePos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 1, pitch);
 			t.reset();
 		}
-		return true;
+		return ActionResultType.PASS;
 	}
 	
 	public boolean isUnderwater(World world, BlockPos pos) {

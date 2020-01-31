@@ -1,36 +1,28 @@
 {
-    "forge_marker": 1,
     "variants": {
-        "facing": {
-            "north": {
-                "y": 0
-            },
-            "east": {
-                "y": 90
-            },
-            "south": {
-                "y": 180
-            },
-            "west": {
-                "y": 270
-            }
-        },
-        "part": {
-            "base": {
-                "model": "teletubbies:block/custard_machine_base"
-            },
-            "bigbase": {
-                "model": "teletubbies:block/custard_machine_bigbase"
-            },
-            "smallbase": {
-                "model": "teletubbies:block/custard_machine_smallbase"
-            },
-            "big": {
-                "model": "teletubbies:block/custard_machine_bigtower"
-            },
-            "small": {
-                "model": "teletubbies:block/custard_machine_smalltower"
-            }
-        }
+        "facing=north,part=base":  { "model": "teletubbies:block/custard_machine_center_base" },
+        "facing=east,part=base":  { "model": "teletubbies:block/custard_machine_center_base", "y": 90 },
+        "facing=south,part=base":  { "model": "teletubbies:block/custard_machine_center_base", "y": 180 },
+        "facing=west,part=base":  { "model": "teletubbies:block/custard_machine_center_base", "y": 270 },
+        
+        "facing=north,part=bigbase":  { "model": "teletubbies:block/custard_machine_side_base" },
+        "facing=east,part=bigbase":  { "model": "teletubbies:block/custard_machine_side_base", "y": 90 },
+        "facing=south,part=bigbase":  { "model": "teletubbies:block/custard_machine_side_base", "y": 180 },
+        "facing=west,part=bigbase":  { "model": "teletubbies:block/custard_machine_side_base", "y": 270 },
+
+        "facing=north,part=smallbase":  { "model": "teletubbies:block/custard_machine_side_base", "y": 180 },
+        "facing=east,part=smallbase":  { "model": "teletubbies:block/custard_machine_side_base", "y": 270 },
+        "facing=south,part=smallbase":  { "model": "teletubbies:block/custard_machine_side_base" },
+        "facing=west,part=smallbase":  { "model": "teletubbies:block/custard_machine_side_base", "y": 90 },
+       
+        "facing=north,part=big":  { "model": "teletubbies:block/custard_machine_bigtower" },
+        "facing=east,part=big":  { "model": "teletubbies:block/custard_machine_bigtower", "y": 90 },
+        "facing=south,part=big":  { "model": "teletubbies:block/custard_machine_bigtower", "y": 180 },
+        "facing=west,part=big":  { "model": "teletubbies:block/custard_machine_bigtower", "y": 270 },
+        
+        "facing=north,part=small":  { "model": "teletubbies:block/custard_machine_smalltower" },
+        "facing=east,part=small":  { "model": "teletubbies:block/custard_machine_smalltower", "y": 90 },
+        "facing=south,part=small":  { "model": "teletubbies:block/custard_machine_smalltower", "y": 180 },
+        "facing=west,part=small":  { "model": "teletubbies:block/custard_machine_smalltower", "y": 270 }    
     }
 }

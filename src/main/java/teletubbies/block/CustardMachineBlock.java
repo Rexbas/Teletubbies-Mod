@@ -18,6 +18,7 @@ import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -248,7 +249,7 @@ public class CustardMachineBlock extends Block {
 	}
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {		
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {		
 		if (player.getHeldItemMainhand() != null) {
 			if (player.getHeldItemMainhand().getItem() == ItemList.BOWL) {
 				BlockPos tilePos = getBasePos(pos, state.get(PART), state.get(FACING));
@@ -271,7 +272,7 @@ public class CustardMachineBlock extends Block {
 				}
 			}
 		}
-		return true;
+		return ActionResultType.PASS;
 	}
 	
 	public boolean isUnderwater(World world, BlockPos pos) {

@@ -1,27 +1,13 @@
 {
-    "forge_marker": 1,
     "variants": {
-        "facing": {
-            "north": {
-                "y": 0
-            },
-            "east": {
-                "y": 90
-            },
-            "south": {
-                "y": 180
-            },
-            "west": {
-                "y": 270
-            }
-        },
-        "bottom": {
-            "true": {
-                "model": "teletubbies:block/voice_trumpet_bottom"
-            },
-            "false": {
-                "model": "teletubbies:block/voice_trumpet_top"
-            }
-        }
+        "bottom=true,facing=north":  { "model": "teletubbies:block/voice_trumpet_bottom" },
+        "bottom=true,facing=east":  { "model": "teletubbies:block/voice_trumpet_bottom" },
+        "bottom=true,facing=south":  { "model": "teletubbies:block/voice_trumpet_bottom" },
+        "bottom=true,facing=west":  { "model": "teletubbies:block/voice_trumpet_bottom" },
+        
+        "bottom=false,facing=north":  { "model": "teletubbies:block/voice_trumpet_top" },
+        "bottom=false,facing=east":  { "model": "teletubbies:block/voice_trumpet_top", "y": 90 },
+        "bottom=false,facing=south":  { "model": "teletubbies:block/voice_trumpet_top", "y": 180 },
+        "bottom=false,facing=west":  { "model": "teletubbies:block/voice_trumpet_top", "y": 270 }
     }
 }
