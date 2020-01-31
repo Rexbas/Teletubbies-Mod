@@ -101,7 +101,7 @@ public class ToastMachineBlock extends Block {
 		    }
 		    else {
 		    	world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);
-		    }	      
+		    }
 		}		      
 		super.onBlockHarvested(world, pos, state, player);
 	}
