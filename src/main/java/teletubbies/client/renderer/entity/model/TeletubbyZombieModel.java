@@ -9,8 +9,8 @@ import teletubbies.entity.monster.TeletubbyZombieEntity;
 public class TeletubbyZombieModel<T extends TeletubbyZombieEntity> extends TeletubbyModel<T> {
 
 	@Override
-	public void render(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		super.setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 		boolean flag = func_212850_a_(entityIn);
 		float f = MathHelper.sin(swingProgress * (float) Math.PI);
 		float f1 = MathHelper.sin((1.0F - (1.0F - swingProgress) * (1.0F - swingProgress)) * (float) Math.PI);

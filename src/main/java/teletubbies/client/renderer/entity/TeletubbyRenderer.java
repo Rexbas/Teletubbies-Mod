@@ -107,7 +107,7 @@ public class TeletubbyRenderer<T extends CreatureEntity, M extends TeletubbyMode
 		}
 
 		this.entityModel.setLivingAnimations(entityIn, f5, f8, partialTicks);
-		this.entityModel.render(entityIn, f5, f8, f7, f2, f6);
+		this.entityModel.setRotationAngles(entityIn, f5, f8, f7, f2, f6);
 		boolean flag = this.isVisible(entityIn);
 		boolean flag1 = !flag && !entityIn.isInvisibleToPlayer(Minecraft.getInstance().player);
 		RenderType rendertype = this.func_230042_a_(entityIn, flag, flag1);

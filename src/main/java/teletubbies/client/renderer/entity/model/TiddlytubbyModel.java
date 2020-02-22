@@ -56,7 +56,7 @@ public class TiddlytubbyModel<T extends TiddlytubbyEntity> extends EntityModel<T
 	}
 	
 	@Override
-	public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		boolean isMoving = entity.getPosX() != entity.prevPosX || entity.getPosY() != entity.prevPosY || entity.getPosZ() != entity.prevPosZ;
 		
 		head.rotateAngleY = netHeadYaw * ((float) Math.PI / 180F);

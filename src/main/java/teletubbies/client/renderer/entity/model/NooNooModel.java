@@ -58,7 +58,7 @@ public class NooNooModel extends EntityModel<NooNooEntity> {
 	}
 
 	@Override
-	public void render(NooNooEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(NooNooEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		hose.rotateAngleY = MathHelper.cos(limbSwing * 0.6662F) * limbSwingAmount * 0.7F;
 
 		rightEye.rotateAngleX = headPitch * ((float) Math.PI / 180F);

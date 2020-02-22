@@ -48,9 +48,9 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	      }
 
 	      matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
-	      PoScooterRenderer.model.render(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
+	      PoScooterRenderer.model.setRotationAngles(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
 	      IVertexBuilder ivertexbuilder = bufferIn.getBuffer(PoScooterRenderer.model.getRenderType(this.getEntityTexture(entity)));
-	      PoScooterRenderer.model.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.DEFAULT_LIGHT, 1.0F, 1.0F, 1.0F, 1.0F);
+	      PoScooterRenderer.model.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 	      matrixStackIn.pop();
 	      super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}

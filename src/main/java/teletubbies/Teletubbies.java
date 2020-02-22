@@ -38,7 +38,7 @@ public class Teletubbies {
     
 	public void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
-		RenderTypeLookup.setRenderLayer(BlockList.WINDOW, RenderType.translucent());
+		RenderTypeLookup.setRenderLayer(BlockList.WINDOW, RenderType.getTranslucent());
         ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER, TinkyWinkyBagScreen::new);
 	}
 }

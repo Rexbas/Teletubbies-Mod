@@ -164,7 +164,7 @@ public class TeletubbiesEventHandler {
 	    public static void BlockColorHandler(final ColorHandlerEvent.Block event) {
 			if (BlockList.FULL_GRASS != null) {
 	        event.getBlockColors().register((state, reader, pos, tint) -> reader != null
-	                && pos != null ? BiomeColors.func_228358_a_(reader, pos)
+	                && pos != null ? BiomeColors.getGrassColor(reader, pos)
 	                : GrassColors.get(0.5D, 1.0D), BlockList.FULL_GRASS);
 			}
 	    }

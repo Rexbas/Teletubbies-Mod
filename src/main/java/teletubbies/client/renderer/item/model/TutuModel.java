@@ -188,7 +188,7 @@ public class TutuModel extends BipedModel<LivingEntity> {
 	}
 	
 	@Override
-	public void render(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setRotationAngles(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (entity.getPose() == Pose.CROUCHING) {
 			tutu.rotationPointY = 8.0F;
 			tutu.rotationPointZ = 2.0F;

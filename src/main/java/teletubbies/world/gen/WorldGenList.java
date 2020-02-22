@@ -31,10 +31,10 @@ public class WorldGenList {
 	
 	@SubscribeEvent
 	public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-		addFeature(Decoration.SURFACE_STRUCTURES, VOICE_TRUMPET_FEATURE.withConfiguration(new NoFeatureConfig()).func_227228_a_(Placement.FOREST_ROCK.func_227446_a_(new FrequencyConfig(2))), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		addFeature(Decoration.SURFACE_STRUCTURES, VOICE_TRUMPET_FEATURE.withConfiguration(new NoFeatureConfig()).withPlacement(Placement.FOREST_ROCK.configure(new FrequencyConfig(2))), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 				
 		addStructure(DOME_STRUCTURE, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-	    addFeature(Decoration.SURFACE_STRUCTURES, DOME_STRUCTURE.withConfiguration(new NoFeatureConfig()).func_227228_a_(Placement.NOPE.func_227446_a_(new NoPlacementConfig())), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+	    addFeature(Decoration.SURFACE_STRUCTURES, DOME_STRUCTURE.withConfiguration(new NoFeatureConfig()).withPlacement(Placement.NOPE.configure(new NoPlacementConfig())), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 	    
 		event.getRegistry().registerAll(
 				VOICE_TRUMPET_FEATURE, DOME_STRUCTURE
