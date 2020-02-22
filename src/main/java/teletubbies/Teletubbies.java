@@ -1,7 +1,6 @@
 package teletubbies;
 
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.item.Food;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.Mod;
@@ -21,8 +20,6 @@ public class Teletubbies {
     public static final String MODID = "teletubbies";
 	
 	public static ItemGroup ITEMGROUP = new ItemGroupTeletubbies(MODID);
-	public static Food CUSTARD_FOOD;
-	public static Food TOAST_FOOD;
 		
 	public Teletubbies() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
