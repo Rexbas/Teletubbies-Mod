@@ -11,7 +11,7 @@ public class CustardItem extends Item {
 	
 	public CustardItem() {
 		super(new Item.Properties()
-				.food(Teletubbies.CUSTARD_FOOD)
+				.food(ItemList.CUSTARD_FOOD)
 				.maxStackSize(1)
 				.group(Teletubbies.ITEMGROUP));
 

@@ -24,8 +24,6 @@ public class Teletubbies {
     public static final String MODID = "teletubbies";
 	
 	public static ItemGroup ITEMGROUP = new ItemGroupTeletubbies(MODID);
-	public static Food CUSTARD_FOOD;
-	public static Food TOAST_FOOD;
 		
 	public Teletubbies() {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);

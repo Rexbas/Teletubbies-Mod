@@ -27,6 +27,10 @@ public class ItemList {
 	public static final Item CUSTARD_MACHINE = new BlockItem(BlockList.CUSTARD_MACHINE, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.CUSTARD_MACHINE.getRegistryName());
 	public static final Item WINDOW = new BlockItem(BlockList.WINDOW, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.WINDOW.getRegistryName());
 
+	// FOOD
+	public static final Food CUSTARD_FOOD = (new Food.Builder()).hunger(4).saturation(5).build();
+	public static final Food TOAST_FOOD = (new Food.Builder()).hunger(2).saturation(5).fastToEat().build();
+	
 	// Items
 	public static final Item TINKYWINKY_STICK = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(Teletubbies.MODID, "tinkywinky_stick");
 	public static final Item DIPSY_STICK = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(Teletubbies.MODID, "dipsy_stick");
@@ -36,7 +40,7 @@ public class ItemList {
 	public static final Item LAALAA_BALL = new LaaLaaBallItem();
 	public static final Item BOWL = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(Teletubbies.MODID, "bowl");
 	public static final Item CUSTARD = new CustardItem();
-	public static final Item TOAST = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP).food(Teletubbies.TOAST_FOOD)).setRegistryName(Teletubbies.MODID, "toast");
+	public static final Item TOAST = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP).food(TOAST_FOOD)).setRegistryName(Teletubbies.MODID, "toast");
 
 	// Vehicle
 	public static final Item PO_SCOOTER = new PoScooterItem();
@@ -74,10 +78,7 @@ public class ItemList {
 	public static final Item PO_ZOMBIE_SPAWN_EGG = new SpawnEggItem(EntityList.PO_ZOMBIE, 0xD62828, 0x660000, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName("po_zombie_spawn_egg");
 
 	@SubscribeEvent
-	public static void registerItems(final RegistryEvent.Register<Item> event) {
-		Teletubbies.CUSTARD_FOOD= (new Food.Builder()).hunger(4).saturation(5).build();
-		Teletubbies.TOAST_FOOD= (new Food.Builder()).hunger(2).saturation(5).fastToEat().build();
-		
+	public static void registerItems(final RegistryEvent.Register<Item> event) {		
 		event.getRegistry().registerAll(
 				FULL_GRASS = new BlockItem(BlockList.FULL_GRASS, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.FULL_GRASS.getRegistryName()),
 				VOICE_TRUMPET, TOAST_MACHINE, CUSTARD_MACHINE, WINDOW,
