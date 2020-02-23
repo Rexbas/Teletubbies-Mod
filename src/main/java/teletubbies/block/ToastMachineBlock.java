@@ -160,7 +160,7 @@ public class ToastMachineBlock extends Block {
 			world.playSound(player, tilePos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 1, pitch);
 			t.reset();
 		}
-		return ActionResultType.PASS;
+		return ActionResultType.SUCCESS;
 	}
 	
 	public boolean isUnderwater(World world, BlockPos pos) {
