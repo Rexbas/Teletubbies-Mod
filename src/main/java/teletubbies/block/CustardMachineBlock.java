@@ -265,14 +265,12 @@ public class CustardMachineBlock extends Block {
 					t.reset();
 				}
 			}
-			else {
-				if (world.isRemote) {
-					ITextComponent msg = new StringTextComponent("\u00A77").appendSibling(new TranslationTextComponent("teletubbies.custard_machine.message"));
-					player.sendMessage(msg);
-				}
+			else if (world.isRemote) {
+				ITextComponent msg = new StringTextComponent("\u00A77").appendSibling(new TranslationTextComponent("teletubbies.custard_machine.message"));
+				player.sendMessage(msg);
 			}
 		}
-		return ActionResultType.PASS;
+		return ActionResultType.SUCCESS;
 	}
 	
 	public boolean isUnderwater(World world, BlockPos pos) {
