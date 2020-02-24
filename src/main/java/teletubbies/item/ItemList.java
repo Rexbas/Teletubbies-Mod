@@ -27,9 +27,9 @@ public class ItemList {
 	public static final Item CUSTARD_MACHINE = new BlockItem(BlockList.CUSTARD_MACHINE, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.CUSTARD_MACHINE.getRegistryName());
 	public static final Item WINDOW = new BlockItem(BlockList.WINDOW, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.WINDOW.getRegistryName());
 
-	// FOOD
-	public static final Food CUSTARD_FOOD = (new Food.Builder()).hunger(4).saturation(5).build();
-	public static final Food TOAST_FOOD = (new Food.Builder()).hunger(2).saturation(5).fastToEat().build();
+	// Food
+	public static final Food CUSTARD_FOOD = (new Food.Builder()).hunger(4).saturation(1).build();
+	public static final Food TOAST_FOOD = (new Food.Builder()).hunger(2).saturation(1).fastToEat().build();
 	
 	// Items
 	public static final Item TINKYWINKY_STICK = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(Teletubbies.MODID, "tinkywinky_stick");
