@@ -423,7 +423,7 @@ public class PoScooterEntity extends Entity {
 
 	@Override
 	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
-		if (player.func_226563_dT_()) {
+		if (player.isSneaking()) {
 			return false;
 		} else {
 			return !this.world.isRemote && this.outOfControlTicks < 60.0F ? player.startRiding(this) : false;

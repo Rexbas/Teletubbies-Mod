@@ -50,7 +50,7 @@ public class DomeStructure extends ScatteredStructure<NoFeatureConfig> {
 		}
 		
 		@Override
-		public void func_225565_a_(IWorld world, ChunkGenerator<?> gen, Random rand, MutableBoundingBox bb, ChunkPos pos) {
+		public void generateStructure(IWorld world, ChunkGenerator<?> gen, Random rand, MutableBoundingBox bb, ChunkPos pos) {
 			MutableBoundingBox fullBB = this.getBoundingBox();
 			if (this.components.iterator().hasNext()) {
 				if (this.components.iterator().next() instanceof DomePiece) {
@@ -60,7 +60,7 @@ public class DomeStructure extends ScatteredStructure<NoFeatureConfig> {
 					}
 				}
 			}
-			super.func_225565_a_(world, gen, rand, bb, pos);
+			super.generateStructure(world, gen, rand, bb, pos);
 		}
 
 		@Override

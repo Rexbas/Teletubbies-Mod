@@ -36,7 +36,7 @@ public class DomePiece extends ScatteredStructurePiece {
 	}
 
 	@Override
-	public boolean func_225577_a_(IWorld world, ChunkGenerator<?> gen, Random rand, MutableBoundingBox bb, ChunkPos chunk) {
+	public boolean create(IWorld world, ChunkGenerator<?> gen, Random rand, MutableBoundingBox bb, ChunkPos chunk) {
 		for (int k1 = 0; k1 < this.width; ++k1) {
 			for (int j = 0; j < this.depth; ++j) {
 				this.replaceLiquidDownwards(world, BlockList.FULL_GRASS.getDefaultState(), k1, this.height, j, bb);

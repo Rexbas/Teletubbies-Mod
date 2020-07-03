@@ -101,6 +101,6 @@ public class EntityList {
 	
 	private static void registerZombieWorldSpawns(EntityType<? extends ZombieEntity> entity, EntityClassification classification, Biome...biomes) {
 		registerWorldSpawns(entity, classification, 100, biomes);
-		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::func_223325_c);
+		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
 	}
 }
