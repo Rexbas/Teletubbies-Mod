@@ -2,18 +2,21 @@ package teletubbies.client.renderer.environment;
 
 import java.util.Random;
 
-import com.mojang.blaze3d.platform.GLX;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.client.renderer.WorldVertexBufferUploader;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.client.renderer.vertex.VertexFormat;
-import net.minecraft.client.renderer.vertex.VertexFormatElement;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -26,25 +29,18 @@ import teletubbies.Teletubbies;
 // Most code from WorldRenderer
 @OnlyIn(Dist.CLIENT)
 public class BabyFaceRenderer implements IRenderHandler {
-	
+
 	private static final ResourceLocation MOON_PHASES_TEXTURES = new ResourceLocation("textures/environment/moon_phases.png");
 	private static final ResourceLocation SUN_TEXTURES = new ResourceLocation(Teletubbies.MODID, "textures/environment/sun.png");
-	private boolean vboEnabled;
-	private int starGLCallList = -1;
-	private int glSkyList = -1;
-	private int glSkyList2 = -1;
-	private final VertexFormat vertexBufferFormat;
+	private final VertexFormat skyVertexFormat = DefaultVertexFormats.POSITION;
 	private VertexBuffer starVBO;
 	private VertexBuffer skyVBO;
 	private VertexBuffer sky2VBO;
-	
+
 	private static final float stepSize = 5.0f;
 	private static float yaw;
 
 	public BabyFaceRenderer() {
-		this.vboEnabled = GLX.useVbo();
-		this.vertexBufferFormat = new VertexFormat();
-		this.vertexBufferFormat.addElement(new VertexFormatElement(0, VertexFormatElement.Type.FLOAT, VertexFormatElement.Usage.POSITION, 3));
 		this.generateStars();
 		this.generateSky();
 		this.generateSky2();
@@ -52,174 +48,220 @@ public class BabyFaceRenderer implements IRenderHandler {
 
 	@Override
 	public void render(int ticks, float partialTicks, ClientWorld world, Minecraft mc) {
+		final MatrixStack matrixstack = new MatrixStack();
+		ActiveRenderInfo activerenderinfo = mc.gameRenderer.getActiveRenderInfo();
+		{ // from GameRenderer@renderWorld
+			net.minecraftforge.client.event.EntityViewRenderEvent.CameraSetup cameraSetup = net.minecraftforge.client.ForgeHooksClient
+					.onCameraSetup(mc.gameRenderer, activerenderinfo, partialTicks);
+			activerenderinfo.setAnglesInternal(cameraSetup.getYaw(), cameraSetup.getPitch());
+			matrixstack.rotate(Vector3f.ZP.rotationDegrees(cameraSetup.getRoll()));
+
+			matrixstack.rotate(Vector3f.XP.rotationDegrees(activerenderinfo.getPitch()));
+			matrixstack.rotate(Vector3f.YP.rotationDegrees(activerenderinfo.getYaw() + 180.0F));
+		}
 		if (mc.world.dimension.isSurfaceWorld()) {
-			GlStateManager.disableTexture();
+			RenderSystem.disableTexture();
 			Vec3d vec3d = world.getSkyColor(mc.gameRenderer.getActiveRenderInfo().getBlockPos(), partialTicks);
 			float f = (float) vec3d.x;
 			float f1 = (float) vec3d.y;
 			float f2 = (float) vec3d.z;
-			GlStateManager.color3f(f, f1, f2);
-			Tessellator tessellator = Tessellator.getInstance();
-			BufferBuilder bufferbuilder = tessellator.getBuffer();
-			GlStateManager.depthMask(false);
-			GlStateManager.enableFog();
-			GlStateManager.color3f(f, f1, f2);
-			if (this.vboEnabled) {
-				this.skyVBO.bindBuffer();
-				GlStateManager.enableClientState(32884);
-				GlStateManager.vertexPointer(3, 5126, 12, 0);
-				this.skyVBO.drawArrays(7);
-				VertexBuffer.unbindBuffer();
-				GlStateManager.disableClientState(32884);
-			} else {
-				GlStateManager.callList(this.glSkyList);
-			}
-
-			GlStateManager.disableFog();
-			GlStateManager.disableAlphaTest();
-			GlStateManager.enableBlend();
-			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA,
-					GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-			RenderHelper.disableStandardItemLighting();
+			FogRenderer.applyFog();
+			BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
+			RenderSystem.depthMask(false);
+			RenderSystem.enableFog();
+			RenderSystem.color3f(f, f1, f2);
+			this.skyVBO.bindBuffer();
+			this.skyVertexFormat.setupBufferState(0L);
+			this.skyVBO.draw(matrixstack.getLast().getMatrix(), 7);
+			VertexBuffer.unbindBuffer();
+			this.skyVertexFormat.clearBufferState();
+			RenderSystem.disableFog();
+			RenderSystem.disableAlphaTest();
+			RenderSystem.enableBlend();
+			RenderSystem.defaultBlendFunc();
 			float[] afloat = world.dimension.calcSunriseSunsetColors(world.getCelestialAngle(partialTicks), partialTicks);
 			if (afloat != null) {
-				GlStateManager.disableTexture();
-				GlStateManager.shadeModel(7425);
-				GlStateManager.pushMatrix();
-				GlStateManager.rotatef(90.0F, 1.0F, 0.0F, 0.0F);
-				GlStateManager.rotatef(MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) < 0.0F ? 180.0F : 0.0F, 0.0F, 0.0F, 1.0F);
-				GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
-				float f3 = afloat[0];
-				float f4 = afloat[1];
-				float f5 = afloat[2];
+				RenderSystem.disableTexture();
+				RenderSystem.shadeModel(7425);
+				matrixstack.push();
+				matrixstack.rotate(Vector3f.XP.rotationDegrees(90.0F));
+				float f3 = MathHelper.sin(world.getCelestialAngleRadians(partialTicks)) < 0.0F ? 180.0F : 0.0F;
+				matrixstack.rotate(Vector3f.ZP.rotationDegrees(f3));
+				matrixstack.rotate(Vector3f.ZP.rotationDegrees(90.0F));
+				float f4 = afloat[0];
+				float f5 = afloat[1];
+				float f6 = afloat[2];
+				Matrix4f matrix4f = matrixstack.getLast().getMatrix();
 				bufferbuilder.begin(6, DefaultVertexFormats.POSITION_COLOR);
-				bufferbuilder.pos(0.0D, 100.0D, 0.0D).color(f3, f4, f5, afloat[3]).endVertex();
+				bufferbuilder.pos(matrix4f, 0.0F, 100.0F, 0.0F).color(f4, f5, f6, afloat[3]).endVertex();
 
 				for (int j = 0; j <= 16; ++j) {
-					float f6 = (float) j * ((float) Math.PI * 2F) / 16.0F;
-					float f7 = MathHelper.sin(f6);
-					float f8 = MathHelper.cos(f6);
-					bufferbuilder.pos((double) (f7 * 120.0F), (double) (f8 * 120.0F), (double) (-f8 * 40.0F * afloat[3]))
-							.color(afloat[0], afloat[1], afloat[2], 0.0F).endVertex();
+					float f7 = (float) j * ((float) Math.PI * 2F) / 16.0F;
+					float f8 = MathHelper.sin(f7);
+					float f9 = MathHelper.cos(f7);
+					bufferbuilder.pos(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * afloat[3]).color(afloat[0], afloat[1], afloat[2], 0.0F).endVertex();
 				}
 
-				tessellator.draw();
-				GlStateManager.popMatrix();
-				GlStateManager.shadeModel(7424);
+				bufferbuilder.finishDrawing();
+				WorldVertexBufferUploader.draw(bufferbuilder);
+				matrixstack.pop();
+				RenderSystem.shadeModel(7424);
 			}
-
-			GlStateManager.enableTexture();
-			GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE,
+			RenderSystem.enableTexture();
+			RenderSystem.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE,
 					GlStateManager.DestFactor.ZERO);
-			GlStateManager.pushMatrix();
+			matrixstack.push();
 			float f11 = 1.0F - world.getRainStrength(partialTicks);
-	        GlStateManager.color4f(1.0F, 1.0F, 1.0F, f11);
-			
-			GlStateManager.rotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-			GlStateManager.rotatef(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
-						
+			RenderSystem.color4f(1.0F, 1.0F, 1.0F, f11);
+			matrixstack.rotate(Vector3f.YP.rotationDegrees(-90.0F));
+			matrixstack.rotate(Vector3f.XP.rotationDegrees(world.getCelestialAngle(partialTicks) * 360.0F));
+
 			// Rotation magic
-			GlStateManager.pushMatrix();
+			matrixstack.push();
+
 			float playerYaw = mc.player.rotationYaw % 360;
-			if (playerYaw < 0) playerYaw += 360f;
-				
+			if (playerYaw < 0)
+				playerYaw += 360f;
+
 			float error = playerYaw - yaw;
-			if (error > 180f) error -= 360f;
-			if (error < -180f) error += 360f;
-			
+			if (error > 180f)
+				error -= 360f;
+			if (error < -180f)
+				error += 360f;
+
 			if (Math.abs(error) < stepSize) {
 				error = 0;
 				yaw = playerYaw;
 			}
-			
-			if (error > 0) yaw += stepSize;
-			if (error < 0) yaw -= stepSize;
-			
+
+			if (error > 0)
+				yaw += stepSize;
+			if (error < 0)
+				yaw -= stepSize;
+
 			float offset = 90f;
 			if (mc.gameSettings.thirdPersonView == 2) {
 				offset += 180f;
 			}
-			GlStateManager.rotatef(-yaw + offset, 0.0F, 1.0F, 0.0F);
 
+			matrixstack.rotate(Vector3f.YP.rotationDegrees(-yaw + offset));
+
+			Matrix4f matrix4f1 = matrixstack.getLast().getMatrix();
 			float f12 = 30.0F;
-			mc.getTextureManager().bindTexture(SUN_TEXTURES);
+			mc.textureManager.bindTexture(SUN_TEXTURES);
 			bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-			bufferbuilder.pos((double) (-f12), 100.0D, (double) (-f12)).tex(0.0D, 0.0D).endVertex();
-			bufferbuilder.pos((double) f12, 100.0D, (double) (-f12)).tex(1.0D, 0.0D).endVertex();
-			bufferbuilder.pos((double) f12, 100.0D, (double) f12).tex(1.0D, 1.0D).endVertex();
-			bufferbuilder.pos((double) (-f12), 100.0D, (double) f12).tex(0.0D, 1.0D).endVertex();
-			tessellator.draw();
-			GlStateManager.popMatrix();
-			// End rotation magic
+			bufferbuilder.pos(matrix4f1, -f12, 100.0F, -f12).tex(0.0F, 0.0F).endVertex();
+			bufferbuilder.pos(matrix4f1, f12, 100.0F, -f12).tex(1.0F, 0.0F).endVertex();
+			bufferbuilder.pos(matrix4f1, f12, 100.0F, f12).tex(1.0F, 1.0F).endVertex();
+			bufferbuilder.pos(matrix4f1, -f12, 100.0F, f12).tex(0.0F, 1.0F).endVertex();
+			bufferbuilder.finishDrawing();
+			WorldVertexBufferUploader.draw(bufferbuilder);
+			matrixstack.pop();
 			
+			matrix4f1 = matrixstack.getLast().getMatrix();
+			// End rotation magic
+
 			f12 = 20.0F;
-			mc.getTextureManager().bindTexture(MOON_PHASES_TEXTURES);
+			mc.textureManager.bindTexture(MOON_PHASES_TEXTURES);
 			int k = world.getMoonPhase();
 			int l = k % 4;
 			int i1 = k / 4 % 2;
 			float f13 = (float) (l + 0) / 4.0F;
 			float f14 = (float) (i1 + 0) / 2.0F;
 			float f15 = (float) (l + 1) / 4.0F;
-			float f9 = (float) (i1 + 1) / 2.0F;
+			float f16 = (float) (i1 + 1) / 2.0F;
 			bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-			bufferbuilder.pos((double) (-f12), -100.0D, (double) f12).tex((double) f15, (double) f9).endVertex();
-			bufferbuilder.pos((double) f12, -100.0D, (double) f12).tex((double) f13, (double) f9).endVertex();
-			bufferbuilder.pos((double) f12, -100.0D, (double) (-f12)).tex((double) f13, (double) f14).endVertex();
-			bufferbuilder.pos((double) (-f12), -100.0D, (double) (-f12)).tex((double) f15, (double) f14).endVertex();
-			tessellator.draw();
-			GlStateManager.disableTexture();
+			bufferbuilder.pos(matrix4f1, -f12, -100.0F, f12).tex(f15, f16).endVertex();
+			bufferbuilder.pos(matrix4f1, f12, -100.0F, f12).tex(f13, f16).endVertex();
+			bufferbuilder.pos(matrix4f1, f12, -100.0F, -f12).tex(f13, f14).endVertex();
+			bufferbuilder.pos(matrix4f1, -f12, -100.0F, -f12).tex(f15, f14).endVertex();
+			bufferbuilder.finishDrawing();
+			WorldVertexBufferUploader.draw(bufferbuilder);
+			RenderSystem.disableTexture();
 			float f10 = world.getStarBrightness(partialTicks) * f11;
 			if (f10 > 0.0F) {
-				GlStateManager.color4f(f10, f10, f10, f10);
-				if (this.vboEnabled) {
-					this.starVBO.bindBuffer();
-					GlStateManager.enableClientState(32884);
-					GlStateManager.vertexPointer(3, 5126, 12, 0);
-					this.starVBO.drawArrays(7);
-					VertexBuffer.unbindBuffer();
-					GlStateManager.disableClientState(32884);
-				} else {
-					GlStateManager.callList(this.starGLCallList);
-				}
+				RenderSystem.color4f(f10, f10, f10, f10);
+				this.starVBO.bindBuffer();
+				this.skyVertexFormat.setupBufferState(0L);
+				this.starVBO.draw(matrixstack.getLast().getMatrix(), 7);
+				VertexBuffer.unbindBuffer();
+				this.skyVertexFormat.clearBufferState();
 			}
 
-			GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-			GlStateManager.disableBlend();
-			GlStateManager.enableAlphaTest();
-			GlStateManager.enableFog();
-			GlStateManager.popMatrix();
-			GlStateManager.disableTexture();
-			GlStateManager.color3f(0.0F, 0.0F, 0.0F);
-			double d0 = mc.player.getEyePosition(partialTicks).y - world.getHorizon();
+			RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+			RenderSystem.disableBlend();
+			RenderSystem.enableAlphaTest();
+			RenderSystem.enableFog();
+			matrixstack.pop();
+			RenderSystem.disableTexture();
+			RenderSystem.color3f(0.0F, 0.0F, 0.0F);
+			double d0 = mc.player.getEyePosition(partialTicks).y - world.getHorizonHeight();
 			if (d0 < 0.0D) {
-				GlStateManager.pushMatrix();
-				GlStateManager.translatef(0.0F, 12.0F, 0.0F);
-				if (this.vboEnabled) {
-					this.sky2VBO.bindBuffer();
-					GlStateManager.enableClientState(32884);
-					GlStateManager.vertexPointer(3, 5126, 12, 0);
-					this.sky2VBO.drawArrays(7);
-					VertexBuffer.unbindBuffer();
-					GlStateManager.disableClientState(32884);
-				} else {
-					GlStateManager.callList(this.glSkyList2);
-				}
-
-				GlStateManager.popMatrix();
+				matrixstack.push();
+				matrixstack.translate(0.0D, 12.0D, 0.0D);
+				this.sky2VBO.bindBuffer();
+				this.skyVertexFormat.setupBufferState(0L);
+				this.sky2VBO.draw(matrixstack.getLast().getMatrix(), 7);
+				VertexBuffer.unbindBuffer();
+				this.skyVertexFormat.clearBufferState();
+				matrixstack.pop();
 			}
 
 			if (world.dimension.isSkyColored()) {
-				GlStateManager.color3f(error * 0.2F + 0.04F, error * 0.2F + 0.04F, f2 * 0.6F + 0.1F);
+				RenderSystem.color3f(f * 0.2F + 0.04F, f1 * 0.2F + 0.04F, f2 * 0.6F + 0.1F);
 			} else {
-				GlStateManager.color3f(error, error, f2);
+				RenderSystem.color3f(f, f1, f2);
 			}
 
-			GlStateManager.pushMatrix();
-			GlStateManager.translatef(0.0F, -((float) (d0 - 16.0D)), 0.0F);
-			GlStateManager.callList(this.glSkyList2);
-			GlStateManager.popMatrix();
-			GlStateManager.enableTexture();
-			GlStateManager.depthMask(true);
+			RenderSystem.enableTexture();
+			RenderSystem.depthMask(true);
+			RenderSystem.disableFog();
+		}
+	}
+
+	private void generateSky2() {
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		if (this.sky2VBO != null) {
+			this.sky2VBO.close();
+		}
+
+		this.sky2VBO = new VertexBuffer(this.skyVertexFormat);
+		this.renderSky(bufferbuilder, -16.0F, true);
+		bufferbuilder.finishDrawing();
+		this.sky2VBO.upload(bufferbuilder);
+	}
+
+	private void generateSky() {
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		if (this.skyVBO != null) {
+			this.skyVBO.close();
+		}
+
+		this.skyVBO = new VertexBuffer(this.skyVertexFormat);
+		this.renderSky(bufferbuilder, 16.0F, false);
+		bufferbuilder.finishDrawing();
+		this.skyVBO.upload(bufferbuilder);
+	}
+
+	private void renderSky(BufferBuilder bufferBuilderIn, float posY, boolean reverseX) {
+		bufferBuilderIn.begin(7, DefaultVertexFormats.POSITION);
+
+		for (int k = -384; k <= 384; k += 64) {
+			for (int l = -384; l <= 384; l += 64) {
+				float f = (float) k;
+				float f1 = (float) (k + 64);
+				if (reverseX) {
+					f1 = (float) k;
+					f = (float) (k + 64);
+				}
+
+				bufferBuilderIn.pos((double) f, (double) posY, (double) l).endVertex();
+				bufferBuilderIn.pos((double) f1, (double) posY, (double) l).endVertex();
+				bufferBuilderIn.pos((double) f1, (double) posY, (double) (l + 64)).endVertex();
+				bufferBuilderIn.pos((double) f, (double) posY, (double) (l + 64)).endVertex();
+			}
 		}
 	}
 
@@ -227,86 +269,13 @@ public class BabyFaceRenderer implements IRenderHandler {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		if (this.starVBO != null) {
-			this.starVBO.deleteGlBuffers();
+			this.starVBO.close();
 		}
 
-		if (this.starGLCallList >= 0) {
-			GLAllocation.deleteDisplayLists(this.starGLCallList);
-			this.starGLCallList = -1;
-		}
-
-		if (this.vboEnabled) {
-			this.starVBO = new VertexBuffer(this.vertexBufferFormat);
-			this.renderStars(bufferbuilder);
-			bufferbuilder.finishDrawing();
-			bufferbuilder.reset();
-			this.starVBO.bufferData(bufferbuilder.getByteBuffer());
-		} else {
-			this.starGLCallList = GLAllocation.generateDisplayLists(1);
-			GlStateManager.pushMatrix();
-			GlStateManager.newList(this.starGLCallList, 4864);
-			this.renderStars(bufferbuilder);
-			tessellator.draw();
-			GlStateManager.endList();
-			GlStateManager.popMatrix();
-		}
-
-	}
-
-	private void generateSky2() {
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		if (this.sky2VBO != null) {
-			this.sky2VBO.deleteGlBuffers();
-		}
-
-		if (this.glSkyList2 >= 0) {
-			GLAllocation.deleteDisplayLists(this.glSkyList2);
-			this.glSkyList2 = -1;
-		}
-
-		if (this.vboEnabled) {
-			this.sky2VBO = new VertexBuffer(this.vertexBufferFormat);
-			this.renderSky(bufferbuilder, -16.0F, true);
-			bufferbuilder.finishDrawing();
-			bufferbuilder.reset();
-			this.sky2VBO.bufferData(bufferbuilder.getByteBuffer());
-		} else {
-			this.glSkyList2 = GLAllocation.generateDisplayLists(1);
-			GlStateManager.newList(this.glSkyList2, 4864);
-			this.renderSky(bufferbuilder, -16.0F, true);
-			tessellator.draw();
-			GlStateManager.endList();
-		}
-
-	}
-
-	private void generateSky() {
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		if (this.skyVBO != null) {
-			this.skyVBO.deleteGlBuffers();
-		}
-
-		if (this.glSkyList >= 0) {
-			GLAllocation.deleteDisplayLists(this.glSkyList);
-			this.glSkyList = -1;
-		}
-
-		if (this.vboEnabled) {
-			this.skyVBO = new VertexBuffer(this.vertexBufferFormat);
-			this.renderSky(bufferbuilder, 16.0F, false);
-			bufferbuilder.finishDrawing();
-			bufferbuilder.reset();
-			this.skyVBO.bufferData(bufferbuilder.getByteBuffer());
-		} else {
-			this.glSkyList = GLAllocation.generateDisplayLists(1);
-			GlStateManager.newList(this.glSkyList, 4864);
-			this.renderSky(bufferbuilder, 16.0F, false);
-			tessellator.draw();
-			GlStateManager.endList();
-		}
-
+		this.starVBO = new VertexBuffer(this.skyVertexFormat);
+		this.renderStars(bufferbuilder);
+		bufferbuilder.finishDrawing();
+		this.starVBO.upload(bufferbuilder);
 	}
 
 	private void renderStars(BufferBuilder bufferBuilderIn) {
@@ -348,26 +317,6 @@ public class BabyFaceRenderer implements IRenderHandler {
 					double d26 = d22 * d9 + d24 * d10;
 					bufferBuilderIn.pos(d5 + d25, d6 + d23, d7 + d26).endVertex();
 				}
-			}
-		}
-	}
-
-	private void renderSky(BufferBuilder bufferBuilder, float posY, boolean reverseX) {
-		bufferBuilder.begin(7, DefaultVertexFormats.POSITION);
-
-		for (int k = -384; k <= 384; k += 64) {
-			for (int l = -384; l <= 384; l += 64) {
-				float f = (float) k;
-				float f1 = (float) (k + 64);
-				if (reverseX) {
-					f1 = (float) k;
-					f = (float) (k + 64);
-				}
-
-				bufferBuilder.pos((double) f, (double) posY, (double) l).endVertex();
-				bufferBuilder.pos((double) f1, (double) posY, (double) l).endVertex();
-				bufferBuilder.pos((double) f1, (double) posY, (double) (l + 64)).endVertex();
-				bufferBuilder.pos((double) f, (double) posY, (double) (l + 64)).endVertex();
 			}
 		}
 	}
