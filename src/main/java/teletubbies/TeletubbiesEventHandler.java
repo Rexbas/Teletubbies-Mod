@@ -16,8 +16,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GrassColors;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -27,11 +29,13 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.block.BlockList;
 import teletubbies.client.audio.PoScooterTickableSound;
+import teletubbies.client.renderer.environment.BabyFaceRenderer;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.entity.item.PoScooterEntity;
@@ -50,6 +54,15 @@ public class TeletubbiesEventHandler {
 	public static void attachtCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {		
 		if(event.getObject() instanceof PlayerEntity) {
 			event.addCapability(new ResourceLocation(Teletubbies.MODID, "capability.jump"), new JumpProvider());
+		}
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public static void setSkyRenderer(WorldEvent.Load event) {
+		if (event.getWorld().isRemote() && event.getWorld().getDimension().getType() == DimensionType.OVERWORLD) {
+			IRenderHandler renderer = new BabyFaceRenderer();
+			event.getWorld().getDimension().setSkyRenderer(renderer);
 		}
 	}
 	
