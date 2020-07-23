@@ -17,6 +17,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
+import teletubbies.config.WorldGenConfig;
 import teletubbies.world.gen.feature.VoiceTrumpetFeature;
 import teletubbies.world.gen.feature.structure.DomePiece;
 import teletubbies.world.gen.feature.structure.DomeStructure;
@@ -31,7 +32,7 @@ public class WorldGenList {
 	
 	@SubscribeEvent
 	public static void registerFeatures(final RegistryEvent.Register<Feature<?>> event) {
-		addFeature(Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(VOICE_TRUMPET_FEATURE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.FOREST_ROCK, new FrequencyConfig(2)), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		addFeature(Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(VOICE_TRUMPET_FEATURE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.FOREST_ROCK, new FrequencyConfig(WorldGenConfig.VOICE_TRUMPET_FREQUENCY.get())), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 				
 		addStructure(DOME_STRUCTURE, IFeatureConfig.NO_FEATURE_CONFIG, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 	    addFeature(Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(DOME_STRUCTURE, IFeatureConfig.NO_FEATURE_CONFIG, Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG), Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
