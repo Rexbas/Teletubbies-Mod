@@ -17,6 +17,7 @@ public class Config {
 	static {
 		WorldGenConfig.init(SERVER_BUILDER);
 		EntityConfig.init(SERVER_BUILDER);
+		FoodConfig.init(SERVER_BUILDER);
 		SERVER_CONFIG = SERVER_BUILDER.build();
 	}
 	
