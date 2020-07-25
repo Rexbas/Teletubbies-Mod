@@ -9,10 +9,12 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
+import teletubbies.config.EntityConfig;
 import teletubbies.entity.baby.BaEntity;
 import teletubbies.entity.baby.DaaDaaEntity;
 import teletubbies.entity.baby.DuggleDeeEntity;
@@ -67,40 +69,40 @@ public class EntityList {
 				PO_SCOOTER
 		);
 		
-		registerWorldSpawns(TINKYWINKY, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(DIPSY, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(LAALAA, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(PO, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(TINKYWINKY, EntityClassification.CREATURE, EntityConfig.TINKYWINKY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(DIPSY, EntityClassification.CREATURE, EntityConfig.DIPSY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(LAALAA, EntityClassification.CREATURE, EntityConfig.LAALAA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(PO, EntityClassification.CREATURE, EntityConfig.PO_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		
-		registerWorldSpawns(NOONOO, EntityClassification.CREATURE, 20, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(NOONOO, EntityClassification.CREATURE, EntityConfig.NOONOO_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		
-		registerWorldSpawns(MIMI, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(DAADAA, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(PING, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(BA, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(RURU, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(NIN, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(DUGGLEDEE, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(UMPIEPUMPIE, EntityClassification.CREATURE, 5, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(MIMI, EntityClassification.CREATURE, EntityConfig.MIMI_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(DAADAA, EntityClassification.CREATURE, EntityConfig.DAADAA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(PING, EntityClassification.CREATURE, EntityConfig.PING_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(BA, EntityClassification.CREATURE, EntityConfig.BA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(RURU, EntityClassification.CREATURE, EntityConfig.RURU_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(NIN, EntityClassification.CREATURE, EntityConfig.NIN_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(DUGGLEDEE, EntityClassification.CREATURE, EntityConfig.DUGGLEDEE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(UMPIEPUMPIE, EntityClassification.CREATURE, EntityConfig.UMPIEPUMPIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 
-		registerZombieWorldSpawns(TINKYWINKY_ZOMBIE, EntityClassification.MONSTER, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerZombieWorldSpawns(DIPSY_ZOMBIE, EntityClassification.MONSTER, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerZombieWorldSpawns(LAALAA_ZOMBIE, EntityClassification.MONSTER, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerZombieWorldSpawns(PO_ZOMBIE, EntityClassification.MONSTER, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(TINKYWINKY_ZOMBIE, EntityClassification.MONSTER, EntityConfig.TINKYWINKY_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(DIPSY_ZOMBIE, EntityClassification.MONSTER, EntityConfig.DIPSY_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(LAALAA_ZOMBIE, EntityClassification.MONSTER, EntityConfig.LAALAA_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(PO_ZOMBIE, EntityClassification.MONSTER, EntityConfig.PO_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 	}
 	
 	private static <T extends TiddlytubbyEntity> EntityType<?> createTiddlytubby(EntityType.IFactory<T> factory, String name) {
 		return EntityType.Builder.create(factory, EntityClassification.CREATURE).size(0.5F, 0.8F).build(Teletubbies.MODID + ":" + name).setRegistryName(Teletubbies.MODID, name);
 	}
 
-	private static void registerWorldSpawns(EntityType<?> entity, EntityClassification classification, int weight, Biome...biomes) {
+	private static void registerWorldSpawns(EntityType<?> entity, EntityClassification classification, IntValue weight, Biome...biomes) {
 		for (Biome b : biomes) {
-			b.getSpawns(classification).add(new SpawnListEntry(entity, weight, 1, 1));
+			b.getSpawns(classification).add(new SpawnListEntry(entity, weight.get(), 1, 1));
 		}
 	}
 	
-	private static void registerZombieWorldSpawns(EntityType<? extends ZombieEntity> entity, EntityClassification classification, Biome...biomes) {
-		registerWorldSpawns(entity, classification, 100, biomes);
+	private static void registerZombieWorldSpawns(EntityType<? extends ZombieEntity> entity, EntityClassification classification, IntValue weight, Biome...biomes) {
+		registerWorldSpawns(entity, classification, weight, biomes);
 		EntitySpawnPlacementRegistry.register(entity, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::func_223325_c);
 	}
 }

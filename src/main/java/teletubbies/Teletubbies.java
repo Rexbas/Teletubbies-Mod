@@ -24,22 +24,22 @@ public class Teletubbies {
     public static final String MODID = "teletubbies";
 	
 	public static ItemGroup ITEMGROUP = new ItemGroupTeletubbies(MODID);
-		
+
 	public Teletubbies() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
-		
+
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-		
+
 		Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve("teletubbies-server.toml").toString());
 	}
-	
+
 	public void setup(final FMLCommonSetupEvent event) {
 		CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
 	}
-    
+
 	public void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
-        ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER, TinkyWinkyBagScreen::new);
+		ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER, TinkyWinkyBagScreen::new);
 	}
 }
