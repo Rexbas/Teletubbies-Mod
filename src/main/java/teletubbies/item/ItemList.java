@@ -12,6 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
 import teletubbies.block.BlockList;
+import teletubbies.config.FoodConfig;
 import teletubbies.entity.EntityList;
 import teletubbies.item.armor.DipsyHatItem;
 import teletubbies.item.armor.NooNooEyesItem;
@@ -28,8 +29,8 @@ public class ItemList {
 	public static final Item WINDOW = new BlockItem(BlockList.WINDOW, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.WINDOW.getRegistryName());
 
 	// Food
-	public static final Food CUSTARD_FOOD = (new Food.Builder()).hunger(4).saturation(1).build();
-	public static final Food TOAST_FOOD = (new Food.Builder()).hunger(2).saturation(1).fastToEat().build();
+	public static final Food CUSTARD_FOOD = (new Food.Builder()).hunger(FoodConfig.CUSTARD_HUNGER.get()).saturation(FoodConfig.CUSTARD_SATURATION.get().floatValue()).build();
+	public static final Food TOAST_FOOD = (new Food.Builder()).hunger(FoodConfig.TOAST_HUNGER.get()).saturation(FoodConfig.TOAST_SATURATION.get().floatValue()).fastToEat().build();
 	
 	// Items
 	public static final Item TINKYWINKY_STICK = new Item(new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(Teletubbies.MODID, "tinkywinky_stick");

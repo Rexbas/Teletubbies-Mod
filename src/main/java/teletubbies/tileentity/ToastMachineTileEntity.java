@@ -26,7 +26,6 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 		}
 	}
 	
-	
 	public boolean canDrop() {
 		return ticksSinceLastDrop >= DROPTICKS;
 	}

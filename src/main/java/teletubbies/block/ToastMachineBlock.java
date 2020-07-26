@@ -154,10 +154,10 @@ public class ToastMachineBlock extends Block {
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
 		ToastMachineTileEntity t = (ToastMachineTileEntity) world.getTileEntity(tilePos);
-		if (t.canDrop()) {
+		if (t.canDrop() && !world.isRemote) {
 			t.dropToast(new ItemStack(ItemList.TOAST), player);
 			float pitch = isUnderwater(world, tilePos) ? 0.5F : 1F;
-			world.playSound(player, tilePos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 1, pitch);
+			world.playSound(null, tilePos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 1, pitch);
 			t.reset();
 		}
 		return ActionResultType.SUCCESS;
