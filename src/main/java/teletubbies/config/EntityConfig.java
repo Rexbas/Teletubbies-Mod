@@ -27,6 +27,8 @@ public class EntityConfig {
 	public static ForgeConfigSpec.IntValue DIPSY_ZOMBIE_WEIGHT;
 	public static ForgeConfigSpec.IntValue LAALAA_ZOMBIE_WEIGHT;
 	public static ForgeConfigSpec.IntValue PO_ZOMBIE_WEIGHT;
+	
+	public static ForgeConfigSpec.IntValue TRANSFORMATION_PROBABILITY;
 
 	public static void init(ForgeConfigSpec.Builder server) {
 		server.comment("Friendly Entity settings").push(CATEGORY_ENTITIES_FRIENDLY);
@@ -52,6 +54,9 @@ public class EntityConfig {
 		DIPSY_ZOMBIE_WEIGHT = server.defineInRange("dipsy_zombie_weight", 100, 1, 1000000);
 		LAALAA_ZOMBIE_WEIGHT = server.defineInRange("laalaa_zombie_weight", 100, 1, 1000000);
 		PO_ZOMBIE_WEIGHT = server.defineInRange("po_zombie_weight", 100, 1, 1000000);
+		
+		TRANSFORMATION_PROBABILITY = server.comment("Chance of Teletubby transforming into zombie Teletubby")
+				.defineInRange("transformation_probability", 25, 1, 100);
 		server.pop();
 	}
 }

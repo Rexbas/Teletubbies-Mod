@@ -1,7 +1,5 @@
 package teletubbies;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -38,6 +36,7 @@ import teletubbies.client.audio.PoScooterTickableSound;
 import teletubbies.client.renderer.environment.BabyFaceRenderer;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
+import teletubbies.config.EntityConfig;
 import teletubbies.entity.item.PoScooterEntity;
 import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
@@ -155,14 +154,12 @@ public class TeletubbiesEventHandler {
 	
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public static void onLivingDeathEvent(LivingDeathEvent event) {
-		Random rand = new Random();
-		int i = rand.nextInt(4);
 		DamageSource damageSource = (DamageSource) event.getSource();
 		World world = event.getEntityLiving().world;
 
 		if (!world.isRemote) {
 			if (damageSource.getImmediateSource() instanceof ZombieEntity) {
-				if (event.getEntity() instanceof TeletubbyEntity && i == 0) {
+				if (event.getEntity() instanceof TeletubbyEntity && world.rand.nextInt(100) < EntityConfig.TRANSFORMATION_PROBABILITY.get()) {
 					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntityLiving();
 					teletubby.transferToZombie();
 				}
