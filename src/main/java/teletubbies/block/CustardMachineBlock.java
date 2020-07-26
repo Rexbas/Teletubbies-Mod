@@ -257,10 +257,10 @@ public class CustardMachineBlock extends Block {
 				int slot = player.inventory.currentItem;
 				ItemStack stack = player.inventory.getStackInSlot(slot);
 				
-				if (t.canDrop()) {
+				if (t.canDrop() && !world.isRemote) {
 					stack.setCount(stack.getCount() - 1);
 					float pitch = isUnderwater(world, pos) ? 0.75F : 1F;
-					world.playSound(player, pos, SoundList.MACHINE_CUSTARD, SoundCategory.BLOCKS, 1, pitch);
+					world.playSound(null, pos, SoundList.MACHINE_CUSTARD, SoundCategory.BLOCKS, 1, pitch);
 					t.reset();
 				}
 			}
