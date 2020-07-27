@@ -8,8 +8,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -27,8 +27,9 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.text.Color;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
@@ -120,8 +121,8 @@ public class CustardMachineBlock extends Block {
 			BlockPos bigbasePos = getBigTowerBasePos(pos, placer.getHorizontalFacing());
 			BlockPos smallPos = getSmallTowerPos(pos, placer.getHorizontalFacing());
 			BlockPos bigPos = getBigTowerPos(pos, placer.getHorizontalFacing());
-		    IFluidState smallFluid = world.getFluidState(smallPos);
-		    IFluidState bigFluid = world.getFluidState(bigPos);
+		    FluidState smallFluid = world.getFluidState(smallPos);
+		    FluidState bigFluid = world.getFluidState(bigPos);
 			world.setBlockState(smallbasePos, state.with(PART, CustardMachinePart.SMALLBASE).with(WATERLOGGED, false));
 		    world.setBlockState(bigbasePos, state.with(PART, CustardMachinePart.BIGBASE).with(WATERLOGGED, false));
 		    world.setBlockState(smallPos, state.with(PART, CustardMachinePart.SMALL).with(WATERLOGGED, smallFluid.getFluid() == Fluids.WATER));
@@ -202,7 +203,7 @@ public class CustardMachineBlock extends Block {
     }
 	
 	private void removePart(World world, BlockPos pos, BlockState state) {
-		IFluidState fluidState = world.getFluidState(pos);
+		FluidState fluidState = world.getFluidState(pos);
 	    if (fluidState.getFluid() == Fluids.WATER) {
 			world.setBlockState(pos, fluidState.getBlockState(), 35); 
 	    }
@@ -231,7 +232,7 @@ public class CustardMachineBlock extends Block {
 	}
 	
 	@Override
-	public IFluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
 	}
 	
@@ -266,8 +267,8 @@ public class CustardMachineBlock extends Block {
 				}
 			}
 			else if (world.isRemote) {
-				ITextComponent msg = new StringTextComponent("\u00A77").appendSibling(new TranslationTextComponent("teletubbies.custard_machine.message"));
-				player.sendMessage(msg);
+				ITextComponent msg = new TranslationTextComponent("teletubbies.custard_machine.message").func_230530_a_(Style.EMPTY.setColor((Color.func_240743_a_(0xAAAAAA))));
+				player.sendMessage(msg, null);
 			}
 		}
 		return ActionResultType.SUCCESS;

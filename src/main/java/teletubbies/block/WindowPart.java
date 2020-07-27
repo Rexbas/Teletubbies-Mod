@@ -15,9 +15,9 @@ public enum WindowPart implements IStringSerializable {
 	private WindowPart(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
-	public String getName() {
+	public String getString() {
 		return this.name;
 	}
 }

@@ -2,7 +2,8 @@ package teletubbies.entity.passive;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap.MutableAttribute;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
@@ -25,11 +26,10 @@ public class NooNooEntity extends CreatureEntity {
 		this.goalSelector.addGoal(2, new LookRandomlyGoal(this));
 	}
 	
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttributes().getAttributeInstance(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
-		this.getAttributes().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(25.0D);
+	public static MutableAttribute setCustomAttributes() {
+		return NooNooEntity.func_233666_p_()
+				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.5D)
+				.func_233815_a_(Attributes.MAX_HEALTH, 25.0D);
 	}
 	
 	@Override

@@ -8,10 +8,10 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootTable;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TinkyWinkyBagItemHandler extends ItemStackHandler {

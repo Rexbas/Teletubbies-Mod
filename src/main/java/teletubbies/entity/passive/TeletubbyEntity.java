@@ -102,6 +102,6 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 		}
 
 		world.addEntity(zombie);
-		world.playEvent(null, 1026, zombie.getPosition(), 0);
+		world.playEvent(null, 1026, zombie.func_233580_cy_(), 0);
 	}
 }

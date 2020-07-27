@@ -14,9 +14,9 @@ public enum CustardMachinePart implements IStringSerializable {
 	private CustardMachinePart(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
-	public String getName() {
+	public String getString() {
 		return this.name;
 	}
 }

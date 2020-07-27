@@ -4,13 +4,13 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootParameters;
+import net.minecraft.loot.LootTable;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootParameters;
-import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
@@ -40,7 +40,7 @@ public class TinkyWinkyZombieEntity extends TeletubbyZombieEntity {
 			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 			LootContext.Builder builder = new LootContext.Builder((ServerWorld) world);
 			LootTable table = ServerLifecycleHooks.getCurrentServer().getLootTableManager().getLootTableFromLocation(TinkyWinkyBagItem.LOOTTABLE);
-			LootContext context = builder.withParameter(LootParameters.POSITION, this.getPosition()).withParameter(LootParameters.THIS_ENTITY, this).build(LootParameterSets.GIFT);
+			LootContext context = builder.withParameter(LootParameters.POSITION, this.func_233580_cy_()).withParameter(LootParameters.THIS_ENTITY, this).build(LootParameterSets.GIFT);
 
 			handler.fillInventory(table, context);
 			

@@ -12,7 +12,6 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -20,6 +19,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
@@ -29,7 +29,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -77,7 +77,7 @@ public class PoScooterEntity extends Entity {
 	public PoScooterEntity(World worldIn, double x, double y, double z) {
 		this(worldIn);
 		this.setPosition(x, y, z);
-		this.setMotion(Vec3d.ZERO);
+		this.setMotion(Vector3d.ZERO);
 		this.prevPosX = x;
 		this.prevPosY = y;
 		this.prevPosZ = z;
@@ -222,7 +222,7 @@ public class PoScooterEntity extends Entity {
 
 			this.move(MoverType.SELF, this.getMotion());
 		} else {
-			this.setMotion(Vec3d.ZERO);
+			this.setMotion(Vector3d.ZERO);
 		}
 
 		this.updateRocking();
@@ -271,8 +271,8 @@ public class PoScooterEntity extends Entity {
 				int j = 60 - k - 1;
 				if (j > 0 && k == 0) {
 					this.setRockingTicks(0);
-					Vec3d vec3d = this.getMotion();
-					this.setMotion(vec3d.x, this.isPassenger(PlayerEntity.class) ? 2.7D : 0.6D, vec3d.z);
+					Vector3d Vector3d = this.getMotion();
+					this.setMotion(Vector3d.x, this.isPassenger(PlayerEntity.class) ? 2.7D : 0.6D, Vector3d.z);
 				}
 				this.rocking = false;
 			}
@@ -308,14 +308,17 @@ public class PoScooterEntity extends Entity {
 		int i1 = MathHelper.floor(axisalignedbb.minZ);
 		int j1 = MathHelper.ceil(axisalignedbb.maxZ);
 
-		try (BlockPos.PooledMutable blockpos$pooledmutableblockpos = BlockPos.PooledMutable.retain()) {
+		
+		// TODO remove next line
+		return 0f;
+		/*try (BlockPos.PooledMutable blockpos$pooledmutableblockpos = BlockPos.PooledMutable.retain()) {
 			label161: for (int k1 = k; k1 < l; ++k1) {
 				float f = 0.0F;
 
 				for (int l1 = i; l1 < j; ++l1) {
 					for (int i2 = i1; i2 < j1; ++i2) {
 						blockpos$pooledmutableblockpos.setPos(l1, k1, i2);
-						IFluidState ifluidstate = this.world.getFluidState(blockpos$pooledmutableblockpos);
+						FluidState ifluidstate = this.world.getFluidState(blockpos$pooledmutableblockpos);
 						if (ifluidstate.isTagged(FluidTags.WATER)) {
 							f = Math.max(f, ifluidstate.getActualHeight(this.world, blockpos$pooledmutableblockpos));
 						}
@@ -334,14 +337,14 @@ public class PoScooterEntity extends Entity {
 
 			float f1 = (float) (l + 1);
 			return f1;
-		}
+		}*/
 	}
 
 	private void updateMotion() {
 		double d1 = this.hasNoGravity() ? 0.0D : (double) -0.04F;
 		float f = 0.15F;
-		Vec3d vec3d = this.getMotion();
-		this.setMotion(vec3d.x * f, vec3d.y + d1, vec3d.z * f);
+		Vector3d Vector3d = this.getMotion();
+		this.setMotion(Vector3d.x * f, Vector3d.y + d1, Vector3d.z * f);
 		this.deltaRotation *= f;
 	}
 
@@ -392,8 +395,8 @@ public class PoScooterEntity extends Entity {
 				}
 			}
 
-			Vec3d vec3d = (new Vec3d((double) f, 0.0D, 0.0D)).rotateYaw(-this.rotationYaw * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
-			passenger.setPosition(this.getPosX() + vec3d.x, this.getPosY() + (double) f1, this.getPosZ() + vec3d.z);
+			Vector3d Vector3d = (new Vector3d((double) f, 0.0D, 0.0D)).rotateYaw(-this.rotationYaw * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+			passenger.setPosition(this.getPosX() + Vector3d.x, this.getPosY() + (double) f1, this.getPosZ() + Vector3d.z);
 			passenger.rotationYaw += this.deltaRotation;
 			passenger.setRotationYawHead(passenger.getRotationYawHead() + this.deltaRotation);
 			this.applyYawToEntity(passenger);
@@ -422,12 +425,15 @@ public class PoScooterEntity extends Entity {
 	protected void readAdditional(CompoundNBT compound) {}
 
 	@Override
-	public boolean processInitialInteract(PlayerEntity player, Hand hand) {
+	public ActionResultType processInitialInteract(PlayerEntity player, Hand hand) {
 		if (player.isSneaking()) {
-			return false;
+			return ActionResultType.FAIL;
 		} else {
-			return !this.world.isRemote && this.outOfControlTicks < 60.0F ? player.startRiding(this) : false;
+			if (!this.world.isRemote && this.outOfControlTicks < 60.0F) {
+				if (player.startRiding(this)) return ActionResultType.PASS;
+			}
 		}
+		return ActionResultType.FAIL;
 	}
 
 	@Override
@@ -446,7 +452,7 @@ public class PoScooterEntity extends Entity {
 				}
 
 				this.fallDistance = 0.0F;
-			} else if (!this.world.getFluidState((new BlockPos(this)).down()).isTagged(FluidTags.WATER) && y < 0.0D) {
+			} else if (!this.world.getFluidState((this.func_233580_cy_()).down()).isTagged(FluidTags.WATER) && y < 0.0D) {
 				this.fallDistance = (float) ((double) this.fallDistance - y);
 			}
 

@@ -9,8 +9,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -62,11 +62,11 @@ public class WindowBlock extends Block {
 			BlockPos hb = getHB(pos, axis);
 			BlockPos sa = getSA(pos, axis);
 			BlockPos sb = getSB(pos, axis);
-		    IFluidState haFluid = world.getFluidState(ha);
-		    IFluidState hbFluid = world.getFluidState(hb);
-		    IFluidState saFluid = world.getFluidState(sa);
-		    IFluidState sbFluid = world.getFluidState(sb);
-		    IFluidState vFluid = world.getFluidState(pos.up());
+		    FluidState haFluid = world.getFluidState(ha);
+		    FluidState hbFluid = world.getFluidState(hb);
+		    FluidState saFluid = world.getFluidState(sa);
+		    FluidState sbFluid = world.getFluidState(sb);
+		    FluidState vFluid = world.getFluidState(pos.up());
 			world.setBlockState(ha, state.with(PART, WindowPart.HORIZONTAL_A).with(WATERLOGGED, haFluid.getFluid() == Fluids.WATER));
 		    world.setBlockState(hb, state.with(PART, WindowPart.HORIZONTAL_B).with(WATERLOGGED, hbFluid.getFluid() == Fluids.WATER));
 		    world.setBlockState(sa, state.with(PART, WindowPart.SLANTED_A).with(WATERLOGGED, saFluid.getFluid() == Fluids.WATER));
@@ -160,7 +160,7 @@ public class WindowBlock extends Block {
     }
 	
 	private void removePart(World world, BlockPos pos, BlockState state) {
-		IFluidState fluidState = world.getFluidState(pos);
+		FluidState fluidState = world.getFluidState(pos);
 	    if (fluidState.getFluid() == Fluids.WATER) {
 			world.setBlockState(pos, fluidState.getBlockState(), 35); 
 	    }
@@ -186,14 +186,14 @@ public class WindowBlock extends Block {
 				sb.getY() < 255 && context.getWorld().getBlockState(sb).isReplaceable(context) &&
 				v.getY() < 255 && context.getWorld().getBlockState(v).isReplaceable(context)) {
 			
-		    IFluidState fluidState = context.getWorld().getFluidState(pos);
+		    FluidState fluidState = context.getWorld().getFluidState(pos);
 			return this.getDefaultState().with(X_AXIS, axis == Axis.X).with(PART, WindowPart.CENTER).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
 		}
 		return null;
 	}
 	
 	@Override
-	public IFluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
 	}
 	

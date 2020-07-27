@@ -9,8 +9,8 @@ import net.minecraft.block.IWaterLoggable;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
@@ -85,7 +85,7 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 	@Override
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (placer != null) {
-		    IFluidState fluidState = world.getFluidState(pos.up());
+		    FluidState fluidState = world.getFluidState(pos.up());
 		    world.setBlockState(pos.up(), state.with(BOTTOM, false).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER));
 		}
 	}
@@ -95,7 +95,7 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {
-			IFluidState fluidState = world.getFluidState(other);
+			FluidState fluidState = world.getFluidState(other);
 		    if (fluidState.getFluid() == Fluids.WATER) {
 				world.setBlockState(other, fluidState.getBlockState(), 35); 
 		    }
@@ -111,7 +111,7 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {		      
-			IFluidState fluidState = world.getFluidState(other);
+			FluidState fluidState = world.getFluidState(other);
 		    if (fluidState.getFluid() == Fluids.WATER) {
 				world.setBlockState(other, fluidState.getBlockState(), 35); 
 		    }
@@ -127,14 +127,14 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
 		BlockPos pos = context.getPos();
 		if (pos.getY() < 255 && context.getWorld().getBlockState(pos.up()).isReplaceable(context)) {
-		    IFluidState fluidState = context.getWorld().getFluidState(pos);
+		    FluidState fluidState = context.getWorld().getFluidState(pos);
 			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(BOTTOM, true).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
 		}
 		return null;
 	}
 	
 	@Override
-	public IFluidState getFluidState(BlockState state) {
+	public FluidState getFluidState(BlockState state) {
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
 	}
 	

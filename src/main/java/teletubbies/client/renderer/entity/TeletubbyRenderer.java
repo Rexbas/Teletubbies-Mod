@@ -108,9 +108,11 @@ public class TeletubbyRenderer<T extends CreatureEntity, M extends TeletubbyMode
 
 		this.entityModel.setLivingAnimations(entityIn, f5, f8, partialTicks);
 		this.entityModel.setRotationAngles(entityIn, f5, f8, f7, f2, f6);
+	    Minecraft minecraft = Minecraft.getInstance();
 		boolean flag = this.isVisible(entityIn);
 		boolean flag1 = !flag && !entityIn.isInvisibleToPlayer(Minecraft.getInstance().player);
-		RenderType rendertype = this.func_230042_a_(entityIn, flag, flag1);
+	    boolean flag2 = minecraft.func_238206_b_(entityIn);
+		RenderType rendertype = this.func_230496_a_(entityIn, flag, flag1, flag2);
 		if (rendertype != null) {
 			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(rendertype);
 			int i = getPackedOverlay(entityIn, this.getOverlayProgress(entityIn, partialTicks));

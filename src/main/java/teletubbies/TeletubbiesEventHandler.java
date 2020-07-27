@@ -1,8 +1,6 @@
 package teletubbies;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -14,30 +12,22 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GrassColors;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.block.BlockList;
-import teletubbies.client.audio.PoScooterTickableSound;
-import teletubbies.client.renderer.environment.BabyFaceRenderer;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.config.EntityConfig;
-import teletubbies.entity.item.PoScooterEntity;
 import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.PoEntity;
@@ -56,22 +46,22 @@ public class TeletubbiesEventHandler {
 		}
 	}
 	
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void setSkyRenderer(WorldEvent.Load event) {
 		if (event.getWorld().isRemote() && event.getWorld().getDimension().getType() == DimensionType.OVERWORLD) {
 			IRenderHandler renderer = new BabyFaceRenderer();
 			event.getWorld().getDimension().setSkyRenderer(renderer);
 		}
-	}
+	}*/
 	
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void joinClientWorld(EntityJoinWorldEvent event) {
 		if(event.getEntity() instanceof PoScooterEntity) {
 			Minecraft.getInstance().getSoundHandler().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
 		}
-	}
+	}*/
 	
 	@SubscribeEvent
 	public static void onLivingUpdate(LivingUpdateEvent event) {
@@ -84,10 +74,10 @@ public class TeletubbiesEventHandler {
 				
 				int ticks = c.ticksOnGround();
 				
-				if(player.onGround && ticks < 50) {
+				if(player.func_233570_aj_() && ticks < 50) {
 					c.setTicksOnGround(ticks + 1);
 				}
-				if(!player.onGround && ticks != 0) {
+				if(!player.func_233570_aj_() && ticks != 0) {
 					c.setTicksOnGround(0);
 				}
 				if(player.fallDistance > fallDistance) {
@@ -101,7 +91,7 @@ public class TeletubbiesEventHandler {
 					}
 				}
 
-				if(player.onGround) {
+				if(player.func_233570_aj_()) {
 					c.setFallDistance(0);
 				}
 				if(player.isInWater() || player.isInLava()) {
@@ -128,7 +118,7 @@ public class TeletubbiesEventHandler {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void updateRidden(PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.START && event.player instanceof ClientPlayerEntity) {
@@ -139,7 +129,7 @@ public class TeletubbiesEventHandler {
 						player.movementInput.forwardKeyDown, player.movementInput.backKeyDown);
 			}
 		}
-	}
+	}*/
 	
 	@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {

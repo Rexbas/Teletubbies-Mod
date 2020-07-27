@@ -21,7 +21,8 @@ public class PoScooterTickableSound extends TickableSound {
 	@Override
 	public void tick() {
 		if (!scooter.isAlive()) {
-			donePlaying = true;
+			func_239509_o_();
+			repeat = true;
 		}
 		else {
 			x = (float) scooter.getPosX();
