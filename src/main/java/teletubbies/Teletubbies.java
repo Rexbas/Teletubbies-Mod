@@ -1,5 +1,6 @@
 package teletubbies;
 
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
@@ -12,12 +13,14 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import teletubbies.block.BlockList;
+import teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
 import teletubbies.client.renderer.RenderRegistry;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpCapability;
 import teletubbies.common.capabilities.JumpStorage;
 import teletubbies.config.Config;
 import teletubbies.entity.EntityList;
+import teletubbies.inventory.container.ContainerList;
 import teletubbies.itemgroup.ItemGroupTeletubbies;
 
 @Mod(Teletubbies.MODID)
@@ -43,6 +46,6 @@ public class Teletubbies {
 	public void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
 		RenderTypeLookup.setRenderLayer(BlockList.WINDOW, RenderType.getTranslucent());
-		//ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER, TinkyWinkyBagScreen::new);
+		ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER, TinkyWinkyBagScreen::new);
 	}
 }
