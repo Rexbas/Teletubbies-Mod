@@ -1,6 +1,8 @@
 package teletubbies;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -17,6 +19,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -25,9 +29,11 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.block.BlockList;
+import teletubbies.client.audio.PoScooterTickableSound;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.config.EntityConfig;
+import teletubbies.entity.item.PoScooterEntity;
 import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.PoEntity;
@@ -55,13 +61,13 @@ public class TeletubbiesEventHandler {
 		}
 	}*/
 	
-	/*@OnlyIn(Dist.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void joinClientWorld(EntityJoinWorldEvent event) {
 		if(event.getEntity() instanceof PoScooterEntity) {
 			Minecraft.getInstance().getSoundHandler().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
 		}
-	}*/
+	}
 	
 	@SubscribeEvent
 	public static void onLivingUpdate(LivingUpdateEvent event) {
@@ -118,7 +124,7 @@ public class TeletubbiesEventHandler {
 		}
 	}
 
-	/*@OnlyIn(Dist.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void updateRidden(PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.START && event.player instanceof ClientPlayerEntity) {
@@ -129,7 +135,7 @@ public class TeletubbiesEventHandler {
 						player.movementInput.forwardKeyDown, player.movementInput.backKeyDown);
 			}
 		}
-	}*/
+	}
 	
 	@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
