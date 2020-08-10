@@ -452,7 +452,7 @@ public class PoScooterEntity extends Entity {
 				}
 
 				this.fallDistance = 0.0F;
-			} else if (!this.world.getFluidState((this.func_233580_cy_()).down()).isTagged(FluidTags.WATER) && y < 0.0D) {
+			} else if (!this.world.getFluidState((this.getPosition()).down()).isTagged(FluidTags.WATER) && y < 0.0D) {
 				this.fallDistance = (float) ((double) this.fallDistance - y);
 			}
 

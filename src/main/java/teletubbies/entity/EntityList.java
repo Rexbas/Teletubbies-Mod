@@ -111,26 +111,26 @@ public class EntityList {
 	
 	public static void setAttributes() {
 		DeferredWorkQueue.runLater(() -> {
-            GlobalEntityTypeAttributes.put(TINKYWINKY, CreatureEntity.func_233666_p_().func_233813_a_());
-            GlobalEntityTypeAttributes.put(DIPSY, CreatureEntity.func_233666_p_().func_233813_a_());
-            GlobalEntityTypeAttributes.put(LAALAA, CreatureEntity.func_233666_p_().func_233813_a_());
-            GlobalEntityTypeAttributes.put(PO, CreatureEntity.func_233666_p_().func_233813_a_());
+            GlobalEntityTypeAttributes.put(TINKYWINKY, CreatureEntity.func_233666_p_().create());
+            GlobalEntityTypeAttributes.put(DIPSY, CreatureEntity.func_233666_p_().create());
+            GlobalEntityTypeAttributes.put(LAALAA, CreatureEntity.func_233666_p_().create());
+            GlobalEntityTypeAttributes.put(PO, CreatureEntity.func_233666_p_().create());
 
-            GlobalEntityTypeAttributes.put(NOONOO, NooNooEntity.setCustomAttributes().func_233813_a_());
+            GlobalEntityTypeAttributes.put(NOONOO, NooNooEntity.setCustomAttributes().create());
             
-        	GlobalEntityTypeAttributes.put(MIMI, TiddlytubbyEntity.setCustomAttributes().func_233813_a_());
-            GlobalEntityTypeAttributes.put(DAADAA, TiddlytubbyEntity.setCustomAttributes().func_233813_a_());
-            GlobalEntityTypeAttributes.put(PING, TiddlytubbyEntity.setCustomAttributes().func_233813_a_());
-            GlobalEntityTypeAttributes.put(BA, TiddlytubbyEntity.setCustomAttributes().func_233813_a_());
-            GlobalEntityTypeAttributes.put(RURU, TiddlytubbyEntity.setCustomAttributes().func_233813_a_());
-            GlobalEntityTypeAttributes.put(NIN, TiddlytubbyEntity.setCustomAttributes().func_233813_a_());
-            GlobalEntityTypeAttributes.put(DUGGLEDEE, TiddlytubbyEntity.setCustomAttributes().func_233813_a_());
-            GlobalEntityTypeAttributes.put(UMPIEPUMPIE, TiddlytubbyEntity.setCustomAttributes().func_233813_a_());
+        	GlobalEntityTypeAttributes.put(MIMI, TiddlytubbyEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(DAADAA, TiddlytubbyEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(PING, TiddlytubbyEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(BA, TiddlytubbyEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(RURU, TiddlytubbyEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(NIN, TiddlytubbyEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(DUGGLEDEE, TiddlytubbyEntity.setCustomAttributes().create());
+            GlobalEntityTypeAttributes.put(UMPIEPUMPIE, TiddlytubbyEntity.setCustomAttributes().create());
            
-            GlobalEntityTypeAttributes.put(TINKYWINKY_ZOMBIE, ZombieEntity.func_234342_eQ_().func_233813_a_());
-            GlobalEntityTypeAttributes.put(DIPSY_ZOMBIE, ZombieEntity.func_234342_eQ_().func_233813_a_());
-            GlobalEntityTypeAttributes.put(LAALAA_ZOMBIE, ZombieEntity.func_234342_eQ_().func_233813_a_());
-            GlobalEntityTypeAttributes.put(PO_ZOMBIE, ZombieEntity.func_234342_eQ_().func_233813_a_());
+            GlobalEntityTypeAttributes.put(TINKYWINKY_ZOMBIE, ZombieEntity.func_234342_eQ_().create());
+            GlobalEntityTypeAttributes.put(DIPSY_ZOMBIE, ZombieEntity.func_234342_eQ_().create());
+            GlobalEntityTypeAttributes.put(LAALAA_ZOMBIE, ZombieEntity.func_234342_eQ_().create());
+            GlobalEntityTypeAttributes.put(PO_ZOMBIE, ZombieEntity.func_234342_eQ_().create());
         });
 	}
 }

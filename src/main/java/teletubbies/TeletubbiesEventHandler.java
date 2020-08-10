@@ -54,7 +54,7 @@ public class TeletubbiesEventHandler {
 	
 	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void setSkyRenderer(WorldEvent.Load event) {
+	public static void setSkyRenderer(WorldEvent.Load event) {		
 		if (event.getWorld().isRemote() && event.getWorld().getDimension().getType() == DimensionType.OVERWORLD) {
 			IRenderHandler renderer = new BabyFaceRenderer();
 			event.getWorld().getDimension().setSkyRenderer(renderer);
@@ -80,10 +80,10 @@ public class TeletubbiesEventHandler {
 				
 				int ticks = c.ticksOnGround();
 				
-				if(player.func_233570_aj_() && ticks < 50) {
+				if(player.isOnGround() && ticks < 50) {
 					c.setTicksOnGround(ticks + 1);
 				}
-				if(!player.func_233570_aj_() && ticks != 0) {
+				if(!player.isOnGround() && ticks != 0) {
 					c.setTicksOnGround(0);
 				}
 				if(player.fallDistance > fallDistance) {
@@ -97,7 +97,7 @@ public class TeletubbiesEventHandler {
 					}
 				}
 
-				if(player.func_233570_aj_()) {
+				if(player.isOnGround()) {
 					c.setFallDistance(0);
 				}
 				if(player.isInWater() || player.isInLava()) {

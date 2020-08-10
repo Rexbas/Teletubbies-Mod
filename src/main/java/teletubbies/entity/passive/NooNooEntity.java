@@ -28,8 +28,8 @@ public class NooNooEntity extends CreatureEntity {
 	
 	public static MutableAttribute setCustomAttributes() {
 		return NooNooEntity.func_233666_p_()
-				.func_233815_a_(Attributes.MOVEMENT_SPEED, 0.5D)
-				.func_233815_a_(Attributes.MAX_HEALTH, 25.0D);
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.5D)
+				.createMutableAttribute(Attributes.MAX_HEALTH, 25.0D);
 	}
 	
 	@Override

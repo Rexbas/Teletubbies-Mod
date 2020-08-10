@@ -12,7 +12,7 @@ public class JumpCapability implements IJumpCapability {
 
 	@Override
 	public boolean canJump(PlayerEntity player) {
-		if(player.func_233570_aj_() && !player.isInWater() && !player.isInLava()) {
+		if(player.isOnGround() && !player.isInWater() && !player.isInLava()) {
 			return true;
 		}
 		return false;
