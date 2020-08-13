@@ -25,6 +25,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IndirectEntityDamageSource;
+import net.minecraft.util.TeleportationRepositioner;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -95,22 +96,29 @@ public class PoScooterEntity extends Entity {
 		this.dataManager.register(DAMAGE_TAKEN, 0.0F);
 		this.dataManager.register(ROCKING_TICKS, 0);
 	}
-
-	@Nullable
+	
 	@Override
-	public AxisAlignedBB getCollisionBox(Entity entityIn) {
-		return entityIn.canBePushed() ? entityIn.getBoundingBox() : null;
+	public boolean func_241849_j(Entity p_241849_1_) {
+		return func_242378_a(this, p_241849_1_);
 	}
 
-	@Nullable
+	public static boolean func_242378_a(Entity p_242378_0_, Entity p_242378_1_) {
+		return (p_242378_1_.func_241845_aY() || p_242378_1_.canBePushed()) && !p_242378_0_.isRidingSameEntity(p_242378_1_);
+	}
+	
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox() {
-		return this.getBoundingBox();
+	public boolean func_241845_aY() {
+		return true;
 	}
 
 	@Override
 	public boolean canBePushed() {
 		return true;
+	}
+	
+	@Override
+	protected Vector3d func_241839_a(Direction.Axis p_241839_1_, TeleportationRepositioner.Result p_241839_2_) {
+		return LivingEntity.func_242288_h(super.func_241839_a(p_241839_1_, p_241839_2_));
 	}
 
 	@Override

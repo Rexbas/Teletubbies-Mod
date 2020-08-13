@@ -23,7 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import teletubbies.item.ItemList;
 
@@ -79,7 +79,7 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 	
 	@Override
 	@Nullable
-	public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData,
+	public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData,
 			@Nullable CompoundNBT dataTag) {
 		spawnData = super.onInitialSpawn(world, difficulty, reason, spawnData, dataTag);
 		this.setEquipmentBasedOnDifficulty(difficulty);

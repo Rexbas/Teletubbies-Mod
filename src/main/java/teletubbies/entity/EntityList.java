@@ -8,8 +8,7 @@ import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.world.biome.MobSpawnInfo.Spawners;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.event.RegistryEvent;
@@ -17,7 +16,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
-import teletubbies.config.EntityConfig;
 import teletubbies.entity.baby.BaEntity;
 import teletubbies.entity.baby.DaaDaaEntity;
 import teletubbies.entity.baby.DuggleDeeEntity;
@@ -72,7 +70,7 @@ public class EntityList {
 				PO_SCOOTER
 		);
 		
-		registerWorldSpawns(TINKYWINKY, EntityClassification.CREATURE, EntityConfig.TINKYWINKY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		/*registerWorldSpawns(TINKYWINKY, EntityClassification.CREATURE, EntityConfig.TINKYWINKY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		registerWorldSpawns(DIPSY, EntityClassification.CREATURE, EntityConfig.DIPSY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		registerWorldSpawns(LAALAA, EntityClassification.CREATURE, EntityConfig.LAALAA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		registerWorldSpawns(PO, EntityClassification.CREATURE, EntityConfig.PO_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
@@ -91,7 +89,7 @@ public class EntityList {
 		registerZombieWorldSpawns(TINKYWINKY_ZOMBIE, EntityClassification.MONSTER, EntityConfig.TINKYWINKY_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		registerZombieWorldSpawns(DIPSY_ZOMBIE, EntityClassification.MONSTER, EntityConfig.DIPSY_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		registerZombieWorldSpawns(LAALAA_ZOMBIE, EntityClassification.MONSTER, EntityConfig.LAALAA_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerZombieWorldSpawns(PO_ZOMBIE, EntityClassification.MONSTER, EntityConfig.PO_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(PO_ZOMBIE, EntityClassification.MONSTER, EntityConfig.PO_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);*/
 	}
 	
 	private static <T extends TiddlytubbyEntity> EntityType<?> createTiddlytubby(EntityType.IFactory<T> factory, String name) {
@@ -100,7 +98,7 @@ public class EntityList {
 
 	private static void registerWorldSpawns(EntityType<?> entity, EntityClassification classification, IntValue weight, Biome...biomes) {
 		for (Biome b : biomes) {
-			b.getSpawns(classification).add(new SpawnListEntry(entity, weight.get(), 1, 1));
+			b.func_242433_b().func_242559_a(classification).add(new Spawners(entity, weight.get(), 1, 1));
 		}
 	}
 	

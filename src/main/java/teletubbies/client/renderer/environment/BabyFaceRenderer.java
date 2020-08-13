@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.WorldVertexBufferUploader;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.client.renderer.vertex.VertexFormat;
+import net.minecraft.client.settings.PointOfView;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.util.ResourceLocation;
@@ -80,7 +81,7 @@ public class BabyFaceRenderer implements IRenderHandler {
 			RenderSystem.disableAlphaTest();
 			RenderSystem.enableBlend();
 			RenderSystem.defaultBlendFunc();
-			float[] afloat = world.func_239132_a_().func_230492_a_(world.getCelestialAngle(partialTicks), partialTicks);
+			float[] afloat = world.func_239132_a_().func_230492_a_(world.func_242415_f(partialTicks), partialTicks);
 			if (afloat != null) {
 				RenderSystem.disableTexture();
 				RenderSystem.shadeModel(7425);
@@ -115,7 +116,7 @@ public class BabyFaceRenderer implements IRenderHandler {
 			float f11 = 1.0F - world.getRainStrength(partialTicks);
 			RenderSystem.color4f(1.0F, 1.0F, 1.0F, f11);
 			matrixstack.rotate(Vector3f.YP.rotationDegrees(-90.0F));
-			matrixstack.rotate(Vector3f.XP.rotationDegrees(world.getCelestialAngle(partialTicks) * 360.0F));
+			matrixstack.rotate(Vector3f.XP.rotationDegrees(world.func_242415_f(partialTicks) * 360.0F));
 
 			// Rotation magic
 			matrixstack.push();
@@ -141,7 +142,7 @@ public class BabyFaceRenderer implements IRenderHandler {
 				yaw -= stepSize;
 
 			float offset = 90f;
-			if (mc.gameSettings.thirdPersonView == 2) {
+			if (mc.gameSettings.func_243230_g() == PointOfView.THIRD_PERSON_FRONT) {
 				offset += 180f;
 			}
 
@@ -164,7 +165,7 @@ public class BabyFaceRenderer implements IRenderHandler {
 
 			f12 = 20.0F;
 			mc.textureManager.bindTexture(MOON_PHASES_TEXTURES);
-			int k = world.getMoonPhase();
+			int k = world.func_242414_af();
 			int l = k % 4;
 			int i1 = k / 4 % 2;
 			float f13 = (float) (l + 0) / 4.0F;

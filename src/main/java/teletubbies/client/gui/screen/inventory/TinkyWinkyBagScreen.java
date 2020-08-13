@@ -32,19 +32,19 @@ public class TinkyWinkyBagScreen extends ContainerScreen<TinkyWinkyBagContainer>
 	
 	// drawGuiContainerForegroundLayer
 	@Override
-	protected void func_230451_b_(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {		
-		this.font.func_238422_b_(p_230451_1_, this.title, 8.0F, 6.0F, 4210752);
-		this.font.func_238422_b_(p_230451_1_, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
+	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {		
+		this.font.func_243248_b(matrixStack, this.title, 8.0F, 6.0F, 4210752);
+		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
 	}
 	
 	// drawGuiContainerBackgroundLayer
 	@Override
-	protected void func_230450_a_(MatrixStack p_230450_1_, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
+	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bindTexture(TEXTURE);
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
-		this.blit(p_230450_1_, i, j, 0, 0, this.xSize, this.inventoryRows * 18 + 17);
-		this.blit(p_230450_1_, i, j + this.inventoryRows * 18 + 17, 0, 126, this.xSize, 96);
+		this.blit(matrixStack, i, j, 0, 0, this.xSize, this.inventoryRows * 18 + 17);
+		this.blit(matrixStack, i, j + this.inventoryRows * 18 + 17, 0, 126, this.xSize, 96);
 	}
 }
