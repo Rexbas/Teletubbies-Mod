@@ -5,7 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import teletubbies.block.BlockList;
+import teletubbies.init.ModBlocks;
 import teletubbies.util.Converter;
 
 public class ToastMachineTileEntity extends TileEntity implements ITickableTileEntity {
@@ -15,7 +15,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	private long ticksSinceLastDrop;
 	
 	public ToastMachineTileEntity() {
-		super(BlockList.TOAST_MACHINE_TILE);
+		super(ModBlocks.TOAST_MACHINE_TILE.get());
 		ticksSinceLastDrop = DROPTICKS;
 	}
 

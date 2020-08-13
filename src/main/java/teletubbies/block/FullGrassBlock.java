@@ -23,7 +23,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
-import teletubbies.Teletubbies;
 
 public class FullGrassBlock extends GrassBlock {
 	
@@ -32,8 +31,6 @@ public class FullGrassBlock extends GrassBlock {
 				.tickRandomly()
 				.hardnessAndResistance(0.6F)
 				.sound(SoundType.PLANT));
-		
-		this.setRegistryName(Teletubbies.MODID, "full_grass");
 	}
 	
 	@Override

@@ -59,7 +59,6 @@ public class ToastMachineBlock extends Block {
 				.hardnessAndResistance(3.0f, 5.0f)
 				.harvestTool(ToolType.PICKAXE));
 		
-		this.setRegistryName(Teletubbies.MODID, "toast_machine");
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false));
 	}
 	

@@ -36,7 +36,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import teletubbies.Teletubbies;
 import teletubbies.client.audio.SoundList;
 import teletubbies.init.ModItems;
 import teletubbies.tileentity.CustardMachineTileEntity;
@@ -77,7 +76,6 @@ public class CustardMachineBlock extends Block {
 				.hardnessAndResistance(3.0f, 5.0f)
 				.harvestTool(ToolType.PICKAXE));
 
-		this.setRegistryName(Teletubbies.MODID, "custard_machine");
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, false));
 	}
 	

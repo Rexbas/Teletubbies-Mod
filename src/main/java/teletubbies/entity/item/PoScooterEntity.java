@@ -12,6 +12,7 @@ import net.minecraft.entity.MoverType;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
@@ -36,7 +37,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
-import teletubbies.entity.EntityList;
+import teletubbies.init.ModEntityTypes;
 import teletubbies.init.ModItems;
 
 /* This class is based on @BoatEntity */
@@ -63,7 +64,7 @@ public class PoScooterEntity extends Entity {
 	private float rockingAngle;
 	private float prevRockingAngle;
 	private float maxFallDistance;
-
+	
 	public PoScooterEntity(EntityType<? extends Entity> type, World world) {
 		super(type, world);
 		this.preventEntitySpawning = true;
@@ -72,7 +73,7 @@ public class PoScooterEntity extends Entity {
 	}
 
 	public PoScooterEntity(World world) {
-		this(EntityList.PO_SCOOTER, world);
+		this(ModEntityTypes.PO_SCOOTER.get(), world);
 	}
 
 	public PoScooterEntity(World worldIn, double x, double y, double z) {
@@ -83,7 +84,7 @@ public class PoScooterEntity extends Entity {
 		this.prevPosY = y;
 		this.prevPosZ = z;
 	}
-
+	
 	@Override
 	protected boolean canTriggerWalking() {
 		return false;
@@ -315,37 +316,31 @@ public class PoScooterEntity extends Entity {
 		int l = MathHelper.ceil(axisalignedbb.maxY - this.lastYd);
 		int i1 = MathHelper.floor(axisalignedbb.minZ);
 		int j1 = MathHelper.ceil(axisalignedbb.maxZ);
+		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
 
-		
-		// TODO remove next line
-		return 0f;
-		/*try (BlockPos.PooledMutable blockpos$pooledmutableblockpos = BlockPos.PooledMutable.retain()) {
-			label161: for (int k1 = k; k1 < l; ++k1) {
-				float f = 0.0F;
+		label39: for (int k1 = k; k1 < l; ++k1) {
+			float f = 0.0F;
 
-				for (int l1 = i; l1 < j; ++l1) {
-					for (int i2 = i1; i2 < j1; ++i2) {
-						blockpos$pooledmutableblockpos.setPos(l1, k1, i2);
-						FluidState ifluidstate = this.world.getFluidState(blockpos$pooledmutableblockpos);
-						if (ifluidstate.isTagged(FluidTags.WATER)) {
-							f = Math.max(f, ifluidstate.getActualHeight(this.world, blockpos$pooledmutableblockpos));
-						}
-
-						if (f >= 1.0F) {
-							continue label161;
-						}
+			for (int l1 = i; l1 < j; ++l1) {
+				for (int i2 = i1; i2 < j1; ++i2) {
+					blockpos$mutable.setPos(l1, k1, i2);
+					FluidState fluidstate = this.world.getFluidState(blockpos$mutable);
+					if (fluidstate.isTagged(FluidTags.WATER)) {
+						f = Math.max(f, fluidstate.getActualHeight(this.world, blockpos$mutable));
 					}
-				}
 
-				if (f < 1.0F) {
-					float f2 = (float) blockpos$pooledmutableblockpos.getY() + f;
-					return f2;
+					if (f >= 1.0F) {
+						continue label39;
+					}
 				}
 			}
 
-			float f1 = (float) (l + 1);
-			return f1;
-		}*/
+			if (f < 1.0F) {
+				return (float) blockpos$mutable.getY() + f;
+			}
+		}
+
+		return (float) (l + 1);
 	}
 
 	private void updateMotion() {

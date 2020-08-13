@@ -28,7 +28,6 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import teletubbies.block.BlockList;
 import teletubbies.client.audio.PoScooterTickableSound;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
@@ -39,6 +38,7 @@ import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.PoEntity;
 import teletubbies.entity.passive.TeletubbyEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
+import teletubbies.init.ModBlocks;
 import teletubbies.init.ModItems;
 import teletubbies.item.LaaLaaBallItem;
 
@@ -168,10 +168,10 @@ public class TeletubbiesEventHandler {
 		@OnlyIn(Dist.CLIENT)
 	    @SubscribeEvent
 	    public static void BlockColorHandler(final ColorHandlerEvent.Block event) {
-			if (BlockList.FULL_GRASS != null) {
+			if (ModBlocks.FULL_GRASS.get() != null) {
 	        event.getBlockColors().register((state, reader, pos, tint) -> reader != null
 	                && pos != null ? BiomeColors.getGrassColor(reader, pos)
-	                : GrassColors.get(0.5D, 1.0D), BlockList.FULL_GRASS);
+	                : GrassColors.get(0.5D, 1.0D), ModBlocks.FULL_GRASS.get());
 			}
 	    }
 	    

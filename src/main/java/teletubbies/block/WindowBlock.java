@@ -26,7 +26,6 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import teletubbies.Teletubbies;
 import teletubbies.util.VoxelShapeRotation;
 
 public class WindowBlock extends Block {
@@ -42,7 +41,6 @@ public class WindowBlock extends Block {
 				.hardnessAndResistance(0.3F)
 				.sound(SoundType.GLASS));
 		
-		this.setRegistryName(Teletubbies.MODID, "window");
 		this.setDefaultState(this.stateContainer.getBaseState().with(X_AXIS, false).with(PART, WindowPart.CENTER).with(WATERLOGGED, false));
 	}
 	

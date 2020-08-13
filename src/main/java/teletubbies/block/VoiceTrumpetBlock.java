@@ -28,7 +28,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import teletubbies.Teletubbies;
 import teletubbies.tileentity.VoiceTrumpetTileEntity;
 import teletubbies.util.VoxelShapeRotation;
 
@@ -59,7 +58,6 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 				.harvestLevel(1)
 				.harvestTool(ToolType.PICKAXE));
 
-		this.setRegistryName(Teletubbies.MODID, "voice_trumpet");
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false));
 	}
 	

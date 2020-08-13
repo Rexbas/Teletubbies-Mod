@@ -4,7 +4,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import teletubbies.block.BlockList;
+import teletubbies.init.ModBlocks;
 import teletubbies.init.ModItems;
 import teletubbies.util.Converter;
 
@@ -16,7 +16,7 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 	private long ticksSinceLastClick;
 	
 	public CustardMachineTileEntity() {
-		super(BlockList.CUSTARD_MACHINE_TILE);
+		super(ModBlocks.CUSTARD_MACHINE_TILE.get());
 		ticksSinceLastClick = CLICKTICKS;
 	}
 

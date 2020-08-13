@@ -5,9 +5,9 @@ import java.util.Random;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
-import teletubbies.block.BlockList;
 import teletubbies.block.VoiceTrumpetBlock;
 import teletubbies.client.audio.SoundList;
+import teletubbies.init.ModBlocks;
 import teletubbies.util.Converter;
 
 public class VoiceTrumpetTileEntity extends TileEntity implements ITickableTileEntity {
@@ -15,7 +15,7 @@ public class VoiceTrumpetTileEntity extends TileEntity implements ITickableTileE
 	private static Random rand = new Random();
 
 	public VoiceTrumpetTileEntity() {
-		super(BlockList.VOICE_TRUMPET_TILE);
+		super(ModBlocks.VOICE_TRUMPET_TILE.get());
 		delay = Converter.SecondsToTicks(rand.nextInt(30));
 	}
 

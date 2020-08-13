@@ -15,7 +15,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.client.audio.SoundList;
-import teletubbies.entity.EntityList;
+import teletubbies.init.ModEntityTypes;
 import teletubbies.init.ModItems;
 import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
 import teletubbies.item.TinkyWinkyBagItem;
@@ -59,6 +59,6 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 
 	@Override
 	public EntityType<?> getZombie() {
-		return EntityList.TINKYWINKY_ZOMBIE;
+		return ModEntityTypes.TINKYWINKY_ZOMBIE.get();
 	}
 }

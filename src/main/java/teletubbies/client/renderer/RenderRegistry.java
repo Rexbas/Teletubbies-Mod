@@ -15,33 +15,33 @@ import teletubbies.client.renderer.entity.model.PoModel;
 import teletubbies.client.renderer.entity.model.PoZombieModel;
 import teletubbies.client.renderer.entity.model.TinkyWinkyModel;
 import teletubbies.client.renderer.entity.model.TinkyWinkyZombieModel;
-import teletubbies.entity.EntityList;
+import teletubbies.init.ModEntityTypes;
 
 @OnlyIn(Dist.CLIENT)
 public class RenderRegistry {
 	
 	public static void registryEntityRenders() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.TINKYWINKY, new TeletubbyRenderer.RenderFactory<>("tinkywinky", 0.95F, new TinkyWinkyModel()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.DIPSY, new TeletubbyRenderer.RenderFactory<>("dipsy", 0.9F, new DipsyModel()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.LAALAA, new TeletubbyRenderer.RenderFactory<>("laalaa", 0.85F, new LaaLaaModel()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.PO, new TeletubbyRenderer.RenderFactory<>("po", 0.8F, new PoModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TINKYWINKY.get(), new TeletubbyRenderer.RenderFactory<>("tinkywinky", 0.95F, new TinkyWinkyModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DIPSY.get(), new TeletubbyRenderer.RenderFactory<>("dipsy", 0.9F, new DipsyModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LAALAA.get(), new TeletubbyRenderer.RenderFactory<>("laalaa", 0.85F, new LaaLaaModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PO.get(), new TeletubbyRenderer.RenderFactory<>("po", 0.8F, new PoModel()));
 				
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.NOONOO, new NooNooRenderer.RenderFactory());
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.NOONOO.get(), new NooNooRenderer.RenderFactory());
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.MIMI, new TiddlytubbyRenderer.RenderFactory("mimi"));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.DAADAA, new TiddlytubbyRenderer.RenderFactory("daadaa"));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.PING, new TiddlytubbyRenderer.RenderFactory("ping"));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.BA, new TiddlytubbyRenderer.RenderFactory("ba"));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.RURU, new TiddlytubbyRenderer.RenderFactory("ruru"));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.NIN, new TiddlytubbyRenderer.RenderFactory("nin"));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.DUGGLEDEE, new TiddlytubbyRenderer.RenderFactory("duggledee"));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.UMPIEPUMPIE, new TiddlytubbyRenderer.RenderFactory("umpiepumpie"));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.MIMI.get(), new TiddlytubbyRenderer.RenderFactory("mimi"));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DAADAA.get(), new TiddlytubbyRenderer.RenderFactory("daadaa"));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PING.get(), new TiddlytubbyRenderer.RenderFactory("ping"));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.BA.get(), new TiddlytubbyRenderer.RenderFactory("ba"));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.RURU.get(), new TiddlytubbyRenderer.RenderFactory("ruru"));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.NIN.get(), new TiddlytubbyRenderer.RenderFactory("nin"));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DUGGLEDEE.get(), new TiddlytubbyRenderer.RenderFactory("duggledee"));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.UMPIEPUMPIE.get(), new TiddlytubbyRenderer.RenderFactory("umpiepumpie"));
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.TINKYWINKY_ZOMBIE, new TeletubbyRenderer.RenderFactory<>("tinkywinky_zombie", 0.95F, new TinkyWinkyZombieModel()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.DIPSY_ZOMBIE, new TeletubbyRenderer.RenderFactory<>("dipsy_zombie", 0.9F, new DipsyZombieModel()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.LAALAA_ZOMBIE, new TeletubbyRenderer.RenderFactory<>("laalaa_zombie", 0.85F, new LaaLaaZombieModel()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.PO_ZOMBIE, new TeletubbyRenderer.RenderFactory<>("po_zombie", 0.8F, new PoZombieModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.TINKYWINKY_ZOMBIE.get(), new TeletubbyRenderer.RenderFactory<>("tinkywinky_zombie", 0.95F, new TinkyWinkyZombieModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DIPSY_ZOMBIE.get(), new TeletubbyRenderer.RenderFactory<>("dipsy_zombie", 0.9F, new DipsyZombieModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.LAALAA_ZOMBIE.get(), new TeletubbyRenderer.RenderFactory<>("laalaa_zombie", 0.85F, new LaaLaaZombieModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PO_ZOMBIE.get(), new TeletubbyRenderer.RenderFactory<>("po_zombie", 0.8F, new PoZombieModel()));
 
-		RenderingRegistry.registerEntityRenderingHandler(EntityList.PO_SCOOTER, new PoScooterRenderer.RenderFactory());
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.PO_SCOOTER.get(), new PoScooterRenderer.RenderFactory());
 	}	
 }

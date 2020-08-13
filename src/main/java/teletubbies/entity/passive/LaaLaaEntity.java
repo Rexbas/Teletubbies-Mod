@@ -8,7 +8,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import teletubbies.client.audio.SoundList;
-import teletubbies.entity.EntityList;
+import teletubbies.init.ModEntityTypes;
 import teletubbies.init.ModItems;
 
 public class LaaLaaEntity extends TeletubbyEntity {
@@ -41,6 +41,6 @@ public class LaaLaaEntity extends TeletubbyEntity {
 
 	@Override
 	public EntityType<?> getZombie() {
-		return EntityList.LAALAA_ZOMBIE;
+		return ModEntityTypes.LAALAA_ZOMBIE.get();
 	}
 }
