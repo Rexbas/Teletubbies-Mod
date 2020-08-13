@@ -9,7 +9,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import teletubbies.client.audio.SoundList;
 import teletubbies.entity.EntityList;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 
 public class PoEntity extends TeletubbyEntity {
 
@@ -30,13 +30,13 @@ public class PoEntity extends TeletubbyEntity {
 		int damage = 0;
 		switch (i) {
 		case 0:
-			stack = new ItemStack(ItemList.PO_BIB);
+			stack = new ItemStack(ModItems.PO_BIB.get());
 			damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			stack = new ItemStack(ItemList.PO_HELMET);
+			stack = new ItemStack(ModItems.PO_HELMET.get());
 			damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.HEAD, stack);
@@ -44,7 +44,7 @@ public class PoEntity extends TeletubbyEntity {
 		}
 		
 		if (this.rand.nextInt(20) == 0) {
-			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ItemList.PO_SCOOTER));
+			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ModItems.PO_SCOOTER.get()));
 		}
 	}
 

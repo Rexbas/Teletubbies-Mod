@@ -19,8 +19,6 @@ public class DipsyHatItem extends ArmorItem {
 	public DipsyHatItem() {
 		super(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
-		
-		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "dipsy_hat"));
 	}
 
 	@Override

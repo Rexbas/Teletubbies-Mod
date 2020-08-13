@@ -16,7 +16,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import teletubbies.client.audio.SoundList;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 
 public class TiddlytubbyEntity extends CreatureEntity {
 	
@@ -28,7 +28,7 @@ public class TiddlytubbyEntity extends CreatureEntity {
 	protected void registerGoals() {
 	    this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, ZombieEntity.class, 8.0F, 0.5D, 0.5D));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.55F));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(ItemList.TOAST, ItemList.CUSTARD)));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(ModItems.TOAST.get(), ModItems.CUSTARD.get())));
 		this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.3F));
 		this.goalSelector.addGoal(4, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
 		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));

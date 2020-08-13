@@ -20,6 +20,7 @@ import teletubbies.common.capabilities.JumpCapability;
 import teletubbies.common.capabilities.JumpStorage;
 import teletubbies.config.Config;
 import teletubbies.entity.EntityList;
+import teletubbies.init.ModItems;
 import teletubbies.inventory.container.ContainerList;
 import teletubbies.itemgroup.ItemGroupTeletubbies;
 
@@ -35,15 +36,17 @@ public class Teletubbies {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
 
+		ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		
 		Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve("teletubbies-server.toml").toString());
 	}
 
-	public void setup(final FMLCommonSetupEvent event) {
+	private void setup(final FMLCommonSetupEvent event) {
 		EntityList.setAttributes();
 		CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
 	}
 
-	public void setupClient(final FMLClientSetupEvent event) {
+	private void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
 		RenderTypeLookup.setRenderLayer(BlockList.WINDOW, RenderType.getTranslucent());
 		ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER, TinkyWinkyBagScreen::new);

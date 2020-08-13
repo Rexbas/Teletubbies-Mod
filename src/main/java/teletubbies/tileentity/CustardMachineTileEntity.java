@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import teletubbies.block.BlockList;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 import teletubbies.util.Converter;
 
 public class CustardMachineTileEntity extends TileEntity implements ITickableTileEntity {
@@ -26,7 +26,7 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 			ticksSinceLastClick++;
 		}
 		if (ticksSinceLastClick == DROPTICKS) {
-			dropCustard(new ItemStack(ItemList.CUSTARD));
+			dropCustard(new ItemStack(ModItems.CUSTARD.get()));
 		}
 	}
 	

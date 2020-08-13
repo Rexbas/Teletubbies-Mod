@@ -39,7 +39,7 @@ import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.PoEntity;
 import teletubbies.entity.passive.TeletubbyEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 import teletubbies.item.LaaLaaBallItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
@@ -178,12 +178,12 @@ public class TeletubbiesEventHandler {
 	    @OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
 		public static void ItemColorHandler(final ColorHandlerEvent.Item event) {
-	    	if (ItemList.FULL_GRASS != null) {
+	    	if (ModItems.FULL_GRASS.get() != null) {
 				final IItemColor colorHandler = (stack, tint) -> {
 					final BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
 					return event.getBlockColors().getColor(state, null, null, tint);
 				};
-				event.getItemColors().register(colorHandler, ItemList.FULL_GRASS);
+				event.getItemColors().register(colorHandler, ModItems.FULL_GRASS.get());
 	    	}
 		}
 	}

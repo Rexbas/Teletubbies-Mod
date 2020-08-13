@@ -37,7 +37,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import teletubbies.entity.EntityList;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 
 /* This class is based on @BoatEntity */
 public class PoScooterEntity extends Entity {
@@ -146,7 +146,7 @@ public class PoScooterEntity extends Entity {
 				boolean flag = source.getTrueSource() instanceof PlayerEntity && ((PlayerEntity) source.getTrueSource()).abilities.isCreativeMode;
 				if (flag || this.getDamageTaken() > 40.0F) {
 					if (!flag && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-						this.entityDropItem(ItemList.PO_SCOOTER);
+						this.entityDropItem(ModItems.PO_SCOOTER.get());
 					}
 
 					this.remove();
@@ -454,7 +454,7 @@ public class PoScooterEntity extends Entity {
 					if (!this.world.isRemote && this.isAlive()) {
 						this.remove();
 						if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-							this.entityDropItem(ItemList.PO_SCOOTER);
+							this.entityDropItem(ModItems.PO_SCOOTER.get());
 						}
 					}
 				}
@@ -540,6 +540,6 @@ public class PoScooterEntity extends Entity {
 
 	@Override
 	public ItemStack getPickedResult(RayTraceResult target) {
-		return new ItemStack(ItemList.PO_SCOOTER);
+		return new ItemStack(ModItems.PO_SCOOTER.get());
 	}
 }

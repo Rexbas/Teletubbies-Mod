@@ -16,8 +16,8 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.client.audio.SoundList;
 import teletubbies.entity.EntityList;
+import teletubbies.init.ModItems;
 import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
-import teletubbies.item.ItemList;
 import teletubbies.item.TinkyWinkyBagItem;
 
 public class TinkyWinkyEntity extends TeletubbyEntity {
@@ -37,13 +37,13 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 		int i = this.rand.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(ItemList.TINKYWINKY_BIB);
+			ItemStack stack = new ItemStack(ModItems.TINKYWINKY_BIB.get());
 			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			ItemStack bag = new ItemStack(ItemList.TINKYWINKY_BAG);
+			ItemStack bag = new ItemStack(ModItems.TINKYWINKY_BAG.get());
 			
 			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 			LootContext.Builder builder = new LootContext.Builder((ServerWorld) world);

@@ -25,7 +25,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 
 public abstract class TeletubbyEntity extends CreatureEntity {
 
@@ -43,7 +43,7 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 	    this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, ZombieEntity.class, 8.0F, 0.5D, 0.5D));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.45F));
 		this.goalSelector.addGoal(3, new PanicGoal(this, 0.55F));
-		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(ItemList.TOAST, ItemList.CUSTARD)));
+		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(ModItems.TOAST.get(), ModItems.CUSTARD.get())));
 		this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 0.45F));
 		this.goalSelector.addGoal(6, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
 		this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
@@ -69,7 +69,7 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 		int i = this.rand.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(ItemList.TUTU);
+			ItemStack stack = new ItemStack(ModItems.TUTU.get());
 			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.LEGS, stack);

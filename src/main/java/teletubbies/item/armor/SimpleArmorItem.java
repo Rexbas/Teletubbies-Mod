@@ -10,11 +10,9 @@ import teletubbies.Teletubbies;
 
 public class SimpleArmorItem extends ArmorItem {
 	
-	public SimpleArmorItem(IArmorMaterial material, EquipmentSlotType slot, String name) {
+	public SimpleArmorItem(IArmorMaterial material, EquipmentSlotType slot) {
 		super(material, slot, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
-		
-		this.setRegistryName(Teletubbies.MODID, name);
 	}
 	
 	@Override

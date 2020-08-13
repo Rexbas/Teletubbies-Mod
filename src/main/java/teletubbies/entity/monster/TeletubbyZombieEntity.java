@@ -8,7 +8,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 
 public class TeletubbyZombieEntity extends ZombieEntity {
 
@@ -29,7 +29,7 @@ public class TeletubbyZombieEntity extends ZombieEntity {
 		int i = this.rand.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(ItemList.TUTU);
+			ItemStack stack = new ItemStack(ModItems.TUTU.get());
 			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.LEGS, stack);

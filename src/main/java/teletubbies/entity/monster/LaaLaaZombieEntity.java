@@ -6,7 +6,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 
 public class LaaLaaZombieEntity extends TeletubbyZombieEntity {
 
@@ -20,13 +20,13 @@ public class LaaLaaZombieEntity extends TeletubbyZombieEntity {
 		int i = this.rand.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(ItemList.LAALAA_BIB);
+			ItemStack stack = new ItemStack(ModItems.LAALAA_BIB.get());
 			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ItemList.LAALAA_BALL));
+			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ModItems.LAALAA_BALL.get()));
 			break;
 		}
 	}

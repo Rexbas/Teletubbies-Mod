@@ -38,7 +38,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import teletubbies.Teletubbies;
 import teletubbies.client.audio.SoundList;
-import teletubbies.item.ItemList;
+import teletubbies.init.ModItems;
 import teletubbies.tileentity.CustardMachineTileEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
@@ -252,7 +252,7 @@ public class CustardMachineBlock extends Block {
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {		
 		if (player.getHeldItemMainhand() != null) {
-			if (player.getHeldItemMainhand().getItem() == ItemList.BOWL) {
+			if (player.getHeldItemMainhand().getItem() == ModItems.BOWL.get()) {
 				BlockPos tilePos = getBasePos(pos, state.get(PART), state.get(FACING));
 				CustardMachineTileEntity t = (CustardMachineTileEntity) world.getTileEntity(tilePos);
 				

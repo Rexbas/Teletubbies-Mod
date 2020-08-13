@@ -8,7 +8,6 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.Teletubbies;
@@ -19,8 +18,6 @@ public class TutuItem extends ArmorItem {
 	public TutuItem() {
 		super(ArmorMaterial.LEATHER, EquipmentSlotType.LEGS, new Item.Properties()
 				.group(Teletubbies.ITEMGROUP));
-		
-		this.setRegistryName(new ResourceLocation(Teletubbies.MODID, "tutu"));
 	}
 	
 	@Override

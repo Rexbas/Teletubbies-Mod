@@ -23,8 +23,6 @@ public class LaaLaaBallItem extends Item {
 		super(new Item.Properties()
 				.maxStackSize(1)
 				.group(Teletubbies.ITEMGROUP));
-		
-		this.setRegistryName(Teletubbies.MODID, "laalaa_ball");
 	}
 	
 	@Override
