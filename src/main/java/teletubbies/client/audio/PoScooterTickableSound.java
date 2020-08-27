@@ -21,7 +21,7 @@ public class PoScooterTickableSound extends TickableSound {
 	@Override
 	public void tick() {
 		if (!scooter.isAlive()) {
-			func_239509_o_();
+			this.finishPlaying();
 			repeat = true;
 		}
 		else {
