@@ -36,8 +36,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import teletubbies.client.audio.SoundList;
 import teletubbies.init.ModItems;
+import teletubbies.init.ModSounds;
 import teletubbies.tileentity.CustardMachineTileEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
@@ -260,7 +260,7 @@ public class CustardMachineBlock extends Block {
 				if (t.canDrop() && !world.isRemote) {
 					stack.setCount(stack.getCount() - 1);
 					float pitch = isUnderwater(world, pos) ? 0.75F : 1F;
-					world.playSound(null, pos, SoundList.MACHINE_CUSTARD, SoundCategory.BLOCKS, 1, pitch);
+					world.playSound(null, pos, ModSounds.MACHINE_CUSTARD.get(), SoundCategory.BLOCKS, 1, pitch);
 					t.reset();
 				}
 			}

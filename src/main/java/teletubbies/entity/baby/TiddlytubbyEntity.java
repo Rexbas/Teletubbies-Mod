@@ -20,8 +20,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import teletubbies.client.audio.SoundList;
 import teletubbies.init.ModItems;
+import teletubbies.init.ModSounds;
 
 public class TiddlytubbyEntity extends CreatureEntity {
 	
@@ -61,6 +61,6 @@ public class TiddlytubbyEntity extends CreatureEntity {
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return this.rand.nextInt(2) == 0 ? SoundList.ENTITY_DAADAA_VOICE : SoundList.ENTITY_MIMI_VOICE;
+		return this.rand.nextInt(2) == 0 ? ModSounds.ENTITY_DAADAA_VOICE.get() : ModSounds.ENTITY_MIMI_VOICE.get();
     }
 }

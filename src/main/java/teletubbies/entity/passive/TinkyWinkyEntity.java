@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.client.audio.SoundList;
 import teletubbies.init.ModEntityTypes;
 import teletubbies.init.ModItems;
+import teletubbies.init.ModSounds;
 import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
 import teletubbies.item.TinkyWinkyBagItem;
 
@@ -28,7 +28,7 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundList.ENTITY_TINKYWINKY_VOICE;
+		return ModSounds.ENTITY_TINKYWINKY_VOICE.get();
 	}
 	
 	@Override

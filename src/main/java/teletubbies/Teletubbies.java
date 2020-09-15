@@ -21,6 +21,7 @@ import teletubbies.config.Config;
 import teletubbies.init.ModBlocks;
 import teletubbies.init.ModEntityTypes;
 import teletubbies.init.ModItems;
+import teletubbies.init.ModSounds;
 import teletubbies.inventory.container.ContainerList;
 import teletubbies.itemgroup.ItemGroupTeletubbies;
 
@@ -40,7 +41,8 @@ public class Teletubbies {
 		ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ModBlocks.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		
+		ModSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+
 		Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve("teletubbies-server.toml").toString());
 	}
 

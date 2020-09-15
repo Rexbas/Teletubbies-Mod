@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.client.audio.SoundList;
 import teletubbies.init.ModEntityTypes;
 import teletubbies.init.ModItems;
+import teletubbies.init.ModSounds;
 
 public class PoEntity extends TeletubbyEntity {
 
@@ -19,7 +19,7 @@ public class PoEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return SoundList.ENTITY_PO_VOICE;
+		return ModSounds.ENTITY_PO_VOICE.get();
 	}
 	
 	@Override

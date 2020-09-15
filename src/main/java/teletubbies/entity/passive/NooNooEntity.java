@@ -16,7 +16,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import teletubbies.client.audio.SoundList;
+import teletubbies.init.ModSounds;
 
 public class NooNooEntity extends CreatureEntity {
 
@@ -53,16 +53,16 @@ public class NooNooEntity extends CreatureEntity {
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return this.rand.nextInt(2) == 0 ? SoundList.ENTITY_NOONOO_AMBIENT1 : SoundList.ENTITY_NOONOO_AMBIENT2;
+		return this.rand.nextInt(2) == 0 ? ModSounds.ENTITY_NOONOO_AMBIENT1.get() : ModSounds.ENTITY_NOONOO_AMBIENT2.get();
     }
 	
 	@Override
 	public SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundList.ENTITY_NOONOO_HURT;
+		return ModSounds.ENTITY_NOONOO_HURT.get();
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return SoundList.ENTITY_NOONOO_DEATH;
+		return ModSounds.ENTITY_NOONOO_DEATH.get();
 	}
 }

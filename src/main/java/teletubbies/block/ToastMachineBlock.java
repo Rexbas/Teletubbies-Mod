@@ -31,9 +31,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import teletubbies.Teletubbies;
-import teletubbies.client.audio.SoundList;
 import teletubbies.init.ModItems;
+import teletubbies.init.ModSounds;
 import teletubbies.tileentity.ToastMachineTileEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
@@ -156,7 +155,7 @@ public class ToastMachineBlock extends Block {
 		if (t.canDrop() && !world.isRemote) {
 			t.dropToast(new ItemStack(ModItems.TOAST.get()), player);
 			float pitch = isUnderwater(world, tilePos) ? 0.5F : 1F;
-			world.playSound(null, tilePos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 1, pitch);
+			world.playSound(null, tilePos, ModSounds.MACHINE_TOAST.get(), SoundCategory.BLOCKS, 1, pitch);
 			t.reset();
 		}
 		return ActionResultType.SUCCESS;
