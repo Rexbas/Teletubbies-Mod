@@ -1,7 +1,10 @@
 package teletubbies.entity.passive;
 
+import java.util.Random;
+
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap.MutableAttribute;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
@@ -10,6 +13,8 @@ import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import teletubbies.client.audio.SoundList;
 
@@ -17,6 +22,10 @@ public class NooNooEntity extends CreatureEntity {
 
 	public NooNooEntity(EntityType<? extends CreatureEntity> type, World world) {
 		super(type, world);
+	}
+	
+	public static boolean canSpawn(EntityType<NooNooEntity> entityType, IWorld world, SpawnReason reason, BlockPos pos, Random rand) {
+		return true;
 	}
 	
 	@Override

@@ -2,13 +2,16 @@ package teletubbies.init;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -32,6 +35,7 @@ import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.NooNooEntity;
 import teletubbies.entity.passive.PoEntity;
+import teletubbies.entity.passive.TeletubbyEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
 import teletubbies.item.ModSpawnEggItem;
 
@@ -131,34 +135,53 @@ public class ModEntityTypes {
                     .size(1.15F, 0.3F)
                     .setCustomClientFactory((entity, world) -> new PoScooterEntity(world))
                     .build(new ResourceLocation(Teletubbies.MODID, "po_scooter").toString()));
-
-	public static void setAttributes() {
-		DeferredWorkQueue.runLater(() -> {
-            GlobalEntityTypeAttributes.put(ModEntityTypes.TINKYWINKY.get(), CreatureEntity.func_233666_p_().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.DIPSY.get(), CreatureEntity.func_233666_p_().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.LAALAA.get(), CreatureEntity.func_233666_p_().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.PO.get(), CreatureEntity.func_233666_p_().create());
-
-            GlobalEntityTypeAttributes.put(ModEntityTypes.NOONOO.get(), NooNooEntity.setCustomAttributes().create());
-            
-        	GlobalEntityTypeAttributes.put(ModEntityTypes.MIMI.get(), TiddlytubbyEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.DAADAA.get(), TiddlytubbyEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.PING.get(), TiddlytubbyEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.BA.get(), TiddlytubbyEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.RURU.get(), TiddlytubbyEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.NIN.get(), TiddlytubbyEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.DUGGLEDEE.get(), TiddlytubbyEntity.setCustomAttributes().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.UMPIEPUMPIE.get(), TiddlytubbyEntity.setCustomAttributes().create());
-           
-            GlobalEntityTypeAttributes.put(ModEntityTypes.TINKYWINKY_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.DIPSY_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.LAALAA_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
-            GlobalEntityTypeAttributes.put(ModEntityTypes.PO_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
-        });
-	}
 	
 	@SubscribeEvent
-	public static void registerEntityTypeEvent(final RegistryEvent.Register<EntityType<?>> event) {
+	public static void registerSpawnEggAndPlacement(final RegistryEvent.Register<EntityType<?>> event) {
 		ModSpawnEggItem.initSpawnEggs();
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.TINKYWINKY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.DIPSY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.LAALAA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.PO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.NOONOO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NooNooEntity::canSpawn);		
+
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.MIMI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.DAADAA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.PING.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.BA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.RURU.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.NIN.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.DUGGLEDEE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.UMPIEPUMPIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.TINKYWINKY_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.DIPSY_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.LAALAA_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.PO_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+	}
+	
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public static void setAtributes(final RegistryEvent.Register<EntityType<?>> event) {
+        GlobalEntityTypeAttributes.put(ModEntityTypes.TINKYWINKY.get(), CreatureEntity.func_233666_p_().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.DIPSY.get(), CreatureEntity.func_233666_p_().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.LAALAA.get(), CreatureEntity.func_233666_p_().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.PO.get(), CreatureEntity.func_233666_p_().create());
+
+        GlobalEntityTypeAttributes.put(ModEntityTypes.NOONOO.get(), NooNooEntity.setCustomAttributes().create());
+        
+    	GlobalEntityTypeAttributes.put(ModEntityTypes.MIMI.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.DAADAA.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.PING.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.BA.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.RURU.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.NIN.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.DUGGLEDEE.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.UMPIEPUMPIE.get(), TiddlytubbyEntity.setCustomAttributes().create());
+       
+        GlobalEntityTypeAttributes.put(ModEntityTypes.TINKYWINKY_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.DIPSY_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.LAALAA_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
+        GlobalEntityTypeAttributes.put(ModEntityTypes.PO_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
 	}
 }

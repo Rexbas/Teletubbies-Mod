@@ -1,6 +1,7 @@
 package teletubbies.entity.passive;
 
 import java.util.Arrays;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -22,8 +23,10 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import teletubbies.init.ModItems;
 
@@ -35,6 +38,10 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 		super(type, world);
 		Arrays.fill(this.inventoryArmorDropChances, 1.0F);
 		Arrays.fill(this.inventoryHandsDropChances, 1.0F);
+	}
+	
+	public static boolean canSpawn(EntityType<? extends TeletubbyEntity> entityType, IWorld world, SpawnReason reason, BlockPos pos, Random rand) {
+		return true;
 	}
 	
 	@Override

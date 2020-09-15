@@ -5,6 +5,7 @@ import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
@@ -19,6 +20,7 @@ import teletubbies.item.armor.NooNooEyesItem;
 import teletubbies.item.armor.SimpleArmorItem;
 import teletubbies.item.armor.TutuItem;
 
+@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModItems {
 	
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Teletubbies.MODID);

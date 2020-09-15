@@ -45,7 +45,6 @@ public class Teletubbies {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-		ModEntityTypes.setAttributes();
 		CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
 	}
 
