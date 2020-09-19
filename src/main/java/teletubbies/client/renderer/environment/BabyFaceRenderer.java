@@ -142,7 +142,7 @@ public class BabyFaceRenderer implements IRenderHandler {
 				yaw -= stepSize;
 
 			float offset = 90f;
-			if (mc.gameSettings.func_243230_g() == PointOfView.THIRD_PERSON_FRONT) {
+			if (mc.gameSettings.getPointOfView() == PointOfView.THIRD_PERSON_FRONT) {
 				offset += 180f;
 			}
 
@@ -165,7 +165,7 @@ public class BabyFaceRenderer implements IRenderHandler {
 
 			f12 = 20.0F;
 			mc.textureManager.bindTexture(MOON_PHASES_TEXTURES);
-			int k = world.func_242414_af();
+			int k = world.getMoonPhase();
 			int l = k % 4;
 			int i1 = k / 4 % 2;
 			float f13 = (float) (l + 0) / 4.0F;

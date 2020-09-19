@@ -99,11 +99,11 @@ public class PoScooterEntity extends Entity {
 	}
 	
 	@Override
-	public boolean func_241849_j(Entity p_241849_1_) {
-		return func_242378_a(this, p_241849_1_);
+	public boolean canCollide(Entity entity) {
+		return canPushEntity(this, entity);
 	}
 
-	public static boolean func_242378_a(Entity p_242378_0_, Entity p_242378_1_) {
+	public static boolean canPushEntity(Entity p_242378_0_, Entity p_242378_1_) {
 		return (p_242378_1_.func_241845_aY() || p_242378_1_.canBePushed()) && !p_242378_0_.isRidingSameEntity(p_242378_1_);
 	}
 	

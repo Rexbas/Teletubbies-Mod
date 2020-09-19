@@ -265,7 +265,7 @@ public class CustardMachineBlock extends Block {
 				}
 			}
 			else if (world.isRemote) {
-				ITextComponent msg = new TranslationTextComponent("teletubbies.custard_machine.message").setStyle(Style.EMPTY.setColor((Color.func_240743_a_(0xAAAAAA))));
+				ITextComponent msg = new TranslationTextComponent("teletubbies.custard_machine.message").setStyle(Style.EMPTY.setColor((Color.fromInt(0xAAAAAA))));
 				player.sendMessage(msg, null);
 			}
 		}

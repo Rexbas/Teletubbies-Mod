@@ -111,7 +111,7 @@ public class TeletubbyRenderer<T extends CreatureEntity, M extends TeletubbyMode
 	    Minecraft minecraft = Minecraft.getInstance();
 		boolean flag = this.isVisible(entityIn);
 		boolean flag1 = !flag && !entityIn.isInvisibleToPlayer(Minecraft.getInstance().player);
-	    boolean flag2 = minecraft.func_238206_b_(entityIn);
+	    boolean flag2 = minecraft.isEntityGlowing(entityIn);
 		RenderType rendertype = this.func_230496_a_(entityIn, flag, flag1, flag2);
 		if (rendertype != null) {
 			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(rendertype);

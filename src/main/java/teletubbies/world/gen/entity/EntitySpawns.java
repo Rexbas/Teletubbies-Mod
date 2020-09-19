@@ -18,7 +18,7 @@ public class EntitySpawns {
 	private static void registerWorldSpawns(BiomeLoadingEvent event, EntityType<?> entity, EntityClassification classification, IntValue weight, Category...categories) {		
 		for (Category category : categories) {
 			if (event.getCategory() == category) {
-				event.getSpawns().func_242575_a(classification, new Spawners(entity, weight.get(), 1, 1));
+				event.getSpawns().withSpawner(classification, new Spawners(entity, weight.get(), 1, 1));
 			}
 		}		
 	}
