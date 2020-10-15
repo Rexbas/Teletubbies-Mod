@@ -1,0 +1,64 @@
+
+#World Gen settings
+[worldgen]
+	#Voice Trumpet Probability (%) to reduce chance of actual placement
+	#Range: 1 ~ 100
+	probability = 30
+	#Voice Trumpet Frequency for Placement
+	#Range: 2 ~ 1000
+	frequency = 2
+
+#Friendly Entity settings
+["friendly entities"]
+	#Range: 1 ~ 1000000
+	mimi_weight = 5
+	#Range: 1 ~ 1000000
+	daadaa_weight = 5
+	#Range: 1 ~ 1000000
+	umpiepumpie_weight = 5
+	#Range: 1 ~ 1000000
+	dipsy_weight = 20
+	#Range: 1 ~ 1000000
+	nin_weight = 5
+	#Range: 1 ~ 1000000
+	ping_weight = 5
+	#Range: 1 ~ 1000000
+	laalaa_weight = 20
+	#Range: 1 ~ 1000000
+	po_weight = 20
+	#Range: 1 ~ 1000000
+	noonoo_weight = 20
+	#Range: 1 ~ 1000000
+	duggledee_weight = 5
+	#Range: 1 ~ 1000000
+	tinkywinky_weight = 20
+	#Range: 1 ~ 1000000
+	ba_weight = 5
+	#Range: 1 ~ 1000000
+	ruru_weight = 5
+
+#Hostile Entity settings
+["hostile entities"]
+	#Range: 1 ~ 1000000
+	po_zombie_weight = 100
+	#Chance of Teletubby transforming into zombie Teletubby
+	#Range: 1 ~ 100
+	transformation_probability = 25
+	#Range: 1 ~ 1000000
+	laalaa_zombie_weight = 100
+	#Range: 1 ~ 1000000
+	tinkywinky_zombie_weight = 100
+	#Range: 1 ~ 1000000
+	dipsy_zombie_weight = 100
+
+#Food settings
+[food]
+	#Range: 1 ~ 100
+	toast_hunger = 2
+	#Range: 1 ~ 100
+	custard_hunger = 4
+	#Range: 1.0 ~ 100.0
+	custard_saturation = 1.0
+	#Range: 1.0 ~ 100.0
+	toast_saturation = 1.0
+
