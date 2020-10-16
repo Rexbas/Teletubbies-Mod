@@ -47,6 +47,12 @@ public class FullGrassBlock extends GrassBlock {
 		return false;
 	}
 	
+	// Need to compare with GrassBlock
+	@Override
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+		this.tick(state, world, pos, rand);
+	}
+	
 	@Override
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
 		if (!worldIn.isRemote) {
