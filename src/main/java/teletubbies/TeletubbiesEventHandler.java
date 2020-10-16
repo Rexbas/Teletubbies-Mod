@@ -54,7 +54,7 @@ public class TeletubbiesEventHandler {
 	
 	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void setSkyRenderer(WorldEvent.Load event) {		
+	public static void setSkyRenderer(WorldEvent.Load event) {
 		if (event.getWorld().isRemote() && event.getWorld().getDimension().getType() == DimensionType.OVERWORLD) {
 			IRenderHandler renderer = new BabyFaceRenderer();
 			event.getWorld().getDimension().setSkyRenderer(renderer);

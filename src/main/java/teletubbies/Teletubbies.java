@@ -42,7 +42,6 @@ public class Teletubbies {
 		ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ModBlocks.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		ModWorldGen.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		ModSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve("teletubbies-server.toml").toString());
@@ -50,6 +49,7 @@ public class Teletubbies {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
+		ModWorldGen.registerConfiguredFeatures();
 	}
 
 	private void setupClient(final FMLClientSetupEvent event) {

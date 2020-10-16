@@ -19,8 +19,8 @@ import teletubbies.init.ModBlocks;
 
 public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
 
-	public VoiceTrumpetFeature(Codec<NoFeatureConfig> c) {
-		super(c);
+	public VoiceTrumpetFeature(Codec<NoFeatureConfig> codec) {
+		super(codec);
 	}
 
 	@Override
