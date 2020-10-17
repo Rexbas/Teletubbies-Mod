@@ -127,7 +127,6 @@ processResources {
         exclude 'META-INF/mods.toml'
     }
 
-
     // Will minify the json files of your mod when you build the jar.
     // Helps reduce files size!
     doLast {

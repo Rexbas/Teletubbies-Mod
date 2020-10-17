@@ -61,7 +61,7 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
 		@Override
 		public void func_230364_a_(DynamicRegistries dr, ChunkGenerator generator, TemplateManager manager, int chunkX, int chunkZ, Biome biome, NoFeatureConfig config) {
             int centerY = generator.getHeight(chunkX * 16, chunkZ * 16, Heightmap.Type.WORLD_SURFACE_WG);
-            BlockPos centerPos = new BlockPos(chunkX * 16 - 16, centerY - 3, chunkZ * 16 - 16);
+            BlockPos centerPos = new BlockPos(chunkX * 16, centerY - 3, chunkZ * 16);
 			
 	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_TINKYWINKY, centerPos.add(-16, 0, -16)));
 	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_DIPSY, centerPos.add(0, 0, -16)));
