@@ -21,13 +21,13 @@ import teletubbies.config.WorldGenConfig;
 
 public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
 
-	public VoiceTrumpetFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory) {
-		super(configFactory);
+	public VoiceTrumpetFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> config) {
+		super(config);
 	}
 
 	@Override
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-		if (rand.nextInt(100) < WorldGenConfig.VOICE_TRUMPET_PROBABILITY.get()) {
+		if (rand.nextInt(100) < WorldGenConfig.VOICE_TRUMPET_SPAWNRATE.get()) {
 			BlockState blockstate = BlockList.VOICE_TRUMPET.getDefaultState();
 			
 			if (world.getBlockState(pos.down()).getBlock() instanceof GrassBlock && world.getBlockState(pos.up()).getBlock() instanceof AirBlock) {
