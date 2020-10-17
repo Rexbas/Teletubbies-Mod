@@ -25,7 +25,7 @@ public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
 
 	@Override
 	public boolean func_241855_a(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-		if (rand.nextInt(100) < WorldGenConfig.VOICE_TRUMPET_PROBABILITY.get()) {
+		if (rand.nextInt(100) < WorldGenConfig.VOICE_TRUMPET_SPAWNRATE.get()) {
 			BlockState blockstate = ModBlocks.VOICE_TRUMPET.get().getDefaultState();
 			
 			if (world.getBlockState(pos.down()).getBlock() instanceof GrassBlock && world.getBlockState(pos.up()).getBlock() instanceof AirBlock) {

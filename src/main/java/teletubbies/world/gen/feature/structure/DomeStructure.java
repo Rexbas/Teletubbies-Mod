@@ -36,12 +36,12 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
 	@Override
 	protected boolean func_230363_a_(ChunkGenerator generator, BiomeProvider biomeProvider, long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig config) {
 		int centerY = generator.getHeight(chunkX * 16, chunkZ * 16, Heightmap.Type.WORLD_SURFACE_WG);
-        BlockPos centerPos = new BlockPos(chunkX * 16 - 16, centerY - 3, chunkZ * 16 - 16);
+        BlockPos centerPos = new BlockPos(chunkX * 16, centerY - 3, chunkZ * 16);
         
         int height_TinkyWinky = generator.getHeight(centerPos.getX() - 16, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
-        int height_Dipsy = generator.getHeight(centerPos.getX() + 16, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
-        int height_LaaLaa = generator.getHeight(centerPos.getX() + 16, centerPos.getZ() + 16, Heightmap.Type.WORLD_SURFACE_WG);
-        int height_Po = generator.getHeight(centerPos.getX() - 16, centerPos.getZ() + 16, Heightmap.Type.WORLD_SURFACE_WG);
+        int height_Dipsy = generator.getHeight(centerPos.getX() + 12, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
+        int height_LaaLaa = generator.getHeight(centerPos.getX() + 12, centerPos.getZ() + 14, Heightmap.Type.WORLD_SURFACE_WG);
+        int height_Po = generator.getHeight(centerPos.getX() - 16, centerPos.getZ() + 14, Heightmap.Type.WORLD_SURFACE_WG);
         
         if (Math.abs(centerY - height_TinkyWinky) <= 3 &&
     		Math.abs(centerY - height_Dipsy) <= 3 &&
@@ -63,10 +63,10 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
             int centerY = generator.getHeight(chunkX * 16, chunkZ * 16, Heightmap.Type.WORLD_SURFACE_WG);
             BlockPos centerPos = new BlockPos(chunkX * 16 - 16, centerY - 3, chunkZ * 16 - 16);
 			
-	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_TINKYWINKY, centerPos));
-	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_DIPSY, centerPos.add(16, 0, 0)));
-	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_LAALAA, centerPos.add(16, 0, 16)));
-	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_PO, centerPos.add(0, 0, 16)));
+	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_TINKYWINKY, centerPos.add(-16, 0, -16)));
+	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_DIPSY, centerPos.add(0, 0, -16)));
+	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_LAALAA, centerPos));
+	        this.components.add(new DomePieces.Piece(manager, DomePieces.DOME_PO, centerPos.add(-16, 0, 0)));
 	        
 			this.recalculateStructureSize();
 		}

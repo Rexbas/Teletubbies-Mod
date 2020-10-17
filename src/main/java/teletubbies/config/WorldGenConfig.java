@@ -5,13 +5,13 @@ import net.minecraftforge.common.ForgeConfigSpec;
 public class WorldGenConfig {
 
 	public static final String CATEGORY_WORLDGEN = "worldgen";
-	public static ForgeConfigSpec.IntValue VOICE_TRUMPET_PROBABILITY;
+	public static ForgeConfigSpec.IntValue VOICE_TRUMPET_SPAWNRATE;
 	public static ForgeConfigSpec.IntValue DOME_MIN_CHUNKS;
 	public static ForgeConfigSpec.IntValue DOME_MAX_CHUNKS;
 	
 	public static void init(ForgeConfigSpec.Builder server) {
 		server.comment("World Gen settings").push(CATEGORY_WORLDGEN);		
-		VOICE_TRUMPET_PROBABILITY = server.comment("Voice Trumpet Probability (%) to reduce chance of actual placement")
+		VOICE_TRUMPET_SPAWNRATE = server.comment("Voice Trumpet Spawnrate (%)")
 				.defineInRange("probability", 10, 0, 100);
 		
 		DOME_MIN_CHUNKS = server.comment("Min chunks between domes")
