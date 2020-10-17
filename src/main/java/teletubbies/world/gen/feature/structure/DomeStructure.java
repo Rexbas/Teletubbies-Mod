@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -67,20 +68,21 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
     
 	@Override
 	public boolean hasStartAt(ChunkGenerator<?> generator, Random rand, int chunkX, int chunkZ) {
-		ChunkPos chunkpos = this.getStartPositionForPosition(generator, rand, chunkX, chunkZ, 0, 0);
+		final ChunkPos chunkpos = this.getStartPositionForPosition(generator, rand, chunkX, chunkZ, 0, 0);
+		//final BlockPos blockChunkPos = new BlockPos(chunkpos.x, 0, chunkpos.z);
 		int centerY = generator.func_222529_a(chunkX * 16, chunkZ * 16, Heightmap.Type.WORLD_SURFACE_WG);
         final BlockPos centerPos = new BlockPos(chunkX * 16, centerY - 3, chunkZ * 16);
 
 		if (chunkX == chunkpos.x && chunkZ == chunkpos.z) {			
-			Biome biome_TinkyWinky = generator.getBiomeProvider().getBiome(centerPos.add(-16, 0, -16));
-			Biome biome_Dipsy = generator.getBiomeProvider().getBiome(centerPos.add(15, 0, -16));
-			Biome biome_LaaLaa = generator.getBiomeProvider().getBiome(centerPos.add(15, 0, 15));
-			Biome biome_Po = generator.getBiomeProvider().getBiome(centerPos.add(-16, 0, 15));
-			
-			if (generator.hasStructure(biome_TinkyWinky, this) &&
-					generator.hasStructure(biome_Dipsy, this) &&
-					generator.hasStructure(biome_LaaLaa, this) &&
-					generator.hasStructure(biome_Po, this)) {
+			Biome biome_TinkyWinky = generator.getBiomeProvider().getBiome(centerPos.add(-1, 0, -1));
+			Biome biome_Dipsy = generator.getBiomeProvider().getBiome(centerPos.add(0, 0, -1));
+			Biome biome_LaaLaa = generator.getBiomeProvider().getBiome(centerPos);
+			Biome biome_Po = generator.getBiomeProvider().getBiome(centerPos.add(-1, 0, 0));
+						
+			if (generator.hasStructure(biome_TinkyWinky, this) && isChunkPure(generator, new ChunkPos(chunkpos.x - 1, chunkpos.z - 1)) &&
+					generator.hasStructure(biome_Dipsy, this) && isChunkPure(generator, new ChunkPos(chunkpos.x, chunkpos.z - 1)) &&
+					generator.hasStructure(biome_LaaLaa, this) && isChunkPure(generator, chunkpos) &&
+					generator.hasStructure(biome_Po, this) && isChunkPure(generator, new ChunkPos(chunkpos.x - 1, chunkpos.z))) {
 				
 		        int height_TinkyWinky = generator.func_222529_a(centerPos.getX() - 16, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
 		        int height_Dipsy = generator.func_222529_a(centerPos.getX() + 12, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
@@ -97,7 +99,22 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
 		}
 		return false;
 	}
-   
+	
+	private boolean isChunkPure(ChunkGenerator<?> generator, ChunkPos chunkPos) {
+		final BlockPos pos = chunkPos.asBlockPos();
+		final Category category = generator.getBiomeProvider().getBiome(pos).getCategory();
+		
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				Biome b = generator.getBiomeProvider().getBiome(pos.add(i, 0, j));
+				if (b.getCategory() != category) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	public static class Start extends StructureStart {
 		
 		public Start(Structure<?> structure, int chunkX, int chunkZ, Biome biome, MutableBoundingBox mbb, int reference, long seed) {
