@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.BiomeManager;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
@@ -73,15 +74,15 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
         final BlockPos centerPos = new BlockPos(chunkX * 16, centerY - 3, chunkZ * 16);
 
 		if (chunkX == chunkpos.x && chunkZ == chunkpos.z) {			
-			Biome biome_TinkyWinky = manager.getBiome(centerPos.add(-16, 0, -16));
-			Biome biome_Dipsy = manager.getBiome(centerPos.add(15, 0, -16));
-			Biome biome_LaaLaa = manager.getBiome(centerPos.add(15, 0, 15));
-			Biome biome_Po = manager.getBiome(centerPos.add(-16, 0, 15));
+			Biome biome_TinkyWinky = manager.getBiome(centerPos.add(-1, 0, -1));
+			Biome biome_Dipsy = manager.getBiome(centerPos.add(0, 0, -1));
+			Biome biome_LaaLaa = manager.getBiome(centerPos);
+			Biome biome_Po = manager.getBiome(centerPos.add(-1, 0, 0));
 						
-			if (generator.hasStructure(biome_TinkyWinky, this) &&
-					generator.hasStructure(biome_Dipsy, this) &&
-					generator.hasStructure(biome_LaaLaa, this) &&
-					generator.hasStructure(biome_Po, this)) {
+			if (generator.hasStructure(biome_TinkyWinky, this) && isChunkPure(manager, new ChunkPos(chunkpos.x - 1, chunkpos.z - 1)) &&
+					generator.hasStructure(biome_Dipsy, this) && isChunkPure(manager, new ChunkPos(chunkpos.x, chunkpos.z - 1)) &&
+					generator.hasStructure(biome_LaaLaa, this) && isChunkPure(manager, chunkpos) &&
+					generator.hasStructure(biome_Po, this) && isChunkPure(manager, new ChunkPos(chunkpos.x - 1, chunkpos.z))) {
 				
 		        int height_TinkyWinky = generator.getHeight(centerPos.getX() - 16, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
 		        int height_Dipsy = generator.getHeight(centerPos.getX() + 12, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
@@ -98,7 +99,22 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
 		}
 		return false;
 	}
-   
+	
+	private boolean isChunkPure(BiomeManager manager, ChunkPos chunkPos) {
+		final BlockPos pos = chunkPos.asBlockPos();
+		final Category category = manager.getBiome(pos).getCategory();
+		
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				Biome b = manager.getBiome(pos.add(i, 0, j));
+				if (b.getCategory() != category) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	public static class Start extends StructureStart {
 		
 		public Start(Structure<?> structure, int chunkX, int chunkZ, MutableBoundingBox mbb, int reference, long seed) {
