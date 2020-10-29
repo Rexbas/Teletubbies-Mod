@@ -8,7 +8,7 @@ import net.minecraft.item.UseAction;
 import net.minecraft.world.World;
 import teletubbies.Teletubbies;
 import teletubbies.config.FoodConfig;
-import teletubbies.init.ModItems;
+import teletubbies.init.TeletubbiesItems;
 
 public class CustardItem extends Item {
 	
@@ -32,6 +32,6 @@ public class CustardItem extends Item {
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
 		super.onItemUseFinish(stack, world, entity);
-		return new ItemStack(ModItems.BOWL.get());
+		return new ItemStack(TeletubbiesItems.BOWL.get());
 	}
 }

@@ -6,8 +6,8 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
 import teletubbies.block.VoiceTrumpetBlock;
-import teletubbies.init.ModBlocks;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesSounds;
 import teletubbies.util.Converter;
 
 public class VoiceTrumpetTileEntity extends TileEntity implements ITickableTileEntity {
@@ -15,7 +15,7 @@ public class VoiceTrumpetTileEntity extends TileEntity implements ITickableTileE
 	private static Random rand = new Random();
 
 	public VoiceTrumpetTileEntity() {
-		super(ModBlocks.VOICE_TRUMPET_TILE.get());
+		super(TeletubbiesBlocks.VOICE_TRUMPET_TILE.get());
 		delay = Converter.SecondsToTicks(rand.nextInt(30));
 	}
 
@@ -23,7 +23,7 @@ public class VoiceTrumpetTileEntity extends TileEntity implements ITickableTileE
 	public void tick() {
 		if (--delay <= 0) {
 			float pitch = ((VoiceTrumpetBlock) this.getBlockState().getBlock()).isUnderwater(world, this.pos) ? 0.5F : 1F;
-			world.playSound(null, pos, ModSounds.MACHINE_VOICE_TRUMPET.get(), SoundCategory.BLOCKS, 1, pitch);
+			world.playSound(null, pos, TeletubbiesSounds.MACHINE_VOICE_TRUMPET.get(), SoundCategory.BLOCKS, 1, pitch);
 			delay = rand.nextInt((int) ((Converter.SecondsToTicks(30) - Converter.SecondsToTicks(15)) + 1)) + Converter.SecondsToTicks(15);
 		}
 	}

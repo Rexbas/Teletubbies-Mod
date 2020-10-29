@@ -37,8 +37,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
-import teletubbies.init.ModEntityTypes;
-import teletubbies.init.ModItems;
+import teletubbies.init.TeletubbiesEntityTypes;
+import teletubbies.init.TeletubbiesItems;
 
 /* This class is based on @BoatEntity */
 public class PoScooterEntity extends Entity {
@@ -73,7 +73,7 @@ public class PoScooterEntity extends Entity {
 	}
 
 	public PoScooterEntity(World world) {
-		this(ModEntityTypes.PO_SCOOTER.get(), world);
+		this(TeletubbiesEntityTypes.PO_SCOOTER.get(), world);
 	}
 
 	public PoScooterEntity(World worldIn, double x, double y, double z) {
@@ -147,7 +147,7 @@ public class PoScooterEntity extends Entity {
 				boolean flag = source.getTrueSource() instanceof PlayerEntity && ((PlayerEntity) source.getTrueSource()).abilities.isCreativeMode;
 				if (flag || this.getDamageTaken() > 40.0F) {
 					if (!flag && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-						this.entityDropItem(ModItems.PO_SCOOTER.get());
+						this.entityDropItem(TeletubbiesItems.PO_SCOOTER.get());
 					}
 
 					this.remove();
@@ -449,7 +449,7 @@ public class PoScooterEntity extends Entity {
 					if (!this.world.isRemote && this.isAlive()) {
 						this.remove();
 						if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-							this.entityDropItem(ModItems.PO_SCOOTER.get());
+							this.entityDropItem(TeletubbiesItems.PO_SCOOTER.get());
 						}
 					}
 				}
@@ -535,6 +535,6 @@ public class PoScooterEntity extends Entity {
 
 	@Override
 	public ItemStack getPickedResult(RayTraceResult target) {
-		return new ItemStack(ModItems.PO_SCOOTER.get());
+		return new ItemStack(TeletubbiesItems.PO_SCOOTER.get());
 	}
 }

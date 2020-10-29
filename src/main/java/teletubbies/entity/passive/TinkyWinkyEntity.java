@@ -14,9 +14,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.init.ModEntityTypes;
-import teletubbies.init.ModItems;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesEntityTypes;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
 import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
 import teletubbies.item.TinkyWinkyBagItem;
 
@@ -28,7 +28,7 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSounds.ENTITY_TINKYWINKY_VOICE.get();
+		return TeletubbiesSounds.ENTITY_TINKYWINKY_VOICE.get();
 	}
 	
 	@Override
@@ -37,13 +37,13 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 		int i = this.rand.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(ModItems.TINKYWINKY_BIB.get());
+			ItemStack stack = new ItemStack(TeletubbiesItems.TINKYWINKY_BIB.get());
 			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			ItemStack bag = new ItemStack(ModItems.TINKYWINKY_BAG.get());
+			ItemStack bag = new ItemStack(TeletubbiesItems.TINKYWINKY_BAG.get());
 			
 			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 			LootContext.Builder builder = new LootContext.Builder((ServerWorld) world);
@@ -59,6 +59,6 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 
 	@Override
 	public EntityType<?> getZombie() {
-		return ModEntityTypes.TINKYWINKY_ZOMBIE.get();
+		return TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get();
 	}
 }

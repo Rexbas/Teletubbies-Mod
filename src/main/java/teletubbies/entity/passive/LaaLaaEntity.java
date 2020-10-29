@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.init.ModEntityTypes;
-import teletubbies.init.ModItems;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesEntityTypes;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
 
 public class LaaLaaEntity extends TeletubbyEntity {
 
@@ -19,7 +19,7 @@ public class LaaLaaEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSounds.ENTITY_LAALAA_VOICE.get();
+		return TeletubbiesSounds.ENTITY_LAALAA_VOICE.get();
 	}
 	
 	@Override
@@ -28,19 +28,19 @@ public class LaaLaaEntity extends TeletubbyEntity {
 		int i = this.rand.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(ModItems.LAALAA_BIB.get());
+			ItemStack stack = new ItemStack(TeletubbiesItems.LAALAA_BIB.get());
 			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ModItems.LAALAA_BALL.get()));
+			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
 			break;
 		}
 	}
 
 	@Override
 	public EntityType<?> getZombie() {
-		return ModEntityTypes.LAALAA_ZOMBIE.get();
+		return TeletubbiesEntityTypes.LAALAA_ZOMBIE.get();
 	}
 }

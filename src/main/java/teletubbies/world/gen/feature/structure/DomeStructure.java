@@ -29,7 +29,7 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
 	}
 
     @Override
-    public GenerationStage.Decoration func_236396_f_() {
+    public GenerationStage.Decoration getDecorationStage() {
         return GenerationStage.Decoration.SURFACE_STRUCTURES;
     }
     

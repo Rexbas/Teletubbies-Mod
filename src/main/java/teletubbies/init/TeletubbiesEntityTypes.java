@@ -45,7 +45,7 @@ import teletubbies.entity.passive.TinkyWinkyEntity;
 import teletubbies.item.ModSpawnEggItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ModEntityTypes {
+public class TeletubbiesEntityTypes {
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Teletubbies.MODID);
 
@@ -144,50 +144,50 @@ public class ModEntityTypes {
 	@SubscribeEvent
 	public static void registerSpawnEggAndPlacement(final RegistryEvent.Register<EntityType<?>> event) {
 		ModSpawnEggItem.initSpawnEggs();
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.TINKYWINKY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.DIPSY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.LAALAA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.PO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.TINKYWINKY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.DIPSY.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.LAALAA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.PO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
 
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.NOONOO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NooNooEntity::canSpawn);		
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.NOONOO.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, NooNooEntity::canSpawn);		
 
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.MIMI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.DAADAA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.PING.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.BA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.RURU.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.NIN.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.DUGGLEDEE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.UMPIEPUMPIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.MIMI.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.DAADAA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.PING.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.BA.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.RURU.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.NIN.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.DUGGLEDEE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.UMPIEPUMPIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
 		
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.TINKYWINKY_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.DIPSY_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.LAALAA_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
-		EntitySpawnPlacementRegistry.register(ModEntityTypes.PO_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
+		EntitySpawnPlacementRegistry.register(TeletubbiesEntityTypes.PO_ZOMBIE.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::canMonsterSpawnInLight);
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void setAtributes(final RegistryEvent.Register<EntityType<?>> event) {
-        GlobalEntityTypeAttributes.put(ModEntityTypes.TINKYWINKY.get(), CreatureEntity.func_233666_p_().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.DIPSY.get(), CreatureEntity.func_233666_p_().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.LAALAA.get(), CreatureEntity.func_233666_p_().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.PO.get(), CreatureEntity.func_233666_p_().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.TINKYWINKY.get(), CreatureEntity.func_233666_p_().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.DIPSY.get(), CreatureEntity.func_233666_p_().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.LAALAA.get(), CreatureEntity.func_233666_p_().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.PO.get(), CreatureEntity.func_233666_p_().create());
 
-        GlobalEntityTypeAttributes.put(ModEntityTypes.NOONOO.get(), NooNooEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.NOONOO.get(), NooNooEntity.setCustomAttributes().create());
         
-    	GlobalEntityTypeAttributes.put(ModEntityTypes.MIMI.get(), TiddlytubbyEntity.setCustomAttributes().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.DAADAA.get(), TiddlytubbyEntity.setCustomAttributes().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.PING.get(), TiddlytubbyEntity.setCustomAttributes().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.BA.get(), TiddlytubbyEntity.setCustomAttributes().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.RURU.get(), TiddlytubbyEntity.setCustomAttributes().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.NIN.get(), TiddlytubbyEntity.setCustomAttributes().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.DUGGLEDEE.get(), TiddlytubbyEntity.setCustomAttributes().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.UMPIEPUMPIE.get(), TiddlytubbyEntity.setCustomAttributes().create());
+    	GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.MIMI.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.DAADAA.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.PING.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.BA.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.RURU.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.NIN.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.DUGGLEDEE.get(), TiddlytubbyEntity.setCustomAttributes().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.UMPIEPUMPIE.get(), TiddlytubbyEntity.setCustomAttributes().create());
        
-        GlobalEntityTypeAttributes.put(ModEntityTypes.TINKYWINKY_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.DIPSY_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.LAALAA_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
-        GlobalEntityTypeAttributes.put(ModEntityTypes.PO_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
+        GlobalEntityTypeAttributes.put(TeletubbiesEntityTypes.PO_ZOMBIE.get(), ZombieEntity.func_234342_eQ_().create());
 	}
 	
 	@Mod.EventBusSubscriber(modid = Teletubbies.MODID)
@@ -203,26 +203,26 @@ public class ModEntityTypes {
 		
 		@SubscribeEvent
 		public static void createEntitySpawns(BiomeLoadingEvent event) {		
-			registerWorldSpawns(event, ModEntityTypes.TINKYWINKY.get(), EntityClassification.CREATURE, EntityConfig.TINKYWINKY_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.DIPSY.get(), EntityClassification.CREATURE, EntityConfig.DIPSY_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.LAALAA.get(), EntityClassification.CREATURE, EntityConfig.LAALAA_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.PO.get(), EntityClassification.CREATURE, EntityConfig.PO_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.TINKYWINKY.get(), EntityClassification.CREATURE, EntityConfig.TINKYWINKY_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.DIPSY.get(), EntityClassification.CREATURE, EntityConfig.DIPSY_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.LAALAA.get(), EntityClassification.CREATURE, EntityConfig.LAALAA_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.PO.get(), EntityClassification.CREATURE, EntityConfig.PO_WEIGHT, Category.PLAINS);
 			
-			registerWorldSpawns(event, ModEntityTypes.NOONOO.get(), EntityClassification.CREATURE, EntityConfig.NOONOO_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.NOONOO.get(), EntityClassification.CREATURE, EntityConfig.NOONOO_WEIGHT, Category.PLAINS);
 			
-			registerWorldSpawns(event, ModEntityTypes.MIMI.get(), EntityClassification.CREATURE, EntityConfig.MIMI_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.DAADAA.get(), EntityClassification.CREATURE, EntityConfig.DAADAA_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.PING.get(), EntityClassification.CREATURE, EntityConfig.PING_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.BA.get(), EntityClassification.CREATURE, EntityConfig.BA_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.RURU.get(), EntityClassification.CREATURE, EntityConfig.RURU_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.NIN.get(), EntityClassification.CREATURE, EntityConfig.NIN_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.DUGGLEDEE.get(), EntityClassification.CREATURE, EntityConfig.DUGGLEDEE_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.UMPIEPUMPIE.get(), EntityClassification.CREATURE, EntityConfig.UMPIEPUMPIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.MIMI.get(), EntityClassification.CREATURE, EntityConfig.MIMI_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.DAADAA.get(), EntityClassification.CREATURE, EntityConfig.DAADAA_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.PING.get(), EntityClassification.CREATURE, EntityConfig.PING_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.BA.get(), EntityClassification.CREATURE, EntityConfig.BA_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.RURU.get(), EntityClassification.CREATURE, EntityConfig.RURU_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.NIN.get(), EntityClassification.CREATURE, EntityConfig.NIN_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.DUGGLEDEE.get(), EntityClassification.CREATURE, EntityConfig.DUGGLEDEE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.UMPIEPUMPIE.get(), EntityClassification.CREATURE, EntityConfig.UMPIEPUMPIE_WEIGHT, Category.PLAINS);
 
-			registerWorldSpawns(event, ModEntityTypes.TINKYWINKY_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.TINKYWINKY_ZOMBIE_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.DIPSY_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.DIPSY_ZOMBIE_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.LAALAA_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.LAALAA_ZOMBIE_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, ModEntityTypes.PO_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.PO_ZOMBIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.TINKYWINKY_ZOMBIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.DIPSY_ZOMBIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.LAALAA_ZOMBIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.PO_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.PO_ZOMBIE_WEIGHT, Category.PLAINS);
 		}
 	}
 }

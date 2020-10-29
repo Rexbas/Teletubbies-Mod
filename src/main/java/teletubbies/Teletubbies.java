@@ -18,11 +18,11 @@ import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpCapability;
 import teletubbies.common.capabilities.JumpStorage;
 import teletubbies.config.Config;
-import teletubbies.init.ModBlocks;
-import teletubbies.init.ModEntityTypes;
-import teletubbies.init.ModItems;
-import teletubbies.init.ModSounds;
-import teletubbies.init.ModWorldGen;
+import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesEntityTypes;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
+import teletubbies.init.TeletubbiesWorldGen;
 import teletubbies.inventory.container.ContainerList;
 import teletubbies.itemgroup.ItemGroupTeletubbies;
 
@@ -38,23 +38,24 @@ public class Teletubbies {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
 
-		ModEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		ModBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		ModBlocks.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		ModItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		ModSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesBlocks.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesWorldGen.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesWorldGen.STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		Config.loadConfig(Config.SERVER_CONFIG, FMLPaths.CONFIGDIR.get().resolve("teletubbies-server.toml").toString());
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
 		CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
-		ModWorldGen.registerConfiguredFeatures();
 	}
 
 	private void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
-		RenderTypeLookup.setRenderLayer(ModBlocks.WINDOW.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(TeletubbiesBlocks.WINDOW.get(), RenderType.getTranslucent());
 		ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER, TinkyWinkyBagScreen::new);
 	}
 }

@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.init.ModEntityTypes;
-import teletubbies.init.ModItems;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesEntityTypes;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
 
 public class DipsyEntity extends TeletubbyEntity {
 
@@ -19,7 +19,7 @@ public class DipsyEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSounds.ENTITY_DIPSY_VOICE.get();
+		return TeletubbiesSounds.ENTITY_DIPSY_VOICE.get();
 	}
 	
 	@Override
@@ -30,13 +30,13 @@ public class DipsyEntity extends TeletubbyEntity {
 		int damage = 0;
 		switch (i) {
 		case 0:
-			stack = new ItemStack(ModItems.DIPSY_BIB.get());
+			stack = new ItemStack(TeletubbiesItems.DIPSY_BIB.get());
 			damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			stack = new ItemStack(ModItems.DIPSY_HAT.get());
+			stack = new ItemStack(TeletubbiesItems.DIPSY_HAT.get());
 			damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.HEAD, stack);
@@ -46,6 +46,6 @@ public class DipsyEntity extends TeletubbyEntity {
 
 	@Override
 	public EntityType<?> getZombie() {
-		return ModEntityTypes.DIPSY_ZOMBIE.get();
+		return TeletubbiesEntityTypes.DIPSY_ZOMBIE.get();
 	}
 }

@@ -38,8 +38,8 @@ import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.PoEntity;
 import teletubbies.entity.passive.TeletubbyEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
-import teletubbies.init.ModBlocks;
-import teletubbies.init.ModItems;
+import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesItems;
 import teletubbies.item.LaaLaaBallItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
@@ -168,22 +168,22 @@ public class TeletubbiesEventHandler {
 		@OnlyIn(Dist.CLIENT)
 	    @SubscribeEvent
 	    public static void BlockColorHandler(final ColorHandlerEvent.Block event) {
-			if (ModBlocks.FULL_GRASS.get() != null) {
+			if (TeletubbiesBlocks.FULL_GRASS.get() != null) {
 	        event.getBlockColors().register((state, reader, pos, tint) -> reader != null
 	                && pos != null ? BiomeColors.getGrassColor(reader, pos)
-	                : GrassColors.get(0.5D, 1.0D), ModBlocks.FULL_GRASS.get());
+	                : GrassColors.get(0.5D, 1.0D), TeletubbiesBlocks.FULL_GRASS.get());
 			}
 	    }
 	    
 	    @OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
 		public static void ItemColorHandler(final ColorHandlerEvent.Item event) {
-	    	if (ModItems.FULL_GRASS.get() != null) {
+	    	if (TeletubbiesItems.FULL_GRASS.get() != null) {
 				final IItemColor colorHandler = (stack, tint) -> {
 					final BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
 					return event.getBlockColors().getColor(state, null, null, tint);
 				};
-				event.getItemColors().register(colorHandler, ModItems.FULL_GRASS.get());
+				event.getItemColors().register(colorHandler, TeletubbiesItems.FULL_GRASS.get());
 	    	}
 		}
 	}

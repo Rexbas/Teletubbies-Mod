@@ -15,7 +15,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import teletubbies.block.VoiceTrumpetBlock;
 import teletubbies.config.WorldGenConfig;
-import teletubbies.init.ModBlocks;
+import teletubbies.init.TeletubbiesBlocks;
 
 public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
 
@@ -24,9 +24,9 @@ public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
 	}
 
 	@Override
-	public boolean func_241855_a(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
 		if (rand.nextInt(100) < WorldGenConfig.VOICE_TRUMPET_SPAWNRATE.get()) {
-			BlockState blockstate = ModBlocks.VOICE_TRUMPET.get().getDefaultState();
+			BlockState blockstate = TeletubbiesBlocks.VOICE_TRUMPET.get().getDefaultState();
 			
 			if (world.getBlockState(pos.down()).getBlock() instanceof GrassBlock && world.getBlockState(pos.up()).getBlock() instanceof AirBlock) {
 				Direction facing = getRandomHorizontalDirection(rand);

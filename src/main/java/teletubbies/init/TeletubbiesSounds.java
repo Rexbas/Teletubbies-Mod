@@ -9,7 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ModSounds {
+public class TeletubbiesSounds {
 	
 	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Teletubbies.MODID);
 	

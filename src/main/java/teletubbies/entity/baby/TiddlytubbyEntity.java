@@ -20,8 +20,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import teletubbies.init.ModItems;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
 
 public class TiddlytubbyEntity extends CreatureEntity {
 	
@@ -37,7 +37,7 @@ public class TiddlytubbyEntity extends CreatureEntity {
 	protected void registerGoals() {
 	    this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, ZombieEntity.class, 8.0F, 0.5D, 0.5D));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.55F));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(ModItems.TOAST.get(), ModItems.CUSTARD.get())));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get())));
 		this.goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.3F));
 		this.goalSelector.addGoal(4, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
 		this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
@@ -61,6 +61,6 @@ public class TiddlytubbyEntity extends CreatureEntity {
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return this.rand.nextInt(2) == 0 ? ModSounds.ENTITY_DAADAA_VOICE.get() : ModSounds.ENTITY_MIMI_VOICE.get();
+		return this.rand.nextInt(2) == 0 ? TeletubbiesSounds.ENTITY_DAADAA_VOICE.get() : TeletubbiesSounds.ENTITY_MIMI_VOICE.get();
     }
 }

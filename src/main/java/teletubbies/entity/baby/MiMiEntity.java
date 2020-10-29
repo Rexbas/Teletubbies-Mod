@@ -4,7 +4,7 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesSounds;
 
 public class MiMiEntity extends TiddlytubbyEntity {
 
@@ -14,6 +14,6 @@ public class MiMiEntity extends TiddlytubbyEntity {
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return ModSounds.ENTITY_MIMI_VOICE.get();
+		return TeletubbiesSounds.ENTITY_MIMI_VOICE.get();
     }
 }

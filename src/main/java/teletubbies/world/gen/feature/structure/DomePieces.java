@@ -22,8 +22,8 @@ import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import teletubbies.Teletubbies;
 import teletubbies.block.FullGrassBlock;
-import teletubbies.init.ModBlocks;
-import teletubbies.init.ModWorldGen;
+import teletubbies.init.TeletubbiesWorldGen;
+import teletubbies.init.TeletubbiesBlocks;
 
 public class DomePieces {
 	
@@ -37,14 +37,14 @@ public class DomePieces {
 		private ResourceLocation resourceLocation;
 		
 	    public Piece(TemplateManager manager, ResourceLocation rl, BlockPos pos) {
-	        super(ModWorldGen.DOME_PIECE, 0);
+	        super(TeletubbiesWorldGen.DOME_PIECE, 0);
 	        this.templatePosition = pos;
 	        this.resourceLocation = rl;
 	        this.setupPiece(manager);
 	    }
 	
 	    public Piece(TemplateManager manager, CompoundNBT nbt) {
-	        super(ModWorldGen.DOME_PIECE, nbt);
+	        super(TeletubbiesWorldGen.DOME_PIECE, nbt);
 	        this.resourceLocation = new ResourceLocation(nbt.getString("resourceLocation"));
 	        this.setupPiece(manager);
 	    }
@@ -73,7 +73,7 @@ public class DomePieces {
 	        				this.getBlockStateFromPos(world, i, 0, j, mbb).getBlock() instanceof RedstoneTorchBlock ||
 	        				this.getBlockStateFromPos(world, i, 0, j, mbb).getBlock() instanceof RedstoneLampBlock) {
 	            			
-	        				this.replaceAirAndLiquidDownwards(world, ModBlocks.FULL_GRASS.get().getDefaultState(), i, -1, j, mbb);
+	        				this.replaceAirAndLiquidDownwards(world, TeletubbiesBlocks.FULL_GRASS.get().getDefaultState(), i, -1, j, mbb);
 	        				this.replaceAirAndLiquidDownwardsThrough(world, Blocks.AIR.getDefaultState(), i, 8, j, 0, mbb);
 	        			}
 	        		}

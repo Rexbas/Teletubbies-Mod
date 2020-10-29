@@ -36,8 +36,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
-import teletubbies.init.ModItems;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
 import teletubbies.tileentity.CustardMachineTileEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
@@ -250,7 +250,7 @@ public class CustardMachineBlock extends Block {
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {		
 		if (player.getHeldItemMainhand() != null) {
-			if (player.getHeldItemMainhand().getItem() == ModItems.BOWL.get()) {
+			if (player.getHeldItemMainhand().getItem() == TeletubbiesItems.BOWL.get()) {
 				BlockPos tilePos = getBasePos(pos, state.get(PART), state.get(FACING));
 				CustardMachineTileEntity t = (CustardMachineTileEntity) world.getTileEntity(tilePos);
 				
@@ -260,7 +260,7 @@ public class CustardMachineBlock extends Block {
 				if (t.canDrop() && !world.isRemote) {
 					stack.setCount(stack.getCount() - 1);
 					float pitch = isUnderwater(world, pos) ? 0.75F : 1F;
-					world.playSound(null, pos, ModSounds.MACHINE_CUSTARD.get(), SoundCategory.BLOCKS, 1, pitch);
+					world.playSound(null, pos, TeletubbiesSounds.MACHINE_CUSTARD.get(), SoundCategory.BLOCKS, 1, pitch);
 					t.reset();
 				}
 			}

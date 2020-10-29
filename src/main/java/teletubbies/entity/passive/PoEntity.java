@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.init.ModEntityTypes;
-import teletubbies.init.ModItems;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesEntityTypes;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
 
 public class PoEntity extends TeletubbyEntity {
 
@@ -19,7 +19,7 @@ public class PoEntity extends TeletubbyEntity {
 	
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSounds.ENTITY_PO_VOICE.get();
+		return TeletubbiesSounds.ENTITY_PO_VOICE.get();
 	}
 	
 	@Override
@@ -30,13 +30,13 @@ public class PoEntity extends TeletubbyEntity {
 		int damage = 0;
 		switch (i) {
 		case 0:
-			stack = new ItemStack(ModItems.PO_BIB.get());
+			stack = new ItemStack(TeletubbiesItems.PO_BIB.get());
 			damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			stack = new ItemStack(ModItems.PO_HELMET.get());
+			stack = new ItemStack(TeletubbiesItems.PO_HELMET.get());
 			damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.HEAD, stack);
@@ -44,12 +44,12 @@ public class PoEntity extends TeletubbyEntity {
 		}
 		
 		if (this.rand.nextInt(20) == 0) {
-			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ModItems.PO_SCOOTER.get()));
+			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.PO_SCOOTER.get()));
 		}
 	}
 
 	@Override
 	public EntityType<?> getZombie() {
-		return ModEntityTypes.PO_ZOMBIE.get();
+		return TeletubbiesEntityTypes.PO_ZOMBIE.get();
 	}
 }

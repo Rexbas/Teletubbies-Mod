@@ -5,14 +5,14 @@ import net.minecraft.util.SoundCategory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.entity.item.PoScooterEntity;
-import teletubbies.init.ModSounds;
+import teletubbies.init.TeletubbiesSounds;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterTickableSound extends TickableSound {
 	private final PoScooterEntity scooter;
 
 	public PoScooterTickableSound(PoScooterEntity scooter) {
-		super(ModSounds.ENTITY_SCOOTER.get(), SoundCategory.NEUTRAL);
+		super(TeletubbiesSounds.ENTITY_SCOOTER.get(), SoundCategory.NEUTRAL);
 		this.scooter = scooter;
 		repeat = true;
 		repeatDelay = 0;

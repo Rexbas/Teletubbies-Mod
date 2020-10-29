@@ -15,7 +15,7 @@ import teletubbies.tileentity.CustardMachineTileEntity;
 import teletubbies.tileentity.ToastMachineTileEntity;
 import teletubbies.tileentity.VoiceTrumpetTileEntity;
 
-public class ModBlocks {
+public class TeletubbiesBlocks {
 
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Teletubbies.MODID);
 	public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Teletubbies.MODID);

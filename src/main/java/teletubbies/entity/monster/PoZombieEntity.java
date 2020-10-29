@@ -6,7 +6,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
-import teletubbies.init.ModItems;
+import teletubbies.init.TeletubbiesItems;
 
 public class PoZombieEntity extends TeletubbyZombieEntity {
 
@@ -22,13 +22,13 @@ public class PoZombieEntity extends TeletubbyZombieEntity {
 		int damage = 0;
 		switch (i) {
 		case 0:
-			stack = new ItemStack(ModItems.PO_BIB.get());
+			stack = new ItemStack(TeletubbiesItems.PO_BIB.get());
 			damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			stack = new ItemStack(ModItems.PO_HELMET.get());
+			stack = new ItemStack(TeletubbiesItems.PO_HELMET.get());
 			damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamage(damage);
 			this.setItemStackToSlot(EquipmentSlotType.HEAD, stack);
@@ -36,7 +36,7 @@ public class PoZombieEntity extends TeletubbyZombieEntity {
 		}
 
 		if (this.rand.nextInt(20) == 0) {
-			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ModItems.PO_SCOOTER.get()));
+			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.PO_SCOOTER.get()));
 		}
 	}
 }
