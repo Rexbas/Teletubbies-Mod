@@ -69,7 +69,6 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
 	@Override
 	public boolean hasStartAt(ChunkGenerator<?> generator, Random rand, int chunkX, int chunkZ) {
 		final ChunkPos chunkpos = this.getStartPositionForPosition(generator, rand, chunkX, chunkZ, 0, 0);
-		//final BlockPos blockChunkPos = new BlockPos(chunkpos.x, 0, chunkpos.z);
 		int centerY = generator.func_222529_a(chunkX * 16, chunkZ * 16, Heightmap.Type.WORLD_SURFACE_WG);
         final BlockPos centerPos = new BlockPos(chunkX * 16, centerY - 3, chunkZ * 16);
 
