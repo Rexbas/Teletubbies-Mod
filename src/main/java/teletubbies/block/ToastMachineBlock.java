@@ -18,10 +18,7 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -31,8 +28,6 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import teletubbies.Teletubbies;
-import teletubbies.client.audio.SoundList;
-import teletubbies.item.ItemList;
 import teletubbies.tileentity.ToastMachineTileEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
@@ -41,7 +36,8 @@ public class ToastMachineBlock extends Block {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-		
+	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+
 	protected static final VoxelShape TOP_AABB_NORTH = VoxelShapes.or(
 			makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), 
 			makeCuboidShape(2.0D, 6.0D, 7.0D, 3.0D, 7.0D, 9.0D), 
@@ -59,7 +55,7 @@ public class ToastMachineBlock extends Block {
 				.harvestTool(ToolType.PICKAXE));
 		
 		this.setRegistryName(Teletubbies.MODID, "toast_machine");
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false).with(POWERED, false));
 	}
 	
 	@Override
@@ -146,23 +142,10 @@ public class ToastMachineBlock extends Block {
 	
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING, BOTTOM, WATERLOGGED);
+		builder.add(FACING, BOTTOM, WATERLOGGED, POWERED);
 	}
 	
-	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
-		ToastMachineTileEntity t = (ToastMachineTileEntity) world.getTileEntity(tilePos);
-		if (t.canDrop() && !world.isRemote) {
-			t.dropToast(new ItemStack(ItemList.TOAST), player);
-			float pitch = isUnderwater(world, tilePos) ? 0.5F : 1F;
-			world.playSound(null, tilePos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 1, pitch);
-			t.reset();
-		}
-		return true;
-	}
-	
-	public boolean isUnderwater(World world, BlockPos pos) {
+	public static boolean isUnderwater(World world, BlockPos pos) {
 		BlockPos tilePos = world.getBlockState(pos).get(BOTTOM) ? pos : pos.down();
 		if (BlocksUtil.isBlockSurrounded(world, tilePos) && world.getBlockState(tilePos.up()).get(WATERLOGGED)) return true;
 		return false;
@@ -180,5 +163,48 @@ public class ToastMachineBlock extends Block {
 			return new ToastMachineTileEntity();
 		}
 		return null;
+	}
+	
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if (!world.isRemote) {
+			BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
+			ToastMachineTileEntity t = (ToastMachineTileEntity) world.getTileEntity(tilePos);			
+			
+			if (state.get(BOTTOM)) {
+				if (world.isBlockPowered(tilePos) || world.isBlockPowered(tilePos.up())) {
+					if (world.getBlockState(tilePos).getBlock() instanceof ToastMachineBlock) {
+						world.setBlockState(tilePos, state.with(POWERED, true));
+					}
+					
+					if (world.getBlockState(tilePos.up()).getBlock() instanceof ToastMachineBlock) {
+						world.setBlockState(tilePos.up(), world.getBlockState(tilePos.up()).with(POWERED, true));
+					}
+				}
+				else {
+					if (world.getBlockState(tilePos).getBlock() instanceof ToastMachineBlock) {
+						world.setBlockState(tilePos, state.with(POWERED, false));
+					}
+					
+					if (world.getBlockState(tilePos.up()).getBlock() instanceof ToastMachineBlock) {
+						world.setBlockState(tilePos.up(), world.getBlockState(tilePos.up()).with(POWERED, false));
+					}
+				}
+			}
+		}
+	}
+	
+	@Override
+	public boolean isSolid(BlockState state) {
+		return false;
+	}
+	
+	@Override
+	public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
+        return false;
+    }
+	
+	@Override
+	public int getLightValue(BlockState state) {
+		return state.get(POWERED) ? 5 : 0;
 	}
 }

@@ -1,27 +1,23 @@
 {
-    "forge_marker": 1,
     "variants": {
-        "facing": {
-            "north": {
-                "y": 0
-            },
-            "east": {
-                "y": 90
-            },
-            "south": {
-                "y": 180
-            },
-            "west": {
-                "y": 270
-            }
-        },
-        "bottom": {
-            "true": {
-                "model": "teletubbies:block/toast_machine_bottom"
-            },
-            "false": {
-                "model": "teletubbies:block/toast_machine_top"
-            }
-        }
+        "bottom=true,facing=north,powered=false":  { "model": "teletubbies:block/toast_machine_bottom" },
+        "bottom=true,facing=east,powered=false":  { "model": "teletubbies:block/toast_machine_bottom", "y": 90 },
+        "bottom=true,facing=south,powered=false":  { "model": "teletubbies:block/toast_machine_bottom", "y": 180 },
+        "bottom=true,facing=west,powered=false":  { "model": "teletubbies:block/toast_machine_bottom", "y": 270 },
+        
+        "bottom=false,facing=north,powered=false":  { "model": "teletubbies:block/toast_machine_top" },
+        "bottom=false,facing=east,powered=false":  { "model": "teletubbies:block/toast_machine_top", "y": 90 },
+        "bottom=false,facing=south,powered=false":  { "model": "teletubbies:block/toast_machine_top", "y": 180 },
+        "bottom=false,facing=west,powered=false":  { "model": "teletubbies:block/toast_machine_top", "y": 270 },
+
+        "bottom=true,facing=north,powered=true":  { "model": "teletubbies:block/toast_machine_bottom_powered" },
+        "bottom=true,facing=east,powered=true":  { "model": "teletubbies:block/toast_machine_bottom_powered", "y": 90 },
+        "bottom=true,facing=south,powered=true":  { "model": "teletubbies:block/toast_machine_bottom_powered", "y": 180 },
+        "bottom=true,facing=west,powered=true":  { "model": "teletubbies:block/toast_machine_bottom_powered", "y": 270 },
+        
+        "bottom=false,facing=north,powered=true":  { "model": "teletubbies:block/toast_machine_top_powered" },
+        "bottom=false,facing=east,powered=true":  { "model": "teletubbies:block/toast_machine_top_powered", "y": 90 },
+        "bottom=false,facing=south,powered=true":  { "model": "teletubbies:block/toast_machine_top_powered", "y": 180 },
+        "bottom=false,facing=west,powered=true":  { "model": "teletubbies:block/toast_machine_top_powered", "y": 270 }
     }
 }
