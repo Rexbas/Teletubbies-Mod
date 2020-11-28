@@ -17,7 +17,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import teletubbies.config.WorldGenConfig;
+import teletubbies.config.Config;
 
 public class DomeStructure extends Structure<NoFeatureConfig> {
 
@@ -28,8 +28,8 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
 	// https://github.com/TelepathicGrunt/StructureTutorialMod/blob/1.15.x/src/main/java/com/telepathicgrunt/structuretutorial/world/features/structures/RunDownHouseStructure.java
 	@Override
 	protected ChunkPos getStartPositionForPosition(ChunkGenerator<?> generator, Random rand, int x, int z, int spacingOffsetsX, int spacingOffsetsZ) {
-		int maxDistance = WorldGenConfig.DOME_MAX_CHUNKS.get();
-		int minDistance = WorldGenConfig.DOME_MIN_CHUNKS.get();
+		int maxDistance = Config.COMMON.DOME_MAX_CHUNKS.get();
+		int minDistance = Config.COMMON.DOME_MIN_CHUNKS.get();
 		
 		int xTemp = x + maxDistance * spacingOffsetsX;
 		int ztemp = z + maxDistance * spacingOffsetsZ;
