@@ -1,12 +1,15 @@
 
 #World Gen settings
 [worldgen]
-	#Voice Trumpet Probability (%) to reduce chance of actual placement
-	#Range: 1 ~ 100
+	#Min chunks between domes
+	#Range: 1 ~ 1000
+	min = 10
+	#Max chunks between domes
+	#Range: 1 ~ 1000
+	max = 25
+	#Voice Trumpet Spawnrate (%)
+	#Range: 0 ~ 100
 	probability = 30
-	#Voice Trumpet Frequency for Placement
-	#Range: 2 ~ 1000
-	frequency = 2
 
 #Friendly Entity settings
 ["friendly entities"]

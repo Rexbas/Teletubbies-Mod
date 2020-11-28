@@ -17,12 +17,6 @@
     },
     "done": true
   },
-  "minecraft:recipes/misc/composter": {
-    "criteria": {
-      "has_wooden_fences": "2020-01-01 13:26:02 +0100"
-    },
-    "done": true
-  },
   "minecraft:recipes/decorations/chest": {
     "criteria": {
       "has_lots_of_items": "2020-01-01 12:31:39 +0100"
@@ -125,5 +119,5 @@
     },
     "done": false
   },
-  "DataVersion": 1976
+  "DataVersion": 2580
 }
