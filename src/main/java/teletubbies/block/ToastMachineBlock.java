@@ -59,6 +59,12 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
+    @Nullable
+	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
+        return PathNodeType.BLOCKED;
+    }
+	
+	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		if (state.get(BOTTOM)) {
 			return VoxelShapes.fullCube();

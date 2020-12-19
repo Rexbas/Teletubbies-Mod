@@ -2,6 +2,8 @@ package teletubbies.block;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowerBlock;
@@ -15,6 +17,8 @@ import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.block.TallFlowerBlock;
 import net.minecraft.block.TallGrassBlock;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -35,6 +39,12 @@ public class FullGrassBlock extends GrassBlock {
 		
 		this.setRegistryName(Teletubbies.MODID, "full_grass");
 	}
+	
+	@Override
+    @Nullable
+	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
+        return PathNodeType.BLOCKED;
+    }
 	
 	@Override
 	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
