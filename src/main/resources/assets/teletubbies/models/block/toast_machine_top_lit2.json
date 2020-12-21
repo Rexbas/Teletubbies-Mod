@@ -1,0 +1,8 @@
+{
+	"parent": "teletubbies:block/toast_machine_top",
+	"textures": {
+		"0": "teletubbies:block/toast_machine",
+		"front": "teletubbies:block/toast_machine_lit2",
+		"particle": "teletubbies:block/toast_machine"
+	}
+}

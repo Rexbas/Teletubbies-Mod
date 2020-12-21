@@ -1,20 +1,19 @@
 package teletubbies.inventory.container;
 
 import net.minecraft.inventory.container.ContainerType;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
 
-@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ContainerList {
 	
-    public static final ContainerType<TinkyWinkyBagContainer> TINKYWINKY_BAG_CONTAINER = (ContainerType<TinkyWinkyBagContainer>) new ContainerType(TinkyWinkyBagContainer::new).setRegistryName("tinkywinky_bag_container");
+	public static final DeferredRegister<ContainerType<?>> CONTAINER_TYPES = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Teletubbies.MODID);
 	
-	@SubscribeEvent
-	public static void registerEntityEvent(final RegistryEvent.Register<ContainerType<?>> event) {
-		event.getRegistry().registerAll(
-				TINKYWINKY_BAG_CONTAINER
-		);
-	}
+	public static final RegistryObject<ContainerType<TinkyWinkyBagContainer>> TINKYWINKY_BAG_CONTAINER = CONTAINER_TYPES
+			.register("tinkywinky_bag_container", () -> IForgeContainerType.create(TinkyWinkyBagContainer::new));
+	
+	public static final RegistryObject<ContainerType<ToastMachineContainer>> TOAST_MACHINE_CONTAINER = CONTAINER_TYPES
+			.register("toast_machine_container", () -> IForgeContainerType.create(ToastMachineContainer::new));	
 }

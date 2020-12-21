@@ -2,6 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "teletubbies:block/toast_machine",
+		"front": "teletubbies:block/toast_machine",
 		"particle": "teletubbies:block/toast_machine"
 	},
 	"elements": [
@@ -12,7 +13,7 @@
 			"faces": {
 				"north": {"uv": [0, 1.5, 4, 5.5], "texture": "#0"},
 				"east": {"uv": [4, 1.5, 8, 5.5], "texture": "#0"},
-				"south": {"uv": [8, 1.5, 12, 5.5], "texture": "#0"},
+				"south": {"uv": [8, 1.5, 12, 5.5], "texture": "#front"},
 				"west": {"uv": [0, 1.5, 4, 5.5], "texture": "#0"},
 				"up": {"uv": [4, 5.75, 8, 9.75], "texture": "#0"},
 				"down": {"uv": [0, 5.75, 4, 9.75], "texture": "#0"}

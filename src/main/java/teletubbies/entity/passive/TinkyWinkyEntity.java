@@ -16,7 +16,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.client.audio.SoundList;
 import teletubbies.entity.EntityList;
-import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
+import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import teletubbies.item.ItemList;
 import teletubbies.item.TinkyWinkyBagItem;
 

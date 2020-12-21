@@ -11,6 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
+import teletubbies.client.gui.screen.inventory.ToastMachineScreen;
 import teletubbies.client.renderer.RenderRegistry;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpCapability;
@@ -28,6 +29,8 @@ public class Teletubbies {
 	public Teletubbies() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_SPEC);
+		
+		ContainerList.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
@@ -42,6 +45,7 @@ public class Teletubbies {
 
 	public void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
-		ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER, TinkyWinkyBagScreen::new);
+		ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
+		ScreenManager.registerFactory(ContainerList.TOAST_MACHINE_CONTAINER.get(), ToastMachineScreen::new);
 	}
 }

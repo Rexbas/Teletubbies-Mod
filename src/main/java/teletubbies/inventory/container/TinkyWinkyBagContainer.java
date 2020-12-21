@@ -6,7 +6,11 @@ import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.items.CapabilityItemHandler;
+import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
+import teletubbies.inventory.container.slot.TinkyWinkyBagSlot;
 import teletubbies.item.TinkyWinkyBagItem;
 
 // https://github.com/Flanks255/simplybackpacks/tree/master/src/main/java/com/flanks255/simplybackpacks
@@ -14,10 +18,9 @@ import teletubbies.item.TinkyWinkyBagItem;
 public class TinkyWinkyBagContainer extends Container {
 	public final int numRows = 6;
 	private final PlayerInventory playerInventory;
-	public TinkyWinkyBagItemHandler handler;
 	public ItemStack bag;
 	
-	public TinkyWinkyBagContainer(final int id, final PlayerInventory playerInventory) {
+	public TinkyWinkyBagContainer(final int id, final PlayerInventory playerInventory, PacketBuffer data) {
 		this(id, playerInventory,
 				playerInventory.player.getHeldItemMainhand().getItem() instanceof TinkyWinkyBagItem
 						? playerInventory.player.getHeldItemMainhand()
@@ -25,18 +28,18 @@ public class TinkyWinkyBagContainer extends Container {
     }
 
 	public TinkyWinkyBagContainer(int id, PlayerInventory playerInventory, ItemStack bag) {
-		super(ContainerList.TINKYWINKY_BAG_CONTAINER, id);
+		super(ContainerList.TINKYWINKY_BAG_CONTAINER.get(), id);
 		this.playerInventory = playerInventory;
 		this.bag = bag;
 		
-        handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+		TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
         handler.load();
 
-		addBagSlots();
+		addBagSlots(handler);
 		addPlayerSlots();
 	}
 	
-	private void addBagSlots() {
+	private void addBagSlots(TinkyWinkyBagItemHandler handler) {
 		for (int j = 0; j < this.numRows; ++j) {
 			for (int k = 0; k < 9; ++k) {
 				this.addSlot(new TinkyWinkyBagSlot(handler, k + j * 9, 8 + k * 18, 18 + j * 18));

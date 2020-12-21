@@ -7,18 +7,25 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -27,16 +34,18 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.Teletubbies;
 import teletubbies.tileentity.ToastMachineTileEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
 
-public class ToastMachineBlock extends Block {
+public class ToastMachineBlock extends Block {	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+	public static final IntegerProperty LIT = IntegerProperty.create("lit", 0, 3);
 
 	protected static final VoxelShape TOP_AABB_NORTH = VoxelShapes.or(
 			makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), 
@@ -55,7 +64,7 @@ public class ToastMachineBlock extends Block {
 				.harvestTool(ToolType.PICKAXE));
 		
 		this.setRegistryName(Teletubbies.MODID, "toast_machine");
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false).with(POWERED, false));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false).with(LIT, 0));
 	}
 	
 	@Override
@@ -63,6 +72,17 @@ public class ToastMachineBlock extends Block {
 	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
         return PathNodeType.BLOCKED;
     }
+	
+	@Override
+	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
+		ToastMachineTileEntity te = (ToastMachineTileEntity) world.getTileEntity(tilePos);
+
+		if (!world.isRemote && player instanceof ServerPlayerEntity) {
+			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, tilePos);
+		}
+		return true;
+	}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
@@ -148,7 +168,7 @@ public class ToastMachineBlock extends Block {
 	
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING, BOTTOM, WATERLOGGED, POWERED);
+		builder.add(FACING, BOTTOM, WATERLOGGED, LIT);
 	}
 	
 	public static boolean isUnderwater(World world, BlockPos pos) {
@@ -171,29 +191,32 @@ public class ToastMachineBlock extends Block {
 		return null;
 	}
 	
+	@Override
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
+			world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+				for (int i = 0; i < h.getSlots(); i++) {
+					spawnAsEntity(world, pos, h.getStackInSlot(i));
+				}
+			});
+			world.removeTileEntity(pos);
+		}
+	}
+
+	
+	@Override
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (!world.isRemote) {
 			BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
-			ToastMachineTileEntity t = (ToastMachineTileEntity) world.getTileEntity(tilePos);			
 			
-			if (state.get(BOTTOM)) {
-				if (world.isBlockPowered(tilePos) || world.isBlockPowered(tilePos.up())) {
-					if (world.getBlockState(tilePos).getBlock() instanceof ToastMachineBlock) {
-						world.setBlockState(tilePos, state.with(POWERED, true));
-					}
-					
-					if (world.getBlockState(tilePos.up()).getBlock() instanceof ToastMachineBlock) {
-						world.setBlockState(tilePos.up(), world.getBlockState(tilePos.up()).with(POWERED, true));
-					}
+			if (world.getTileEntity(tilePos) instanceof ToastMachineTileEntity) {
+				ToastMachineTileEntity te = (ToastMachineTileEntity) world.getTileEntity(tilePos);
+				
+				if (world.isBlockPowered(pos)) {
+					te.setPowered(state);
 				}
 				else {
-					if (world.getBlockState(tilePos).getBlock() instanceof ToastMachineBlock) {
-						world.setBlockState(tilePos, state.with(POWERED, false));
-					}
-					
-					if (world.getBlockState(tilePos.up()).getBlock() instanceof ToastMachineBlock) {
-						world.setBlockState(tilePos.up(), world.getBlockState(tilePos.up()).with(POWERED, false));
-					}
+					te.setUnPowered(state);
 				}
 			}
 		}
@@ -211,6 +234,6 @@ public class ToastMachineBlock extends Block {
 	
 	@Override
 	public int getLightValue(BlockState state) {
-		return state.get(POWERED) ? 5 : 0;
+		return state.get(LIT) * 3;
 	}
 }
