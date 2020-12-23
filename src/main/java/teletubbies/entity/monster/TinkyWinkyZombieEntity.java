@@ -14,7 +14,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.init.TeletubbiesItems;
-import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
+import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import teletubbies.item.TinkyWinkyBagItem;
 
 public class TinkyWinkyZombieEntity extends TeletubbyZombieEntity {

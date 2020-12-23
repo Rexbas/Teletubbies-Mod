@@ -29,7 +29,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
-import teletubbies.config.WorldGenConfig;
+import teletubbies.config.Config;
 import teletubbies.world.gen.feature.TeletubbiesConfiguredFeatures;
 import teletubbies.world.gen.feature.VoiceTrumpetFeature;
 import teletubbies.world.gen.feature.structure.DomePieces;
@@ -76,7 +76,7 @@ public class TeletubbiesWorldGen {
 	public static void setup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
 			TeletubbiesConfiguredFeatures.registerConfiguredFeatures();
-			registerStructure(DOME_STRUCTURE.get(), new StructureSeparationSettings(WorldGenConfig.DOME_MAX_CHUNKS.get(), WorldGenConfig.DOME_MIN_CHUNKS.get(), 8351309), false);
+			registerStructure(DOME_STRUCTURE.get(), new StructureSeparationSettings(Config.COMMON.DOME_MAX_CHUNKS.get(), Config.COMMON.DOME_MIN_CHUNKS.get(), 8351309), false);
 	    	registerStructurePiece(DOME_PIECE, new ResourceLocation(Teletubbies.MODID, "dome_piece"));
 	    	TeletubbiesConfiguredStructures.registerConfiguredStructures();
 		});

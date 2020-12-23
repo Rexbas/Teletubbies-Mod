@@ -18,7 +18,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -26,12 +26,12 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import teletubbies.block.BlockList;
 import teletubbies.block.ToastMachineBlock;
-import teletubbies.client.audio.SoundList;
+import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
 import teletubbies.inventory.container.ToastMachineContainer;
 import teletubbies.inventory.container.handler.ToastMachineItemHandler;
-import teletubbies.item.ItemList;
 import teletubbies.util.Converter;
 import teletubbies.util.RandomHelper;
 
@@ -44,7 +44,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
     private byte powerList;
 	
 	public ToastMachineTileEntity() {
-		super(BlockList.TOAST_MACHINE_TILE);
+		super(TeletubbiesBlocks.TOAST_MACHINE_TILE.get());
 		this.progress = 0;
 		this.tickCounter = 0;
 		this.powerList = 0;
@@ -127,13 +127,13 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	
 	public void dropToast() {
 		if (!world.isRemote) {
-        	ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1.6, pos.getZ() + 0.5, new ItemStack(ItemList.TOAST));
+        	ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1.6, pos.getZ() + 0.5, new ItemStack(TeletubbiesItems.TOAST.get()));
         	
         	double motionX, motionY, motionZ;
         	
         	PlayerEntity player = world.getClosestPlayer(item.getPosX(), item.getPosY(), item.getPosZ(), 5.5, false);
         	if (player != null) {
-        		Vec3d v = new Vec3d(player.getPosX() - item.getPosX(), player.getPosY() - item.getPosY(), player.getPosZ() - item.getPosZ());
+        		Vector3d v = new Vector3d(player.getPosX() - item.getPosX(), player.getPosY() - item.getPosY(), player.getPosZ() - item.getPosZ());
         		v = v.scale(0.05);
         		motionX = v.getX();
         		motionZ = v.getZ();
@@ -149,7 +149,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
         	world.addEntity(item);
 
         	float soundPitch = ToastMachineBlock.isUnderwater(world, pos) ? 0.5F : 1F;
-			world.playSound(null, pos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 2, soundPitch);
+			world.playSound(null, pos, TeletubbiesSounds.MACHINE_TOAST.get(), SoundCategory.BLOCKS, 2, soundPitch);
     	}
 	}
 	
@@ -176,8 +176,8 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 	
 	@Override
-	public void read(CompoundNBT nbt) {
-		super.read(nbt);
+	public void read(BlockState state, CompoundNBT nbt) {
+		super.read(state, nbt);
 		this.handler.deserializeNBT(nbt.getCompound("Inventory"));
 		this.progress = nbt.getInt("progress");
 		this.tickCounter = nbt.getInt("tickCounter");
@@ -204,7 +204,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		this.read(pkt.getNbtCompound());
+		this.read(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
 	}
 
 	@Override
@@ -215,8 +215,8 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 
 	@Override
-	public void handleUpdateTag(CompoundNBT nbt) {
-		this.read(nbt);
+	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
+		this.read(state, nbt);
 	}
 	
 	@Override

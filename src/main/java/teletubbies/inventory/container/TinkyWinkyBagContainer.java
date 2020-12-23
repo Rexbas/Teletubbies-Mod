@@ -7,8 +7,8 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.items.CapabilityItemHandler;
+import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import teletubbies.inventory.container.slot.TinkyWinkyBagSlot;
 import teletubbies.item.TinkyWinkyBagItem;
@@ -28,7 +28,7 @@ public class TinkyWinkyBagContainer extends Container {
     }
 
 	public TinkyWinkyBagContainer(int id, PlayerInventory playerInventory, ItemStack bag) {
-		super(ContainerList.TINKYWINKY_BAG_CONTAINER.get(), id);
+		super(TeletubbiesContainers.TINKYWINKY_BAG_CONTAINER.get(), id);
 		this.playerInventory = playerInventory;
 		this.bag = bag;
 		

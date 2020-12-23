@@ -7,14 +7,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.world.World;
 import teletubbies.Teletubbies;
-import teletubbies.config.FoodConfig;
+import teletubbies.config.Config;
 import teletubbies.init.TeletubbiesItems;
 
 public class CustardItem extends Item {
 	
 	private static final Food CUSTARD_FOOD = new Food.Builder()
-			.hunger(FoodConfig.CUSTARD_HUNGER.get())
-			.saturation(FoodConfig.CUSTARD_SATURATION.get().floatValue())
+			.hunger(Config.COMMON.CUSTARD_HUNGER.get())
+			.saturation(Config.COMMON.CUSTARD_SATURATION.get().floatValue())
 			.build();
 	
 	public CustardItem() {

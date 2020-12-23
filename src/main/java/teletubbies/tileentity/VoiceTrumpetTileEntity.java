@@ -23,7 +23,7 @@ public class VoiceTrumpetTileEntity extends TileEntity implements ITickableTileE
 	public void tick() {
 		if (--delay <= 0) {
 			float pitch = ((VoiceTrumpetBlock) this.getBlockState().getBlock()).isUnderwater(world, this.pos) ? 0.5F : 1F;
-			world.playSound(null, pos, SoundList.MACHINE_VOICE_TRUMPET, SoundCategory.BLOCKS, 2, pitch);
+			world.playSound(null, pos, TeletubbiesSounds.MACHINE_VOICE_TRUMPET.get(), SoundCategory.BLOCKS, 2, pitch);
 			delay = rand.nextInt((int) ((Converter.SecondsToTicks(30) - Converter.SecondsToTicks(15)) + 1)) + Converter.SecondsToTicks(15);
 		}
 	}

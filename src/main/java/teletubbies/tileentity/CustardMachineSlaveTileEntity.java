@@ -9,13 +9,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.block.BlockList;
 import teletubbies.block.CustardMachineBlock;
+import teletubbies.init.TeletubbiesBlocks;
 
 public class CustardMachineSlaveTileEntity extends TileEntity{
 
 	public CustardMachineSlaveTileEntity() {
-		super(BlockList.CUSTARD_MACHINE_SLAVE_TILE);
+		super(TeletubbiesBlocks.CUSTARD_MACHINE_SLAVE_TILE.get());
 	}
 	
 	@Override

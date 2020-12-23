@@ -5,7 +5,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraftforge.items.ItemStackHandler;
-import teletubbies.item.ItemList;
+import teletubbies.init.TeletubbiesItems;
 
 public class CustardMachineItemHandler extends ItemStackHandler {
 	
@@ -27,7 +27,7 @@ public class CustardMachineItemHandler extends ItemStackHandler {
 	        case 5:
 	            return stack.getItem().equals(Items.EGG);
 	        case 6:
-	            return stack.getItem().equals(ItemList.BOWL);
+	            return stack.getItem().equals(TeletubbiesItems.BOWL.get());
 	        }
     	}
     	else if (this.stacks.size() == 5) {
@@ -36,7 +36,7 @@ public class CustardMachineItemHandler extends ItemStackHandler {
 	        case 1:
 	        case 2:
 	        case 3:
-	            return stack.getItem().equals(ItemList.CUSTARD);
+	            return stack.getItem().equals(TeletubbiesItems.CUSTARD.get());
 	        case 4:
 	            return stack.getItem().equals(Items.BUCKET);
 	        }

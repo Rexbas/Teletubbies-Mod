@@ -17,7 +17,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
-import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
+import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import teletubbies.item.TinkyWinkyBagItem;
 
 public class TinkyWinkyEntity extends TeletubbyEntity {

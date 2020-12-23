@@ -11,6 +11,7 @@ import teletubbies.block.FullGrassBlock;
 import teletubbies.block.ToastMachineBlock;
 import teletubbies.block.VoiceTrumpetBlock;
 import teletubbies.block.WindowBlock;
+import teletubbies.tileentity.CustardMachineSlaveTileEntity;
 import teletubbies.tileentity.CustardMachineTileEntity;
 import teletubbies.tileentity.ToastMachineTileEntity;
 import teletubbies.tileentity.VoiceTrumpetTileEntity;
@@ -31,4 +32,5 @@ public class TeletubbiesBlocks {
 	public static final RegistryObject<TileEntityType<?>> VOICE_TRUMPET_TILE = TILE_ENTITIES.register("voice_trumpet_tile", () -> TileEntityType.Builder.create(VoiceTrumpetTileEntity::new, VOICE_TRUMPET.get()).build(null));
 	public static final RegistryObject<TileEntityType<?>> TOAST_MACHINE_TILE = TILE_ENTITIES.register("toast_machine_tile", () -> TileEntityType.Builder.create(ToastMachineTileEntity::new, TOAST_MACHINE.get()).build(null));
 	public static final RegistryObject<TileEntityType<?>> CUSTARD_MACHINE_TILE = TILE_ENTITIES.register("custard_machine_tile", () -> TileEntityType.Builder.create(CustardMachineTileEntity::new, CUSTARD_MACHINE.get()).build(null));
+	public static final RegistryObject<TileEntityType<?>> CUSTARD_MACHINE_SLAVE_TILE = TILE_ENTITIES.register("custard_machine_slave_tile", () -> TileEntityType.Builder.create(CustardMachineSlaveTileEntity::new, CUSTARD_MACHINE.get()).build(null));
 }

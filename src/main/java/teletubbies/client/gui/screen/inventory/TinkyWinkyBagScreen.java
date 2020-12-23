@@ -30,14 +30,12 @@ public class TinkyWinkyBagScreen extends ContainerScreen<TinkyWinkyBagContainer>
 		this.renderHoveredTooltip(p_230430_1_, p_230430_2_, p_230430_3_);
 	}
 	
-	// drawGuiContainerForegroundLayer
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {		
 		this.font.func_243248_b(matrixStack, this.title, 8.0F, 6.0F, 4210752);
 		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
 	}
 	
-	// drawGuiContainerBackgroundLayer
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);

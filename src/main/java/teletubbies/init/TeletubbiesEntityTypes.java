@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
-import teletubbies.config.EntityConfig;
+import teletubbies.config.Config;
 import teletubbies.entity.baby.BaEntity;
 import teletubbies.entity.baby.DaaDaaEntity;
 import teletubbies.entity.baby.DuggleDeeEntity;
@@ -203,26 +203,26 @@ public class TeletubbiesEntityTypes {
 		
 		@SubscribeEvent
 		public static void createEntitySpawns(BiomeLoadingEvent event) {		
-			registerWorldSpawns(event, TeletubbiesEntityTypes.TINKYWINKY.get(), EntityClassification.CREATURE, EntityConfig.TINKYWINKY_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.DIPSY.get(), EntityClassification.CREATURE, EntityConfig.DIPSY_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.LAALAA.get(), EntityClassification.CREATURE, EntityConfig.LAALAA_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.PO.get(), EntityClassification.CREATURE, EntityConfig.PO_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.TINKYWINKY.get(), EntityClassification.CREATURE, Config.COMMON.TINKYWINKY_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.DIPSY.get(), EntityClassification.CREATURE, Config.COMMON.DIPSY_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.LAALAA.get(), EntityClassification.CREATURE, Config.COMMON.LAALAA_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.PO.get(), EntityClassification.CREATURE, Config.COMMON.PO_WEIGHT, Category.PLAINS);
 			
-			registerWorldSpawns(event, TeletubbiesEntityTypes.NOONOO.get(), EntityClassification.CREATURE, EntityConfig.NOONOO_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.NOONOO.get(), EntityClassification.CREATURE, Config.COMMON.NOONOO_WEIGHT, Category.PLAINS);
 			
-			registerWorldSpawns(event, TeletubbiesEntityTypes.MIMI.get(), EntityClassification.CREATURE, EntityConfig.MIMI_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.DAADAA.get(), EntityClassification.CREATURE, EntityConfig.DAADAA_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.PING.get(), EntityClassification.CREATURE, EntityConfig.PING_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.BA.get(), EntityClassification.CREATURE, EntityConfig.BA_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.RURU.get(), EntityClassification.CREATURE, EntityConfig.RURU_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.NIN.get(), EntityClassification.CREATURE, EntityConfig.NIN_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.DUGGLEDEE.get(), EntityClassification.CREATURE, EntityConfig.DUGGLEDEE_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.UMPIEPUMPIE.get(), EntityClassification.CREATURE, EntityConfig.UMPIEPUMPIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.MIMI.get(), EntityClassification.CREATURE, Config.COMMON.MIMI_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.DAADAA.get(), EntityClassification.CREATURE, Config.COMMON.DAADAA_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.PING.get(), EntityClassification.CREATURE, Config.COMMON.PING_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.BA.get(), EntityClassification.CREATURE, Config.COMMON.BA_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.RURU.get(), EntityClassification.CREATURE, Config.COMMON.RURU_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.NIN.get(), EntityClassification.CREATURE, Config.COMMON.NIN_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.DUGGLEDEE.get(), EntityClassification.CREATURE, Config.COMMON.DUGGLEDEE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.UMPIEPUMPIE.get(), EntityClassification.CREATURE, Config.COMMON.UMPIEPUMPIE_WEIGHT, Category.PLAINS);
 
-			registerWorldSpawns(event, TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.TINKYWINKY_ZOMBIE_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.DIPSY_ZOMBIE_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.LAALAA_ZOMBIE_WEIGHT, Category.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.PO_ZOMBIE.get(), EntityClassification.MONSTER, EntityConfig.PO_ZOMBIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), EntityClassification.MONSTER, Config.COMMON.TINKYWINKY_ZOMBIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), EntityClassification.MONSTER, Config.COMMON.DIPSY_ZOMBIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), EntityClassification.MONSTER, Config.COMMON.LAALAA_ZOMBIE_WEIGHT, Category.PLAINS);
+			registerWorldSpawns(event, TeletubbiesEntityTypes.PO_ZOMBIE.get(), EntityClassification.MONSTER, Config.COMMON.PO_ZOMBIE_WEIGHT, Category.PLAINS);
 		}
 	}
 }

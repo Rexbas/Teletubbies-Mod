@@ -21,11 +21,11 @@ import teletubbies.common.capabilities.JumpCapability;
 import teletubbies.common.capabilities.JumpStorage;
 import teletubbies.config.Config;
 import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesContainers;
 import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
 import teletubbies.init.TeletubbiesWorldGen;
-import teletubbies.inventory.container.ContainerList;
 import teletubbies.itemgroup.ItemGroupTeletubbies;
 
 @Mod(Teletubbies.MODID)
@@ -38,7 +38,6 @@ public class Teletubbies {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_SPEC);
 		
-		ContainerList.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
@@ -50,6 +49,7 @@ public class Teletubbies {
 		TeletubbiesSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesWorldGen.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesWorldGen.STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesContainers.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		Config.loadConfig(Config.COMMON_SPEC, FMLPaths.CONFIGDIR.get().resolve("teletubbies-common.toml").toString());
 		Config.loadConfig(Config.CLIENT_SPEC, FMLPaths.CONFIGDIR.get().resolve("teletubbies-client.toml").toString());
@@ -62,8 +62,8 @@ public class Teletubbies {
 	private void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
 		RenderTypeLookup.setRenderLayer(TeletubbiesBlocks.WINDOW.get(), RenderType.getTranslucent());
-		ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
-		ScreenManager.registerFactory(ContainerList.TOAST_MACHINE_CONTAINER.get(), ToastMachineScreen::new);
-		ScreenManager.registerFactory(ContainerList.CUSTARD_MACHINE_CONTAINER.get(), CustardMachineScreen::new);
+		ScreenManager.registerFactory(TeletubbiesContainers.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
+		ScreenManager.registerFactory(TeletubbiesContainers.TOAST_MACHINE_CONTAINER.get(), ToastMachineScreen::new);
+		ScreenManager.registerFactory(TeletubbiesContainers.CUSTARD_MACHINE_CONTAINER.get(), CustardMachineScreen::new);
 	}
 }

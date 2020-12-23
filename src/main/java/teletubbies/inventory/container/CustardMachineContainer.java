@@ -12,10 +12,11 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
+import teletubbies.init.TeletubbiesContainers;
+import teletubbies.init.TeletubbiesItems;
 import teletubbies.inventory.container.handler.CustardMachineItemHandler;
 import teletubbies.inventory.container.slot.CustardMachineOutputSlot;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
-import teletubbies.item.ItemList;
 import teletubbies.tileentity.CustardMachineTileEntity;
 
 public class CustardMachineContainer extends Container {
@@ -30,7 +31,7 @@ public class CustardMachineContainer extends Container {
 
 	// Server Constructor
 	public CustardMachineContainer(int id, PlayerInventory playerInventory, CustardMachineTileEntity te) {
-		super(ContainerList.CUSTARD_MACHINE_CONTAINER.get(), id);
+		super(TeletubbiesContainers.CUSTARD_MACHINE_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
 		this.tileentity = te;
@@ -49,7 +50,7 @@ public class CustardMachineContainer extends Container {
 		}
 		this.addSlot(new SpecificItemSlot(inputHandler, 4, 32, 25, Items.SUGAR));
 		this.addSlot(new SpecificItemSlot(inputHandler, 5, 32, 43, Items.EGG));
-		this.addSlot(new SpecificItemSlot(inputHandler, 6, 32, 61, ItemList.BOWL));
+		this.addSlot(new SpecificItemSlot(inputHandler, 6, 32, 61, TeletubbiesItems.BOWL.get()));
 		this.addSlot(new CustardMachineOutputSlot(outputHandler, 4, 128, 43));
 	}
 	

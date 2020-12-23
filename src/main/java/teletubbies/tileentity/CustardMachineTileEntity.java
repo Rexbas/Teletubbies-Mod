@@ -3,6 +3,7 @@ package teletubbies.tileentity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -24,12 +25,12 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import teletubbies.block.BlockList;
 import teletubbies.block.CustardMachineBlock;
-import teletubbies.client.audio.SoundList;
+import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesItems;
+import teletubbies.init.TeletubbiesSounds;
 import teletubbies.inventory.container.CustardMachineContainer;
 import teletubbies.inventory.container.handler.CustardMachineItemHandler;
-import teletubbies.item.ItemList;
 import teletubbies.util.Converter;
 
 public class CustardMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
@@ -41,7 +42,7 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 	private boolean isProcessing;
 	
 	public CustardMachineTileEntity() {
-		super(BlockList.CUSTARD_MACHINE_TILE);
+		super(TeletubbiesBlocks.CUSTARD_MACHINE_TILE.get());
 		this.processTime = 0;
 		this.isProcessing = false;
 	}
@@ -61,7 +62,7 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 				if (processTime == 0) {
 					for (int j = 0; j < 4; j++) {
 						if (outputHandler.getStackInSlot(j).isEmpty()) {
-							outputHandler.insertItem(j, new ItemStack(ItemList.CUSTARD), false);
+							outputHandler.insertItem(j, new ItemStack(TeletubbiesItems.CUSTARD.get()), false);
 							break;
 						}	
 					}
@@ -84,7 +85,7 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 				inputHandler.extractItem(6, 1, false);
 				
 				float pitch = CustardMachineBlock.isUnderwater(world, pos) ? 0.75F : 1F;
-				world.playSound(null, pos, SoundList.MACHINE_CUSTARD, SoundCategory.BLOCKS, 2, pitch);
+				world.playSound(null, pos, TeletubbiesSounds.MACHINE_CUSTARD.get(), SoundCategory.BLOCKS, 2, pitch);
 				
 				processTime = Math.toIntExact(DURATION);
 				isProcessing = true;
@@ -120,7 +121,7 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 			if (inputHandler.getStackInSlot(i).getItem().equals(Items.MILK_BUCKET)) {
 				if (inputHandler.getStackInSlot(4).getItem().equals(Items.SUGAR)
 						&& inputHandler.getStackInSlot(5).getItem().equals(Items.EGG)
-						&& inputHandler.getStackInSlot(6).getItem().equals(ItemList.BOWL)) {
+						&& inputHandler.getStackInSlot(6).getItem().equals(TeletubbiesItems.BOWL.get())) {
 
 					// All items available, check output
 					if (outputHandler.getStackInSlot(4).getCount() < outputHandler.getStackInSlot(4).getMaxStackSize()) {
@@ -145,8 +146,8 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 	}
 	
 	@Override
-	public void read(CompoundNBT nbt) {
-		super.read(nbt);
+	public void read(BlockState state, CompoundNBT nbt) {
+		super.read(state, nbt);
 		this.inputHandler.deserializeNBT(nbt.getCompound("InventoryIn"));
 		this.outputHandler.deserializeNBT(nbt.getCompound("InventoryOut"));
 		this.processTime = nbt.getInt("processTime");
@@ -173,7 +174,7 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		this.read(pkt.getNbtCompound());
+		this.read(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
 	}
 
 	@Override
@@ -184,8 +185,8 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 	}
 
 	@Override
-	public void handleUpdateTag(CompoundNBT nbt) {
-		this.read(nbt);
+	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
+		this.read(state, nbt);
 	}
 	
 	@Override

@@ -11,6 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
+import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.ToastMachineItemHandler;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
 import teletubbies.tileentity.ToastMachineTileEntity;
@@ -27,7 +28,7 @@ public class ToastMachineContainer extends Container {
 
 	// Server Constructor
 	public ToastMachineContainer(int id, PlayerInventory playerInventory, ToastMachineTileEntity te) {
-		super(ContainerList.TOAST_MACHINE_CONTAINER.get(), id);
+		super(TeletubbiesContainers.TOAST_MACHINE_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
 		this.tileentity = te;
