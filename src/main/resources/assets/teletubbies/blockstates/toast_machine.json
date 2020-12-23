@@ -1,13 +1,46 @@
 {
     "variants": {
-        "bottom=true,facing=north":  { "model": "teletubbies:block/toast_machine_bottom" },
-        "bottom=true,facing=east":  { "model": "teletubbies:block/toast_machine_bottom", "y": 90 },
-        "bottom=true,facing=south":  { "model": "teletubbies:block/toast_machine_bottom", "y": 180 },
-        "bottom=true,facing=west":  { "model": "teletubbies:block/toast_machine_bottom", "y": 270 },
+        "bottom=true,facing=north,lit=0":  { "model": "teletubbies:block/toast_machine_bottom" },
+        "bottom=true,facing=east,lit=0":  { "model": "teletubbies:block/toast_machine_bottom", "y": 90 },
+        "bottom=true,facing=south,lit=0":  { "model": "teletubbies:block/toast_machine_bottom", "y": 180 },
+        "bottom=true,facing=west,lit=0":  { "model": "teletubbies:block/toast_machine_bottom", "y": 270 },
         
-        "bottom=false,facing=north":  { "model": "teletubbies:block/toast_machine_top" },
-        "bottom=false,facing=east":  { "model": "teletubbies:block/toast_machine_top", "y": 90 },
-        "bottom=false,facing=south":  { "model": "teletubbies:block/toast_machine_top", "y": 180 },
-        "bottom=false,facing=west":  { "model": "teletubbies:block/toast_machine_top", "y": 270 }
+        "bottom=false,facing=north,lit=0":  { "model": "teletubbies:block/toast_machine_top" },
+        "bottom=false,facing=east,lit=0":  { "model": "teletubbies:block/toast_machine_top", "y": 90 },
+        "bottom=false,facing=south,lit=0":  { "model": "teletubbies:block/toast_machine_top", "y": 180 },
+        "bottom=false,facing=west,lit=0":  { "model": "teletubbies:block/toast_machine_top", "y": 270 },
+
+
+        "bottom=true,facing=north,lit=1":  { "model": "teletubbies:block/toast_machine_bottom_lit1" },
+        "bottom=true,facing=east,lit=1":  { "model": "teletubbies:block/toast_machine_bottom_lit1", "y": 90 },
+        "bottom=true,facing=south,lit=1":  { "model": "teletubbies:block/toast_machine_bottom_lit1", "y": 180 },
+        "bottom=true,facing=west,lit=1":  { "model": "teletubbies:block/toast_machine_bottom_lit1", "y": 270 },
+        
+        "bottom=false,facing=north,lit=1":  { "model": "teletubbies:block/toast_machine_top_lit1" },
+        "bottom=false,facing=east,lit=1":  { "model": "teletubbies:block/toast_machine_top_lit1", "y": 90 },
+        "bottom=false,facing=south,lit=1":  { "model": "teletubbies:block/toast_machine_top_lit1", "y": 180 },
+        "bottom=false,facing=west,lit=1":  { "model": "teletubbies:block/toast_machine_top_lit1", "y": 270 },
+
+
+        "bottom=true,facing=north,lit=2":  { "model": "teletubbies:block/toast_machine_bottom_lit2" },
+        "bottom=true,facing=east,lit=2":  { "model": "teletubbies:block/toast_machine_bottom_lit2", "y": 90 },
+        "bottom=true,facing=south,lit=2":  { "model": "teletubbies:block/toast_machine_bottom_lit2", "y": 180 },
+        "bottom=true,facing=west,lit=2":  { "model": "teletubbies:block/toast_machine_bottom_lit2", "y": 270 },
+        
+        "bottom=false,facing=north,lit=2":  { "model": "teletubbies:block/toast_machine_top_lit2" },
+        "bottom=false,facing=east,lit=2":  { "model": "teletubbies:block/toast_machine_top_lit2", "y": 90 },
+        "bottom=false,facing=south,lit=2":  { "model": "teletubbies:block/toast_machine_top_lit2", "y": 180 },
+        "bottom=false,facing=west,lit=2":  { "model": "teletubbies:block/toast_machine_top_lit2", "y": 270 },
+
+        
+        "bottom=true,facing=north,lit=3":  { "model": "teletubbies:block/toast_machine_bottom_lit3" },
+        "bottom=true,facing=east,lit=3":  { "model": "teletubbies:block/toast_machine_bottom_lit3", "y": 90 },
+        "bottom=true,facing=south,lit=3":  { "model": "teletubbies:block/toast_machine_bottom_lit3", "y": 180 },
+        "bottom=true,facing=west,lit=3":  { "model": "teletubbies:block/toast_machine_bottom_lit3", "y": 270 },
+        
+        "bottom=false,facing=north,lit=3":  { "model": "teletubbies:block/toast_machine_top_lit3" },
+        "bottom=false,facing=east,lit=3":  { "model": "teletubbies:block/toast_machine_top_lit3", "y": 90 },
+        "bottom=false,facing=south,lit=3":  { "model": "teletubbies:block/toast_machine_top_lit3", "y": 180 },
+        "bottom=false,facing=west,lit=3":  { "model": "teletubbies:block/toast_machine_top_lit3", "y": 270 }
     }
 }

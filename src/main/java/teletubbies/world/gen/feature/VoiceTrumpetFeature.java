@@ -14,7 +14,7 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import teletubbies.block.VoiceTrumpetBlock;
-import teletubbies.config.WorldGenConfig;
+import teletubbies.config.Config;
 import teletubbies.init.TeletubbiesBlocks;
 
 public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {

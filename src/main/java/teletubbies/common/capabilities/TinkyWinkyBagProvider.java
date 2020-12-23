@@ -7,7 +7,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import teletubbies.inventory.container.TinkyWinkyBagItemHandler;
+import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 
 public class TinkyWinkyBagProvider implements ICapabilityProvider {
 
