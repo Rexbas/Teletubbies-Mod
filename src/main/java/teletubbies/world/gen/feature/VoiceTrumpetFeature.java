@@ -17,7 +17,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import teletubbies.block.BlockList;
 import teletubbies.block.VoiceTrumpetBlock;
-import teletubbies.config.WorldGenConfig;
+import teletubbies.config.Config;
 
 public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
 
@@ -27,7 +27,7 @@ public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
 
 	@Override
 	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config) {
-		if (rand.nextInt(100) < WorldGenConfig.VOICE_TRUMPET_SPAWNRATE.get()) {
+		if (rand.nextInt(100) < Config.COMMON.VOICE_TRUMPET_SPAWNRATE.get()) {
 			BlockState blockstate = BlockList.VOICE_TRUMPET.getDefaultState();
 			
 			if (world.getBlockState(pos.down()).getBlock() instanceof GrassBlock && world.getBlockState(pos.up()).getBlock() instanceof AirBlock) {

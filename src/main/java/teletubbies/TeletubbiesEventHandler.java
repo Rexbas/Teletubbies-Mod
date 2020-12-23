@@ -36,7 +36,7 @@ import teletubbies.client.audio.PoScooterTickableSound;
 import teletubbies.client.renderer.environment.BabyFaceRenderer;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
-import teletubbies.config.EntityConfig;
+import teletubbies.config.Config;
 import teletubbies.entity.item.PoScooterEntity;
 import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
@@ -59,7 +59,7 @@ public class TeletubbiesEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void setSkyRenderer(WorldEvent.Load event) {
-		if (event.getWorld().isRemote() && event.getWorld().getDimension().getType() == DimensionType.OVERWORLD) {
+		if (event.getWorld().isRemote() && event.getWorld().getDimension().getType() == DimensionType.OVERWORLD && Config.CLIENT.REPLACE_SUN.get()) {
 			IRenderHandler renderer = new BabyFaceRenderer();
 			event.getWorld().getDimension().setSkyRenderer(renderer);
 		}
@@ -159,7 +159,7 @@ public class TeletubbiesEventHandler {
 
 		if (!world.isRemote) {
 			if (damageSource.getImmediateSource() instanceof ZombieEntity) {
-				if (event.getEntity() instanceof TeletubbyEntity && world.rand.nextInt(100) < EntityConfig.TRANSFORMATION_PROBABILITY.get()) {
+				if (event.getEntity() instanceof TeletubbyEntity && world.rand.nextInt(100) < Config.COMMON.TRANSFORMATION_PROBABILITY.get()) {
 					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntityLiving();
 					teletubby.transferToZombie();
 				}

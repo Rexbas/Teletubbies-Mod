@@ -9,20 +9,22 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -33,18 +35,19 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.Teletubbies;
-import teletubbies.client.audio.SoundList;
-import teletubbies.item.ItemList;
 import teletubbies.tileentity.ToastMachineTileEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
 
-public class ToastMachineBlock extends Block {
+public class ToastMachineBlock extends Block {	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-		
+	public static final IntegerProperty LIT = IntegerProperty.create("lit", 0, 3);
+
 	protected static final VoxelShape TOP_AABB_NORTH = VoxelShapes.or(
 			makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), 
 			makeCuboidShape(2.0D, 6.0D, 7.0D, 3.0D, 7.0D, 9.0D), 
@@ -62,7 +65,7 @@ public class ToastMachineBlock extends Block {
 				.harvestTool(ToolType.PICKAXE));
 		
 		this.setRegistryName(Teletubbies.MODID, "toast_machine");
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false).with(LIT, 0));
 	}
 	
 	@Override
@@ -70,6 +73,17 @@ public class ToastMachineBlock extends Block {
 	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
         return PathNodeType.BLOCKED;
     }
+	
+	@Override
+	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
+		ToastMachineTileEntity te = (ToastMachineTileEntity) world.getTileEntity(tilePos);
+
+		if (!world.isRemote && player instanceof ServerPlayerEntity) {
+			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, tilePos);
+		}
+		return true;
+	}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
@@ -155,23 +169,10 @@ public class ToastMachineBlock extends Block {
 	
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING, BOTTOM, WATERLOGGED);
+		builder.add(FACING, BOTTOM, WATERLOGGED, LIT);
 	}
 	
-	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
-		ToastMachineTileEntity t = (ToastMachineTileEntity) world.getTileEntity(tilePos);
-		if (t.canDrop() && !world.isRemote) {
-			t.dropToast(new ItemStack(ItemList.TOAST), player);
-			float pitch = isUnderwater(world, tilePos) ? 0.5F : 1F;
-			world.playSound(null, tilePos, SoundList.MACHINE_TOAST, SoundCategory.BLOCKS, 1, pitch);
-			t.reset();
-		}
-		return ActionResultType.SUCCESS;
-	}
-	
-	public boolean isUnderwater(World world, BlockPos pos) {
+	public static boolean isUnderwater(World world, BlockPos pos) {
 		BlockPos tilePos = world.getBlockState(pos).get(BOTTOM) ? pos : pos.down();
 		if (BlocksUtil.isBlockSurrounded(world, tilePos) && world.getBlockState(tilePos.up()).get(WATERLOGGED)) return true;
 		return false;
@@ -189,5 +190,50 @@ public class ToastMachineBlock extends Block {
 			return new ToastMachineTileEntity();
 		}
 		return null;
+	}
+	
+	@Override
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
+			world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+				for (int i = 0; i < h.getSlots(); i++) {
+					spawnAsEntity(world, pos, h.getStackInSlot(i));
+				}
+			});
+			world.removeTileEntity(pos);
+		}
+	}
+
+	@Override
+	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if (!world.isRemote) {
+			BlockPos tilePos = state.get(BOTTOM) ? pos : pos.down();
+			
+			if (world.getTileEntity(tilePos) instanceof ToastMachineTileEntity) {
+				ToastMachineTileEntity te = (ToastMachineTileEntity) world.getTileEntity(tilePos);
+				
+				if (world.isBlockPowered(pos)) {
+					te.setPowered(state);
+				}
+				else {
+					te.setUnPowered(state);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public boolean isSolid(BlockState state) {
+		return false;
+	}
+	
+	@Override
+	public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
+        return false;
+    }
+	
+	@Override
+	public int getLightValue(BlockState state) {
+		return state.get(LIT) * 4;
 	}
 }

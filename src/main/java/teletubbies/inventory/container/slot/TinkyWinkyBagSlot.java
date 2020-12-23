@@ -1,4 +1,4 @@
-package teletubbies.inventory.container;
+package teletubbies.inventory.container.slot;
 
 import javax.annotation.Nonnull;
 
@@ -9,6 +9,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import teletubbies.item.TinkyWinkyBagItem;
 
 public class TinkyWinkyBagSlot extends SlotItemHandler {

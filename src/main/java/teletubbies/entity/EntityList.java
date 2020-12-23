@@ -14,7 +14,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
-import teletubbies.config.EntityConfig;
+import teletubbies.config.Config;
 import teletubbies.entity.baby.BaEntity;
 import teletubbies.entity.baby.DaaDaaEntity;
 import teletubbies.entity.baby.DuggleDeeEntity;
@@ -69,26 +69,26 @@ public class EntityList {
 				PO_SCOOTER
 		);
 		
-		registerWorldSpawns(TINKYWINKY, EntityClassification.CREATURE, EntityConfig.TINKYWINKY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(DIPSY, EntityClassification.CREATURE, EntityConfig.DIPSY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(LAALAA, EntityClassification.CREATURE, EntityConfig.LAALAA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(PO, EntityClassification.CREATURE, EntityConfig.PO_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(TINKYWINKY, EntityClassification.CREATURE, Config.COMMON.TINKYWINKY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(DIPSY, EntityClassification.CREATURE, Config.COMMON.DIPSY_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(LAALAA, EntityClassification.CREATURE, Config.COMMON.LAALAA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(PO, EntityClassification.CREATURE, Config.COMMON.PO_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		
-		registerWorldSpawns(NOONOO, EntityClassification.CREATURE, EntityConfig.NOONOO_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(NOONOO, EntityClassification.CREATURE, Config.COMMON.NOONOO_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 		
-		registerWorldSpawns(MIMI, EntityClassification.CREATURE, EntityConfig.MIMI_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(DAADAA, EntityClassification.CREATURE, EntityConfig.DAADAA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(PING, EntityClassification.CREATURE, EntityConfig.PING_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(BA, EntityClassification.CREATURE, EntityConfig.BA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(RURU, EntityClassification.CREATURE, EntityConfig.RURU_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(NIN, EntityClassification.CREATURE, EntityConfig.NIN_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(DUGGLEDEE, EntityClassification.CREATURE, EntityConfig.DUGGLEDEE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerWorldSpawns(UMPIEPUMPIE, EntityClassification.CREATURE, EntityConfig.UMPIEPUMPIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(MIMI, EntityClassification.CREATURE, Config.COMMON.MIMI_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(DAADAA, EntityClassification.CREATURE, Config.COMMON.DAADAA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(PING, EntityClassification.CREATURE, Config.COMMON.PING_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(BA, EntityClassification.CREATURE, Config.COMMON.BA_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(RURU, EntityClassification.CREATURE, Config.COMMON.RURU_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(NIN, EntityClassification.CREATURE, Config.COMMON.NIN_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(DUGGLEDEE, EntityClassification.CREATURE, Config.COMMON.DUGGLEDEE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerWorldSpawns(UMPIEPUMPIE, EntityClassification.CREATURE, Config.COMMON.UMPIEPUMPIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 
-		registerZombieWorldSpawns(TINKYWINKY_ZOMBIE, EntityClassification.MONSTER, EntityConfig.TINKYWINKY_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerZombieWorldSpawns(DIPSY_ZOMBIE, EntityClassification.MONSTER, EntityConfig.DIPSY_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerZombieWorldSpawns(LAALAA_ZOMBIE, EntityClassification.MONSTER, EntityConfig.LAALAA_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
-		registerZombieWorldSpawns(PO_ZOMBIE, EntityClassification.MONSTER, EntityConfig.PO_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(TINKYWINKY_ZOMBIE, EntityClassification.MONSTER, Config.COMMON.TINKYWINKY_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(DIPSY_ZOMBIE, EntityClassification.MONSTER, Config.COMMON.DIPSY_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(LAALAA_ZOMBIE, EntityClassification.MONSTER, Config.COMMON.LAALAA_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
+		registerZombieWorldSpawns(PO_ZOMBIE, EntityClassification.MONSTER, Config.COMMON.PO_ZOMBIE_WEIGHT, Biomes.PLAINS, Biomes.SUNFLOWER_PLAINS);
 	}
 	
 	private static <T extends TiddlytubbyEntity> EntityType<?> createTiddlytubby(EntityType.IFactory<T> factory, String name) {

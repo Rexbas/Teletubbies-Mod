@@ -1,0 +1,7 @@
+{
+	"parent": "teletubbies:block/custard_machine_smalltower",
+	"textures": {
+		"0": "teletubbies:block/custard_machine_lit",
+		"particle": "teletubbies:block/custard_machine"
+	}
+}
