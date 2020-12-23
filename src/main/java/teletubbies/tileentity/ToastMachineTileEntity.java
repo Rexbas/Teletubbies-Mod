@@ -131,9 +131,9 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
         	
         	double motionX, motionY, motionZ;
         	
-        	PlayerEntity player = world.getClosestPlayer(item.posX, item.posY, item.posZ, 5.5, false);
+        	PlayerEntity player = world.getClosestPlayer(item.getPosX(), item.getPosY(), item.getPosZ(), 5.5, false);
         	if (player != null) {
-        		Vec3d v = new Vec3d(player.posX - item.posX, player.posY - item.posY, player.posZ - item.posZ);
+        		Vec3d v = new Vec3d(player.getPosX() - item.getPosX(), player.getPosY() - item.getPosY(), player.getPosZ() - item.getPosZ());
         		v = v.scale(0.05);
         		motionX = v.getX();
         		motionZ = v.getZ();

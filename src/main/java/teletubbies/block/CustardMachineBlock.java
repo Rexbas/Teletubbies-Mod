@@ -89,14 +89,14 @@ public class CustardMachineBlock extends Block {
     }
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		BlockPos tilePos = getBasePos(pos, state.get(PART), state.get(FACING));
 		CustardMachineTileEntity te = (CustardMachineTileEntity) world.getTileEntity(tilePos);
 
 		if (!world.isRemote && player instanceof ServerPlayerEntity) {
 			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, tilePos);
 		}
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 	
 	@Override
