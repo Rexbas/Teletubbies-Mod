@@ -2,19 +2,22 @@ package teletubbies.inventory.container.slot;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ToastMachineInputSlot extends SlotItemHandler {
+public class SpecificItemSlot extends SlotItemHandler {
 
-	public ToastMachineInputSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
+	private final Item item;
+	
+	public SpecificItemSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition, Item item) {
 		super(itemHandler, index, xPosition, yPosition);
+		this.item = item;
 	}
 	
     @Override
 	public boolean isItemValid(@Nonnull ItemStack stack) {
-    	return stack.getItem().equals(Items.WHEAT);
+    	return stack.getItem().equals(item);
     }
 }

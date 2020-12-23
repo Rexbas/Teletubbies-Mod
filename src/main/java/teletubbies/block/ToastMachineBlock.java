@@ -203,7 +203,6 @@ public class ToastMachineBlock extends Block {
 		}
 	}
 
-	
 	@Override
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (!world.isRemote) {
@@ -234,6 +233,6 @@ public class ToastMachineBlock extends Block {
 	
 	@Override
 	public int getLightValue(BlockState state) {
-		return state.get(LIT) * 3;
+		return state.get(LIT) * 4;
 	}
 }

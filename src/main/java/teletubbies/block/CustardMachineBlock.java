@@ -9,8 +9,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
@@ -22,23 +24,20 @@ import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.Teletubbies;
-import teletubbies.client.audio.SoundList;
-import teletubbies.item.ItemList;
+import teletubbies.tileentity.CustardMachineSlaveTileEntity;
 import teletubbies.tileentity.CustardMachineTileEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
@@ -47,6 +46,7 @@ public class CustardMachineBlock extends Block {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final EnumProperty<CustardMachinePart> PART = EnumProperty.create("part", CustardMachinePart.class);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 		
 	protected static final VoxelShape SMALLTOWER_AABB_NORTH = VoxelShapes.or(
 			makeCuboidShape(7.0D, 0.0D, 5.0D, 13.0D, 3.0D, 11.0D), 
@@ -78,7 +78,7 @@ public class CustardMachineBlock extends Block {
 				.harvestTool(ToolType.PICKAXE));
 
 		this.setRegistryName(Teletubbies.MODID, "custard_machine");
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, false));
+		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, false).with(LIT, false));
 	}
 	
 	@Override
@@ -86,6 +86,17 @@ public class CustardMachineBlock extends Block {
 	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
         return PathNodeType.BLOCKED;
     }
+	
+	@Override
+	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		BlockPos tilePos = getBasePos(pos, state.get(PART), state.get(FACING));
+		CustardMachineTileEntity te = (CustardMachineTileEntity) world.getTileEntity(tilePos);
+
+		if (!world.isRemote && player instanceof ServerPlayerEntity) {
+			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, tilePos);
+		}
+		return true;
+	}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
@@ -252,37 +263,10 @@ public class CustardMachineBlock extends Block {
 	
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FACING, PART, WATERLOGGED);
+		builder.add(FACING, PART, WATERLOGGED, LIT);
 	}
 	
-	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {		
-		if (player.getHeldItemMainhand() != null) {
-			if (player.getHeldItemMainhand().getItem() == ItemList.BOWL) {
-				BlockPos tilePos = getBasePos(pos, state.get(PART), state.get(FACING));
-				CustardMachineTileEntity t = (CustardMachineTileEntity) world.getTileEntity(tilePos);
-				
-				int slot = player.inventory.currentItem;
-				ItemStack stack = player.inventory.getStackInSlot(slot);
-				
-				if (t.canDrop() && !world.isRemote) {
-					stack.setCount(stack.getCount() - 1);
-					float pitch = isUnderwater(world, pos) ? 0.75F : 1F;
-					world.playSound(null, pos, SoundList.MACHINE_CUSTARD, SoundCategory.BLOCKS, 1, pitch);
-					t.reset();
-				}
-			}
-			else {
-				if (world.isRemote) {
-					ITextComponent msg = new StringTextComponent("\u00A77").appendSibling(new TranslationTextComponent("teletubbies.custard_machine.message"));
-					player.sendMessage(msg);
-				}
-			}
-		}
-		return true;
-	}
-	
-	public boolean isUnderwater(World world, BlockPos pos) {
+	public static boolean isUnderwater(World world, BlockPos pos) {
 		Direction facing = world.getBlockState(pos).get(FACING);
 		BlockPos basePos = getBasePos(pos, world.getBlockState(pos).get(PART), facing);
 		if (BlocksUtil.isBlockSurrounded(world, basePos) &&
@@ -297,7 +281,7 @@ public class CustardMachineBlock extends Block {
 	
 	@Override
 	public boolean hasTileEntity(BlockState state) {
-		return (state.get(PART) == CustardMachinePart.BASE);
+		return (state.get(PART) == CustardMachinePart.BASE || state.get(PART) == CustardMachinePart.BIGBASE || state.get(PART) == CustardMachinePart.SMALLBASE);
 	}
 	
 	@Nullable
@@ -306,10 +290,33 @@ public class CustardMachineBlock extends Block {
 		if (state.get(PART) == CustardMachinePart.BASE) {
 			return new CustardMachineTileEntity();
 		}
+		else if (state.get(PART) == CustardMachinePart.BIGBASE) {
+			return new CustardMachineSlaveTileEntity();
+		}
+		else if (state.get(PART) == CustardMachinePart.SMALLBASE) {
+			return new CustardMachineSlaveTileEntity();
+		}
 		return null;
 	}
 	
-	private BlockPos getSmallTowerBasePos(BlockPos base, Direction facing) {
+	@Override
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.hasTileEntity() && state.getBlock() != newState.getBlock() && state.get(PART) == CustardMachinePart.BASE) {
+			world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+				for (int i = 0; i < h.getSlots(); i++) {
+					spawnAsEntity(world, pos, h.getStackInSlot(i));
+				}
+			});
+			world.removeTileEntity(pos);
+		}
+	}
+	
+	@Override
+	public int getLightValue(BlockState state) {
+		return state.get(LIT) ? 6 : 0;
+	}
+	
+	public static BlockPos getSmallTowerBasePos(BlockPos base, Direction facing) {
 		switch (facing) {
 		case NORTH:
 			return base.east();
@@ -324,7 +331,7 @@ public class CustardMachineBlock extends Block {
 		}	
 	}
 	
-	private BlockPos getBigTowerBasePos(BlockPos base, Direction facing) {
+	public static BlockPos getBigTowerBasePos(BlockPos base, Direction facing) {
 		switch (facing) {
 		case NORTH:
 			return base.west();
@@ -339,7 +346,7 @@ public class CustardMachineBlock extends Block {
 		}	
 	}
 	
-	private BlockPos getSmallTowerPos(BlockPos base, Direction facing) {
+	public static BlockPos getSmallTowerPos(BlockPos base, Direction facing) {
 		switch (facing) {
 		case NORTH:
 			return base.east().up();
@@ -354,7 +361,7 @@ public class CustardMachineBlock extends Block {
 		}	
 	}
 	
-	private BlockPos getBigTowerPos(BlockPos base, Direction facing) {
+	public static BlockPos getBigTowerPos(BlockPos base, Direction facing) {
 		switch (facing) {
 		case NORTH:
 			return base.west().up();
@@ -369,7 +376,7 @@ public class CustardMachineBlock extends Block {
 		}	
 	}
 	
-	private BlockPos getBasePos(BlockPos pos, CustardMachinePart part, Direction facing) {
+	public static BlockPos getBasePos(BlockPos pos, CustardMachinePart part, Direction facing) {
 		if (part == CustardMachinePart.BASE) return pos;
 		switch (facing) {
 		case NORTH:

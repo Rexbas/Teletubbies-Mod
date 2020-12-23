@@ -10,47 +10,58 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.inventory.container.handler.ToastMachineItemHandler;
+import teletubbies.inventory.container.handler.CustardMachineItemHandler;
+import teletubbies.inventory.container.slot.CustardMachineOutputSlot;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
-import teletubbies.tileentity.ToastMachineTileEntity;
+import teletubbies.item.ItemList;
+import teletubbies.tileentity.CustardMachineTileEntity;
 
-public class ToastMachineContainer extends Container {
+public class CustardMachineContainer extends Container {
 	
 	private final PlayerInventory playerInventory;
-	private final ToastMachineTileEntity tileentity;
+	private final CustardMachineTileEntity tileentity;
 	
 	// Client Constructor
-	public ToastMachineContainer(final int id, final PlayerInventory playerInventory, final PacketBuffer data) {
+	public CustardMachineContainer(final int id, final PlayerInventory playerInventory, final PacketBuffer data) {
 		this(id, playerInventory, getTileEntity(playerInventory, data));
 	}
 
 	// Server Constructor
-	public ToastMachineContainer(int id, PlayerInventory playerInventory, ToastMachineTileEntity te) {
-		super(ContainerList.TOAST_MACHINE_CONTAINER.get(), id);
+	public CustardMachineContainer(int id, PlayerInventory playerInventory, CustardMachineTileEntity te) {
+		super(ContainerList.CUSTARD_MACHINE_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
 		this.tileentity = te;
 		
-		ToastMachineItemHandler handler = (ToastMachineItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).orElse(null);
 		
-		addMachineSlots(handler);
+		addMachineSlots(inputHandler, outputHandler);
 		addPlayerSlots();
 	}
 	
-	private void addMachineSlots(ToastMachineItemHandler handler) {
-		this.addSlot(new SpecificItemSlot(handler, 0, 61, 37, Items.WHEAT));
+	private void addMachineSlots(CustardMachineItemHandler inputHandler, CustardMachineItemHandler outputHandler) {
+		for (int i = 0; i < 4; ++i) {
+			this.addSlot(new SpecificItemSlot(inputHandler, i, 8, 16 + i * 18, Items.MILK_BUCKET));
+			this.addSlot(new CustardMachineOutputSlot(outputHandler, i, 152, 16 + i * 18));
+		}
+		this.addSlot(new SpecificItemSlot(inputHandler, 4, 32, 25, Items.SUGAR));
+		this.addSlot(new SpecificItemSlot(inputHandler, 5, 32, 43, Items.EGG));
+		this.addSlot(new SpecificItemSlot(inputHandler, 6, 32, 61, ItemList.BOWL));
+		this.addSlot(new CustardMachineOutputSlot(outputHandler, 4, 128, 43));
 	}
 	
 	private void addPlayerSlots() {
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
-				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+				this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 105 + i * 18));
 			}
 		}
 
 		for (int k = 0; k < 9; ++k) {
-			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 142));
+			this.addSlot(new Slot(playerInventory, k, 8 + k * 18, 163));
 		}
 	}
 	
@@ -83,17 +94,17 @@ public class ToastMachineContainer extends Container {
 	}
 	
 	// https://github.com/DaRealTurtyWurty/1.15-Tut-Mod/blob/master/src/main/java/com/turtywurty/tutorialmod/container/ExampleFurnaceContainer.java
-	private static ToastMachineTileEntity getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
+	private static CustardMachineTileEntity getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
 		final TileEntity tileAtPos = playerInv.player.world.getTileEntity(data.readBlockPos());
-		if (tileAtPos instanceof ToastMachineTileEntity) {
-			return (ToastMachineTileEntity) tileAtPos;
+		if (tileAtPos instanceof CustardMachineTileEntity) {
+			return (CustardMachineTileEntity) tileAtPos;
 		}
 		throw new IllegalStateException("TileEntity is not correct " + tileAtPos);
 	}
 	
-	public ToastMachineTileEntity getTileEntity() {
+	public CustardMachineTileEntity getTileEntity() {
 		return this.tileentity;
 	}
 }

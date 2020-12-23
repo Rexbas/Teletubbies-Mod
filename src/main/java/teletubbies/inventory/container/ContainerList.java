@@ -16,4 +16,7 @@ public class ContainerList {
 	
 	public static final RegistryObject<ContainerType<ToastMachineContainer>> TOAST_MACHINE_CONTAINER = CONTAINER_TYPES
 			.register("toast_machine_container", () -> IForgeContainerType.create(ToastMachineContainer::new));	
+	
+	public static final RegistryObject<ContainerType<CustardMachineContainer>> CUSTARD_MACHINE_CONTAINER = CONTAINER_TYPES
+			.register("custard_machine_container", () -> IForgeContainerType.create(CustardMachineContainer::new));	
 }

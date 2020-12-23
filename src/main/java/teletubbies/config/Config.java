@@ -78,8 +78,8 @@ public class Config {
 			builder.pop();
 			
 			builder.push("Food");
-			CUSTARD_HUNGER = builder.defineInRange("custard_hunger", 4, 1, 100);
-			CUSTARD_SATURATION = builder.defineInRange("custard_saturation", 1.0d, 1.0d, 100.0d);
+			CUSTARD_HUNGER = builder.defineInRange("custard_hunger", 5, 1, 100);
+			CUSTARD_SATURATION = builder.defineInRange("custard_saturation", 1.5d, 1.0d, 100.0d);
 			TOAST_HUNGER = builder.defineInRange("toast_hunger", 2, 1, 100);
 			TOAST_SATURATION = builder.defineInRange("toast_saturation", 1.0d, 1.0d, 100.0d);
 			builder.pop();
