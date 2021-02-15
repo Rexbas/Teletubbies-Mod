@@ -17,6 +17,7 @@ public class DipsyHatModel extends BipedModel<LivingEntity> {
 	public ModelRenderer hat;
 
 	public DipsyHatModel() {
+		super(1.0F);
 		textureWidth = 64;
 		textureHeight = 64;
 
