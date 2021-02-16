@@ -23,10 +23,8 @@ public class NooNooEyesModel extends BipedModel<LivingEntity> {
 
 		eyes = new ModelRenderer(this);
 		eyes.setRotationPoint(0.0F, 24.0F, 0.0F);
-		eyes.addBox(null, 1.0F, -6.0F, -7.0F, 1, 3, 3, 0.0F, 0, 10);
-		eyes.addBox(null, 0.0F, -5.0F, -7.0F, 3, 1, 3, 0.0F, 0, 0);
-		eyes.addBox(null, -3.0F, -4.0F, -7.0F, 3, 1, 3, 0.0F, 0, 4);
-		eyes.addBox(null, -2.0F, -5.0F, -7.0F, 1, 3, 3, 0.0F, 8, 10);
+		eyes.setTextureOffset(0, 7).addBox(0.0F, -6.0F, -8.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
+		eyes.setTextureOffset(0, 0).addBox(-3.0F, -5.0F, -8.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
 	}
 	
 	@Override

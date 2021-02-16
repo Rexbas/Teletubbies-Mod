@@ -46,15 +46,11 @@ public class NooNooModel extends EntityModel<NooNooEntity> {
 
 		rightEye = new ModelRenderer(this);
 		rightEye.setRotationPoint(-1.5F, 11.5F, -8.0F);
-		rightEye.addBox(null, 0.5F, -0.5F, -3.0F, 1, 1, 4, 0.0F, 0, 0);
-		rightEye.addBox(null, -1.5F, -0.5F, -3.0F, 1, 1, 4, 0.0F, 0, 0);
-		rightEye.addBox(null, -0.5F, -1.5F, -3.0F, 1, 3, 4, 0.0F, 0, 5);
+		rightEye.addBox(null, -1.5F, -1.5F, -3.0F, 3, 3, 4, 0.0F, 0, 0);
 
 		leftEye = new ModelRenderer(this);
 		leftEye.setRotationPoint(2.5F, 11.5F, -8.0F);
-		leftEye.addBox(null, 0.5F, -0.5F, -3.0F, 1, 1, 4, 0.0F, 0, 0);
-		leftEye.addBox(null, -1.5F, -0.5F, -3.0F, 1, 1, 4, 0.0F, 0, 0);
-		leftEye.addBox(null, -0.5F, -1.5F, -3.0F, 1, 3, 4, 0.0F, 0, 5);
+		leftEye.addBox(null, -1.5F, -1.5F, -3.0F, 3, 3, 4, 0.0F, 0, 7);
 	}
 
 	@Override
