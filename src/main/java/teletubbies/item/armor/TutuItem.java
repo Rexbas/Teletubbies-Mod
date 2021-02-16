@@ -29,6 +29,7 @@ public class TutuItem extends ArmorItem {
     @Override
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A defaultModel) {
     	BipedModel<LivingEntity> armorModel = TutuModel.model;
+    	armorModel.setRotationAngles(entityLiving, entityLiving.limbSwing, entityLiving.limbSwingAmount, entityLiving.ticksExisted, entityLiving.rotationYawHead, entityLiving.rotationPitch);
 		return (A) armorModel;
     }
 }

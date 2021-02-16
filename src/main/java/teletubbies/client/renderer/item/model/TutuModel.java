@@ -198,7 +198,7 @@ public class TutuModel extends BipedModel<LivingEntity> {
 			tutu.rotationPointZ = 0;
 			tutu.rotateAngleX = 0;
 		}
-		
+				
 		final float f1 = 0.065F;
 		final float f2 = 0.125F;
 		segment1.rotateAngleX = -0.3491F + f1 * MathHelper.cos(f2 * ageInTicks);
