@@ -23,6 +23,7 @@ import teletubbies.item.armor.TutuItem;
 public class ItemList {
 	// Blocks
 	public static Item FULL_GRASS;
+	public static final Item CONTROL_PANEL = new BlockItem(BlockList.CONTROL_PANEL, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.CONTROL_PANEL.getRegistryName());
 	public static final Item VOICE_TRUMPET = new BlockItem(BlockList.VOICE_TRUMPET, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.VOICE_TRUMPET.getRegistryName());
 	public static final Item TOAST_MACHINE = new BlockItem(BlockList.TOAST_MACHINE, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.TOAST_MACHINE.getRegistryName());
 	public static final Item CUSTARD_MACHINE = new BlockItem(BlockList.CUSTARD_MACHINE, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.CUSTARD_MACHINE.getRegistryName());
@@ -82,7 +83,7 @@ public class ItemList {
 	public static void registerItems(final RegistryEvent.Register<Item> event) {		
 		event.getRegistry().registerAll(
 				FULL_GRASS = new BlockItem(BlockList.FULL_GRASS, new Item.Properties().group(Teletubbies.ITEMGROUP)).setRegistryName(BlockList.FULL_GRASS.getRegistryName()),
-				VOICE_TRUMPET, TOAST_MACHINE, CUSTARD_MACHINE, WINDOW,
+				CONTROL_PANEL, VOICE_TRUMPET, TOAST_MACHINE, CUSTARD_MACHINE, WINDOW,
 				
 				TINKYWINKY_STICK, DIPSY_STICK, LAALAA_STICK, PO_STICK, TINKYWINKY_BAG, LAALAA_BALL,
 				BOWL, CUSTARD, TOAST,

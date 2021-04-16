@@ -16,6 +16,7 @@ import teletubbies.tileentity.VoiceTrumpetTileEntity;
 @ObjectHolder(Teletubbies.MODID)
 public class BlockList {
 	public static final Block FULL_GRASS = null;
+	public static final Block CONTROL_PANEL = new ControlPanelBlock();
 	public static final Block VOICE_TRUMPET = new VoiceTrumpetBlock();
 	public static final Block TOAST_MACHINE = new ToastMachineBlock();
 	public static final Block CUSTARD_MACHINE = new CustardMachineBlock();
@@ -30,10 +31,11 @@ public class BlockList {
 	public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 		event.getRegistry().registerAll(
 				new FullGrassBlock(),
+				CONTROL_PANEL,
 				VOICE_TRUMPET,
 				TOAST_MACHINE,
 				CUSTARD_MACHINE,
-				WINDOW
+				WINDOW				
 		);
 	}
 	
