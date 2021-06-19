@@ -307,6 +307,11 @@ public class CustardMachineBlock extends Block {
 					spawnAsEntity(world, pos, h.getStackInSlot(i));
 				}
 			});
+			world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
+				for (int i = 0; i < h.getSlots(); i++) {
+					spawnAsEntity(world, pos, h.getStackInSlot(i));
+				}
+			});
 			world.removeTileEntity(pos);
 		}
 	}

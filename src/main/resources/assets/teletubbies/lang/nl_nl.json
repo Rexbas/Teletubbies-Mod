@@ -60,6 +60,7 @@
 
     "block.teletubbies.full_grass": "Grasblok",
     "block.teletubbies.control_panel": "Controle Paneel",
+    "block.teletubbies.control_panel.text": "Leeg je tassen met door hoppers",
     "block.teletubbies.voice_trumpet": "Voice Trompet",
     "block.teletubbies.toast_machine": "Tubby Toast Machine",
     "block.teletubbies.custard_machine": "Tubby Toetje Machine",

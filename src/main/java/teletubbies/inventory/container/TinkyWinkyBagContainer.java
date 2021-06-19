@@ -7,7 +7,6 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import teletubbies.inventory.container.slot.TinkyWinkyBagSlot;

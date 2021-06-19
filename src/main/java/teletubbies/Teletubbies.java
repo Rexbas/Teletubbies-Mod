@@ -10,6 +10,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import teletubbies.client.gui.screen.inventory.ControlPanelScreen;
 import teletubbies.client.gui.screen.inventory.CustardMachineScreen;
 import teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
 import teletubbies.client.gui.screen.inventory.ToastMachineScreen;
@@ -47,6 +48,7 @@ public class Teletubbies {
 	public void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
 		ScreenManager.registerFactory(ContainerList.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
+		ScreenManager.registerFactory(ContainerList.CONTROL_PANEL_CONTAINER.get(), ControlPanelScreen::new);
 		ScreenManager.registerFactory(ContainerList.TOAST_MACHINE_CONTAINER.get(), ToastMachineScreen::new);
 		ScreenManager.registerFactory(ContainerList.CUSTARD_MACHINE_CONTAINER.get(), CustardMachineScreen::new);
 	}
