@@ -41,12 +41,12 @@ public class TeletubbiesWorldGen {
 	// Features
 	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Teletubbies.MODID);
 
-	public static final RegistryObject<Feature<NoFeatureConfig>> VOICE_TRUMPET_FEATURE = FEATURES.register("voice_trumpet", () -> new VoiceTrumpetFeature(NoFeatureConfig.field_236558_a_));
+	public static final RegistryObject<Feature<NoFeatureConfig>> VOICE_TRUMPET_FEATURE = FEATURES.register("voice_trumpet", () -> new VoiceTrumpetFeature(NoFeatureConfig.CODEC));
 	
 	// Structures --------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Teletubbies.MODID);
 		
-	public static final RegistryObject<Structure<NoFeatureConfig>> DOME_STRUCTURE = STRUCTURES.register("dome", () -> new DomeStructure(NoFeatureConfig.field_236558_a_));
+	public static final RegistryObject<Structure<NoFeatureConfig>> DOME_STRUCTURE = STRUCTURES.register("dome", () -> new DomeStructure(NoFeatureConfig.CODEC));
 	public static final IStructurePieceType DOME_PIECE = DomePieces.Piece::new;
 	
 	// https://github.com/TelepathicGrunt/StructureTutorialMod/blob/c919931014ba7515981f2516892489953e718f56/src/main/java/com/telepathicgrunt/structuretutorial/STStructures.java

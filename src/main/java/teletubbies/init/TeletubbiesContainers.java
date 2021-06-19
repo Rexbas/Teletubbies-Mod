@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
+import teletubbies.inventory.container.ControlPanelContainer;
 import teletubbies.inventory.container.CustardMachineContainer;
 import teletubbies.inventory.container.TinkyWinkyBagContainer;
 import teletubbies.inventory.container.ToastMachineContainer;

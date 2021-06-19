@@ -32,8 +32,8 @@ public class TinkyWinkyBagScreen extends ContainerScreen<TinkyWinkyBagContainer>
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {		
-		this.font.func_243248_b(matrixStack, this.title, 8.0F, 6.0F, 4210752);
-		this.font.func_243248_b(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
+		this.font.drawText(matrixStack, this.title, 8.0F, 6.0F, 4210752);
+		this.font.drawText(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
 	}
 	
 	@Override

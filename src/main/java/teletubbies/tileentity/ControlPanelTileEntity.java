@@ -3,6 +3,7 @@ package teletubbies.tileentity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -18,7 +19,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import teletubbies.block.BlockList;
+import teletubbies.init.TeletubbiesBlocks;
 import teletubbies.inventory.container.ControlPanelContainer;
 import teletubbies.inventory.container.handler.ControlPanelItemHandler;
 
@@ -27,7 +28,7 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 	private ControlPanelItemHandler inputHandler = new ControlPanelItemHandler();
 	
 	public ControlPanelTileEntity() {
-		super(BlockList.CONTROL_PANEL_TILE);
+		super(TeletubbiesBlocks.CONTROL_PANEL_TILE.get());
 	}
 
 	@Override
@@ -36,8 +37,8 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 	}
 	
 	@Override
-	public void read(CompoundNBT nbt) {
-		super.read(nbt);
+	public void read(BlockState state, CompoundNBT nbt) {
+		super.read(state, nbt);
 		this.inputHandler.deserializeNBT(nbt.getCompound("InventoryIn"));
 	}
 
@@ -58,7 +59,7 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		this.read(pkt.getNbtCompound());
+		this.read(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
 	}
 
 	@Override
@@ -69,8 +70,8 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 	}
 
 	@Override
-	public void handleUpdateTag(CompoundNBT nbt) {
-		this.read(nbt);
+	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
+		this.read(state, nbt);
 	}
 	
 	@Override

@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
+import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.ControlPanelItemHandler;
 import teletubbies.inventory.container.slot.ItemHandlerSlot;
 import teletubbies.tileentity.ControlPanelTileEntity;
@@ -26,7 +27,7 @@ public class ControlPanelContainer extends Container {
 
 	// Server Constructor
 	public ControlPanelContainer(int id, PlayerInventory playerInventory, ControlPanelTileEntity te) {
-		super(ContainerList.CONTROL_PANEL_CONTAINER.get(), id);
+		super(TeletubbiesContainers.CONTROL_PANEL_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
 		this.tileentity = te;

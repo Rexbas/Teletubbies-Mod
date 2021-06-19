@@ -12,7 +12,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import teletubbies.block.BlockList;
 import teletubbies.client.gui.screen.inventory.ControlPanelScreen;
 import teletubbies.client.gui.screen.inventory.CustardMachineScreen;
 import teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
@@ -65,7 +64,7 @@ public class Teletubbies {
 		RenderRegistry.registryEntityRenders();
 		RenderTypeLookup.setRenderLayer(TeletubbiesBlocks.WINDOW.get(), RenderType.getTranslucent());
 		ScreenManager.registerFactory(TeletubbiesContainers.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
-		ScreenManager.registerFactory(ContainerList.CONTROL_PANEL_CONTAINER.get(), ControlPanelScreen::new);
+		ScreenManager.registerFactory(TeletubbiesContainers.CONTROL_PANEL_CONTAINER.get(), ControlPanelScreen::new);
 		ScreenManager.registerFactory(TeletubbiesContainers.TOAST_MACHINE_CONTAINER.get(), ToastMachineScreen::new);
 		ScreenManager.registerFactory(TeletubbiesContainers.CUSTARD_MACHINE_CONTAINER.get(), CustardMachineScreen::new);
 	}

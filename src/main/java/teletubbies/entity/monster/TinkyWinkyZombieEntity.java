@@ -40,7 +40,7 @@ public class TinkyWinkyZombieEntity extends TeletubbyZombieEntity {
 			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 			LootContext.Builder builder = new LootContext.Builder((ServerWorld) world);
 			LootTable table = ServerLifecycleHooks.getCurrentServer().getLootTableManager().getLootTableFromLocation(TinkyWinkyBagItem.LOOTTABLE);
-			LootContext context = builder.withParameter(LootParameters.field_237457_g_, this.getPositionVec()).withParameter(LootParameters.THIS_ENTITY, this).build(LootParameterSets.GIFT);
+			LootContext context = builder.withParameter(LootParameters.ORIGIN, this.getPositionVec()).withParameter(LootParameters.THIS_ENTITY, this).build(LootParameterSets.GIFT);
 
 			handler.fillInventory(table, context);
 			

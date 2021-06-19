@@ -79,7 +79,7 @@ public class TinkyWinkyBagItem extends Item {
 					
 					if (lines < MAX_TOOLTIP_ITEMS) {
 						ItemStack s = handler.getStackInSlot(i);
-						tooltip.add(s.getDisplayName().appendSibling(new StringTextComponent(" x" + s.getCount())));
+						tooltip.add(s.getDisplayName().copyRaw().appendSibling(new StringTextComponent(" x" + s.getCount())));
 						lines++;
 					}
 				}
