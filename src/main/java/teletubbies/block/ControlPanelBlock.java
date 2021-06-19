@@ -11,6 +11,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -39,13 +40,13 @@ public class ControlPanelBlock extends Block {
     }
 	
 	@Override
-	public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
 		ControlPanelTileEntity te = (ControlPanelTileEntity) world.getTileEntity(pos);
 
 		if (!world.isRemote && player instanceof ServerPlayerEntity) {
 			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, pos);
 		}
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 	
 	@Override
