@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SHS",
+    "SSS"
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:hopper"
+    },
+    "S": [
+      {
+        "item": "teletubbies:tinkywinky_stick"
+      },
+      {
+        "item": "teletubbies:dipsy_stick"
+      },
+      {
+        "item": "teletubbies:laalaa_stick"
+      },
+      {
+        "item": "teletubbies:po_stick"
+      }
+    ]
+  },
+  "result": {
+    "item": "teletubbies:control_panel"
+  }
+}

@@ -11,7 +11,7 @@ import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 
 public class TinkyWinkyBagProvider implements ICapabilityProvider {
 
-	private IItemHandler inventory;
+	private TinkyWinkyBagItemHandler inventory;
 	private LazyOptional<IItemHandler> instance;
 
 	public TinkyWinkyBagProvider(ItemStack stack) {
@@ -21,6 +21,7 @@ public class TinkyWinkyBagProvider implements ICapabilityProvider {
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+		inventory.load();
 		return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? instance.cast() : LazyOptional.empty();
 	}
 }
