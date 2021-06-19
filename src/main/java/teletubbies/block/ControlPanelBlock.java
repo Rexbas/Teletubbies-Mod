@@ -20,7 +20,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.Teletubbies;
 import teletubbies.tileentity.ControlPanelTileEntity;
 
 public class ControlPanelBlock extends Block {
