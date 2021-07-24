@@ -24,15 +24,15 @@ public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
 		if (rand.nextInt(100) < Config.COMMON.VOICE_TRUMPET_SPAWNRATE.get()) {
-			BlockState blockstate = TeletubbiesBlocks.VOICE_TRUMPET.get().getDefaultState();
+			BlockState blockstate = TeletubbiesBlocks.VOICE_TRUMPET.get().defaultBlockState();
 			
-			if (world.getBlockState(pos.down()).getBlock() instanceof GrassBlock && world.getBlockState(pos.up()).getBlock() instanceof AirBlock) {
+			if (world.getBlockState(pos.below()).getBlock() instanceof GrassBlock && world.getBlockState(pos.above()).getBlock() instanceof AirBlock) {
 				Direction facing = getRandomHorizontalDirection(rand);
 				
-				world.setBlockState(pos, blockstate.with(VoiceTrumpetBlock.FACING, facing).with(VoiceTrumpetBlock.BOTTOM, true), 0);
-				world.setBlockState(pos.up(), blockstate.with(VoiceTrumpetBlock.FACING, facing).with(VoiceTrumpetBlock.BOTTOM, false), 0);
+				world.setBlock(pos, blockstate.setValue(VoiceTrumpetBlock.FACING, facing).setValue(VoiceTrumpetBlock.BOTTOM, true), 0);
+				world.setBlock(pos.above(), blockstate.setValue(VoiceTrumpetBlock.FACING, facing).setValue(VoiceTrumpetBlock.BOTTOM, false), 0);
 				return true;
 			}	
 		}

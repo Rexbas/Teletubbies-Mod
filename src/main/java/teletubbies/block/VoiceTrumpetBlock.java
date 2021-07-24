@@ -39,28 +39,28 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 		
 	protected static final VoxelShape TOP_AABB_NORTH = VoxelShapes.or(
-			makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 2.0D, 9.0D), 
-			makeCuboidShape(6.0D, 2.0D, 7.0D, 10.0D, 3.0D, 11.0D), 
-			makeCuboidShape(5.0D, 3.0D, 7.0D, 6.0D, 7.0D, 11.0D), 
-			makeCuboidShape(10.0D, 3.0D, 7.0D, 11.0D, 7.0D, 11.0D), 
-			makeCuboidShape(6.0D, 7.0D, 7.0D, 10.0D, 8.0D, 11.0D),
-			makeCuboidShape(6.0D, 3.0D, 6.0D, 10.0D, 7.0D, 7.0D),
-			makeCuboidShape(6.0D, 3.0D, 9.0D, 10.0D, 7.0D, 10.0D))
-			.simplify();
+			box(7.0D, 0.0D, 7.0D, 9.0D, 2.0D, 9.0D), 
+			box(6.0D, 2.0D, 7.0D, 10.0D, 3.0D, 11.0D), 
+			box(5.0D, 3.0D, 7.0D, 6.0D, 7.0D, 11.0D), 
+			box(10.0D, 3.0D, 7.0D, 11.0D, 7.0D, 11.0D), 
+			box(6.0D, 7.0D, 7.0D, 10.0D, 8.0D, 11.0D),
+			box(6.0D, 3.0D, 6.0D, 10.0D, 7.0D, 7.0D),
+			box(6.0D, 3.0D, 9.0D, 10.0D, 7.0D, 10.0D))
+			.optimize();
 	
 	protected static final VoxelShape TOP_AABB_EAST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(270));
 	protected static final VoxelShape TOP_AABB_SOUTH = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(180));
 	protected static final VoxelShape TOP_AABB_WEST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(90));
 	
-	protected static final VoxelShape BOTTOM_AABB = Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
+	protected static final VoxelShape BOTTOM_AABB = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
 	
 	public VoiceTrumpetBlock() {
-		super(Properties.create(Material.IRON)
-				.hardnessAndResistance(3.0f, 5.0f)
+		super(Properties.of(Material.METAL)
+				.strength(3.0f, 5.0f)
 				.harvestLevel(1)
 				.harvestTool(ToolType.PICKAXE));
 
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(BOTTOM, true).with(WATERLOGGED, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BOTTOM, true).setValue(WATERLOGGED, false));
 	}
 	
 	@Override
@@ -71,10 +71,10 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		if (state.get(BOTTOM)) {
+		if (state.getValue(BOTTOM)) {
 			return BOTTOM_AABB;
 		}
-		switch(state.get(FACING)) {
+		switch(state.getValue(FACING)) {
 		case NORTH:
 			return TOP_AABB_NORTH;
 		case EAST:
@@ -89,40 +89,40 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (placer != null) {
-		    FluidState fluidState = world.getFluidState(pos.up());
-		    world.setBlockState(pos.up(), state.with(BOTTOM, false).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER));
+		    FluidState fluidState = world.getFluidState(pos.above());
+		    world.setBlockAndUpdate(pos.above(), state.setValue(BOTTOM, false).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER));
 		}
 	}
 	
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {	     
-		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {	     
+		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {
 			FluidState fluidState = world.getFluidState(other);
-		    if (fluidState.getFluid() == Fluids.WATER) {
-				world.setBlockState(other, fluidState.getBlockState(), 35); 
+		    if (fluidState.getType() == Fluids.WATER) {
+				world.setBlock(other, fluidState.createLegacyBlock(), 35); 
 		    }
 		    else {
-		    	world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);
+		    	world.setBlock(other, Blocks.AIR.defaultBlockState(), 35);
 		    }
 		}		      
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 	
 	@Override
     public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
-		BlockPos other = state.get(BOTTOM) ? pos.up() : pos.down();	     
+		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {		      
 			FluidState fluidState = world.getFluidState(other);
-		    if (fluidState.getFluid() == Fluids.WATER) {
-				world.setBlockState(other, fluidState.getBlockState(), 35); 
+		    if (fluidState.getType() == Fluids.WATER) {
+				world.setBlock(other, fluidState.createLegacyBlock(), 35); 
 		    }
 		    else {
-		    	world.setBlockState(other, Blocks.AIR.getDefaultState(), 35);
+		    	world.setBlock(other, Blocks.AIR.defaultBlockState(), 35);
 		    }   
 		}		
 		super.onBlockExploded(state, world, pos, explosion);
@@ -131,47 +131,47 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		BlockPos pos = context.getPos();
-		if (pos.getY() < 255 && context.getWorld().getBlockState(pos.up()).isReplaceable(context)) {
-		    FluidState fluidState = context.getWorld().getFluidState(pos);
-			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(BOTTOM, true).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+		BlockPos pos = context.getClickedPos();
+		if (pos.getY() < 255 && context.getLevel().getBlockState(pos.above()).canBeReplaced(context)) {
+		    FluidState fluidState = context.getLevel().getFluidState(pos);
+			return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection()).setValue(BOTTOM, true).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
 		}
 		return null;
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-		if (state.get(WATERLOGGED)) {
-			world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+		if (state.getValue(WATERLOGGED)) {
+			world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
-		return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
 	}
 	
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING, BOTTOM, WATERLOGGED);
 	}
 	
 	public boolean isUnderwater(World world, BlockPos pos) {
-		BlockPos tilePos = world.getBlockState(pos).get(BOTTOM) ? pos : pos.down();
-		if (world.getBlockState(tilePos).get(WATERLOGGED) && world.getBlockState(tilePos.up()).get(WATERLOGGED)) return true;
+		BlockPos tilePos = world.getBlockState(pos).getValue(BOTTOM) ? pos : pos.below();
+		if (world.getBlockState(tilePos).getValue(WATERLOGGED) && world.getBlockState(tilePos.above()).getValue(WATERLOGGED)) return true;
 		return false;
 	}
 	
 	@Override
 	public boolean hasTileEntity(BlockState state) {
-		return state.get(BOTTOM);
+		return state.getValue(BOTTOM);
 	}
 	
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		if (state.get(BOTTOM)) {
+		if (state.getValue(BOTTOM)) {
 			return new VoiceTrumpetTileEntity();
 		}
 		return null;

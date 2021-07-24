@@ -56,7 +56,7 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 	public void tick() {
 		boolean dirty = false;
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (processTime > 0) {
 				processTime--;
 				if (processTime == 0) {
@@ -84,8 +84,8 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 				inputHandler.extractItem(5, 1, false);
 				inputHandler.extractItem(6, 1, false);
 				
-				float pitch = CustardMachineBlock.isUnderwater(world, pos) ? 0.75F : 1F;
-				world.playSound(null, pos, TeletubbiesSounds.MACHINE_CUSTARD.get(), SoundCategory.BLOCKS, 2, pitch);
+				float pitch = CustardMachineBlock.isUnderwater(level, worldPosition) ? 0.75F : 1F;
+				level.playSound(null, worldPosition, TeletubbiesSounds.MACHINE_CUSTARD.get(), SoundCategory.BLOCKS, 2, pitch);
 				
 				processTime = Math.toIntExact(DURATION);
 				isProcessing = true;
@@ -96,21 +96,21 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 		}
 		
 		if (dirty) {
-			this.markDirty();
-			this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+			this.setChanged();
+			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
 		}
 	}
 	
 	private void setLightState() {
 		if (this.getBlockState().getBlock() instanceof CustardMachineBlock) {
-			BlockPos smallTowerPos = CustardMachineBlock.getSmallTowerPos(pos, this.getBlockState().get(CustardMachineBlock.FACING));
-			BlockPos bigTowerPos = CustardMachineBlock.getBigTowerPos(pos, this.getBlockState().get(CustardMachineBlock.FACING));
+			BlockPos smallTowerPos = CustardMachineBlock.getSmallTowerPos(worldPosition, this.getBlockState().getValue(CustardMachineBlock.FACING));
+			BlockPos bigTowerPos = CustardMachineBlock.getBigTowerPos(worldPosition, this.getBlockState().getValue(CustardMachineBlock.FACING));
 			
-			if (world.getBlockState(smallTowerPos).getBlock() instanceof CustardMachineBlock) {
-				world.setBlockState(smallTowerPos, world.getBlockState(smallTowerPos).with(CustardMachineBlock.LIT, this.isProcessing));
+			if (level.getBlockState(smallTowerPos).getBlock() instanceof CustardMachineBlock) {
+				level.setBlockAndUpdate(smallTowerPos, level.getBlockState(smallTowerPos).setValue(CustardMachineBlock.LIT, this.isProcessing));
 			}
-			if (world.getBlockState(bigTowerPos).getBlock() instanceof CustardMachineBlock) {
-				world.setBlockState(bigTowerPos, world.getBlockState(bigTowerPos).with(CustardMachineBlock.LIT, this.isProcessing));
+			if (level.getBlockState(bigTowerPos).getBlock() instanceof CustardMachineBlock) {
+				level.setBlockAndUpdate(bigTowerPos, level.getBlockState(bigTowerPos).setValue(CustardMachineBlock.LIT, this.isProcessing));
 			}
 		}
 	}
@@ -146,8 +146,8 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) {
-		super.read(state, nbt);
+	public void load(BlockState state, CompoundNBT nbt) {
+		super.load(state, nbt);
 		this.inputHandler.deserializeNBT(nbt.getCompound("InventoryIn"));
 		this.outputHandler.deserializeNBT(nbt.getCompound("InventoryOut"));
 		this.processTime = nbt.getInt("processTime");
@@ -155,8 +155,8 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT nbt) {
-		super.write(nbt);
+	public CompoundNBT save(CompoundNBT nbt) {
+		super.save(nbt);
 		nbt.put("InventoryIn", this.inputHandler.serializeNBT());
 		nbt.put("InventoryOut", this.outputHandler.serializeNBT());
 		nbt.putInt("processTime", this.processTime);
@@ -168,25 +168,25 @@ public class CustardMachineTileEntity extends TileEntity implements ITickableTil
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
 		CompoundNBT nbt = new CompoundNBT();
-		this.write(nbt);
-		return new SUpdateTileEntityPacket(this.pos, 0, nbt);
+		this.save(nbt);
+		return new SUpdateTileEntityPacket(this.worldPosition, 0, nbt);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		this.read(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+		this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag() {
 		CompoundNBT nbt = new CompoundNBT();
-		this.write(nbt);
+		this.save(nbt);
 		return nbt;
 	}
 
 	@Override
 	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
-		this.read(state, nbt);
+		this.load(state, nbt);
 	}
 	
 	@Override

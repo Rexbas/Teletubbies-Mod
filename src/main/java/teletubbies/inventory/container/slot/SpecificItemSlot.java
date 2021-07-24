@@ -17,7 +17,7 @@ public class SpecificItemSlot extends SlotItemHandler {
 	}
 	
     @Override
-	public boolean isItemValid(@Nonnull ItemStack stack) {
+	public boolean mayPlace(@Nonnull ItemStack stack) {
     	return stack.getItem().equals(item);
     }
 }

@@ -8,7 +8,6 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.Teletubbies;
@@ -18,7 +17,7 @@ public class DipsyHatItem extends ArmorItem {
 		
 	public DipsyHatItem() {
 		super(ArmorMaterial.LEATHER, EquipmentSlotType.HEAD, new Item.Properties()
-				.group(Teletubbies.ITEMGROUP));
+				.tab(Teletubbies.ITEMGROUP));
 	}
 
 	@Override

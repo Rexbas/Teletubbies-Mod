@@ -56,7 +56,7 @@ public class TeletubbiesEventHandler {
 	@SubscribeEvent
 	public static void joinClientWorld(EntityJoinWorldEvent event) {
 		if(event.getEntity() instanceof PoScooterEntity) {
-			Minecraft.getInstance().getSoundHandler().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
+			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class TeletubbiesEventHandler {
 		if(event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 						
-			LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getHorizontalFacing());
+			LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getDirection());
 			cap.ifPresent(c -> {
 				float fallDistance = c.fallDistance();
 				
@@ -81,8 +81,8 @@ public class TeletubbiesEventHandler {
 					c.setFallDistance(player.fallDistance);
 				}
 				
-				if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem
-						|| player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() instanceof LaaLaaBallItem) {
+				if (player.getMainHandItem() != null && player.getMainHandItem().getItem() instanceof LaaLaaBallItem
+						|| player.getOffhandItem() != null && player.getOffhandItem().getItem() instanceof LaaLaaBallItem) {
 					if (c.canJump(player) && fallDistance >= 10) {
 						LaaLaaBallItem.jump(player, true);
 					}
@@ -102,13 +102,13 @@ public class TeletubbiesEventHandler {
 	public static void fallEvent(LivingFallEvent event) {
 		if(event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-			if(player.getHeldItemMainhand() != null) {
-				if(player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem) {
+			if(player.getMainHandItem() != null) {
+				if(player.getMainHandItem().getItem() instanceof LaaLaaBallItem) {
 					event.setCanceled(true);
 				}
 			}
-			if(player.getHeldItemOffhand() != null) {
-				if(player.getHeldItemOffhand().getItem() instanceof LaaLaaBallItem) {
+			if(player.getOffhandItem() != null) {
+				if(player.getOffhandItem().getItem() instanceof LaaLaaBallItem) {
 					event.setCanceled(true);
 				}
 			}
@@ -120,10 +120,10 @@ public class TeletubbiesEventHandler {
 	public static void updateRidden(PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.START && event.player instanceof ClientPlayerEntity) {
 			ClientPlayerEntity player = (ClientPlayerEntity) event.player;
-			if (player.getRidingEntity() instanceof PoScooterEntity) {
-				PoScooterEntity scooter = (PoScooterEntity) player.getRidingEntity();
-				scooter.updateInputs(player.movementInput.leftKeyDown, player.movementInput.rightKeyDown,
-						player.movementInput.forwardKeyDown, player.movementInput.backKeyDown);
+			if (player.getVehicle() instanceof PoScooterEntity) {
+				PoScooterEntity scooter = (PoScooterEntity) player.getVehicle();
+				scooter.updateInputs(player.input.left, player.input.right,
+						player.input.up, player.input.down);
 			}
 		}
 	}
@@ -142,11 +142,11 @@ public class TeletubbiesEventHandler {
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public static void onLivingDeathEvent(LivingDeathEvent event) {
 		DamageSource damageSource = (DamageSource) event.getSource();
-		World world = event.getEntityLiving().world;
+		World world = event.getEntityLiving().level;
 
-		if (!world.isRemote) {
-			if (damageSource.getImmediateSource() instanceof ZombieEntity) {
-				if (event.getEntity() instanceof TeletubbyEntity && world.rand.nextInt(100) < Config.COMMON.TRANSFORMATION_PROBABILITY.get()) {
+		if (!world.isClientSide) {
+			if (damageSource.getDirectEntity() instanceof ZombieEntity) {
+				if (event.getEntity() instanceof TeletubbyEntity && world.random.nextInt(100) < Config.COMMON.TRANSFORMATION_PROBABILITY.get()) {
 					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntityLiving();
 					teletubby.transferToZombie();
 				}
@@ -161,7 +161,7 @@ public class TeletubbiesEventHandler {
 	    public static void BlockColorHandler(final ColorHandlerEvent.Block event) {
 			if (TeletubbiesBlocks.FULL_GRASS.get() != null) {
 	        event.getBlockColors().register((state, reader, pos, tint) -> reader != null
-	                && pos != null ? BiomeColors.getGrassColor(reader, pos)
+	                && pos != null ? BiomeColors.getAverageGrassColor(reader, pos)
 	                : GrassColors.get(0.5D, 1.0D), TeletubbiesBlocks.FULL_GRASS.get());
 			}
 	    }
@@ -171,7 +171,7 @@ public class TeletubbiesEventHandler {
 		public static void ItemColorHandler(final ColorHandlerEvent.Item event) {
 	    	if (TeletubbiesItems.FULL_GRASS.get() != null) {
 				final IItemColor colorHandler = (stack, tint) -> {
-					final BlockState state = ((BlockItem) stack.getItem()).getBlock().getDefaultState();
+					final BlockState state = ((BlockItem) stack.getItem()).getBlock().defaultBlockState();
 					return event.getBlockColors().getColor(state, null, null, tint);
 				};
 				event.getItemColors().register(colorHandler, TeletubbiesItems.FULL_GRASS.get());

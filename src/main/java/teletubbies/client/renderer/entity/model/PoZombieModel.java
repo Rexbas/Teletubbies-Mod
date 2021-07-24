@@ -11,13 +11,13 @@ public class PoZombieModel extends TeletubbyZombieModel<PoZombieEntity> {
 
 	public PoZombieModel() {
 		stick = new ModelRenderer(this);
-		stick.setRotationPoint(0.0F, 24.0F, 0.0F);
+		stick.setPos(0.0F, 24.0F, 0.0F);
 		stick.addBox(null, -1.0F, -34.0F, -1.0F, 2, 2, 2, 0.0F, 27, 20);
 		stick.addBox(null, -2.0F, -35.0F, -1.0F, 4, 1, 2, 0.0F, 27, 24);
 		stick.addBox(null, 1.0F, -37.0F, -1.0F, 1, 2, 2, 0.0F, 27, 27);
 		stick.addBox(null, -2.0F, -37.0F, -1.0F, 1, 2, 2, 0.0F, 35, 20);
 		stick.addBox(null, -2.0F, -38.0F, -1.0F, 4, 1, 2, 0.0F, 27, 26);
 		
-		bipedHead.addChild(stick);
+		head.addChild(stick);
 	}
 }

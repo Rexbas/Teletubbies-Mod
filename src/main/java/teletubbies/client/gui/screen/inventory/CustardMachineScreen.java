@@ -19,33 +19,33 @@ public class CustardMachineScreen extends ContainerScreen<CustardMachineContaine
 	public CustardMachineScreen(CustardMachineContainer container, PlayerInventory playerInv, ITextComponent title) {
 		super(container, playerInv, title);
 		this.passEvents = false;
-		this.ySize = 187;
+		this.imageHeight = 187;
 	}
 	
 	@Override
 	public void render(MatrixStack p_230430_1_, int p_230430_2_, int p_230430_3_, float p_230430_4_) {
 		this.renderBackground(p_230430_1_);
 		super.render(p_230430_1_, p_230430_2_, p_230430_3_, p_230430_4_);
-		this.renderHoveredTooltip(p_230430_1_, p_230430_2_, p_230430_3_);
+		this.renderTooltip(p_230430_1_, p_230430_2_, p_230430_3_);
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int mouseX, int mouseY) {
+	protected void renderLabels(MatrixStack matrixStack, int mouseX, int mouseY) {
 		String s = this.title.getString();
-		this.font.drawString(matrixStack, s, (float) (this.xSize / 2 - this.font.getStringWidth(s) / 2), 6.0F, 4210752);
-		this.font.drawText(matrixStack, this.playerInventory.getDisplayName(), 8.0F, (float) (this.ySize - 96 + 2), 4210752);
+		this.font.draw(matrixStack, s, (float) (this.imageWidth / 2 - this.font.width(s) / 2), 6.0F, 4210752);
+		this.font.draw(matrixStack, this.inventory.getDisplayName(), 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(TEXTURE);
-		int i = this.guiLeft;
-		int j = this.guiTop;
-	    this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
+	protected void renderBg(MatrixStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+		GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
+		this.minecraft.getTextureManager().bind(TEXTURE);
+		int i = this.leftPos;
+		int j = this.topPos;
+	    this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
-	    if (this.container.getTileEntity().isProcessing()) {
-	    	this.blit(matrixStack, i + 51, j + 47, 176, 0, (int) (this.container.getTileEntity().getProgress() * 74), 9);
+	    if (this.menu.getTileEntity().isProcessing()) {
+	    	this.blit(matrixStack, i + 51, j + 47, 176, 0, (int) (this.menu.getTileEntity().getProgress() * 74), 9);
 	    }
 	}
 }

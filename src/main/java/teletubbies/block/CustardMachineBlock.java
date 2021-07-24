@@ -49,21 +49,21 @@ public class CustardMachineBlock extends Block {
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 		
 	protected static final VoxelShape SMALLTOWER_AABB_NORTH = VoxelShapes.or(
-			makeCuboidShape(7.0D, 0.0D, 5.0D, 13.0D, 3.0D, 11.0D), 
-			makeCuboidShape(8.0D, 3.0D, 6.0D, 12.0D, 10.0D, 10.0D), 
-			makeCuboidShape(7.0D, 10.0D, 5.0D, 13.0D, 11.0D, 11.0D), 
-			makeCuboidShape(8.0D, 11.0D, 6.0D, 12.0D, 13.0D, 10.0D),
-			makeCuboidShape(9.0D, 13.0D, 7.0D, 11.0D, 14.0D, 9.0D))
-			.simplify();
+			box(7.0D, 0.0D, 5.0D, 13.0D, 3.0D, 11.0D), 
+			box(8.0D, 3.0D, 6.0D, 12.0D, 10.0D, 10.0D), 
+			box(7.0D, 10.0D, 5.0D, 13.0D, 11.0D, 11.0D), 
+			box(8.0D, 11.0D, 6.0D, 12.0D, 13.0D, 10.0D),
+			box(9.0D, 13.0D, 7.0D, 11.0D, 14.0D, 9.0D))
+			.optimize();
 	
 	protected static final VoxelShape BIGTOWER_AABB_NORTH = VoxelShapes.or(
-			makeCuboidShape(3.0D, 0.0D, 5.0D, 9.0D, 3.0D, 11.0D), 
-			makeCuboidShape(4.0D, 3.0D, 6.0D, 8.0D, 12.0D, 10.0D), 
-			makeCuboidShape(3.0D, 12.0D, 5.0D, 9.0D, 13.0D, 11.0D), 
-			makeCuboidShape(4.0D, 13.0D, 6.0D, 8.0D, 15.0D, 10.0D),
-			makeCuboidShape(5.0D, 15.0D, 7.0D, 7.0D, 16.0D, 9.0D),
-			makeCuboidShape(7.0D, 0.0D, 2.0D, 12.0D, 3.0D, 5.0D))
-			.simplify();
+			box(3.0D, 0.0D, 5.0D, 9.0D, 3.0D, 11.0D), 
+			box(4.0D, 3.0D, 6.0D, 8.0D, 12.0D, 10.0D), 
+			box(3.0D, 12.0D, 5.0D, 9.0D, 13.0D, 11.0D), 
+			box(4.0D, 13.0D, 6.0D, 8.0D, 15.0D, 10.0D),
+			box(5.0D, 15.0D, 7.0D, 7.0D, 16.0D, 9.0D),
+			box(7.0D, 0.0D, 2.0D, 12.0D, 3.0D, 5.0D))
+			.optimize();
 	
 	protected static final VoxelShape SMALLTOWER_AABB_EAST = VoxelShapeRotation.rotateY(SMALLTOWER_AABB_NORTH, Math.toRadians(270));
 	protected static final VoxelShape SMALLTOWER_AABB_SOUTH = VoxelShapeRotation.rotateY(SMALLTOWER_AABB_NORTH, Math.toRadians(180));
@@ -73,11 +73,11 @@ public class CustardMachineBlock extends Block {
 	protected static final VoxelShape BIGTOWER_AABB_WEST = VoxelShapeRotation.rotateY(BIGTOWER_AABB_NORTH, Math.toRadians(90));
 		
 	public CustardMachineBlock() {
-		super(Properties.create(Material.IRON)
-				.hardnessAndResistance(3.0f, 5.0f)
+		super(Properties.of(Material.METAL)
+				.strength(3.0f, 5.0f)
 				.harvestTool(ToolType.PICKAXE));
 
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, false).with(LIT, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(PART, CustardMachinePart.BASE).setValue(WATERLOGGED, false).setValue(LIT, false));
 	}
 	
 	@Override
@@ -87,11 +87,11 @@ public class CustardMachineBlock extends Block {
     }
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		BlockPos tilePos = getBasePos(pos, state.get(PART), state.get(FACING));
-		CustardMachineTileEntity te = (CustardMachineTileEntity) world.getTileEntity(tilePos);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		BlockPos tilePos = getBasePos(pos, state.getValue(PART), state.getValue(FACING));
+		CustardMachineTileEntity te = (CustardMachineTileEntity) world.getBlockEntity(tilePos);
 
-		if (!world.isRemote && player instanceof ServerPlayerEntity) {
+		if (!world.isClientSide && player instanceof ServerPlayerEntity) {
 			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, tilePos);
 		}
 		return ActionResultType.SUCCESS;
@@ -99,11 +99,11 @@ public class CustardMachineBlock extends Block {
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		if (state.get(PART) == CustardMachinePart.BASE || state.get(PART) == CustardMachinePart.BIGBASE || state.get(PART) == CustardMachinePart.SMALLBASE) {
-			return VoxelShapes.fullCube();
+		if (state.getValue(PART) == CustardMachinePart.BASE || state.getValue(PART) == CustardMachinePart.BIGBASE || state.getValue(PART) == CustardMachinePart.SMALLBASE) {
+			return VoxelShapes.block();
 		}
-		if (state.get(PART) == CustardMachinePart.SMALL) {
-			switch(state.get(FACING)) {
+		if (state.getValue(PART) == CustardMachinePart.SMALL) {
+			switch(state.getValue(FACING)) {
 			case NORTH:
 				return SMALLTOWER_AABB_NORTH;
 			case EAST:
@@ -116,7 +116,7 @@ public class CustardMachineBlock extends Block {
 				return SMALLTOWER_AABB_NORTH;
 			}
 		}
-		switch(state.get(FACING)) {
+		switch(state.getValue(FACING)) {
 		case NORTH:
 			return BIGTOWER_AABB_NORTH;
 		case EAST:
@@ -131,26 +131,26 @@ public class CustardMachineBlock extends Block {
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (placer != null) {
-			BlockPos smallbasePos = getSmallTowerBasePos(pos, placer.getHorizontalFacing());
-			BlockPos bigbasePos = getBigTowerBasePos(pos, placer.getHorizontalFacing());
-			BlockPos smallPos = getSmallTowerPos(pos, placer.getHorizontalFacing());
-			BlockPos bigPos = getBigTowerPos(pos, placer.getHorizontalFacing());
+			BlockPos smallbasePos = getSmallTowerBasePos(pos, placer.getDirection());
+			BlockPos bigbasePos = getBigTowerBasePos(pos, placer.getDirection());
+			BlockPos smallPos = getSmallTowerPos(pos, placer.getDirection());
+			BlockPos bigPos = getBigTowerPos(pos, placer.getDirection());
 		    FluidState smallFluid = world.getFluidState(smallPos);
 		    FluidState bigFluid = world.getFluidState(bigPos);
-			world.setBlockState(smallbasePos, state.with(PART, CustardMachinePart.SMALLBASE).with(WATERLOGGED, false));
-		    world.setBlockState(bigbasePos, state.with(PART, CustardMachinePart.BIGBASE).with(WATERLOGGED, false));
-		    world.setBlockState(smallPos, state.with(PART, CustardMachinePart.SMALL).with(WATERLOGGED, smallFluid.getFluid() == Fluids.WATER));
-		    world.setBlockState(bigPos, state.with(PART, CustardMachinePart.BIG).with(WATERLOGGED, bigFluid.getFluid() == Fluids.WATER));
+			world.setBlockAndUpdate(smallbasePos, state.setValue(PART, CustardMachinePart.SMALLBASE).setValue(WATERLOGGED, false));
+		    world.setBlockAndUpdate(bigbasePos, state.setValue(PART, CustardMachinePart.BIGBASE).setValue(WATERLOGGED, false));
+		    world.setBlockAndUpdate(smallPos, state.setValue(PART, CustardMachinePart.SMALL).setValue(WATERLOGGED, smallFluid.getType() == Fluids.WATER));
+		    world.setBlockAndUpdate(bigPos, state.setValue(PART, CustardMachinePart.BIG).setValue(WATERLOGGED, bigFluid.getType() == Fluids.WATER));
 		}
 	}
 	
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		Direction facing = state.get(FACING);
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		Direction facing = state.getValue(FACING);
 		
-		BlockPos basePos = getBasePos(pos, state.get(PART), facing);
+		BlockPos basePos = getBasePos(pos, state.getValue(PART), facing);
 		BlockState subblockState = world.getBlockState(basePos);
 		if (subblockState.getBlock() == this && !pos.equals(basePos)) {
 			removePart(world, basePos, subblockState);
@@ -179,14 +179,14 @@ public class CustardMachineBlock extends Block {
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
 			removePart(world, subblock, subblockState);
 		}		      
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 	
 	@Override
     public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
-		Direction facing = state.get(FACING);
+		Direction facing = state.getValue(FACING);
 		
-		BlockPos basePos = getBasePos(pos, state.get(PART), facing);
+		BlockPos basePos = getBasePos(pos, state.getValue(PART), facing);
 		BlockState subblockState = world.getBlockState(basePos);
 		if (subblockState.getBlock() == this && !pos.equals(basePos)) {		      
 			removePart(world, basePos, subblockState);
@@ -220,59 +220,59 @@ public class CustardMachineBlock extends Block {
 	
 	private void removePart(World world, BlockPos pos, BlockState state) {
 		FluidState fluidState = world.getFluidState(pos);
-	    if (fluidState.getFluid() == Fluids.WATER) {
-			world.setBlockState(pos, fluidState.getBlockState(), 35); 
+	    if (fluidState.getType() == Fluids.WATER) {
+			world.setBlock(pos, fluidState.createLegacyBlock(), 35); 
 	    }
 	    else {
-	    	world.setBlockState(pos, Blocks.AIR.getDefaultState(), 35);
+	    	world.setBlock(pos, Blocks.AIR.defaultBlockState(), 35);
 	    }
 	}
 	
 	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		BlockPos pos = context.getPos();
-		BlockPos smallbasePos = getSmallTowerBasePos(pos, context.getPlacementHorizontalFacing());
-		BlockPos bigbasePos = getBigTowerBasePos(pos, context.getPlacementHorizontalFacing());
-		BlockPos smallPos = getSmallTowerPos(pos, context.getPlacementHorizontalFacing());
-		BlockPos bigPos = getBigTowerPos(pos, context.getPlacementHorizontalFacing());
+		BlockPos pos = context.getClickedPos();
+		BlockPos smallbasePos = getSmallTowerBasePos(pos, context.getHorizontalDirection());
+		BlockPos bigbasePos = getBigTowerBasePos(pos, context.getHorizontalDirection());
+		BlockPos smallPos = getSmallTowerPos(pos, context.getHorizontalDirection());
+		BlockPos bigPos = getBigTowerPos(pos, context.getHorizontalDirection());
 		if (pos.getY() < 255 &&
-				smallbasePos.getY() < 255 && context.getWorld().getBlockState(smallbasePos).isReplaceable(context) &&
-				bigbasePos.getY() < 255 && context.getWorld().getBlockState(bigbasePos).isReplaceable(context) &&
-				smallPos.getY() < 255 && context.getWorld().getBlockState(smallPos).isReplaceable(context) &&
-				bigPos.getY() < 255 && context.getWorld().getBlockState(bigPos).isReplaceable(context)) {
+				smallbasePos.getY() < 255 && context.getLevel().getBlockState(smallbasePos).canBeReplaced(context) &&
+				bigbasePos.getY() < 255 && context.getLevel().getBlockState(bigbasePos).canBeReplaced(context) &&
+				smallPos.getY() < 255 && context.getLevel().getBlockState(smallPos).canBeReplaced(context) &&
+				bigPos.getY() < 255 && context.getLevel().getBlockState(bigPos).canBeReplaced(context)) {
 			
-			return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing()).with(PART, CustardMachinePart.BASE).with(WATERLOGGED, false);
+			return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection()).setValue(PART, CustardMachinePart.BASE).setValue(WATERLOGGED, false);
 		}
 		return null;
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-		if (state.get(WATERLOGGED)) {
-			world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+		if (state.getValue(WATERLOGGED)) {
+			world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
-		return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
+		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
 	}
 	
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(FACING, PART, WATERLOGGED, LIT);
 	}
 	
 	public static boolean isUnderwater(World world, BlockPos pos) {
-		Direction facing = world.getBlockState(pos).get(FACING);
-		BlockPos basePos = getBasePos(pos, world.getBlockState(pos).get(PART), facing);
+		Direction facing = world.getBlockState(pos).getValue(FACING);
+		BlockPos basePos = getBasePos(pos, world.getBlockState(pos).getValue(PART), facing);
 		if (BlocksUtil.isBlockSurrounded(world, basePos) &&
 				BlocksUtil.isBlockSurrounded(world, getSmallTowerBasePos(basePos, facing)) &&
 				BlocksUtil.isBlockSurrounded(world, getBigTowerBasePos(basePos, facing)) &&
-				world.getBlockState(getSmallTowerPos(basePos, facing)).get(WATERLOGGED) &&
-				world.getBlockState(getBigTowerPos(basePos, facing)).get(WATERLOGGED)) { 
+				world.getBlockState(getSmallTowerPos(basePos, facing)).getValue(WATERLOGGED) &&
+				world.getBlockState(getBigTowerPos(basePos, facing)).getValue(WATERLOGGED)) { 
 			return true; 
 		}
 		return false;
@@ -280,44 +280,44 @@ public class CustardMachineBlock extends Block {
 	
 	@Override
 	public boolean hasTileEntity(BlockState state) {
-		return (state.get(PART) == CustardMachinePart.BASE || state.get(PART) == CustardMachinePart.BIGBASE || state.get(PART) == CustardMachinePart.SMALLBASE);
+		return (state.getValue(PART) == CustardMachinePart.BASE || state.getValue(PART) == CustardMachinePart.BIGBASE || state.getValue(PART) == CustardMachinePart.SMALLBASE);
 	}
 	
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		if (state.get(PART) == CustardMachinePart.BASE) {
+		if (state.getValue(PART) == CustardMachinePart.BASE) {
 			return new CustardMachineTileEntity();
 		}
-		else if (state.get(PART) == CustardMachinePart.BIGBASE) {
+		else if (state.getValue(PART) == CustardMachinePart.BIGBASE) {
 			return new CustardMachineSlaveTileEntity();
 		}
-		else if (state.get(PART) == CustardMachinePart.SMALLBASE) {
+		else if (state.getValue(PART) == CustardMachinePart.SMALLBASE) {
 			return new CustardMachineSlaveTileEntity();
 		}
 		return null;
 	}
 	
 	@Override
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.hasTileEntity() && state.getBlock() != newState.getBlock() && state.get(PART) == CustardMachinePart.BASE) {
-			world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.hasTileEntity() && state.getBlock() != newState.getBlock() && state.getValue(PART) == CustardMachinePart.BASE) {
+			world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
-					spawnAsEntity(world, pos, h.getStackInSlot(i));
+					popResource(world, pos, h.getStackInSlot(i));
 				}
 			});
-			world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
+			world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
-					spawnAsEntity(world, pos, h.getStackInSlot(i));
+					popResource(world, pos, h.getStackInSlot(i));
 				}
 			});
-			world.removeTileEntity(pos);
+			world.removeBlockEntity(pos);
 		}
 	}
 	
 	@Override
 	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-		return state.get(LIT) ? 6 : 0;
+		return state.getValue(LIT) ? 6 : 0;
 	}
 	
 	public static BlockPos getSmallTowerBasePos(BlockPos base, Direction facing) {
@@ -353,30 +353,30 @@ public class CustardMachineBlock extends Block {
 	public static BlockPos getSmallTowerPos(BlockPos base, Direction facing) {
 		switch (facing) {
 		case NORTH:
-			return base.east().up();
+			return base.east().above();
 		case EAST:
-			return base.south().up();
+			return base.south().above();
 		case SOUTH:
-			return base.west().up();
+			return base.west().above();
 		case WEST:
-			return base.north().up();
+			return base.north().above();
 		default:
-			return base.east().up();		
+			return base.east().above();		
 		}	
 	}
 	
 	public static BlockPos getBigTowerPos(BlockPos base, Direction facing) {
 		switch (facing) {
 		case NORTH:
-			return base.west().up();
+			return base.west().above();
 		case EAST:
-			return base.north().up();
+			return base.north().above();
 		case SOUTH:
-			return base.east().up();
+			return base.east().above();
 		case WEST:
-			return base.south().up();
+			return base.south().above();
 		default:
-			return base.west().up();		
+			return base.west().above();		
 		}	
 	}
 	
@@ -386,11 +386,11 @@ public class CustardMachineBlock extends Block {
 		case NORTH:
 			switch (part) {
 			case BIG:
-				return pos.east().down();
+				return pos.east().below();
 			case BIGBASE:
 				return pos.east();
 			case SMALL:
-				return pos.west().down();
+				return pos.west().below();
 			case SMALLBASE:
 				return pos.west();
 			default:
@@ -399,11 +399,11 @@ public class CustardMachineBlock extends Block {
 		case EAST:
 			switch (part) {
 			case BIG:
-				return pos.south().down();
+				return pos.south().below();
 			case BIGBASE:
 				return pos.south();
 			case SMALL:
-				return pos.north().down();
+				return pos.north().below();
 			case SMALLBASE:
 				return pos.north();
 			default:
@@ -412,11 +412,11 @@ public class CustardMachineBlock extends Block {
 		case SOUTH:
 			switch (part) {
 			case BIG:
-				return pos.west().down();
+				return pos.west().below();
 			case BIGBASE:
 				return pos.west();
 			case SMALL:
-				return pos.east().down();
+				return pos.east().below();
 			case SMALLBASE:
 				return pos.east();
 			default:
@@ -425,11 +425,11 @@ public class CustardMachineBlock extends Block {
 		case WEST:
 			switch (part) {
 			case BIG:
-				return pos.north().down();
+				return pos.north().below();
 			case BIGBASE:
 				return pos.north();
 			case SMALL:
-				return pos.south().down();
+				return pos.south().below();
 			case SMALLBASE:
 				return pos.south();
 			default:

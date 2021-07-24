@@ -51,19 +51,19 @@ public class TeletubbiesWorldGen {
 	
 	// https://github.com/TelepathicGrunt/StructureTutorialMod/blob/c919931014ba7515981f2516892489953e718f56/src/main/java/com/telepathicgrunt/structuretutorial/STStructures.java
 	public static <F extends Structure<?>> void registerStructure(F structure, StructureSeparationSettings separation, boolean transformSurroundingLand) {
-        Structure.NAME_STRUCTURE_BIMAP.put(structure.getRegistryName().toString(), structure);
+        Structure.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
         
         if (transformSurroundingLand) {
-            Structure.field_236384_t_ =
+            Structure.NOISE_AFFECTING_FEATURES =
                     ImmutableList.<Structure<?>>builder()
-                    .addAll(Structure.field_236384_t_)
+                    .addAll(Structure.NOISE_AFFECTING_FEATURES)
                     .add(structure)
                     .build();
         }
 
-        DimensionStructuresSettings.field_236191_b_ =
+        DimensionStructuresSettings.DEFAULTS =
                 ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
-                        .putAll(DimensionStructuresSettings.field_236191_b_)
+                        .putAll(DimensionStructuresSettings.DEFAULTS)
                         .put(structure, separation)
                         .build();
     }
@@ -87,9 +87,9 @@ public class TeletubbiesWorldGen {
     	@SubscribeEvent
         public static void biomeLoading(final BiomeLoadingEvent event) {
     		if (event.getCategory() == Category.PLAINS) {
-    			event.getGeneration().withFeature(Decoration.LOCAL_MODIFICATIONS, TeletubbiesConfiguredFeatures.VOICE_TRUMPET_CONFIGURED_FEATURE);
+    			event.getGeneration().addFeature(Decoration.LOCAL_MODIFICATIONS, TeletubbiesConfiguredFeatures.VOICE_TRUMPET_CONFIGURED_FEATURE);
     			
-    			event.getGeneration().withStructure(TeletubbiesConfiguredStructures.DOME_CONFIGURED_STRUCTURE);
+    			event.getGeneration().addStructureStart(TeletubbiesConfiguredStructures.DOME_CONFIGURED_STRUCTURE);
     		}
         }
     	
@@ -98,14 +98,14 @@ public class TeletubbiesWorldGen {
 			if (event.getWorld() instanceof ServerWorld) {
 				ServerWorld serverWorld = (ServerWorld) event.getWorld();
 
-				if (serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator
-						&& serverWorld.getDimensionKey().equals(World.OVERWORLD)) {
+				if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator
+						&& serverWorld.dimension().equals(World.OVERWORLD)) {
 					return;
 				}
 
-				Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkProvider().generator.func_235957_b_().func_236195_a_());
-				tempMap.put(DOME_STRUCTURE.get(), DimensionStructuresSettings.field_236191_b_.get(DOME_STRUCTURE.get()));
-				serverWorld.getChunkProvider().generator.func_235957_b_().field_236193_d_ = tempMap;
+				Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+				tempMap.put(DOME_STRUCTURE.get(), DimensionStructuresSettings.DEFAULTS.get(DOME_STRUCTURE.get()));
+				serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 			}
 		}
 	}

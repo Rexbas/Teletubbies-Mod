@@ -18,24 +18,24 @@ public class DipsyHatModel extends BipedModel<LivingEntity> {
 
 	public DipsyHatModel() {
 		super(1.0F);
-		textureWidth = 64;
-		textureHeight = 64;
+		texWidth = 64;
+		texHeight = 64;
 
 		hat = new ModelRenderer(this);
-		hat.setRotationPoint(0.0F, 24.0F, 0.0F);
-		hat.setTextureOffset(20, 10).addBox(-4.0F, -16.0F, -4.0F, 8.0F, 7.0F, 2.0F, 0.0F, false);
-		hat.setTextureOffset(0, 10).addBox(-4.0F, -16.0F, 2.0F, 8.0F, 7.0F, 2.0F, 0.0F, false);
-		hat.setTextureOffset(12, 27).addBox(-4.0F, -16.0F, -2.0F, 2.0F, 7.0F, 4.0F, 0.0F, false);
-		hat.setTextureOffset(0, 27).addBox(2.0F, -16.0F, -2.0F, 2.0F, 7.0F, 4.0F, 0.0F, false);
-		hat.setTextureOffset(0, 5).addBox(-6.0F, -9.0F, 3.0F, 12.0F, 2.0F, 3.0F, 0.0F, false);
-		hat.setTextureOffset(0, 0).addBox(-6.0F, -9.0F, -6.0F, 12.0F, 2.0F, 3.0F, 0.0F, false);
-		hat.setTextureOffset(18, 19).addBox(-6.0F, -9.0F, -3.0F, 3.0F, 2.0F, 6.0F, 0.0F, false);
-		hat.setTextureOffset(0, 19).addBox(3.0F, -9.0F, -3.0F, 3.0F, 2.0F, 6.0F, 0.0F, false);
+		hat.setPos(0.0F, 24.0F, 0.0F);
+		hat.texOffs(20, 10).addBox(-4.0F, -16.0F, -4.0F, 8.0F, 7.0F, 2.0F, 0.0F, false);
+		hat.texOffs(0, 10).addBox(-4.0F, -16.0F, 2.0F, 8.0F, 7.0F, 2.0F, 0.0F, false);
+		hat.texOffs(12, 27).addBox(-4.0F, -16.0F, -2.0F, 2.0F, 7.0F, 4.0F, 0.0F, false);
+		hat.texOffs(0, 27).addBox(2.0F, -16.0F, -2.0F, 2.0F, 7.0F, 4.0F, 0.0F, false);
+		hat.texOffs(0, 5).addBox(-6.0F, -9.0F, 3.0F, 12.0F, 2.0F, 3.0F, 0.0F, false);
+		hat.texOffs(0, 0).addBox(-6.0F, -9.0F, -6.0F, 12.0F, 2.0F, 3.0F, 0.0F, false);
+		hat.texOffs(18, 19).addBox(-6.0F, -9.0F, -3.0F, 3.0F, 2.0F, 6.0F, 0.0F, false);
+		hat.texOffs(0, 19).addBox(3.0F, -9.0F, -3.0F, 3.0F, 2.0F, 6.0F, 0.0F, false);
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		hat.copyModelAngles(bipedHead);
+	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+		hat.copyFrom(head);
 		hat.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 }

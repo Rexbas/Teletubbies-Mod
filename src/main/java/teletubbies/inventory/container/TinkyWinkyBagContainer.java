@@ -22,9 +22,9 @@ public class TinkyWinkyBagContainer extends Container {
 	
 	public TinkyWinkyBagContainer(final int id, final PlayerInventory playerInventory, PacketBuffer data) {
 		this(id, playerInventory,
-				playerInventory.player.getHeldItemMainhand().getItem() instanceof TinkyWinkyBagItem
-						? playerInventory.player.getHeldItemMainhand()
-						: playerInventory.player.getHeldItemOffhand());
+				playerInventory.player.getMainHandItem().getItem() instanceof TinkyWinkyBagItem
+						? playerInventory.player.getMainHandItem()
+						: playerInventory.player.getOffhandItem());
     }
 
 	public TinkyWinkyBagContainer(int id, PlayerInventory playerInventory, ItemStack bag) {
@@ -62,44 +62,44 @@ public class TinkyWinkyBagContainer extends Container {
 	}
 
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			int bagslotcount = inventorySlots.size() - playerIn.inventory.mainInventory.size();
-			ItemStack itemstack1 = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			int bagslotcount = slots.size() - playerIn.inventory.items.size();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < bagslotcount) {
-				if (!this.mergeItemStack(itemstack1, bagslotcount, this.inventorySlots.size(), true))
+				if (!this.moveItemStackTo(itemstack1, bagslotcount, this.slots.size(), true))
 					return ItemStack.EMPTY;
-			} else if (!this.mergeItemStack(itemstack1, 0, bagslotcount, false)) {
+			} else if (!this.moveItemStackTo(itemstack1, 0, bagslotcount, false)) {
 				return ItemStack.EMPTY;
 			}
 			if (itemstack1.isEmpty())
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			else
-				slot.onSlotChanged();
+				slot.setChanged();
 		}
 		return itemstack;
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean stillValid(PlayerEntity playerIn) {
 		return !bag.isEmpty();
 	}
 
 	@Override
-	public ItemStack slotClick(int slot, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+	public ItemStack clicked(int slot, int dragType, ClickType clickTypeIn, PlayerEntity player) {
 		if (slot >= 0) {
-			if (getSlot(slot).getStack().getItem() instanceof TinkyWinkyBagItem)
+			if (getSlot(slot).getItem().getItem() instanceof TinkyWinkyBagItem)
 				return ItemStack.EMPTY;
 		}
 		if (clickTypeIn == ClickType.SWAP)
 			return ItemStack.EMPTY;
 
 		if (slot >= 0)
-			getSlot(slot).inventory.markDirty();
-		return super.slotClick(slot, dragType, clickTypeIn, player);
+			getSlot(slot).container.setChanged();
+		return super.clicked(slot, dragType, clickTypeIn, player);
 	}
 }

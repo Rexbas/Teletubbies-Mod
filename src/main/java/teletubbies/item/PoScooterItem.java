@@ -21,30 +21,30 @@ import teletubbies.Teletubbies;
 import teletubbies.entity.item.PoScooterEntity;
 
 public class PoScooterItem extends Item {
-	private static final Predicate<Entity> field_219989_a = EntityPredicates.NOT_SPECTATING.and(Entity::canBeCollidedWith);
+	private static final Predicate<Entity> ENTITY_PREDICATE = EntityPredicates.NO_SPECTATORS.and(Entity::isPickable);
 
 	public PoScooterItem() {
 		super(new Item.Properties()
-				.maxStackSize(1)
-				.group(Teletubbies.ITEMGROUP));
+				.stacksTo(1)
+				.tab(Teletubbies.ITEMGROUP));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.ANY);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.ANY);
 		if (raytraceresult.getType() == RayTraceResult.Type.MISS) {
 			return new ActionResult<>(ActionResultType.PASS, itemstack);
 		} else {
-			Vector3d vec3d = playerIn.getLook(1.0F);
-			List<Entity> list = worldIn.getEntitiesInAABBexcluding(playerIn,
-					playerIn.getBoundingBox().expand(vec3d.scale(5.0D)).grow(1.0D), field_219989_a);
+			Vector3d vec3d = playerIn.getViewVector(1.0F);
+			List<Entity> list = worldIn.getEntities(playerIn,
+					playerIn.getBoundingBox().expandTowards(vec3d.scale(5.0D)).inflate(1.0D), ENTITY_PREDICATE);
 			if (!list.isEmpty()) {
 				Vector3d vec3d1 = playerIn.getEyePosition(1.0F);
 
 				for (Entity entity : list) {
 					AxisAlignedBB axisalignedbb = entity.getBoundingBox()
-							.grow((double) entity.getCollisionBorderSize());
+							.inflate((double) entity.getPickRadius());
 					if (axisalignedbb.contains(vec3d1)) {
 						return new ActionResult<>(ActionResultType.PASS, itemstack);
 					}
@@ -52,21 +52,21 @@ public class PoScooterItem extends Item {
 			}
 
 			if (raytraceresult.getType() == RayTraceResult.Type.BLOCK) {
-				PoScooterEntity entity = new PoScooterEntity(worldIn, raytraceresult.getHitVec().x,
-						raytraceresult.getHitVec().y, raytraceresult.getHitVec().z);
-				entity.rotationYaw = playerIn.rotationYaw;
-				if (!worldIn.hasNoCollisions(entity, entity.getBoundingBox().grow(-0.1D))) {
+				PoScooterEntity entity = new PoScooterEntity(worldIn, raytraceresult.getLocation().x,
+						raytraceresult.getLocation().y, raytraceresult.getLocation().z);
+				entity.yRot = playerIn.yRot;
+				if (!worldIn.noCollision(entity, entity.getBoundingBox().inflate(-0.1D))) {
 					return new ActionResult<>(ActionResultType.FAIL, itemstack);
 				} else {
-					if (!worldIn.isRemote) {
-						worldIn.addEntity(entity);
+					if (!worldIn.isClientSide) {
+						worldIn.addFreshEntity(entity);
 					}
 
-					if (!playerIn.abilities.isCreativeMode) {
+					if (!playerIn.abilities.instabuild) {
 						itemstack.shrink(1);
 					}
 
-					playerIn.addStat(Stats.ITEM_USED.get(this));
+					playerIn.awardStat(Stats.ITEM_USED.get(this));
 					return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
 				}
 			} else {

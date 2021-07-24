@@ -36,24 +36,24 @@ public class NooNooEntity extends CreatureEntity {
 	}
 	
 	public static MutableAttribute setCustomAttributes() {
-		return NooNooEntity.func_233666_p_()
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.5D)
-				.createMutableAttribute(Attributes.MAX_HEALTH, 25.0D);
+		return NooNooEntity.createMobAttributes()
+				.add(Attributes.MOVEMENT_SPEED, 0.5D)
+				.add(Attributes.MAX_HEALTH, 25.0D);
 	}
 	
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 	
 	@Override
     public SoundEvent getAmbientSound() {
-		return this.rand.nextInt(2) == 0 ? TeletubbiesSounds.ENTITY_NOONOO_AMBIENT1.get() : TeletubbiesSounds.ENTITY_NOONOO_AMBIENT2.get();
+		return this.random.nextInt(2) == 0 ? TeletubbiesSounds.ENTITY_NOONOO_AMBIENT1.get() : TeletubbiesSounds.ENTITY_NOONOO_AMBIENT2.get();
     }
 	
 	@Override

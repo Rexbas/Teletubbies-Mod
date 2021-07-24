@@ -15,7 +15,7 @@ public class VoxelShapeRotation {
     * formula: (rotmat dot (vector - [8, 0, 8])) + [8, 0, 8] 
     */
 	public static VoxelShape rotateY(final VoxelShape shape, double a) {
-		List<AxisAlignedBB> bbList = shape.toBoundingBoxList();
+		List<AxisAlignedBB> bbList = shape.toAabbs();
 		List<VoxelShape> shapeList = new ArrayList<>();
 		
 		for (AxisAlignedBB aabb : bbList) {
@@ -23,14 +23,14 @@ public class VoxelShapeRotation {
 			double minZ = -Math.sin(a) * (aabb.minX - .5) + Math.cos(a) * (aabb.minZ - .5) + .5;
 			double maxX = Math.cos(a) * (aabb.maxX - .5) + Math.sin(a) * (aabb.maxZ - .5) + .5;
 			double maxZ = -Math.sin(a) * (aabb.maxX - .5) + Math.cos(a) * (aabb.maxZ - .5) + .5;
-			shapeList.add(VoxelShapes.create(minX, aabb.minY , minZ, maxX, aabb.maxY , maxZ));
+			shapeList.add(VoxelShapes.box(minX, aabb.minY , minZ, maxX, aabb.maxY , maxZ));
 		}
 		
 		VoxelShape newShape = shapeList.get(0);
 		for (int i = 1; i < shapeList.size(); i++) {
-			newShape = VoxelShapes.combine(newShape, shapeList.get(i), IBooleanFunction.OR);
+			newShape = VoxelShapes.joinUnoptimized(newShape, shapeList.get(i), IBooleanFunction.OR);
 		}
-		newShape.simplify();
+		newShape.optimize();
 		
 		return newShape;
 	}

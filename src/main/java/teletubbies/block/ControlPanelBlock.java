@@ -25,8 +25,8 @@ import teletubbies.tileentity.ControlPanelTileEntity;
 public class ControlPanelBlock extends Block {
 
 	public ControlPanelBlock() {
-		super(Properties.create(Material.IRON)
-				.hardnessAndResistance(3.0f, 5.0f)
+		super(Properties.of(Material.METAL)
+				.strength(3.0f, 5.0f)
 				.harvestTool(ToolType.PICKAXE));
 	}
 	
@@ -37,10 +37,10 @@ public class ControlPanelBlock extends Block {
     }
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		ControlPanelTileEntity te = (ControlPanelTileEntity) world.getTileEntity(pos);
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+		ControlPanelTileEntity te = (ControlPanelTileEntity) world.getBlockEntity(pos);
 
-		if (!world.isRemote && player instanceof ServerPlayerEntity) {
+		if (!world.isClientSide && player instanceof ServerPlayerEntity) {
 			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, pos);
 		}
 		return ActionResultType.SUCCESS;
@@ -58,14 +58,14 @@ public class ControlPanelBlock extends Block {
 	}
 	
 	@Override
-	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
-			world.getTileEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+			world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
-					spawnAsEntity(world, pos, h.getStackInSlot(i));
+					popResource(world, pos, h.getStackInSlot(i));
 				}
 			});
-			world.removeTileEntity(pos);
+			world.removeBlockEntity(pos);
 		}
 	}
 }

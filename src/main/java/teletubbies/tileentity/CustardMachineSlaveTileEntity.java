@@ -21,10 +21,10 @@ public class CustardMachineSlaveTileEntity extends TileEntity{
 	@Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {		
 		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-			BlockPos masterPos = CustardMachineBlock.getBasePos(pos, this.getBlockState().get(CustardMachineBlock.PART), this.getBlockState().get(CustardMachineBlock.FACING));
+			BlockPos masterPos = CustardMachineBlock.getBasePos(worldPosition, this.getBlockState().getValue(CustardMachineBlock.PART), this.getBlockState().getValue(CustardMachineBlock.FACING));
 			
-			if (world.getTileEntity(masterPos) instanceof CustardMachineTileEntity) {
-				CustardMachineTileEntity master = (CustardMachineTileEntity) world.getTileEntity(masterPos);
+			if (level.getBlockEntity(masterPos) instanceof CustardMachineTileEntity) {
+				CustardMachineTileEntity master = (CustardMachineTileEntity) level.getBlockEntity(masterPos);
 				return master.getCapability(cap, side);
 			}
 		}

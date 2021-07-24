@@ -42,7 +42,7 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
     }
     
 	public void fillInventory(LootTable table, LootContext context) {
-		List<ItemStack> list = table.generate(context);
+		List<ItemStack> list = table.getRandomItems(context);
 		Random rand = context.getRandom();
 		List<Integer> list1 = getEmptySlotsRandomized(rand);
 		shuffleItems(list, list1.size(), rand);

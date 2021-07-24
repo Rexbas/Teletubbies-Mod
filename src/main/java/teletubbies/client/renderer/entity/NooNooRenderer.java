@@ -16,7 +16,7 @@ public class NooNooRenderer extends MobRenderer<NooNooEntity, NooNooModel> {
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(NooNooEntity entity) {
+	public ResourceLocation getTextureLocation(NooNooEntity entity) {
 		return new ResourceLocation(Teletubbies.MODID, "textures/entity/noonoo.png");
 	}
 	

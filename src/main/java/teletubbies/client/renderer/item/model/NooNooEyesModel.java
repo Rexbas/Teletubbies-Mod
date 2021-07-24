@@ -18,18 +18,18 @@ public class NooNooEyesModel extends BipedModel<LivingEntity> {
 
 	public NooNooEyesModel() {
 		super(1.0F);
-		textureWidth = 16;
-		textureHeight = 16;
+		texWidth = 16;
+		texHeight = 16;
 
 		eyes = new ModelRenderer(this);
-		eyes.setRotationPoint(0.0F, 24.0F, 0.0F);
-		eyes.setTextureOffset(0, 7).addBox(0.0F, -6.0F, -8.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
-		eyes.setTextureOffset(0, 0).addBox(-3.0F, -5.0F, -8.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
+		eyes.setPos(0.0F, 24.0F, 0.0F);
+		eyes.texOffs(0, 7).addBox(0.0F, -6.0F, -8.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
+		eyes.texOffs(0, 0).addBox(-3.0F, -5.0F, -8.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		eyes.copyModelAngles(bipedHead);
+	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+		eyes.copyFrom(head);
 		eyes.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 }

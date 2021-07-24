@@ -17,7 +17,7 @@ public class TutuItem extends ArmorItem {
 		
 	public TutuItem() {
 		super(ArmorMaterial.LEATHER, EquipmentSlotType.LEGS, new Item.Properties()
-				.group(Teletubbies.ITEMGROUP));
+				.tab(Teletubbies.ITEMGROUP));
 	}
 	
 	@Override
@@ -29,7 +29,7 @@ public class TutuItem extends ArmorItem {
     @Override
     public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A defaultModel) {
     	BipedModel<LivingEntity> armorModel = TutuModel.model;
-    	armorModel.setRotationAngles(entityLiving, entityLiving.limbSwing, entityLiving.limbSwingAmount, entityLiving.ticksExisted, entityLiving.rotationYawHead, entityLiving.rotationPitch);
+    	armorModel.setupAnim(entityLiving, entityLiving.animationPosition, entityLiving.animationSpeed, entityLiving.tickCount, entityLiving.yHeadRot, entityLiving.xRot);
 		return (A) armorModel;
     }
 }

@@ -42,10 +42,10 @@ import teletubbies.init.TeletubbiesItems;
 
 /* This class is based on @BoatEntity */
 public class PoScooterEntity extends Entity {
-	private static final DataParameter<Integer> TIME_SINCE_HIT = EntityDataManager.createKey(PoScooterEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> FORWARD_DIRECTION = EntityDataManager.createKey(PoScooterEntity.class, DataSerializers.VARINT);
-	private static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.createKey(PoScooterEntity.class, DataSerializers.FLOAT);
-	private static final DataParameter<Integer> ROCKING_TICKS = EntityDataManager.createKey(PoScooterEntity.class, DataSerializers.VARINT);
+	private static final DataParameter<Integer> TIME_SINCE_HIT = EntityDataManager.defineId(PoScooterEntity.class, DataSerializers.INT);
+	private static final DataParameter<Integer> FORWARD_DIRECTION = EntityDataManager.defineId(PoScooterEntity.class, DataSerializers.INT);
+	private static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.defineId(PoScooterEntity.class, DataSerializers.FLOAT);
+	private static final DataParameter<Integer> ROCKING_TICKS = EntityDataManager.defineId(PoScooterEntity.class, DataSerializers.INT);
 	private float outOfControlTicks;
 	private float deltaRotation;
 	private int lerpSteps;
@@ -67,8 +67,8 @@ public class PoScooterEntity extends Entity {
 	
 	public PoScooterEntity(EntityType<? extends Entity> type, World world) {
 		super(type, world);
-		this.preventEntitySpawning = true;
-		stepHeight = 1.0F;
+		this.blocksBuilding = true;
+		maxUpStep = 1.0F;
 		maxFallDistance = 5;
 	}
 
@@ -78,52 +78,52 @@ public class PoScooterEntity extends Entity {
 
 	public PoScooterEntity(World worldIn, double x, double y, double z) {
 		this(worldIn);
-		this.setPosition(x, y, z);
-		this.setMotion(Vector3d.ZERO);
-		this.prevPosX = x;
-		this.prevPosY = y;
-		this.prevPosZ = z;
+		this.setPos(x, y, z);
+		this.setDeltaMovement(Vector3d.ZERO);
+		this.xo = x;
+		this.yo = y;
+		this.zo = z;
 	}
 	
 	@Override
-	protected boolean canTriggerWalking() {
+	protected boolean isMovementNoisy() {
 		return false;
 	}
 
 	@Override
-	protected void registerData() {
-		this.dataManager.register(TIME_SINCE_HIT, 0);
-		this.dataManager.register(FORWARD_DIRECTION, 1);
-		this.dataManager.register(DAMAGE_TAKEN, 0.0F);
-		this.dataManager.register(ROCKING_TICKS, 0);
+	protected void defineSynchedData() {
+		this.entityData.define(TIME_SINCE_HIT, 0);
+		this.entityData.define(FORWARD_DIRECTION, 1);
+		this.entityData.define(DAMAGE_TAKEN, 0.0F);
+		this.entityData.define(ROCKING_TICKS, 0);
 	}
 	
 	@Override
-	public boolean canCollide(Entity entity) {
+	public boolean canCollideWith(Entity entity) {
 		return canPushEntity(this, entity);
 	}
 
 	public static boolean canPushEntity(Entity p_242378_0_, Entity p_242378_1_) {
-		return (p_242378_1_.func_241845_aY() || p_242378_1_.canBePushed()) && !p_242378_0_.isRidingSameEntity(p_242378_1_);
+		return (p_242378_1_.canBeCollidedWith() || p_242378_1_.isPushable()) && !p_242378_0_.isPassengerOfSameVehicle(p_242378_1_);
 	}
 	
 	@Override
-	public boolean func_241845_aY() {
+	public boolean canBeCollidedWith() {
 		return true;
 	}
 
 	@Override
-	public boolean canBePushed() {
+	public boolean isPushable() {
 		return true;
 	}
 	
 	@Override
-	protected Vector3d func_241839_a(Direction.Axis p_241839_1_, TeleportationRepositioner.Result p_241839_2_) {
-		return LivingEntity.func_242288_h(super.func_241839_a(p_241839_1_, p_241839_2_));
+	protected Vector3d getRelativePortalPosition(Direction.Axis p_241839_1_, TeleportationRepositioner.Result p_241839_2_) {
+		return LivingEntity.resetForwardDirectionOfRelativePortalPosition(super.getRelativePortalPosition(p_241839_1_, p_241839_2_));
 	}
 
 	@Override
-	public double getMountedYOffset() {
+	public double getPassengersRidingOffset() {
 		return 0.6D;
 	}
 
@@ -133,21 +133,21 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (this.isInvulnerableTo(source)) {
 			return false;
-		} else if (!this.world.isRemote && this.isAlive()) {
-			if (source instanceof IndirectEntityDamageSource && source.getTrueSource() != null && this.isPassenger(source.getTrueSource())) {
+		} else if (!this.level.isClientSide && this.isAlive()) {
+			if (source instanceof IndirectEntityDamageSource && source.getEntity() != null && this.hasPassenger(source.getEntity())) {
 				return false;
 			} else {
 				this.setForwardDirection(-this.getForwardDirection());
 				this.setTimeSinceHit(10);
 				this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
-				this.markVelocityChanged();
-				boolean flag = source.getTrueSource() instanceof PlayerEntity && ((PlayerEntity) source.getTrueSource()).abilities.isCreativeMode;
+				this.markHurt();
+				boolean flag = source.getEntity() instanceof PlayerEntity && ((PlayerEntity) source.getEntity()).abilities.instabuild;
 				if (flag || this.getDamageTaken() > 40.0F) {
-					if (!flag && this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-						this.entityDropItem(TeletubbiesItems.PO_SCOOTER.get());
+					if (!flag && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+						this.spawnAtLocation(TeletubbiesItems.PO_SCOOTER.get());
 					}
 
 					this.remove();
@@ -161,33 +161,33 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	public void applyEntityCollision(Entity entityIn) {
+	public void push(Entity entityIn) {
 		if (entityIn instanceof PoScooterEntity) {
 			if (entityIn.getBoundingBox().minY < this.getBoundingBox().maxY) {
-				super.applyEntityCollision(entityIn);
+				super.push(entityIn);
 			}
 		} else if (entityIn.getBoundingBox().minY <= this.getBoundingBox().minY) {
-			super.applyEntityCollision(entityIn);
+			super.push(entityIn);
 		}
 
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void performHurtAnimation() {
+	public void animateHurt() {
 		this.setForwardDirection(-this.getForwardDirection());
 		this.setTimeSinceHit(10);
 		this.setDamageTaken(this.getDamageTaken() * 11.0F);
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean isPickable() {
 		return this.isAlive();
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void setPositionAndRotationDirect(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
+	public void lerpTo(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
 		this.lerpX = x;
 		this.lerpY = y;
 		this.lerpZ = z;
@@ -197,8 +197,8 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	public Direction getAdjustedHorizontalFacing() {
-		return this.getHorizontalFacing().rotateY();
+	public Direction getMotionDirection() {
+		return this.getDirection().getClockWise();
 	}
 
 	@Override
@@ -209,8 +209,8 @@ public class PoScooterEntity extends Entity {
 			++this.outOfControlTicks;
 		}
 
-		if (!this.world.isRemote && this.outOfControlTicks >= 60.0F) {
-			this.removePassengers();
+		if (!this.level.isClientSide && this.outOfControlTicks >= 60.0F) {
+			this.ejectPassengers();
 		}
 
 		if (this.getTimeSinceHit() > 0) {
@@ -223,32 +223,32 @@ public class PoScooterEntity extends Entity {
 
 		super.tick();
 		this.tickLerp();
-		if (this.canPassengerSteer()) {
+		if (this.isControlledByLocalInstance()) {
 			this.updateMotion();
-			if (this.world.isRemote) {
+			if (this.level.isClientSide) {
 				this.controlScooter();
 			}
 
-			this.move(MoverType.SELF, this.getMotion());
+			this.move(MoverType.SELF, this.getDeltaMovement());
 		} else {
-			this.setMotion(Vector3d.ZERO);
+			this.setDeltaMovement(Vector3d.ZERO);
 		}
 
 		this.updateRocking();
 
-		this.doBlockCollisions();
-		List<Entity> list = this.world.getEntitiesInAABBexcluding(this, this.getBoundingBox().grow((double) 0.2F, (double) -0.01F, (double) 0.2F), EntityPredicates.pushableBy(this));
+		this.checkInsideBlocks();
+		List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate((double) 0.2F, (double) -0.01F, (double) 0.2F), EntityPredicates.pushableBy(this));
 		if (!list.isEmpty()) {
-			boolean flag = !this.world.isRemote && !(this.getControllingPassenger() instanceof PlayerEntity);
+			boolean flag = !this.level.isClientSide && !(this.getControllingPassenger() instanceof PlayerEntity);
 
 			for (int j = 0; j < list.size(); ++j) {
 				Entity entity = list.get(j);
-				if (!entity.isPassenger(this)) {
-					if (flag && this.getPassengers().size() < 2 && !entity.isPassenger() && entity.getWidth() < this.getWidth()
+				if (!entity.hasPassenger(this)) {
+					if (flag && this.getPassengers().size() < 2 && !entity.isPassenger() && entity.getBbWidth() < this.getBbWidth()
 							&& entity instanceof LivingEntity && !(entity instanceof WaterMobEntity) && !(entity instanceof PlayerEntity)) {
 						entity.startRiding(this);
 					} else {
-						this.applyEntityCollision(entity);
+						this.push(entity);
 					}
 				}
 			}
@@ -257,7 +257,7 @@ public class PoScooterEntity extends Entity {
 	}
 
 	private void updateRocking() {
-		if (this.world.isRemote) {
+		if (this.level.isClientSide) {
 			int i = this.getRockingTicks();
 			if (i > 0) {
 				this.rockingIntensity += 0.05F;
@@ -267,7 +267,7 @@ public class PoScooterEntity extends Entity {
 
 			this.rockingIntensity = MathHelper.clamp(this.rockingIntensity, 0.0F, 1.0F);
 			this.prevRockingAngle = this.rockingAngle;
-			this.rockingAngle = 10.0F * (float) Math.sin((double) (0.5F * (float) this.world.getGameTime())) * this.rockingIntensity;
+			this.rockingAngle = 10.0F * (float) Math.sin((double) (0.5F * (float) this.level.getGameTime())) * this.rockingIntensity;
 		} else {
 			if (!this.rocking) {
 				this.setRockingTicks(0);
@@ -280,8 +280,8 @@ public class PoScooterEntity extends Entity {
 				int j = 60 - k - 1;
 				if (j > 0 && k == 0) {
 					this.setRockingTicks(0);
-					Vector3d Vector3d = this.getMotion();
-					this.setMotion(Vector3d.x, this.isPassenger(PlayerEntity.class) ? 2.7D : 0.6D, Vector3d.z);
+					Vector3d Vector3d = this.getDeltaMovement();
+					this.setDeltaMovement(Vector3d.x, this.hasPassenger(PlayerEntity.class) ? 2.7D : 0.6D, Vector3d.z);
 				}
 				this.rocking = false;
 			}
@@ -290,21 +290,21 @@ public class PoScooterEntity extends Entity {
 	}
 
 	private void tickLerp() {
-		if (this.canPassengerSteer()) {
+		if (this.isControlledByLocalInstance()) {
 			this.lerpSteps = 0;
-			this.setPacketCoordinates(this.getPosX(), this.getPosY(), this.getPosZ());
+			this.setPacketCoordinates(this.getX(), this.getY(), this.getZ());
 		}
 
 		if (this.lerpSteps > 0) {
-			double d0 = this.getPosX() + (this.lerpX - this.getPosX()) / (double) this.lerpSteps;
-			double d1 = this.getPosY() + (this.lerpY - this.getPosY()) / (double) this.lerpSteps;
-			double d2 = this.getPosZ() + (this.lerpZ - this.getPosZ()) / (double) this.lerpSteps;
-			double d3 = MathHelper.wrapDegrees(this.lerpYaw - (double) this.rotationYaw);
-			this.rotationYaw = (float) ((double) this.rotationYaw + d3 / (double) this.lerpSteps);
-			this.rotationPitch = (float) ((double) this.rotationPitch + (this.lerpPitch - (double) this.rotationPitch) / (double) this.lerpSteps);
+			double d0 = this.getX() + (this.lerpX - this.getX()) / (double) this.lerpSteps;
+			double d1 = this.getY() + (this.lerpY - this.getY()) / (double) this.lerpSteps;
+			double d2 = this.getZ() + (this.lerpZ - this.getZ()) / (double) this.lerpSteps;
+			double d3 = MathHelper.wrapDegrees(this.lerpYaw - (double) this.yRot);
+			this.yRot = (float) ((double) this.yRot + d3 / (double) this.lerpSteps);
+			this.xRot = (float) ((double) this.xRot + (this.lerpPitch - (double) this.xRot) / (double) this.lerpSteps);
 			--this.lerpSteps;
-			this.setPosition(d0, d1, d2);
-			this.setRotation(this.rotationYaw, this.rotationPitch);
+			this.setPos(d0, d1, d2);
+			this.setRot(this.yRot, this.xRot);
 		}
 	}
 
@@ -323,10 +323,10 @@ public class PoScooterEntity extends Entity {
 
 			for (int l1 = i; l1 < j; ++l1) {
 				for (int i2 = i1; i2 < j1; ++i2) {
-					blockpos$mutable.setPos(l1, k1, i2);
-					FluidState fluidstate = this.world.getFluidState(blockpos$mutable);
-					if (fluidstate.isTagged(FluidTags.WATER)) {
-						f = Math.max(f, fluidstate.getActualHeight(this.world, blockpos$mutable));
+					blockpos$mutable.set(l1, k1, i2);
+					FluidState fluidstate = this.level.getFluidState(blockpos$mutable);
+					if (fluidstate.is(FluidTags.WATER)) {
+						f = Math.max(f, fluidstate.getHeight(this.level, blockpos$mutable));
 					}
 
 					if (f >= 1.0F) {
@@ -344,15 +344,15 @@ public class PoScooterEntity extends Entity {
 	}
 
 	private void updateMotion() {
-		double d1 = this.hasNoGravity() ? 0.0D : (double) -0.04F;
+		double d1 = this.isNoGravity() ? 0.0D : (double) -0.04F;
 		float f = 0.15F;
-		Vector3d Vector3d = this.getMotion();
-		this.setMotion(Vector3d.x * f, Vector3d.y + d1, Vector3d.z * f);
+		Vector3d Vector3d = this.getDeltaMovement();
+		this.setDeltaMovement(Vector3d.x * f, Vector3d.y + d1, Vector3d.z * f);
 		this.deltaRotation *= f;
 	}
 
 	private void controlScooter() {
-		if (this.isBeingRidden()) {
+		if (this.isVehicle()) {
 			float f = 0.0F;
 			if (this.leftInputDown) {
 				--this.deltaRotation;
@@ -367,7 +367,7 @@ public class PoScooterEntity extends Entity {
 			}
 			
 			this.deltaRotation *= 3.33F;
-			this.rotationYaw += this.deltaRotation;
+			this.yRot += this.deltaRotation;
 			if (this.forwardInputDown) {
 				f += 0.4F; // Base speed
 			}
@@ -376,15 +376,15 @@ public class PoScooterEntity extends Entity {
 				f -= 0.05F;
 			}
 
-			this.setMotion(this.getMotion().add(Math.sin(-this.rotationYaw * (Math.PI / 180F)) * f, 0.0D, Math.cos(this.rotationYaw * (Math.PI / 180F)) * f));
+			this.setDeltaMovement(this.getDeltaMovement().add(Math.sin(-this.yRot * (Math.PI / 180F)) * f, 0.0D, Math.cos(this.yRot * (Math.PI / 180F)) * f));
 		}
 	}
 
 	@Override
-	public void updatePassenger(Entity passenger) {
-		if (this.isPassenger(passenger)) {
+	public void positionRider(Entity passenger) {
+		if (this.hasPassenger(passenger)) {
 			float f = 0.0F;
-			float f1 = (float) ((!this.isAlive() ? (double) 0.01F : this.getMountedYOffset()) + passenger.getYOffset());
+			float f1 = (float) ((!this.isAlive() ? (double) 0.01F : this.getPassengersRidingOffset()) + passenger.getMyRidingOffset());
 			if (this.getPassengers().size() > 1) {
 				int i = this.getPassengers().indexOf(passenger);
 				if (i == 0) {
@@ -398,41 +398,41 @@ public class PoScooterEntity extends Entity {
 				}
 			}
 
-			Vector3d Vector3d = (new Vector3d((double) f, 0.0D, 0.0D)).rotateYaw(-this.rotationYaw * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
-			passenger.setPosition(this.getPosX() + Vector3d.x, this.getPosY() + (double) f1, this.getPosZ() + Vector3d.z);
-			passenger.rotationYaw += this.deltaRotation;
-			passenger.setRotationYawHead(passenger.getRotationYawHead() + this.deltaRotation);
+			Vector3d Vector3d = (new Vector3d((double) f, 0.0D, 0.0D)).yRot(-this.yRot * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+			passenger.setPos(this.getX() + Vector3d.x, this.getY() + (double) f1, this.getZ() + Vector3d.z);
+			passenger.yRot += this.deltaRotation;
+			passenger.setYHeadRot(passenger.getYHeadRot() + this.deltaRotation);
 			this.applyYawToEntity(passenger);
 		}
 	}
 
 	protected void applyYawToEntity(Entity entityToUpdate) {
-		entityToUpdate.setRenderYawOffset(this.rotationYaw);
-		float f = MathHelper.wrapDegrees(entityToUpdate.rotationYaw - this.rotationYaw);
+		entityToUpdate.setYBodyRot(this.yRot);
+		float f = MathHelper.wrapDegrees(entityToUpdate.yRot - this.yRot);
 		float f1 = MathHelper.clamp(f, -105.0F, 105.0F);
-		entityToUpdate.prevRotationYaw += f1 - f;
-		entityToUpdate.rotationYaw += f1 - f;
-		entityToUpdate.setRotationYawHead(entityToUpdate.rotationYaw);
+		entityToUpdate.yRotO += f1 - f;
+		entityToUpdate.yRot += f1 - f;
+		entityToUpdate.setYHeadRot(entityToUpdate.yRot);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void applyOrientationToEntity(Entity entityToUpdate) {
+	public void onPassengerTurned(Entity entityToUpdate) {
 		this.applyYawToEntity(entityToUpdate);
 	}
 
 	@Override
-	protected void writeAdditional(CompoundNBT compound) {}
+	protected void addAdditionalSaveData(CompoundNBT compound) {}
 
 	@Override
-	protected void readAdditional(CompoundNBT compound) {}
+	protected void readAdditionalSaveData(CompoundNBT compound) {}
 
 	@Override
-	public ActionResultType processInitialInteract(PlayerEntity player, Hand hand) {
-		if (player.isSneaking()) {
+	public ActionResultType interact(PlayerEntity player, Hand hand) {
+		if (player.isShiftKeyDown()) {
 			return ActionResultType.FAIL;
 		} else {
-			if (!this.world.isRemote && this.outOfControlTicks < 60.0F) {
+			if (!this.level.isClientSide && this.outOfControlTicks < 60.0F) {
 				if (player.startRiding(this)) return ActionResultType.PASS;
 			}
 		}
@@ -440,22 +440,22 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	protected void updateFallState(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
-		this.lastYd = this.getMotion().y;
+	protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+		this.lastYd = this.getDeltaMovement().y;
 		if (!this.isPassenger()) {
 			if (onGroundIn) {
 				if (this.fallDistance > maxFallDistance) {
-					this.onLivingFall(this.fallDistance, 1.0F);
-					if (!this.world.isRemote && this.isAlive()) {
+					this.causeFallDamage(this.fallDistance, 1.0F);
+					if (!this.level.isClientSide && this.isAlive()) {
 						this.remove();
-						if (this.world.getGameRules().getBoolean(GameRules.DO_ENTITY_DROPS)) {
-							this.entityDropItem(TeletubbiesItems.PO_SCOOTER.get());
+						if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+							this.spawnAtLocation(TeletubbiesItems.PO_SCOOTER.get());
 						}
 					}
 				}
 
 				this.fallDistance = 0.0F;
-			} else if (!this.world.getFluidState((this.getPosition()).down()).isTagged(FluidTags.WATER) && y < 0.0D) {
+			} else if (!this.level.getFluidState((this.blockPosition()).below()).is(FluidTags.WATER) && y < 0.0D) {
 				this.fallDistance = (float) ((double) this.fallDistance - y);
 			}
 
@@ -463,27 +463,27 @@ public class PoScooterEntity extends Entity {
 	}
 
 	public void setDamageTaken(float damageTaken) {
-		this.dataManager.set(DAMAGE_TAKEN, damageTaken);
+		this.entityData.set(DAMAGE_TAKEN, damageTaken);
 	}
 
 	public float getDamageTaken() {
-		return this.dataManager.get(DAMAGE_TAKEN);
+		return this.entityData.get(DAMAGE_TAKEN);
 	}
 
 	public void setTimeSinceHit(int timeSinceHit) {
-		this.dataManager.set(TIME_SINCE_HIT, timeSinceHit);
+		this.entityData.set(TIME_SINCE_HIT, timeSinceHit);
 	}
 
 	public int getTimeSinceHit() {
-		return this.dataManager.get(TIME_SINCE_HIT);
+		return this.entityData.get(TIME_SINCE_HIT);
 	}
 
 	private void setRockingTicks(int p_203055_1_) {
-		this.dataManager.set(ROCKING_TICKS, p_203055_1_);
+		this.entityData.set(ROCKING_TICKS, p_203055_1_);
 	}
 
 	private int getRockingTicks() {
-		return this.dataManager.get(ROCKING_TICKS);
+		return this.entityData.get(ROCKING_TICKS);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -492,16 +492,16 @@ public class PoScooterEntity extends Entity {
 	}
 
 	public void setForwardDirection(int forwardDirection) {
-		this.dataManager.set(FORWARD_DIRECTION, forwardDirection);
+		this.entityData.set(FORWARD_DIRECTION, forwardDirection);
 	}
 
 	public int getForwardDirection() {
-		return this.dataManager.get(FORWARD_DIRECTION);
+		return this.entityData.get(FORWARD_DIRECTION);
 	}
 
 	@Override
-	protected boolean canFitPassenger(Entity passenger) {
-		return this.getPassengers().size() < 1 && !this.areEyesInFluid(FluidTags.WATER);
+	protected boolean canAddPassenger(Entity passenger) {
+		return this.getPassengers().size() < 1 && !this.isEyeInFluid(FluidTags.WATER);
 	}
 
 	@Nullable
@@ -520,16 +520,16 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
 	protected void addPassenger(Entity passenger) {
 		super.addPassenger(passenger);
-		if (this.canPassengerSteer() && this.lerpSteps > 0) {
+		if (this.isControlledByLocalInstance() && this.lerpSteps > 0) {
 			this.lerpSteps = 0;
-	         this.setPositionAndRotation(this.lerpX, this.lerpY, this.lerpZ, (float)this.lerpYaw, (float)this.lerpPitch);
+	         this.absMoveTo(this.lerpX, this.lerpY, this.lerpZ, (float)this.lerpYaw, (float)this.lerpPitch);
 		}
 	}
 

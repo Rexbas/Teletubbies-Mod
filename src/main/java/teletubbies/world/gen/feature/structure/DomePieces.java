@@ -22,8 +22,8 @@ import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import teletubbies.Teletubbies;
 import teletubbies.block.FullGrassBlock;
-import teletubbies.init.TeletubbiesWorldGen;
 import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesWorldGen;
 
 public class DomePieces {
 	
@@ -50,31 +50,31 @@ public class DomePieces {
 	    }
 	
 	    private void setupPiece(TemplateManager manager) {
-	        Template template = manager.getTemplateDefaulted(this.resourceLocation);
+	        Template template = manager.getOrCreate(this.resourceLocation);
 	        PlacementSettings placementsettings = new PlacementSettings();
 	        this.setup(template, this.templatePosition, placementsettings);
 	    }
 	    
         @Override
-        protected void readAdditional(CompoundNBT nbt) {
-            super.readAdditional(nbt);
+        protected void addAdditionalSaveData(CompoundNBT nbt) {
+            super.addAdditionalSaveData(nbt);
             nbt.putString("resourceLocation", this.resourceLocation.toString());
         }
 	    
 	    @Override
-	    public boolean func_230383_a_(ISeedReader world, StructureManager manager, ChunkGenerator generator, Random rand, MutableBoundingBox mbb, ChunkPos chunkPos, BlockPos pos) {
-	    	boolean b = super.func_230383_a_(world, manager, generator, rand, mbb, chunkPos, pos);
+	    public boolean postProcess(ISeedReader world, StructureManager manager, ChunkGenerator generator, Random rand, MutableBoundingBox mbb, ChunkPos chunkPos, BlockPos pos) {
+	    	boolean b = super.postProcess(world, manager, generator, rand, mbb, chunkPos, pos);
 	    	
 	    	if (b) {	    		
     			// Get all blocks in the sphere of the dome
-	        	for (int i = 0; i < mbb.getXSize(); i++) {
-	        		for (int j = 0; j < mbb.getZSize(); j++) {	        			
-	        			if (this.getBlockStateFromPos(world, i, 0, j, mbb).getBlock() instanceof FullGrassBlock ||
-	        				this.getBlockStateFromPos(world, i, 0, j, mbb).getBlock() instanceof RedstoneTorchBlock ||
-	        				this.getBlockStateFromPos(world, i, 0, j, mbb).getBlock() instanceof RedstoneLampBlock) {
+	        	for (int i = 0; i < mbb.getXSpan(); i++) {
+	        		for (int j = 0; j < mbb.getZSpan(); j++) {	        			
+	        			if (this.getBlock(world, i, 0, j, mbb).getBlock() instanceof FullGrassBlock ||
+	        				this.getBlock(world, i, 0, j, mbb).getBlock() instanceof RedstoneTorchBlock ||
+	        				this.getBlock(world, i, 0, j, mbb).getBlock() instanceof RedstoneLampBlock) {
 	            			
-	        				this.replaceAirAndLiquidDownwards(world, TeletubbiesBlocks.FULL_GRASS.get().getDefaultState(), i, -1, j, mbb);
-	        				this.replaceAirAndLiquidDownwardsThrough(world, Blocks.AIR.getDefaultState(), i, 8, j, 0, mbb);
+	        				this.fillColumnDown(world, TeletubbiesBlocks.FULL_GRASS.get().defaultBlockState(), i, -1, j, mbb);
+	        				this.replaceAirAndLiquidDownwardsThrough(world, Blocks.AIR.defaultBlockState(), i, 8, j, 0, mbb);
 	        			}
 	        		}
 	        	}
@@ -91,17 +91,17 @@ public class DomePieces {
 		}
 		
 		protected void replaceAirAndLiquidDownwardsThrough(ISeedReader world, BlockState blockstateIn, int x, int yHigh, int z, int yLow, MutableBoundingBox mbb) {
-			int i = this.getXWithOffset(x, z);
-			int j = this.getYWithOffset(yHigh);
-			int k = this.getZWithOffset(x, z);
-			final int low = this.getYWithOffset(yLow);
-			if (mbb.isVecInside(new BlockPos(i, j, k))) {
+			int i = this.getWorldX(x, z);
+			int j = this.getWorldY(yHigh);
+			int k = this.getWorldZ(x, z);
+			final int low = this.getWorldY(yLow);
+			if (mbb.isInside(new BlockPos(i, j, k))) {
 				while (j >= low) {
-					if ((world.isAirBlock(new BlockPos(i, j, k)) || world.getBlockState(new BlockPos(i, j, k)).getMaterial().isLiquid()) && j > 1) {
-						world.setBlockState(new BlockPos(i, j, k), blockstateIn, 2);
+					if ((world.isEmptyBlock(new BlockPos(i, j, k)) || world.getBlockState(new BlockPos(i, j, k)).getMaterial().isLiquid()) && j > 1) {
+						world.setBlock(new BlockPos(i, j, k), blockstateIn, 2);
 					}
 					else if ((world.getBlockState(new BlockPos(i, j, k)).hasProperty(BlockStateProperties.WATERLOGGED)) && j > 1) {
-						world.setBlockState(new BlockPos(i, j, k), world.getBlockState(new BlockPos(i, j, k)).with(BlockStateProperties.WATERLOGGED, false), 2);
+						world.setBlock(new BlockPos(i, j, k), world.getBlockState(new BlockPos(i, j, k)).setValue(BlockStateProperties.WATERLOGGED, false), 2);
 					}
 					--j;
 				}

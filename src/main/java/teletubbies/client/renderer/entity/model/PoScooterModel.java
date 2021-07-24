@@ -14,11 +14,11 @@ public class PoScooterModel extends EntityModel<PoScooterEntity> {
 	public ModelRenderer scooter;
 	
 	public PoScooterModel() {
-		textureWidth = 64;
-		textureHeight = 64;
+		texWidth = 64;
+		texHeight = 64;
 		
 		scooter = new ModelRenderer(this);
-		scooter.setRotationPoint(0.0F, 24.0F, 0.0F);
+		scooter.setPos(0.0F, 24.0F, 0.0F);
 		scooter.addBox(null, -2.0F, -23.0F, -14.0F, 3, 5, 5, 0.0F, 16, 0);
 		scooter.addBox(null, -1.0F, -42.0F, -10.0F, 1, 18, 1, 0.0F, 0, 10);
 		scooter.addBox(null, -4.0F, -43.0F, -10.0F, 7, 1, 1, 0.0F, 0, 0);
@@ -30,10 +30,10 @@ public class PoScooterModel extends EntityModel<PoScooterEntity> {
 	}
 
 	@Override
-	public void setRotationAngles(PoScooterEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+	public void setupAnim(PoScooterEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
 		scooter.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 }

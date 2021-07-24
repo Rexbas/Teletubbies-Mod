@@ -8,14 +8,14 @@ import teletubbies.config.Config;
 public class ToastItem extends Item {
 	
 	private static final Food TOAST_FOOD = new Food.Builder()
-			.hunger(Config.COMMON.TOAST_HUNGER.get())
-			.saturation(Config.COMMON.TOAST_SATURATION.get().floatValue())
-			.fastToEat()
+			.nutrition(Config.COMMON.TOAST_HUNGER.get())
+			.saturationMod(Config.COMMON.TOAST_SATURATION.get().floatValue())
+			.fast()
 			.build();
 
 	public ToastItem() {
 		super(new Item.Properties()
 				.food(TOAST_FOOD)
-				.group(Teletubbies.ITEMGROUP));
+				.tab(Teletubbies.ITEMGROUP));
 	}
 }

@@ -36,15 +36,15 @@ public class TinkyWinkyBagItem extends Item {
 	
 	public TinkyWinkyBagItem() {
 		super(new Item.Properties()
-				.maxStackSize(1)
-				.group(Teletubbies.ITEMGROUP));
+				.stacksTo(1)
+				.tab(Teletubbies.ITEMGROUP));
 	}
 		
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
-		ItemStack stack = player.getHeldItem(handIn);
-		if (!world.isRemote) {
-			player.openContainer(new INamedContainerProvider() {
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand handIn) {
+		ItemStack stack = player.getItemInHand(handIn);
+		if (!world.isClientSide) {
+			player.openMenu(new INamedContainerProvider() {
 				@Override
 				public ITextComponent getDisplayName() {
 					return new TranslationTextComponent("item.teletubbies.tinkywinky_bag");
@@ -56,7 +56,7 @@ public class TinkyWinkyBagItem extends Item {
 				}
 			});
 		}
-		return super.onItemRightClick(world, player, handIn);
+		return super.use(world, player, handIn);
 	}
 	
 	@Nullable
@@ -67,7 +67,7 @@ public class TinkyWinkyBagItem extends Item {
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		int lines = 0;
 		if (stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent()) {
 			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
@@ -79,7 +79,7 @@ public class TinkyWinkyBagItem extends Item {
 					
 					if (lines < MAX_TOOLTIP_ITEMS) {
 						ItemStack s = handler.getStackInSlot(i);
-						tooltip.add(s.getDisplayName().copyRaw().appendSibling(new StringTextComponent(" x" + s.getCount())));
+						tooltip.add(s.getHoverName().plainCopy().append(new StringTextComponent(" x" + s.getCount())));
 						lines++;
 					}
 				}

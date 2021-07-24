@@ -36,8 +36,8 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 	
 	public TeletubbyEntity(EntityType<? extends CreatureEntity> type, World world) {
 		super(type, world);
-		Arrays.fill(this.inventoryArmorDropChances, 1.0F);
-		Arrays.fill(this.inventoryHandsDropChances, 1.0F);
+		Arrays.fill(this.armorDropChances, 1.0F);
+		Arrays.fill(this.handDropChances, 1.0F);
 	}
 	
 	public static boolean canSpawn(EntityType<? extends TeletubbyEntity> entityType, IWorld world, SpawnReason reason, BlockPos pos, Random rand) {
@@ -50,65 +50,65 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 	    this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, ZombieEntity.class, 8.0F, 0.5D, 0.5D));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.45F));
 		this.goalSelector.addGoal(3, new PanicGoal(this, 0.55F));
-		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, false, Ingredient.fromItems(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get())));
+		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, false, Ingredient.of(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get())));
 		this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 0.45F));
 		this.goalSelector.addGoal(6, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
 		this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
 	}
 	
 	@Override
-	protected boolean canDropLoot() {
-		return super.canDropLoot() && !hasTransferredToZombie;
+	protected boolean shouldDropExperience() {
+		return super.shouldDropExperience() && !hasTransferredToZombie;
 	}
 	
 	@Override
-	public int getMaxSpawnedInChunk() {
+	public int getMaxSpawnClusterSize() {
 		return 1;
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 	
 	@Override
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		int i = this.rand.nextInt(10);
+	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:
 			ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
-			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
-			stack.setDamage(damage);
-			this.setItemStackToSlot(EquipmentSlotType.LEGS, stack);
+			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
+			stack.setDamageValue(damage);
+			this.setItemSlot(EquipmentSlotType.LEGS, stack);
 			break;
 		}
 	}
 	
 	@Override
 	@Nullable
-	public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData,
+	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData,
 			@Nullable CompoundNBT dataTag) {
-		spawnData = super.onInitialSpawn(world, difficulty, reason, spawnData, dataTag);
-		this.setEquipmentBasedOnDifficulty(difficulty);
+		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
+		this.populateDefaultEquipmentSlots(difficulty);
 		return spawnData;
 	}
 	
 	public abstract EntityType<?> getZombie();
 	
 	public void transferToZombie() {
-		ZombieEntity zombie = (ZombieEntity) this.getZombie().create(world);
-		zombie.copyLocationAndAnglesFrom(this);
+		ZombieEntity zombie = (ZombieEntity) this.getZombie().create(level);
+		zombie.copyPosition(this);
 		this.hasTransferredToZombie = true;
 		this.remove();
 		
-		zombie.setChild(false);
-		zombie.setNoAI(this.isAIDisabled());
+		zombie.setBaby(false);
+		zombie.setNoAi(this.isNoAi());
 		if (this.hasCustomName()) {
 			zombie.setCustomName(this.getCustomName());
 			zombie.setCustomNameVisible(this.isCustomNameVisible());
 		}
 
-		world.addEntity(zombie);
-		world.playEvent(null, 1026, zombie.getPosition(), 0);
+		level.addFreshEntity(zombie);
+		level.levelEvent(null, 1026, zombie.blockPosition(), 0);
 	}
 }

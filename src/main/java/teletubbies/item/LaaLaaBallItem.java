@@ -21,19 +21,19 @@ public class LaaLaaBallItem extends Item {
 		
 	public LaaLaaBallItem() {
 		super(new Item.Properties()
-				.maxStackSize(1)
-				.group(Teletubbies.ITEMGROUP));
+				.stacksTo(1)
+				.tab(Teletubbies.ITEMGROUP));
 	}
 	
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {	
-		ItemStack stack = player.getHeldItem(hand);
+    public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {	
+		ItemStack stack = player.getItemInHand(hand);
 		
-		if(hand == Hand.OFF_HAND && player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() instanceof LaaLaaBallItem) {
+		if(hand == Hand.OFF_HAND && player.getMainHandItem() != null && player.getMainHandItem().getItem() instanceof LaaLaaBallItem) {
 	        return new ActionResult<ItemStack>(ActionResultType.FAIL, stack);
 		}
 				
-		LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getHorizontalFacing());
+		LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getDirection());
 		AtomicReference<ActionResultType> ar = new AtomicReference<>();
 		ar.set(ActionResultType.FAIL);
 		
@@ -52,7 +52,7 @@ public class LaaLaaBallItem extends Item {
     }
 	
 	public static void jump(PlayerEntity player, boolean fallJump) {
-		LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getHorizontalFacing());
+		LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getDirection());
 
 		cap.ifPresent(c -> {
 			float fallDistance = c.fallDistance();
@@ -61,13 +61,13 @@ public class LaaLaaBallItem extends Item {
 			if(fallJump) motionY = 1 + fallDistance / 100;
 			else motionY = 1;
 			
-			float yaw = player.rotationYaw;
-			float pitch = player.rotationPitch;
+			float yaw = player.yRot;
+			float pitch = player.xRot;
 			float movingAmount = 1.0F;
 			double motionX = (double)(-MathHelper.sin(yaw / 180.0F * (float)Math.PI) * MathHelper.cos(pitch / 180.0F * (float)Math.PI) * movingAmount);
 			double motionZ = (double)(MathHelper.cos(yaw / 180.0F * (float)Math.PI) * MathHelper.cos(pitch / 180.0F * (float)Math.PI) * movingAmount);
 			
-			player.addVelocity(motionX, motionY, motionZ);
+			player.push(motionX, motionY, motionZ);
 		    Random rand = new Random();
 		    float pitch1 = (float) (rand.nextFloat() * (1.1 - 0.9) + 0.9);
 			player.playSound(TeletubbiesSounds.BALL_BOUNCE.get(), 1, pitch1);

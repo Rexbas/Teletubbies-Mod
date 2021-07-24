@@ -15,18 +15,18 @@ public class LaaLaaZombieEntity extends TeletubbyZombieEntity {
 	}
 	
 	@Override
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		super.setEquipmentBasedOnDifficulty(difficulty);
-		int i = this.rand.nextInt(10);
+	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(difficulty);
+		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:
 			ItemStack stack = new ItemStack(TeletubbiesItems.LAALAA_BIB.get());
-			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
-			stack.setDamage(damage);
-			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
+			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
+			stack.setDamageValue(damage);
+			this.setItemSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
+			this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
 			break;
 		}
 	}

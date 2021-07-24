@@ -67,30 +67,30 @@ public class CustardMachineContainer extends Container {
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.getHasStack()) {
-			int slotcount = inventorySlots.size() - playerIn.inventory.mainInventory.size();
-			ItemStack itemstack1 = slot.getStack();
+		if (slot != null && slot.hasItem()) {
+			int slotcount = slots.size() - playerIn.inventory.items.size();
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < slotcount) {
-				if (!this.mergeItemStack(itemstack1, slotcount, this.inventorySlots.size(), true))
+				if (!this.moveItemStackTo(itemstack1, slotcount, this.slots.size(), true))
 					return ItemStack.EMPTY;
-			} else if (!this.mergeItemStack(itemstack1, 0, slotcount, false)) {
+			} else if (!this.moveItemStackTo(itemstack1, 0, slotcount, false)) {
 				return ItemStack.EMPTY;
 			}
 			if (itemstack1.isEmpty())
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			else
-				slot.onSlotChanged();
+				slot.setChanged();
 		}
 		return itemstack;
 	}
 
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean stillValid(PlayerEntity playerIn) {
 		return true;
 	}
 	
@@ -98,7 +98,7 @@ public class CustardMachineContainer extends Container {
 	private static CustardMachineTileEntity getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
-		final TileEntity tileAtPos = playerInv.player.world.getTileEntity(data.readBlockPos());
+		final TileEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
 		if (tileAtPos instanceof CustardMachineTileEntity) {
 			return (CustardMachineTileEntity) tileAtPos;
 		}

@@ -14,22 +14,22 @@ public class PoScooterTickableSound extends TickableSound {
 	public PoScooterTickableSound(PoScooterEntity scooter) {
 		super(TeletubbiesSounds.ENTITY_SCOOTER.get(), SoundCategory.NEUTRAL);
 		this.scooter = scooter;
-		repeat = true;
-		repeatDelay = 0;
+		looping = true;
+		delay = 0;
 		volume = Float.MIN_VALUE;
 	}
 
 	@Override
 	public void tick() {
 		if (!scooter.isAlive()) {
-			this.finishPlaying();
-			repeat = true;
+			this.stop();
+			looping = true;
 		}
 		else {
-			x = (float) scooter.getPosX();
-			y = (float) scooter.getPosY();
-			z = (float) scooter.getPosZ();
-			if(((float)scooter.prevPosX != x || (float)scooter.prevPosZ != z) && scooter.isBeingRidden()) {
+			x = (float) scooter.getX();
+			y = (float) scooter.getY();
+			z = (float) scooter.getZ();
+			if(((float)scooter.xo != x || (float)scooter.zo != z) && scooter.isVehicle()) {
 				volume = 1.0F;
 			}
 			else {

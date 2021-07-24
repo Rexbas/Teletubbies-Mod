@@ -13,25 +13,25 @@ import teletubbies.init.TeletubbiesItems;
 public class CustardItem extends Item {
 	
 	private static final Food CUSTARD_FOOD = new Food.Builder()
-			.hunger(Config.COMMON.CUSTARD_HUNGER.get())
-			.saturation(Config.COMMON.CUSTARD_SATURATION.get().floatValue())
+			.nutrition(Config.COMMON.CUSTARD_HUNGER.get())
+			.saturationMod(Config.COMMON.CUSTARD_SATURATION.get().floatValue())
 			.build();
 	
 	public CustardItem() {
 		super(new Item.Properties()
 				.food(CUSTARD_FOOD)
-				.maxStackSize(1)
-				.group(Teletubbies.ITEMGROUP));
+				.stacksTo(1)
+				.tab(Teletubbies.ITEMGROUP));
 	}
 	
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entity) {
-		super.onItemUseFinish(stack, world, entity);
+	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
+		super.finishUsingItem(stack, world, entity);
 		return new ItemStack(TeletubbiesItems.BOWL.get());
 	}
 }

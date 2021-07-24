@@ -10,7 +10,7 @@ public class CustardMachineOutputSlot extends SlotItemHandler {
 		super(itemHandler, index, xPosition, yPosition);
 	}
 	
-	public boolean isItemValid(ItemStack stack) {
+	public boolean mayPlace(ItemStack stack) {
 		return false;
 	}
 }

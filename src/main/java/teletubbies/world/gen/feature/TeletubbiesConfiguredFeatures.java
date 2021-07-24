@@ -12,8 +12,8 @@ import teletubbies.init.TeletubbiesWorldGen;
 
 public class TeletubbiesConfiguredFeatures {
 	public static final ConfiguredFeature<?, ?> VOICE_TRUMPET_CONFIGURED_FEATURE = TeletubbiesWorldGen.VOICE_TRUMPET_FEATURE.get()
-		.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
-		.withPlacement(Placement.HEIGHTMAP_WORLD_SURFACE.configure(new NoPlacementConfig()));
+		.configured(IFeatureConfig.NONE)
+		.decorated(Placement.HEIGHTMAP_WORLD_SURFACE.configured(new NoPlacementConfig()));
 	
 	public static void registerConfiguredFeatures() {	
 		Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;

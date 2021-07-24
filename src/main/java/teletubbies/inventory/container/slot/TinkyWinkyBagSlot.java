@@ -19,13 +19,13 @@ public class TinkyWinkyBagSlot extends SlotItemHandler {
 	}
 	
 	@Override
-	public boolean isItemValid(@Nonnull ItemStack stack) {
+	public boolean mayPlace(@Nonnull ItemStack stack) {
 		if (stack.getItem() instanceof TinkyWinkyBagItem) {
 			return false;
 		}
 		
 		if (stack.getItem() instanceof BlockItem) {
-			if (((BlockItem) stack.getItem()).getBlock().isIn(BlockTags.SHULKER_BOXES)) {
+			if (((BlockItem) stack.getItem()).getBlock().is(BlockTags.SHULKER_BOXES)) {
 				return false;
 			}
 		}
@@ -39,12 +39,12 @@ public class TinkyWinkyBagSlot extends SlotItemHandler {
             	return false;
             }
         }
-		return super.isItemValid(stack);
+		return super.mayPlace(stack);
 	}
 	
 	@Override
-	public void onSlotChanged() {
-		super.onSlotChanged();
+	public void setChanged() {
+		super.setChanged();
 		if (getItemHandler() instanceof TinkyWinkyBagItemHandler) {
 			((TinkyWinkyBagItemHandler) getItemHandler()).save();
 		}

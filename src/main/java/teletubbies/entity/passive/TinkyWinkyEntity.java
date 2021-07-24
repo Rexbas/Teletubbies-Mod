@@ -32,27 +32,27 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 	}
 	
 	@Override
-	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
-		super.setEquipmentBasedOnDifficulty(difficulty);
-		int i = this.rand.nextInt(10);
+	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(difficulty);
+		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:
 			ItemStack stack = new ItemStack(TeletubbiesItems.TINKYWINKY_BIB.get());
-			int damage = this.rand.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
-			stack.setDamage(damage);
-			this.setItemStackToSlot(EquipmentSlotType.CHEST, stack);
+			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
+			stack.setDamageValue(damage);
+			this.setItemSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
 			ItemStack bag = new ItemStack(TeletubbiesItems.TINKYWINKY_BAG.get());
 			
 			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-			LootContext.Builder builder = new LootContext.Builder((ServerWorld) world);
-			LootTable table = ServerLifecycleHooks.getCurrentServer().getLootTableManager().getLootTableFromLocation(TinkyWinkyBagItem.LOOTTABLE);
-			LootContext context = builder.withParameter(LootParameters.ORIGIN, this.getPositionVec()).withParameter(LootParameters.THIS_ENTITY, this).build(LootParameterSets.GIFT);
+			LootContext.Builder builder = new LootContext.Builder((ServerWorld) level);
+			LootTable table = ServerLifecycleHooks.getCurrentServer().getLootTables().get(TinkyWinkyBagItem.LOOTTABLE);
+			LootContext context = builder.withParameter(LootParameters.ORIGIN, this.position()).withParameter(LootParameters.THIS_ENTITY, this).create(LootParameterSets.GIFT);
 
 			handler.fillInventory(table, context);
 			
-			this.setItemStackToSlot(EquipmentSlotType.MAINHAND, bag);
+			this.setItemSlot(EquipmentSlotType.MAINHAND, bag);
 			break;
 		}
 	}

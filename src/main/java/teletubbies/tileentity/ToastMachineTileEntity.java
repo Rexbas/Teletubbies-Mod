@@ -59,7 +59,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	public void tick() {	
 		boolean dirty = false;
 
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			if (this.isPowered()) {
 				if (handler.getStackInSlot(0).getItem().equals(Items.WHEAT)) {
 					this.tickCounter++;
@@ -94,29 +94,29 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 		}
 		
 		if (dirty) {
-			this.markDirty();
-			this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+			this.setChanged();
+			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
 		}
 	}
 	
 	private void setProgressInLightState() {
-		BlockState bottomState = world.getBlockState(pos);
-		BlockState topState = world.getBlockState(pos.up());
+		BlockState bottomState = level.getBlockState(worldPosition);
+		BlockState topState = level.getBlockState(worldPosition.above());
 		
 		if (this.progress >= 0 && this.progress < 4) {
 			if (bottomState.getBlock() instanceof ToastMachineBlock) {
-				world.setBlockState(pos, bottomState.with(ToastMachineBlock.LIT, this.progress));
+				level.setBlockAndUpdate(worldPosition, bottomState.setValue(ToastMachineBlock.LIT, this.progress));
 			}
 			if (topState.getBlock() instanceof ToastMachineBlock) {
-				world.setBlockState(pos.up(), topState.with(ToastMachineBlock.LIT, this.progress));
+				level.setBlockAndUpdate(worldPosition.above(), topState.setValue(ToastMachineBlock.LIT, this.progress));
 			}
 		}
 		else {
 			if (bottomState.getBlock() instanceof ToastMachineBlock) {
-				world.setBlockState(pos, bottomState.with(ToastMachineBlock.LIT, 0));
+				level.setBlockAndUpdate(worldPosition, bottomState.setValue(ToastMachineBlock.LIT, 0));
 			}
 			if (topState.getBlock() instanceof ToastMachineBlock) {
-				world.setBlockState(pos.up(), topState.with(ToastMachineBlock.LIT, 0));
+				level.setBlockAndUpdate(worldPosition.above(), topState.setValue(ToastMachineBlock.LIT, 0));
 			}
 		}
 	}
@@ -126,17 +126,17 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 	
 	public void dropToast() {
-		if (!world.isRemote) {
-        	ItemEntity item = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1.6, pos.getZ() + 0.5, new ItemStack(TeletubbiesItems.TOAST.get()));
+		if (!level.isClientSide) {
+        	ItemEntity item = new ItemEntity(level, worldPosition.getX() + 0.5, worldPosition.getY() + 1.6, worldPosition.getZ() + 0.5, new ItemStack(TeletubbiesItems.TOAST.get()));
         	
         	double motionX, motionY, motionZ;
         	
-        	PlayerEntity player = world.getClosestPlayer(item.getPosX(), item.getPosY(), item.getPosZ(), 5.5, false);
+        	PlayerEntity player = level.getNearestPlayer(item.getX(), item.getY(), item.getZ(), 5.5, false);
         	if (player != null) {
-        		Vector3d v = new Vector3d(player.getPosX() - item.getPosX(), player.getPosY() - item.getPosY(), player.getPosZ() - item.getPosZ());
+        		Vector3d v = new Vector3d(player.getX() - item.getX(), player.getY() - item.getY(), player.getZ() - item.getZ());
         		v = v.scale(0.05);
-        		motionX = v.getX();
-        		motionZ = v.getZ();
+        		motionX = v.x();
+        		motionZ = v.z();
         	}
         	else {
         		motionX = RandomHelper.getRandomNumber(-0.25, 0.25);
@@ -145,16 +145,16 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
         	
             motionY = RandomHelper.getRandomNumber(0.45, 0.6);
 
-        	item.setMotion(motionX, motionY, motionZ);
-        	world.addEntity(item);
+        	item.setDeltaMovement(motionX, motionY, motionZ);
+        	level.addFreshEntity(item);
 
-        	float soundPitch = ToastMachineBlock.isUnderwater(world, pos) ? 0.5F : 1F;
-			world.playSound(null, pos, TeletubbiesSounds.MACHINE_TOAST.get(), SoundCategory.BLOCKS, 2, soundPitch);
+        	float soundPitch = ToastMachineBlock.isUnderwater(level, worldPosition) ? 0.5F : 1F;
+			level.playSound(null, worldPosition, TeletubbiesSounds.MACHINE_TOAST.get(), SoundCategory.BLOCKS, 2, soundPitch);
     	}
 	}
 	
 	public void setPowered(BlockState state) {
-		if (state.get(ToastMachineBlock.BOTTOM)) {
+		if (state.getValue(ToastMachineBlock.BOTTOM)) {
 			this.powerList |= 1 << 0;
 		}
 		else {
@@ -163,7 +163,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 	
 	public void setUnPowered(BlockState state) {
-		if (state.get(ToastMachineBlock.BOTTOM)) {
+		if (state.getValue(ToastMachineBlock.BOTTOM)) {
 			this.powerList &= ~(1 << 0);
 		}
 		else {
@@ -176,8 +176,8 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) {
-		super.read(state, nbt);
+	public void load(BlockState state, CompoundNBT nbt) {
+		super.load(state, nbt);
 		this.handler.deserializeNBT(nbt.getCompound("Inventory"));
 		this.progress = nbt.getInt("progress");
 		this.tickCounter = nbt.getInt("tickCounter");
@@ -185,8 +185,8 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT nbt) {
-		super.write(nbt);
+	public CompoundNBT save(CompoundNBT nbt) {
+		super.save(nbt);
 		nbt.put("Inventory", this.handler.serializeNBT());
 		nbt.putInt("progress", this.progress);
 		nbt.putInt("tickCounter", this.tickCounter);
@@ -198,25 +198,25 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
 		CompoundNBT nbt = new CompoundNBT();
-		this.write(nbt);
-		return new SUpdateTileEntityPacket(this.pos, 0, nbt);
+		this.save(nbt);
+		return new SUpdateTileEntityPacket(this.worldPosition, 0, nbt);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		this.read(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+		this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag() {
 		CompoundNBT nbt = new CompoundNBT();
-		this.write(nbt);
+		this.save(nbt);
 		return nbt;
 	}
 
 	@Override
 	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
-		this.read(state, nbt);
+		this.load(state, nbt);
 	}
 	
 	@Override

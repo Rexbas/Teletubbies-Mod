@@ -17,7 +17,7 @@ public class NooNooEyesItem extends ArmorItem {
 		
 	public NooNooEyesItem() {
 		super(ArmorMaterial.IRON, EquipmentSlotType.HEAD, new Item.Properties()
-				.group(Teletubbies.ITEMGROUP));
+				.tab(Teletubbies.ITEMGROUP));
 	}
 
 	@Override

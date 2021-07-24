@@ -37,14 +37,14 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) {
-		super.read(state, nbt);
+	public void load(BlockState state, CompoundNBT nbt) {
+		super.load(state, nbt);
 		this.inputHandler.deserializeNBT(nbt.getCompound("InventoryIn"));
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT nbt) {
-		super.write(nbt);
+	public CompoundNBT save(CompoundNBT nbt) {
+		super.save(nbt);
 		nbt.put("InventoryIn", this.inputHandler.serializeNBT());
 		return nbt;
 	}
@@ -53,25 +53,25 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
 		CompoundNBT nbt = new CompoundNBT();
-		this.write(nbt);
-		return new SUpdateTileEntityPacket(this.pos, 0, nbt);
+		this.save(nbt);
+		return new SUpdateTileEntityPacket(this.worldPosition, 0, nbt);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		this.read(world.getBlockState(pkt.getPos()), pkt.getNbtCompound());
+		this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag() {
 		CompoundNBT nbt = new CompoundNBT();
-		this.write(nbt);
+		this.save(nbt);
 		return nbt;
 	}
 
 	@Override
 	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
-		this.read(state, nbt);
+		this.load(state, nbt);
 	}
 	
 	@Override
