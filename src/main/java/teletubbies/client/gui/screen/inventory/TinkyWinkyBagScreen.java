@@ -1,6 +1,6 @@
 package teletubbies.client.gui.screen.inventory;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -38,8 +38,8 @@ public class TinkyWinkyBagScreen extends AbstractContainerScreen<TinkyWinkyBagCo
 	
 	@Override
 	protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
-		GlStateManager._colorMask(true, true, true, true);
-		this.minecraft.getTextureManager().bindForSetup(TEXTURE);
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.setShaderTexture(0, TEXTURE);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.inventoryRows * 18 + 17);
