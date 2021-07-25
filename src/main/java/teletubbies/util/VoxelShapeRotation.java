@@ -19,11 +19,12 @@ public class VoxelShapeRotation {
 		List<VoxelShape> shapeList = new ArrayList<>();
 		
 		for (AABB aabb : bbList) {
-			double minX = Math.cos(a) * (aabb.minX - .5) + Math.sin(a) * (aabb.minZ - .5) + .5;
-			double minZ = -Math.sin(a) * (aabb.minX - .5) + Math.cos(a) * (aabb.minZ - .5) + .5;
-			double maxX = Math.cos(a) * (aabb.maxX - .5) + Math.sin(a) * (aabb.maxZ - .5) + .5;
-			double maxZ = -Math.sin(a) * (aabb.maxX - .5) + Math.cos(a) * (aabb.maxZ - .5) + .5;
-			shapeList.add(Shapes.box(minX, aabb.minY , minZ, maxX, aabb.maxY , maxZ));
+			double x1 = Math.cos(a) * (aabb.minX - .5) + Math.sin(a) * (aabb.minZ - .5) + .5;
+			double z1 = -Math.sin(a) * (aabb.minX - .5) + Math.cos(a) * (aabb.minZ - .5) + .5;
+			double x2 = Math.cos(a) * (aabb.maxX - .5) + Math.sin(a) * (aabb.maxZ - .5) + .5;
+			double z2 = -Math.sin(a) * (aabb.maxX - .5) + Math.cos(a) * (aabb.maxZ - .5) + .5;
+
+			shapeList.add(Shapes.box(Math.min(x1, x2), aabb.minY , Math.min(z1, z2), Math.max(x1, x2), aabb.maxY , Math.max(z1, z2)));
 		}
 		
 		VoxelShape newShape = shapeList.get(0);

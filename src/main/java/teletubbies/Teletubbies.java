@@ -1,6 +1,8 @@
 package teletubbies;
 
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -52,7 +54,7 @@ public class Teletubbies {
 
 	private void setupClient(final FMLClientSetupEvent event) {
 		//RenderRegistry.registryEntityRenders();
-		//ItemBlockRenderTypes.setRenderLayer(TeletubbiesBlocks.WINDOW.get(), RenderType.translucent());
+		ItemBlockRenderTypes.setRenderLayer(TeletubbiesBlocks.WINDOW.get(), RenderType.translucent());
 		MenuScreens.register(TeletubbiesContainers.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
 		//MenuScreens.register(TeletubbiesContainers.CONTROL_PANEL_CONTAINER.get(), ControlPanelScreen::new);
 		//MenuScreens.register(TeletubbiesContainers.TOAST_MACHINE_CONTAINER.get(), ToastMachineScreen::new);
