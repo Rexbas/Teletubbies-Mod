@@ -61,8 +61,8 @@ public class LaaLaaBallItem extends Item {
 			if(fallJump) motionY = 1 + fallDistance / 100;
 			else motionY = 1;
 			
-			float yaw = player.yRot;
-			float pitch = player.xRot;
+			float yaw = player.getYRot();
+			float pitch = player.getXRot();
 			float movingAmount = 1.0F;
 			double motionX = (double)(-Mth.sin(yaw / 180.0F * (float)Math.PI) * Mth.cos(pitch / 180.0F * (float)Math.PI) * movingAmount);
 			double motionZ = (double)(Mth.cos(yaw / 180.0F * (float)Math.PI) * Mth.cos(pitch / 180.0F * (float)Math.PI) * movingAmount);

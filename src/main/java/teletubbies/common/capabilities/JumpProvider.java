@@ -11,7 +11,7 @@ public class JumpProvider implements ICapabilityProvider {
 	@CapabilityInject(IJumpCapability.class)
 	public static final Capability<IJumpCapability> JUMP_CAPABILITY = null;
 	
-	private LazyOptional<IJumpCapability> instance = LazyOptional.of(JUMP_CAPABILITY::getDefaultInstance);
+	private LazyOptional<IJumpCapability> instance = LazyOptional.of(JumpCapability::new);
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {

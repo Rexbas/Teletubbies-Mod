@@ -1,45 +1,16 @@
 package teletubbies;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.item.ItemColor;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.level.GrassColor;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import teletubbies.client.audio.PoScooterTickableSound;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
-import teletubbies.config.Config;
-import teletubbies.entity.item.PoScooterEntity;
-import teletubbies.entity.passive.DipsyEntity;
-import teletubbies.entity.passive.LaaLaaEntity;
-import teletubbies.entity.passive.PoEntity;
-import teletubbies.entity.passive.TeletubbyEntity;
-import teletubbies.entity.passive.TinkyWinkyEntity;
-import teletubbies.init.TeletubbiesBlocks;
-import teletubbies.init.TeletubbiesItems;
 import teletubbies.item.LaaLaaBallItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
@@ -52,13 +23,13 @@ public class TeletubbiesEventHandler {
 		}
 	}
 	
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void joinClientWorld(EntityJoinWorldEvent event) {
 		if(event.getEntity() instanceof PoScooterEntity) {
 			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
 		}
-	}
+	}*/
 	
 	@SubscribeEvent
 	public static void onLivingUpdate(LivingUpdateEvent event) {
@@ -115,7 +86,7 @@ public class TeletubbiesEventHandler {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void updateRidden(PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.START && event.player instanceof LocalPlayer) {
@@ -126,9 +97,9 @@ public class TeletubbiesEventHandler {
 						player.input.up, player.input.down);
 			}
 		}
-	}
+	}*/
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if(event.getEntity() instanceof Zombie) {
 			Zombie zombie = (Zombie) event.getEntity();
@@ -137,9 +108,9 @@ public class TeletubbiesEventHandler {
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, LaaLaaEntity.class, true));
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, PoEntity.class, true));
 		}
-	}
+	}*/
 	
-	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
+	/*@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public static void onLivingDeathEvent(LivingDeathEvent event) {
 		DamageSource damageSource = (DamageSource) event.getSource();
 		Level world = event.getEntityLiving().level;
@@ -152,9 +123,9 @@ public class TeletubbiesEventHandler {
 				}
 			}
 		}
-	}
+	}*/
 	
-	@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+	/*@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class TeletubbiesBus {
 		@OnlyIn(Dist.CLIENT)
 	    @SubscribeEvent
@@ -177,5 +148,5 @@ public class TeletubbiesEventHandler {
 				event.getItemColors().register(colorHandler, TeletubbiesItems.FULL_GRASS.get());
 	    	}
 		}
-	}
+	}*/
 }
