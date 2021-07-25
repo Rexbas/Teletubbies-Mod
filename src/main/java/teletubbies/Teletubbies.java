@@ -13,6 +13,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.config.Config;
+import teletubbies.init.TeletubbiesBlocks;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
@@ -32,7 +33,7 @@ public class Teletubbies {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
 
-		//TeletubbiesBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		//TeletubbiesBlocks.TILE_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		//TeletubbiesEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());

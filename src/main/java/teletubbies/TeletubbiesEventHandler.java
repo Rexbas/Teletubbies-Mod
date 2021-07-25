@@ -1,8 +1,16 @@
 package teletubbies;
 
+import net.minecraft.client.color.item.ItemColor;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.GrassColor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -11,6 +19,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
+import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesItems;
 import teletubbies.item.LaaLaaBallItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
@@ -125,7 +135,7 @@ public class TeletubbiesEventHandler {
 		}
 	}*/
 	
-	/*@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+	@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class TeletubbiesBus {
 		@OnlyIn(Dist.CLIENT)
 	    @SubscribeEvent
@@ -148,5 +158,5 @@ public class TeletubbiesEventHandler {
 				event.getItemColors().register(colorHandler, TeletubbiesItems.FULL_GRASS.get());
 	    	}
 		}
-	}*/
+	}
 }
