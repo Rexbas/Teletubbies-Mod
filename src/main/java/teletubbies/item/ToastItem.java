@@ -1,13 +1,13 @@
 package teletubbies.item;
 
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
 import teletubbies.Teletubbies;
 import teletubbies.config.Config;
 
 public class ToastItem extends Item {
 	
-	private static final Food TOAST_FOOD = new Food.Builder()
+	private static final FoodProperties TOAST_FOOD = new FoodProperties.Builder()
 			.nutrition(Config.COMMON.TOAST_HUNGER.get())
 			.saturationMod(Config.COMMON.TOAST_SATURATION.get().floatValue())
 			.fast()

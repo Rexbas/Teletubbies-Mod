@@ -3,16 +3,16 @@ package teletubbies.tileentity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.block.CustardMachineBlock;
 import teletubbies.init.TeletubbiesBlocks;
 
-public class CustardMachineSlaveTileEntity extends TileEntity{
+public class CustardMachineSlaveTileEntity extends BlockEntity{
 
 	public CustardMachineSlaveTileEntity() {
 		super(TeletubbiesBlocks.CUSTARD_MACHINE_SLAVE_TILE.get());

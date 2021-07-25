@@ -4,27 +4,27 @@ import java.util.Random;
 
 import com.mojang.serialization.Codec;
 
-import net.minecraft.block.AirBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.GrassBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.GrassBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import teletubbies.block.VoiceTrumpetBlock;
 import teletubbies.config.Config;
 import teletubbies.init.TeletubbiesBlocks;
 
-public class VoiceTrumpetFeature extends Feature<NoFeatureConfig> {
+public class VoiceTrumpetFeature extends Feature<NoneFeatureConfiguration> {
 
-	public VoiceTrumpetFeature(Codec<NoFeatureConfig> codec) {
+	public VoiceTrumpetFeature(Codec<NoneFeatureConfiguration> codec) {
 		super(codec);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
 		if (rand.nextInt(100) < Config.COMMON.VOICE_TRUMPET_SPAWNRATE.get()) {
 			BlockState blockstate = TeletubbiesBlocks.VOICE_TRUMPET.get().defaultBlockState();
 			

@@ -2,8 +2,8 @@ package teletubbies.inventory.container.handler;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.items.ItemStackHandler;
 import teletubbies.init.TeletubbiesItems;
 

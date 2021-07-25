@@ -1,16 +1,16 @@
 package teletubbies.entity.monster;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.ZombieEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import teletubbies.init.TeletubbiesItems;
 
 public class LaaLaaZombieEntity extends TeletubbyZombieEntity {
 
-	public LaaLaaZombieEntity(EntityType<? extends ZombieEntity> type, World world) {
+	public LaaLaaZombieEntity(EntityType<? extends Zombie> type, Level world) {
 		super(type, world);
 	}
 	
@@ -23,10 +23,10 @@ public class LaaLaaZombieEntity extends TeletubbyZombieEntity {
 			ItemStack stack = new ItemStack(TeletubbiesItems.LAALAA_BIB.get());
 			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlotType.CHEST, stack);
+			this.setItemSlot(EquipmentSlot.CHEST, stack);
 			break;
 		case 1:
-			this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
+			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
 			break;
 		}
 	}

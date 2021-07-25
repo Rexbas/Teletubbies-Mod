@@ -2,46 +2,46 @@ package teletubbies.world.gen.feature.structure;
 
 import com.mojang.serialization.Codec;
 
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-public class DomeStructure extends Structure<NoFeatureConfig> {
+public class DomeStructure extends StructureFeature<NoneFeatureConfiguration> {
 
-	public DomeStructure(Codec<NoFeatureConfig> codec) {
+	public DomeStructure(Codec<NoneFeatureConfiguration> codec) {
 		super(codec);
 	}
 	
 	@Override
-	public IStartFactory<NoFeatureConfig> getStartFactory() {
+	public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() {
 		return Start::new;
 	}
 
     @Override
-    public GenerationStage.Decoration step() {
-        return GenerationStage.Decoration.SURFACE_STRUCTURES;
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
     
 	@Override
-	protected boolean isFeatureChunk(ChunkGenerator generator, BiomeProvider biomeProvider, long seed, SharedSeedRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoFeatureConfig config) {
-		int centerY = generator.getBaseHeight(chunkX * 16, chunkZ * 16, Heightmap.Type.WORLD_SURFACE_WG);
+	protected boolean isFeatureChunk(ChunkGenerator generator, BiomeSource biomeProvider, long seed, WorldgenRandom chunkRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos, NoneFeatureConfiguration config) {
+		int centerY = generator.getBaseHeight(chunkX * 16, chunkZ * 16, Heightmap.Types.WORLD_SURFACE_WG);
         BlockPos centerPos = new BlockPos(chunkX * 16, centerY - 3, chunkZ * 16);
         
-        int height_TinkyWinky = generator.getBaseHeight(centerPos.getX() - 16, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
-        int height_Dipsy = generator.getBaseHeight(centerPos.getX() + 12, centerPos.getZ() - 16, Heightmap.Type.WORLD_SURFACE_WG);
-        int height_LaaLaa = generator.getBaseHeight(centerPos.getX() + 12, centerPos.getZ() + 14, Heightmap.Type.WORLD_SURFACE_WG);
-        int height_Po = generator.getBaseHeight(centerPos.getX() - 16, centerPos.getZ() + 14, Heightmap.Type.WORLD_SURFACE_WG);
+        int height_TinkyWinky = generator.getBaseHeight(centerPos.getX() - 16, centerPos.getZ() - 16, Heightmap.Types.WORLD_SURFACE_WG);
+        int height_Dipsy = generator.getBaseHeight(centerPos.getX() + 12, centerPos.getZ() - 16, Heightmap.Types.WORLD_SURFACE_WG);
+        int height_LaaLaa = generator.getBaseHeight(centerPos.getX() + 12, centerPos.getZ() + 14, Heightmap.Types.WORLD_SURFACE_WG);
+        int height_Po = generator.getBaseHeight(centerPos.getX() - 16, centerPos.getZ() + 14, Heightmap.Types.WORLD_SURFACE_WG);
         
         if (Math.abs(centerY - height_TinkyWinky) <= 3 &&
     		Math.abs(centerY - height_Dipsy) <= 3 &&
@@ -52,15 +52,15 @@ public class DomeStructure extends Structure<NoFeatureConfig> {
 		return false;
 	}
    
-	public static class Start extends StructureStart<NoFeatureConfig> {
+	public static class Start extends StructureStart<NoneFeatureConfiguration> {
 		
-		public Start(Structure<NoFeatureConfig> structure, int chunkX, int chunkZ, MutableBoundingBox bounds, int reference, long seed) {
+		public Start(StructureFeature<NoneFeatureConfiguration> structure, int chunkX, int chunkZ, BoundingBox bounds, int reference, long seed) {
 			super(structure, chunkX, chunkZ, bounds, reference, seed);
 		}
 		
 		@Override
-		public void generatePieces(DynamicRegistries dr, ChunkGenerator generator, TemplateManager manager, int chunkX, int chunkZ, Biome biome, NoFeatureConfig config) {
-            int centerY = generator.getBaseHeight(chunkX * 16, chunkZ * 16, Heightmap.Type.WORLD_SURFACE_WG);
+		public void generatePieces(RegistryAccess dr, ChunkGenerator generator, StructureManager manager, int chunkX, int chunkZ, Biome biome, NoneFeatureConfiguration config) {
+            int centerY = generator.getBaseHeight(chunkX * 16, chunkZ * 16, Heightmap.Types.WORLD_SURFACE_WG);
             BlockPos centerPos = new BlockPos(chunkX * 16, centerY - 3, chunkZ * 16);
 			
 	        this.pieces.add(new DomePieces.Piece(manager, DomePieces.DOME_TINKYWINKY, centerPos.offset(-16, 0, -16)));

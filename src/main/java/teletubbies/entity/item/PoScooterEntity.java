@@ -4,48 +4,48 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.BlockUtil;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IndirectEntityDamageSource;
-import net.minecraft.util.TeleportationRepositioner;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesItems;
 
 /* This class is based on @BoatEntity */
 public class PoScooterEntity extends Entity {
-	private static final DataParameter<Integer> TIME_SINCE_HIT = EntityDataManager.defineId(PoScooterEntity.class, DataSerializers.INT);
-	private static final DataParameter<Integer> FORWARD_DIRECTION = EntityDataManager.defineId(PoScooterEntity.class, DataSerializers.INT);
-	private static final DataParameter<Float> DAMAGE_TAKEN = EntityDataManager.defineId(PoScooterEntity.class, DataSerializers.FLOAT);
-	private static final DataParameter<Integer> ROCKING_TICKS = EntityDataManager.defineId(PoScooterEntity.class, DataSerializers.INT);
+	private static final EntityDataAccessor<Integer> TIME_SINCE_HIT = SynchedEntityData.defineId(PoScooterEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> FORWARD_DIRECTION = SynchedEntityData.defineId(PoScooterEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Float> DAMAGE_TAKEN = SynchedEntityData.defineId(PoScooterEntity.class, EntityDataSerializers.FLOAT);
+	private static final EntityDataAccessor<Integer> ROCKING_TICKS = SynchedEntityData.defineId(PoScooterEntity.class, EntityDataSerializers.INT);
 	private float outOfControlTicks;
 	private float deltaRotation;
 	private int lerpSteps;
@@ -65,21 +65,21 @@ public class PoScooterEntity extends Entity {
 	private float prevRockingAngle;
 	private float maxFallDistance;
 	
-	public PoScooterEntity(EntityType<? extends Entity> type, World world) {
+	public PoScooterEntity(EntityType<? extends Entity> type, Level world) {
 		super(type, world);
 		this.blocksBuilding = true;
 		maxUpStep = 1.0F;
 		maxFallDistance = 5;
 	}
 
-	public PoScooterEntity(World world) {
+	public PoScooterEntity(Level world) {
 		this(TeletubbiesEntityTypes.PO_SCOOTER.get(), world);
 	}
 
-	public PoScooterEntity(World worldIn, double x, double y, double z) {
+	public PoScooterEntity(Level worldIn, double x, double y, double z) {
 		this(worldIn);
 		this.setPos(x, y, z);
-		this.setDeltaMovement(Vector3d.ZERO);
+		this.setDeltaMovement(Vec3.ZERO);
 		this.xo = x;
 		this.yo = y;
 		this.zo = z;
@@ -118,7 +118,7 @@ public class PoScooterEntity extends Entity {
 	}
 	
 	@Override
-	protected Vector3d getRelativePortalPosition(Direction.Axis p_241839_1_, TeleportationRepositioner.Result p_241839_2_) {
+	protected Vec3 getRelativePortalPosition(Direction.Axis p_241839_1_, BlockUtil.FoundRectangle p_241839_2_) {
 		return LivingEntity.resetForwardDirectionOfRelativePortalPosition(super.getRelativePortalPosition(p_241839_1_, p_241839_2_));
 	}
 
@@ -144,7 +144,7 @@ public class PoScooterEntity extends Entity {
 				this.setTimeSinceHit(10);
 				this.setDamageTaken(this.getDamageTaken() + amount * 10.0F);
 				this.markHurt();
-				boolean flag = source.getEntity() instanceof PlayerEntity && ((PlayerEntity) source.getEntity()).abilities.instabuild;
+				boolean flag = source.getEntity() instanceof Player && ((Player) source.getEntity()).abilities.instabuild;
 				if (flag || this.getDamageTaken() > 40.0F) {
 					if (!flag && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 						this.spawnAtLocation(TeletubbiesItems.PO_SCOOTER.get());
@@ -231,21 +231,21 @@ public class PoScooterEntity extends Entity {
 
 			this.move(MoverType.SELF, this.getDeltaMovement());
 		} else {
-			this.setDeltaMovement(Vector3d.ZERO);
+			this.setDeltaMovement(Vec3.ZERO);
 		}
 
 		this.updateRocking();
 
 		this.checkInsideBlocks();
-		List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate((double) 0.2F, (double) -0.01F, (double) 0.2F), EntityPredicates.pushableBy(this));
+		List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate((double) 0.2F, (double) -0.01F, (double) 0.2F), EntitySelector.pushableBy(this));
 		if (!list.isEmpty()) {
-			boolean flag = !this.level.isClientSide && !(this.getControllingPassenger() instanceof PlayerEntity);
+			boolean flag = !this.level.isClientSide && !(this.getControllingPassenger() instanceof Player);
 
 			for (int j = 0; j < list.size(); ++j) {
 				Entity entity = list.get(j);
 				if (!entity.hasPassenger(this)) {
 					if (flag && this.getPassengers().size() < 2 && !entity.isPassenger() && entity.getBbWidth() < this.getBbWidth()
-							&& entity instanceof LivingEntity && !(entity instanceof WaterMobEntity) && !(entity instanceof PlayerEntity)) {
+							&& entity instanceof LivingEntity && !(entity instanceof WaterAnimal) && !(entity instanceof Player)) {
 						entity.startRiding(this);
 					} else {
 						this.push(entity);
@@ -265,7 +265,7 @@ public class PoScooterEntity extends Entity {
 				this.rockingIntensity -= 0.1F;
 			}
 
-			this.rockingIntensity = MathHelper.clamp(this.rockingIntensity, 0.0F, 1.0F);
+			this.rockingIntensity = Mth.clamp(this.rockingIntensity, 0.0F, 1.0F);
 			this.prevRockingAngle = this.rockingAngle;
 			this.rockingAngle = 10.0F * (float) Math.sin((double) (0.5F * (float) this.level.getGameTime())) * this.rockingIntensity;
 		} else {
@@ -280,8 +280,8 @@ public class PoScooterEntity extends Entity {
 				int j = 60 - k - 1;
 				if (j > 0 && k == 0) {
 					this.setRockingTicks(0);
-					Vector3d Vector3d = this.getDeltaMovement();
-					this.setDeltaMovement(Vector3d.x, this.hasPassenger(PlayerEntity.class) ? 2.7D : 0.6D, Vector3d.z);
+					Vec3 Vector3d = this.getDeltaMovement();
+					this.setDeltaMovement(Vector3d.x, this.hasPassenger(Player.class) ? 2.7D : 0.6D, Vector3d.z);
 				}
 				this.rocking = false;
 			}
@@ -299,7 +299,7 @@ public class PoScooterEntity extends Entity {
 			double d0 = this.getX() + (this.lerpX - this.getX()) / (double) this.lerpSteps;
 			double d1 = this.getY() + (this.lerpY - this.getY()) / (double) this.lerpSteps;
 			double d2 = this.getZ() + (this.lerpZ - this.getZ()) / (double) this.lerpSteps;
-			double d3 = MathHelper.wrapDegrees(this.lerpYaw - (double) this.yRot);
+			double d3 = Mth.wrapDegrees(this.lerpYaw - (double) this.yRot);
 			this.yRot = (float) ((double) this.yRot + d3 / (double) this.lerpSteps);
 			this.xRot = (float) ((double) this.xRot + (this.lerpPitch - (double) this.xRot) / (double) this.lerpSteps);
 			--this.lerpSteps;
@@ -309,14 +309,14 @@ public class PoScooterEntity extends Entity {
 	}
 
 	public float getWaterLevelAbove() {
-		AxisAlignedBB axisalignedbb = this.getBoundingBox();
-		int i = MathHelper.floor(axisalignedbb.minX);
-		int j = MathHelper.ceil(axisalignedbb.maxX);
-		int k = MathHelper.floor(axisalignedbb.maxY);
-		int l = MathHelper.ceil(axisalignedbb.maxY - this.lastYd);
-		int i1 = MathHelper.floor(axisalignedbb.minZ);
-		int j1 = MathHelper.ceil(axisalignedbb.maxZ);
-		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+		AABB axisalignedbb = this.getBoundingBox();
+		int i = Mth.floor(axisalignedbb.minX);
+		int j = Mth.ceil(axisalignedbb.maxX);
+		int k = Mth.floor(axisalignedbb.maxY);
+		int l = Mth.ceil(axisalignedbb.maxY - this.lastYd);
+		int i1 = Mth.floor(axisalignedbb.minZ);
+		int j1 = Mth.ceil(axisalignedbb.maxZ);
+		BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
 
 		label39: for (int k1 = k; k1 < l; ++k1) {
 			float f = 0.0F;
@@ -346,7 +346,7 @@ public class PoScooterEntity extends Entity {
 	private void updateMotion() {
 		double d1 = this.isNoGravity() ? 0.0D : (double) -0.04F;
 		float f = 0.15F;
-		Vector3d Vector3d = this.getDeltaMovement();
+		Vec3 Vector3d = this.getDeltaMovement();
 		this.setDeltaMovement(Vector3d.x * f, Vector3d.y + d1, Vector3d.z * f);
 		this.deltaRotation *= f;
 	}
@@ -393,12 +393,12 @@ public class PoScooterEntity extends Entity {
 					f = -0.6F;
 				}
 				
-				if (passenger instanceof AnimalEntity) {
+				if (passenger instanceof Animal) {
 					f = (float) ((double) f + 0.2D);
 				}
 			}
 
-			Vector3d Vector3d = (new Vector3d((double) f, 0.0D, 0.0D)).yRot(-this.yRot * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+			Vec3 Vector3d = (new Vec3((double) f, 0.0D, 0.0D)).yRot(-this.yRot * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
 			passenger.setPos(this.getX() + Vector3d.x, this.getY() + (double) f1, this.getZ() + Vector3d.z);
 			passenger.yRot += this.deltaRotation;
 			passenger.setYHeadRot(passenger.getYHeadRot() + this.deltaRotation);
@@ -408,8 +408,8 @@ public class PoScooterEntity extends Entity {
 
 	protected void applyYawToEntity(Entity entityToUpdate) {
 		entityToUpdate.setYBodyRot(this.yRot);
-		float f = MathHelper.wrapDegrees(entityToUpdate.yRot - this.yRot);
-		float f1 = MathHelper.clamp(f, -105.0F, 105.0F);
+		float f = Mth.wrapDegrees(entityToUpdate.yRot - this.yRot);
+		float f1 = Mth.clamp(f, -105.0F, 105.0F);
 		entityToUpdate.yRotO += f1 - f;
 		entityToUpdate.yRot += f1 - f;
 		entityToUpdate.setYHeadRot(entityToUpdate.yRot);
@@ -422,21 +422,21 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT compound) {}
+	protected void addAdditionalSaveData(CompoundTag compound) {}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT compound) {}
+	protected void readAdditionalSaveData(CompoundTag compound) {}
 
 	@Override
-	public ActionResultType interact(PlayerEntity player, Hand hand) {
+	public InteractionResult interact(Player player, InteractionHand hand) {
 		if (player.isShiftKeyDown()) {
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 		} else {
 			if (!this.level.isClientSide && this.outOfControlTicks < 60.0F) {
-				if (player.startRiding(this)) return ActionResultType.PASS;
+				if (player.startRiding(this)) return InteractionResult.PASS;
 			}
 		}
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 
 	@Override
@@ -488,7 +488,7 @@ public class PoScooterEntity extends Entity {
 
 	@OnlyIn(Dist.CLIENT)
 	public float getRockingAngle(float partialTicks) {
-		return MathHelper.lerp(partialTicks, this.prevRockingAngle, this.rockingAngle);
+		return Mth.lerp(partialTicks, this.prevRockingAngle, this.rockingAngle);
 	}
 
 	public void setForwardDirection(int forwardDirection) {
@@ -520,7 +520,7 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -534,7 +534,7 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	public ItemStack getPickedResult(RayTraceResult target) {
+	public ItemStack getPickedResult(HitResult target) {
 		return new ItemStack(TeletubbiesItems.PO_SCOOTER.get());
 	}
 }

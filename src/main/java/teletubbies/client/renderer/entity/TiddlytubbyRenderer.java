@@ -1,10 +1,10 @@
 package teletubbies.client.renderer.entity;
 
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.fmlclient.registry.IRenderFactory;
 import teletubbies.Teletubbies;
 import teletubbies.client.renderer.entity.model.TiddlytubbyModel;
 import teletubbies.entity.baby.TiddlytubbyEntity;
@@ -12,7 +12,7 @@ import teletubbies.entity.baby.TiddlytubbyEntity;
 public class TiddlytubbyRenderer extends MobRenderer<TiddlytubbyEntity, TiddlytubbyModel<TiddlytubbyEntity>> {
 	private final String name;
 
-	public TiddlytubbyRenderer(EntityRendererManager manager, String name) {
+	public TiddlytubbyRenderer(EntityRenderDispatcher manager, String name) {
 		super(manager, new TiddlytubbyModel<>(), 0.3F);
 		this.name = name;
 	}
@@ -30,7 +30,7 @@ public class TiddlytubbyRenderer extends MobRenderer<TiddlytubbyEntity, Tiddlytu
 		}
 		
 		@Override
-		public EntityRenderer<? super TiddlytubbyEntity> createRenderFor(EntityRendererManager manager) {
+		public EntityRenderer<? super TiddlytubbyEntity> createRenderFor(EntityRenderDispatcher manager) {
 			return new TiddlytubbyRenderer(manager, name);
 		}
 	}

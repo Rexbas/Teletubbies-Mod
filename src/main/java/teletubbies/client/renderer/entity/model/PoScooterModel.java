@@ -1,23 +1,23 @@
 package teletubbies.client.renderer.entity.model;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.entity.item.PoScooterEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterModel extends EntityModel<PoScooterEntity> {
-	public ModelRenderer scooter;
+	public ModelPart scooter;
 	
 	public PoScooterModel() {
 		texWidth = 64;
 		texHeight = 64;
 		
-		scooter = new ModelRenderer(this);
+		scooter = new ModelPart(this);
 		scooter.setPos(0.0F, 24.0F, 0.0F);
 		scooter.addBox(null, -2.0F, -23.0F, -14.0F, 3, 5, 5, 0.0F, 16, 0);
 		scooter.addBox(null, -1.0F, -42.0F, -10.0F, 1, 18, 1, 0.0F, 0, 10);
@@ -33,7 +33,7 @@ public class PoScooterModel extends EntityModel<PoScooterEntity> {
 	public void setupAnim(PoScooterEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
 		scooter.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 }

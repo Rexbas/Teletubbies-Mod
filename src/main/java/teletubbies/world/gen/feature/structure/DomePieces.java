@@ -2,24 +2,24 @@ package teletubbies.world.gen.feature.structure;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.RedstoneLampBlock;
-import net.minecraft.block.RedstoneTorchBlock;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.TemplateStructurePiece;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RedstoneLampBlock;
+import net.minecraft.world.level.block.RedstoneTorchBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import teletubbies.Teletubbies;
 import teletubbies.block.FullGrassBlock;
 import teletubbies.init.TeletubbiesBlocks;
@@ -36,33 +36,33 @@ public class DomePieces {
 		
 		private ResourceLocation resourceLocation;
 		
-	    public Piece(TemplateManager manager, ResourceLocation rl, BlockPos pos) {
+	    public Piece(StructureManager manager, ResourceLocation rl, BlockPos pos) {
 	        super(TeletubbiesWorldGen.DOME_PIECE, 0);
 	        this.templatePosition = pos;
 	        this.resourceLocation = rl;
 	        this.setupPiece(manager);
 	    }
 	
-	    public Piece(TemplateManager manager, CompoundNBT nbt) {
+	    public Piece(StructureManager manager, CompoundTag nbt) {
 	        super(TeletubbiesWorldGen.DOME_PIECE, nbt);
 	        this.resourceLocation = new ResourceLocation(nbt.getString("resourceLocation"));
 	        this.setupPiece(manager);
 	    }
 	
-	    private void setupPiece(TemplateManager manager) {
-	        Template template = manager.getOrCreate(this.resourceLocation);
-	        PlacementSettings placementsettings = new PlacementSettings();
+	    private void setupPiece(StructureManager manager) {
+	        StructureTemplate template = manager.getOrCreate(this.resourceLocation);
+	        StructurePlaceSettings placementsettings = new StructurePlaceSettings();
 	        this.setup(template, this.templatePosition, placementsettings);
 	    }
 	    
         @Override
-        protected void addAdditionalSaveData(CompoundNBT nbt) {
+        protected void addAdditionalSaveData(CompoundTag nbt) {
             super.addAdditionalSaveData(nbt);
             nbt.putString("resourceLocation", this.resourceLocation.toString());
         }
 	    
 	    @Override
-	    public boolean postProcess(ISeedReader world, StructureManager manager, ChunkGenerator generator, Random rand, MutableBoundingBox mbb, ChunkPos chunkPos, BlockPos pos) {
+	    public boolean postProcess(WorldGenLevel world, StructureFeatureManager manager, ChunkGenerator generator, Random rand, BoundingBox mbb, ChunkPos chunkPos, BlockPos pos) {
 	    	boolean b = super.postProcess(world, manager, generator, rand, mbb, chunkPos, pos);
 	    	
 	    	if (b) {	    		
@@ -83,14 +83,14 @@ public class DomePieces {
 	    }
 	
 		@Override
-		protected void handleDataMarker(String function, BlockPos pos, IServerWorld world, Random rand, MutableBoundingBox mbb) {
+		protected void handleDataMarker(String function, BlockPos pos, ServerLevelAccessor world, Random rand, BoundingBox mbb) {
 			// Chest spawns but is not functional
 			/*if (function.equals("chest")) {
 				this.generateChest(world, mbb, rand, pos, TinkyWinkyBagItem.LOOTTABLE, Blocks.CHEST.getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, Direction.SOUTH));
 			}*/
 		}
 		
-		protected void replaceAirAndLiquidDownwardsThrough(ISeedReader world, BlockState blockstateIn, int x, int yHigh, int z, int yLow, MutableBoundingBox mbb) {
+		protected void replaceAirAndLiquidDownwardsThrough(WorldGenLevel world, BlockState blockstateIn, int x, int yHigh, int z, int yLow, BoundingBox mbb) {
 			int i = this.getWorldX(x, z);
 			int j = this.getWorldY(yHigh);
 			int k = this.getWorldZ(x, z);

@@ -3,24 +3,24 @@ package teletubbies.tileentity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -35,7 +35,7 @@ import teletubbies.inventory.container.handler.ToastMachineItemHandler;
 import teletubbies.util.Converter;
 import teletubbies.util.RandomHelper;
 
-public class ToastMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class ToastMachineTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
 
 	private static final long TICKS_PER_BAR = Converter.SecondsToTicks(1.2D / 4.0D);
 	private ToastMachineItemHandler handler = new ToastMachineItemHandler();
@@ -51,7 +51,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 	
 	@Override
-	public Container createMenu(final int windowID, final PlayerInventory playerInv, final PlayerEntity playerIn) {
+	public AbstractContainerMenu createMenu(final int windowID, final Inventory playerInv, final Player playerIn) {
 		return new ToastMachineContainer(windowID, playerInv, this);
 	}
 
@@ -131,9 +131,9 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
         	
         	double motionX, motionY, motionZ;
         	
-        	PlayerEntity player = level.getNearestPlayer(item.getX(), item.getY(), item.getZ(), 5.5, false);
+        	Player player = level.getNearestPlayer(item.getX(), item.getY(), item.getZ(), 5.5, false);
         	if (player != null) {
-        		Vector3d v = new Vector3d(player.getX() - item.getX(), player.getY() - item.getY(), player.getZ() - item.getZ());
+        		Vec3 v = new Vec3(player.getX() - item.getX(), player.getY() - item.getY(), player.getZ() - item.getZ());
         		v = v.scale(0.05);
         		motionX = v.x();
         		motionZ = v.z();
@@ -149,7 +149,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
         	level.addFreshEntity(item);
 
         	float soundPitch = ToastMachineBlock.isUnderwater(level, worldPosition) ? 0.5F : 1F;
-			level.playSound(null, worldPosition, TeletubbiesSounds.MACHINE_TOAST.get(), SoundCategory.BLOCKS, 2, soundPitch);
+			level.playSound(null, worldPosition, TeletubbiesSounds.MACHINE_TOAST.get(), SoundSource.BLOCKS, 2, soundPitch);
     	}
 	}
 	
@@ -176,7 +176,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundNBT nbt) {
+	public void load(BlockState state, CompoundTag nbt) {
 		super.load(state, nbt);
 		this.handler.deserializeNBT(nbt.getCompound("Inventory"));
 		this.progress = nbt.getInt("progress");
@@ -185,7 +185,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
 		nbt.put("Inventory", this.handler.serializeNBT());
 		nbt.putInt("progress", this.progress);
@@ -196,26 +196,26 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	
 	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		CompoundNBT nbt = new CompoundNBT();
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		CompoundTag nbt = new CompoundTag();
 		this.save(nbt);
-		return new SUpdateTileEntityPacket(this.worldPosition, 0, nbt);
+		return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, nbt);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT nbt = new CompoundNBT();
+	public CompoundTag getUpdateTag() {
+		CompoundTag nbt = new CompoundTag();
 		this.save(nbt);
 		return nbt;
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
+	public void handleUpdateTag(BlockState state, CompoundTag nbt) {
 		this.load(state, nbt);
 	}
 	
@@ -229,7 +229,7 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("block.teletubbies.toast_machine");
+	public Component getDisplayName() {
+		return new TranslatableComponent("block.teletubbies.toast_machine");
 	}
 }

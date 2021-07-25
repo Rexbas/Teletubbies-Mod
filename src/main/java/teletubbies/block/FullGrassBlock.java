@@ -4,28 +4,28 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.block.GrassBlock;
-import net.minecraft.block.MushroomBlock;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SeaPickleBlock;
-import net.minecraft.block.SnowBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.SweetBerryBushBlock;
-import net.minecraft.block.TallFlowerBlock;
-import net.minecraft.block.TallGrassBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.lighting.LightEngine;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.GrassBlock;
+import net.minecraft.world.level.block.MushroomBlock;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.SeaPickleBlock;
+import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.SweetBerryBushBlock;
+import net.minecraft.world.level.block.TallFlowerBlock;
+import net.minecraft.world.level.block.TallGrassBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.lighting.LayerLightEngine;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.IPlantable;
 
 public class FullGrassBlock extends GrassBlock {
@@ -39,12 +39,12 @@ public class FullGrassBlock extends GrassBlock {
 	
 	@Override
     @Nullable
-	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return PathNodeType.BLOCKED;
+	public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+        return BlockPathTypes.BLOCKED;
     }
 	
 	@Override
-	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
+	public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
 		if (plantable instanceof TallFlowerBlock ||
 				plantable instanceof FlowerBlock ||
 				plantable instanceof MushroomBlock ||
@@ -59,12 +59,12 @@ public class FullGrassBlock extends GrassBlock {
 	
 	// Need to compare with GrassBlock
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
 		this.tick(state, world, pos, rand);
 	}
 	
 	@Override
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
 		if (!worldIn.isClientSide) {
 			if (!worldIn.isAreaLoaded(pos, 3)) return; 
 			if (canBeGrass(state, worldIn, pos)) {
@@ -82,19 +82,19 @@ public class FullGrassBlock extends GrassBlock {
 		}
 	}
 	
-	private static boolean canBeGrass(BlockState p_220257_0_, IWorldReader p_220257_1_, BlockPos p_220257_2_) {
+	private static boolean canBeGrass(BlockState p_220257_0_, LevelReader p_220257_1_, BlockPos p_220257_2_) {
 		BlockPos blockpos = p_220257_2_.above();
 		BlockState blockstate = p_220257_1_.getBlockState(blockpos);
-		if (blockstate.getBlock() == Blocks.SNOW && blockstate.getValue(SnowBlock.LAYERS) == 1) {
+		if (blockstate.getBlock() == Blocks.SNOW && blockstate.getValue(SnowLayerBlock.LAYERS) == 1) {
 			return true;
 		} else {
-			int i = LightEngine.getLightBlockInto(p_220257_1_, p_220257_0_, p_220257_2_, blockstate, blockpos, Direction.UP,
+			int i = LayerLightEngine.getLightBlockInto(p_220257_1_, p_220257_0_, p_220257_2_, blockstate, blockpos, Direction.UP,
 					blockstate.getLightBlock(p_220257_1_, blockpos));
 			return i < p_220257_1_.getMaxLightLevel();
 		}
 	}
 
-	private static boolean canPropagate(BlockState p_220256_0_, IWorldReader p_220256_1_, BlockPos p_220256_2_) {
+	private static boolean canPropagate(BlockState p_220256_0_, LevelReader p_220256_1_, BlockPos p_220256_2_) {
 		BlockPos blockpos = p_220256_2_.above();
 		return canBeGrass(p_220256_0_, p_220256_1_, p_220256_2_) && !p_220256_1_.getFluidState(blockpos).is(FluidTags.WATER);
 	}

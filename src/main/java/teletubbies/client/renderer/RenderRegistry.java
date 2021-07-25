@@ -2,7 +2,7 @@ package teletubbies.client.renderer;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fmlclient.registry.RenderingRegistry;
 import teletubbies.client.renderer.entity.NooNooRenderer;
 import teletubbies.client.renderer.entity.PoScooterRenderer;
 import teletubbies.client.renderer.entity.TeletubbyRenderer;

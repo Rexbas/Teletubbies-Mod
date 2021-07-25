@@ -3,18 +3,18 @@ package teletubbies.tileentity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -23,7 +23,7 @@ import teletubbies.init.TeletubbiesBlocks;
 import teletubbies.inventory.container.ControlPanelContainer;
 import teletubbies.inventory.container.handler.ControlPanelItemHandler;
 
-public class ControlPanelTileEntity extends TileEntity implements INamedContainerProvider {
+public class ControlPanelTileEntity extends BlockEntity implements MenuProvider {
 
 	private ControlPanelItemHandler inputHandler = new ControlPanelItemHandler();
 	
@@ -32,18 +32,18 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 	}
 
 	@Override
-	public Container createMenu(final int windowID, final PlayerInventory playerInv, final PlayerEntity playerIn) {
+	public AbstractContainerMenu createMenu(final int windowID, final Inventory playerInv, final Player playerIn) {
 		return new ControlPanelContainer(windowID, playerInv, this);
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundNBT nbt) {
+	public void load(BlockState state, CompoundTag nbt) {
 		super.load(state, nbt);
 		this.inputHandler.deserializeNBT(nbt.getCompound("InventoryIn"));
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
 		nbt.put("InventoryIn", this.inputHandler.serializeNBT());
 		return nbt;
@@ -51,26 +51,26 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 	
 	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		CompoundNBT nbt = new CompoundNBT();
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		CompoundTag nbt = new CompoundTag();
 		this.save(nbt);
-		return new SUpdateTileEntityPacket(this.worldPosition, 0, nbt);
+		return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, nbt);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT nbt = new CompoundNBT();
+	public CompoundTag getUpdateTag() {
+		CompoundTag nbt = new CompoundTag();
 		this.save(nbt);
 		return nbt;
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT nbt) {
+	public void handleUpdateTag(BlockState state, CompoundTag nbt) {
 		this.load(state, nbt);
 	}
 	
@@ -93,7 +93,7 @@ public class ControlPanelTileEntity extends TileEntity implements INamedContaine
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
-		return new TranslationTextComponent("block.teletubbies.control_panel");
+	public Component getDisplayName() {
+		return new TranslatableComponent("block.teletubbies.control_panel");
 	}
 }

@@ -1,8 +1,8 @@
 package teletubbies.block;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum CustardMachinePart implements IStringSerializable {
+public enum CustardMachinePart implements StringRepresentable {
 	BASE("base"),
 	BIGBASE("bigbase"),
 	SMALLBASE("smallbase"),

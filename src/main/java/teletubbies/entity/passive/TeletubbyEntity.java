@@ -5,55 +5,55 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.monster.ZombieEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.InteractGoal;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import teletubbies.init.TeletubbiesItems;
 
-public abstract class TeletubbyEntity extends CreatureEntity {
+public abstract class TeletubbyEntity extends PathfinderMob {
 
 	protected boolean hasTransferredToZombie = false;
 	
-	public TeletubbyEntity(EntityType<? extends CreatureEntity> type, World world) {
+	public TeletubbyEntity(EntityType<? extends PathfinderMob> type, Level world) {
 		super(type, world);
 		Arrays.fill(this.armorDropChances, 1.0F);
 		Arrays.fill(this.handDropChances, 1.0F);
 	}
 	
-	public static boolean canSpawn(EntityType<? extends TeletubbyEntity> entityType, IWorld world, SpawnReason reason, BlockPos pos, Random rand) {
+	public static boolean canSpawn(EntityType<? extends TeletubbyEntity> entityType, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
 		return true;
 	}
 	
 	@Override
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new SwimGoal(this));
-	    this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, ZombieEntity.class, 8.0F, 0.5D, 0.5D));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.45F));
+		this.goalSelector.addGoal(0, new FloatGoal(this));
+	    this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Zombie.class, 8.0F, 0.5D, 0.5D));
+		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.45F));
 		this.goalSelector.addGoal(3, new PanicGoal(this, 0.55F));
 		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, false, Ingredient.of(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get())));
-		this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 0.45F));
-		this.goalSelector.addGoal(6, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
-		this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.45F));
+		this.goalSelector.addGoal(6, new InteractGoal(this, Player.class, 10F, 0.9F));
+		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 	}
 	
 	@Override
@@ -79,15 +79,15 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 			ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
 			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlotType.LEGS, stack);
+			this.setItemSlot(EquipmentSlot.LEGS, stack);
 			break;
 		}
 	}
 	
 	@Override
 	@Nullable
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData,
-			@Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData,
+			@Nullable CompoundTag dataTag) {
 		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 		this.populateDefaultEquipmentSlots(difficulty);
 		return spawnData;
@@ -96,7 +96,7 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 	public abstract EntityType<?> getZombie();
 	
 	public void transferToZombie() {
-		ZombieEntity zombie = (ZombieEntity) this.getZombie().create(level);
+		Zombie zombie = (Zombie) this.getZombie().create(level);
 		zombie.copyPosition(this);
 		this.hasTransferredToZombie = true;
 		this.remove();

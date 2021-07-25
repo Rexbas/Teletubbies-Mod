@@ -7,11 +7,11 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootTable;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TinkyWinkyBagItemHandler extends ItemStackHandler {
@@ -30,12 +30,12 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
     }
     
     public void save() {
-        CompoundNBT nbt = stack.getOrCreateTag();
+        CompoundTag nbt = stack.getOrCreateTag();
         nbt.put("Inventory", serializeNBT());
     }
     
     public void load() {
-        CompoundNBT nbt = stack.getOrCreateTag();
+        CompoundTag nbt = stack.getOrCreateTag();
         if (nbt.contains("Inventory")) {
             deserializeNBT(nbt.getCompound("Inventory"));
         }
@@ -88,8 +88,8 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
 		}
 
 		while (size - stacks.size() - list.size() > 0 && !list.isEmpty()) {
-			ItemStack itemstack2 = list.remove(MathHelper.nextInt(rand, 0, list.size() - 1));
-			int i = MathHelper.nextInt(rand, 1, itemstack2.getCount() / 2);
+			ItemStack itemstack2 = list.remove(Mth.nextInt(rand, 0, list.size() - 1));
+			int i = Mth.nextInt(rand, 1, itemstack2.getCount() / 2);
 			ItemStack itemstack1 = itemstack2.split(i);
 			if (itemstack2.getCount() > 1 && rand.nextBoolean()) {
 				list.add(itemstack2);

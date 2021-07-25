@@ -1,19 +1,19 @@
 package teletubbies.client.renderer.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraftforge.fmlclient.registry.IRenderFactory;
 import teletubbies.Teletubbies;
 import teletubbies.client.renderer.entity.model.PoScooterModel;
 import teletubbies.entity.item.PoScooterEntity;
@@ -22,13 +22,13 @@ import teletubbies.entity.item.PoScooterEntity;
 public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	private static final PoScooterModel model = new PoScooterModel();
 
-	public PoScooterRenderer(EntityRendererManager manager) {
+	public PoScooterRenderer(EntityRenderDispatcher manager) {
 		super(manager);
 		this.shadowRadius = 0.5F;
 	}
 	
 	@Override
-	public void render(PoScooterEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+	public void render(PoScooterEntity entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
 	      matrixStackIn.pushPose();
 	      matrixStackIn.translate(0.0D, 0.375D, 0.0D);
 	      matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
@@ -39,17 +39,17 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	      }
 
 	      if (f > 0.0F) {
-	         matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(MathHelper.sin(f) * f * f1 / 10.0F * (float)entity.getForwardDirection()));
+	         matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float)entity.getForwardDirection()));
 	      }
 
 	      float f2 = entity.getRockingAngle(partialTicks);
-	      if (!MathHelper.equal(f2, 0.0F)) {
+	      if (!Mth.equal(f2, 0.0F)) {
 	         matrixStackIn.mulPose(new Quaternion(new Vector3f(1.0F, 0.0F, 1.0F), entity.getRockingAngle(partialTicks), true));
 	      }
 
 	      matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
 	      PoScooterRenderer.model.setupAnim(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
-	      IVertexBuilder ivertexbuilder = bufferIn.getBuffer(PoScooterRenderer.model.renderType(this.getTextureLocation(entity)));
+	      VertexConsumer ivertexbuilder = bufferIn.getBuffer(PoScooterRenderer.model.renderType(this.getTextureLocation(entity)));
 	      PoScooterRenderer.model.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 	      matrixStackIn.popPose();
 	      super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
@@ -63,7 +63,7 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	public static class RenderFactory implements IRenderFactory<PoScooterEntity> {
 		
 		@Override
-		public EntityRenderer<? super PoScooterEntity> createRenderFor(EntityRendererManager manager) {
+		public EntityRenderer<? super PoScooterEntity> createRenderFor(EntityRenderDispatcher manager) {
 			return new PoScooterRenderer(manager);
 		}
 	}

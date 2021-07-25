@@ -2,32 +2,32 @@ package teletubbies.block;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import teletubbies.util.VoxelShapeRotation;
 
 public class WindowBlock extends Block {
@@ -48,12 +48,12 @@ public class WindowBlock extends Block {
 	
 	@Override
     @Nullable
-	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return PathNodeType.BLOCKED;
+	public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+        return BlockPathTypes.BLOCKED;
     }
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.getValue(X_AXIS)) {
 			return AABB_X;
 		}
@@ -61,7 +61,7 @@ public class WindowBlock extends Block {
 	}
 	
 	@Override
-	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (placer != null) {
 			Axis axis = placer.getDirection().getAxis();
 			BlockPos ha = getHA(pos, axis);
@@ -82,7 +82,7 @@ public class WindowBlock extends Block {
 	}
 	
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {	     
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {	     
 		Axis axis = state.getValue(X_AXIS) ? Axis.X : Axis.Z;
 		
 		BlockPos basePos = getCenterPos(pos, state.getValue(PART), axis);
@@ -124,7 +124,7 @@ public class WindowBlock extends Block {
 	}
 	
 	@Override
-    public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
+    public void onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
 		Axis axis = state.getValue(X_AXIS) ? Axis.X : Axis.Z;
 		
 		BlockPos basePos = getCenterPos(pos, state.getValue(PART), axis);
@@ -165,7 +165,7 @@ public class WindowBlock extends Block {
 		super.onBlockExploded(state, world, pos, explosion);
     }
 	
-	private void removePart(World world, BlockPos pos, BlockState state) {
+	private void removePart(Level world, BlockPos pos, BlockState state) {
 		FluidState fluidState = world.getFluidState(pos);
 	    if (fluidState.getType() == Fluids.WATER) {
 			world.setBlock(pos, fluidState.createLegacyBlock(), 35); 
@@ -177,7 +177,7 @@ public class WindowBlock extends Block {
 	
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		Axis axis = context.getHorizontalDirection().getAxis();
 		BlockPos pos = context.getClickedPos();
 		BlockPos ha = getHA(pos, axis);
@@ -204,7 +204,7 @@ public class WindowBlock extends Block {
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (state.getValue(WATERLOGGED)) {
 			world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
@@ -212,7 +212,7 @@ public class WindowBlock extends Block {
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(X_AXIS, PART, WATERLOGGED);
 	}
 	

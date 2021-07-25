@@ -1,18 +1,18 @@
 package teletubbies.entity.passive;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.LootTable;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesItems;
@@ -22,7 +22,7 @@ import teletubbies.item.TinkyWinkyBagItem;
 
 public class TinkyWinkyEntity extends TeletubbyEntity {
 	
-	public TinkyWinkyEntity(EntityType<? extends CreatureEntity> type, World world) {
+	public TinkyWinkyEntity(EntityType<? extends PathfinderMob> type, Level world) {
 		super(type, world);
 	}
 	
@@ -40,19 +40,19 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 			ItemStack stack = new ItemStack(TeletubbiesItems.TINKYWINKY_BIB.get());
 			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlotType.CHEST, stack);
+			this.setItemSlot(EquipmentSlot.CHEST, stack);
 			break;
 		case 1:
 			ItemStack bag = new ItemStack(TeletubbiesItems.TINKYWINKY_BAG.get());
 			
 			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-			LootContext.Builder builder = new LootContext.Builder((ServerWorld) level);
+			LootContext.Builder builder = new LootContext.Builder((ServerLevel) level);
 			LootTable table = ServerLifecycleHooks.getCurrentServer().getLootTables().get(TinkyWinkyBagItem.LOOTTABLE);
-			LootContext context = builder.withParameter(LootParameters.ORIGIN, this.position()).withParameter(LootParameters.THIS_ENTITY, this).create(LootParameterSets.GIFT);
+			LootContext context = builder.withParameter(LootContextParams.ORIGIN, this.position()).withParameter(LootContextParams.THIS_ENTITY, this).create(LootContextParamSets.GIFT);
 
 			handler.fillInventory(table, context);
 			
-			this.setItemSlot(EquipmentSlotType.MAINHAND, bag);
+			this.setItemSlot(EquipmentSlot.MAINHAND, bag);
 			break;
 		}
 	}

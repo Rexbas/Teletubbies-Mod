@@ -2,40 +2,40 @@ package teletubbies.block;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.tileentity.ToastMachineTileEntity;
 import teletubbies.util.BlocksUtil;
@@ -47,7 +47,7 @@ public class ToastMachineBlock extends Block {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final IntegerProperty LIT = IntegerProperty.create("lit", 0, 3);
 
-	protected static final VoxelShape TOP_AABB_NORTH = VoxelShapes.or(
+	protected static final VoxelShape TOP_AABB_NORTH = Shapes.or(
 			box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), 
 			box(2.0D, 6.0D, 7.0D, 3.0D, 7.0D, 9.0D), 
 			box(13.0D, 6.0D, 7.0D, 14.0D, 7.0D, 9.0D), 
@@ -68,25 +68,25 @@ public class ToastMachineBlock extends Block {
 	
 	@Override
     @Nullable
-	public PathNodeType getAiPathNodeType(BlockState state, IBlockReader world, BlockPos pos, @Nullable MobEntity entity) {
-        return PathNodeType.BLOCKED;
+	public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+        return BlockPathTypes.BLOCKED;
     }
 	
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		BlockPos tilePos = state.getValue(BOTTOM) ? pos : pos.below();
 		ToastMachineTileEntity te = (ToastMachineTileEntity) world.getBlockEntity(tilePos);
 
-		if (!world.isClientSide && player instanceof ServerPlayerEntity) {
-			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, tilePos);
+		if (!world.isClientSide && player instanceof ServerPlayer) {
+			NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) te, tilePos);
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.getValue(BOTTOM)) {
-			return VoxelShapes.block();
+			return Shapes.block();
 		}
 		switch(state.getValue(FACING)) {
 		case NORTH:
@@ -103,7 +103,7 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (placer != null) {
 		    FluidState fluidState = world.getFluidState(pos.above());
 		    world.setBlockAndUpdate(pos.above(), state.setValue(BOTTOM, false).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER));
@@ -111,7 +111,7 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {	     
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {	     
 		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {
@@ -127,7 +127,7 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-    public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion) {
+    public void onBlockExploded(BlockState state, Level world, BlockPos pos, Explosion explosion) {
 		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();	     
 		BlockState otherState = world.getBlockState(other);	      
 		if (otherState.getBlock() == this) {		      
@@ -144,7 +144,7 @@ public class ToastMachineBlock extends Block {
 	
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockPos pos = context.getClickedPos();
 		if (pos.getY() < 255 && context.getLevel().getBlockState(pos.above()).canBeReplaced(context)) {
 			return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection()).setValue(BOTTOM, true).setValue(WATERLOGGED, false);
@@ -158,7 +158,7 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (state.getValue(WATERLOGGED)) {
 			world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
@@ -166,11 +166,11 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, BOTTOM, WATERLOGGED, LIT);
 	}
 	
-	public static boolean isUnderwater(World world, BlockPos pos) {
+	public static boolean isUnderwater(Level world, BlockPos pos) {
 		BlockPos tilePos = world.getBlockState(pos).getValue(BOTTOM) ? pos : pos.below();
 		if (BlocksUtil.isBlockSurrounded(world, tilePos) && world.getBlockState(tilePos.above()).getValue(WATERLOGGED)) return true;
 		return false;
@@ -183,7 +183,7 @@ public class ToastMachineBlock extends Block {
 	
 	@Nullable
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
 		if (state.getValue(BOTTOM)) {
 			return new ToastMachineTileEntity();
 		}
@@ -191,7 +191,7 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-	public void onRemove(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
 			world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
@@ -203,7 +203,7 @@ public class ToastMachineBlock extends Block {
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (!world.isClientSide) {
 			BlockPos tilePos = state.getValue(BOTTOM) ? pos : pos.below();
 			
@@ -221,12 +221,12 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-	public boolean canConnectRedstone(BlockState state, IBlockReader world, BlockPos pos, @Nullable Direction side) {
+	public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, @Nullable Direction side) {
         return false;
     }
 	
 	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+	public int getLightValue(BlockState state, BlockGetter world, BlockPos pos) {
 		return state.getValue(LIT) * 4;
 	}
 }

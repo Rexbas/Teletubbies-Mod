@@ -2,15 +2,15 @@ package teletubbies.inventory.container;
 
 import java.util.Objects;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.init.TeletubbiesItems;
@@ -19,18 +19,18 @@ import teletubbies.inventory.container.slot.CustardMachineOutputSlot;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
 import teletubbies.tileentity.CustardMachineTileEntity;
 
-public class CustardMachineContainer extends Container {
+public class CustardMachineContainer extends AbstractContainerMenu {
 	
-	private final PlayerInventory playerInventory;
+	private final Inventory playerInventory;
 	private final CustardMachineTileEntity tileentity;
 	
 	// Client Constructor
-	public CustardMachineContainer(final int id, final PlayerInventory playerInventory, final PacketBuffer data) {
+	public CustardMachineContainer(final int id, final Inventory playerInventory, final FriendlyByteBuf data) {
 		this(id, playerInventory, getTileEntity(playerInventory, data));
 	}
 
 	// Server Constructor
-	public CustardMachineContainer(int id, PlayerInventory playerInventory, CustardMachineTileEntity te) {
+	public CustardMachineContainer(int id, Inventory playerInventory, CustardMachineTileEntity te) {
 		super(TeletubbiesContainers.CUSTARD_MACHINE_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
@@ -67,7 +67,7 @@ public class CustardMachineContainer extends Container {
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 
@@ -90,15 +90,15 @@ public class CustardMachineContainer extends Container {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return true;
 	}
 	
 	// https://github.com/DaRealTurtyWurty/1.15-Tut-Mod/blob/master/src/main/java/com/turtywurty/tutorialmod/container/ExampleFurnaceContainer.java
-	private static CustardMachineTileEntity getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
+	private static CustardMachineTileEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
-		final TileEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
+		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
 		if (tileAtPos instanceof CustardMachineTileEntity) {
 			return (CustardMachineTileEntity) tileAtPos;
 		}

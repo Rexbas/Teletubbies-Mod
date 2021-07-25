@@ -1,10 +1,10 @@
 package teletubbies.common.capabilities;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public interface IJumpCapability {
 	
-	public boolean canJump(PlayerEntity player);
+	public boolean canJump(Player player);
 	public float fallDistance();
 	public void setFallDistance(float newFallDistance);
 	public boolean check();

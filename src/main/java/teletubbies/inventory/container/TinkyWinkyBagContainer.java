@@ -1,12 +1,12 @@
 package teletubbies.inventory.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
@@ -15,19 +15,19 @@ import teletubbies.item.TinkyWinkyBagItem;
 
 // https://github.com/Flanks255/simplybackpacks/tree/master/src/main/java/com/flanks255/simplybackpacks
 
-public class TinkyWinkyBagContainer extends Container {
+public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 	public final int numRows = 6;
-	private final PlayerInventory playerInventory;
+	private final Inventory playerInventory;
 	public ItemStack bag;
 	
-	public TinkyWinkyBagContainer(final int id, final PlayerInventory playerInventory, PacketBuffer data) {
+	public TinkyWinkyBagContainer(final int id, final Inventory playerInventory, FriendlyByteBuf data) {
 		this(id, playerInventory,
 				playerInventory.player.getMainHandItem().getItem() instanceof TinkyWinkyBagItem
 						? playerInventory.player.getMainHandItem()
 						: playerInventory.player.getOffhandItem());
     }
 
-	public TinkyWinkyBagContainer(int id, PlayerInventory playerInventory, ItemStack bag) {
+	public TinkyWinkyBagContainer(int id, Inventory playerInventory, ItemStack bag) {
 		super(TeletubbiesContainers.TINKYWINKY_BAG_CONTAINER.get(), id);
 		this.playerInventory = playerInventory;
 		this.bag = bag;
@@ -62,7 +62,7 @@ public class TinkyWinkyBagContainer extends Container {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 
@@ -85,12 +85,12 @@ public class TinkyWinkyBagContainer extends Container {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return !bag.isEmpty();
 	}
 
 	@Override
-	public ItemStack clicked(int slot, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+	public ItemStack clicked(int slot, int dragType, ClickType clickTypeIn, Player player) {
 		if (slot >= 0) {
 			if (getSlot(slot).getItem().getItem() instanceof TinkyWinkyBagItem)
 				return ItemStack.EMPTY;

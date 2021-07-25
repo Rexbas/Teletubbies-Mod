@@ -2,17 +2,17 @@ package teletubbies.entity.monster;
 
 import java.util.Arrays;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.ZombieEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import teletubbies.init.TeletubbiesItems;
 
-public class TeletubbyZombieEntity extends ZombieEntity {
+public class TeletubbyZombieEntity extends Zombie {
 
-	public TeletubbyZombieEntity(EntityType<? extends ZombieEntity> type, World world) {
+	public TeletubbyZombieEntity(EntityType<? extends Zombie> type, Level world) {
 		super(type, world);
 		Arrays.fill(this.armorDropChances, 1.0F);
 		Arrays.fill(this.handDropChances, 1.0F);
@@ -32,7 +32,7 @@ public class TeletubbyZombieEntity extends ZombieEntity {
 			ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
 			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlotType.LEGS, stack);
+			this.setItemSlot(EquipmentSlot.LEGS, stack);
 			break;
 		}
 	}

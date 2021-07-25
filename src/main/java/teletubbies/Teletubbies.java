@@ -1,9 +1,9 @@
 package teletubbies;
 
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -33,7 +33,7 @@ import teletubbies.itemgroup.ItemGroupTeletubbies;
 public class Teletubbies {
     public static final String MODID = "teletubbies";
 	
-	public static final ItemGroup ITEMGROUP = new ItemGroupTeletubbies(MODID);
+	public static final CreativeModeTab ITEMGROUP = new ItemGroupTeletubbies(MODID);
 
 	public Teletubbies() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
@@ -62,10 +62,10 @@ public class Teletubbies {
 
 	private void setupClient(final FMLClientSetupEvent event) {
 		RenderRegistry.registryEntityRenders();
-		RenderTypeLookup.setRenderLayer(TeletubbiesBlocks.WINDOW.get(), RenderType.translucent());
-		ScreenManager.register(TeletubbiesContainers.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
-		ScreenManager.register(TeletubbiesContainers.CONTROL_PANEL_CONTAINER.get(), ControlPanelScreen::new);
-		ScreenManager.register(TeletubbiesContainers.TOAST_MACHINE_CONTAINER.get(), ToastMachineScreen::new);
-		ScreenManager.register(TeletubbiesContainers.CUSTARD_MACHINE_CONTAINER.get(), CustardMachineScreen::new);
+		ItemBlockRenderTypes.setRenderLayer(TeletubbiesBlocks.WINDOW.get(), RenderType.translucent());
+		MenuScreens.register(TeletubbiesContainers.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
+		MenuScreens.register(TeletubbiesContainers.CONTROL_PANEL_CONTAINER.get(), ControlPanelScreen::new);
+		MenuScreens.register(TeletubbiesContainers.TOAST_MACHINE_CONTAINER.get(), ToastMachineScreen::new);
+		MenuScreens.register(TeletubbiesContainers.CUSTARD_MACHINE_CONTAINER.get(), CustardMachineScreen::new);
 	}
 }

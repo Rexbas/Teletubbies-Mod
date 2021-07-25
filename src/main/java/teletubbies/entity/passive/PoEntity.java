@@ -1,19 +1,19 @@
 package teletubbies.entity.passive;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
 
 public class PoEntity extends TeletubbyEntity {
 
-	public PoEntity(EntityType<? extends CreatureEntity> type, World world) {
+	public PoEntity(EntityType<? extends PathfinderMob> type, Level world) {
 		super(type, world);
 	}
 	
@@ -33,18 +33,18 @@ public class PoEntity extends TeletubbyEntity {
 			stack = new ItemStack(TeletubbiesItems.PO_BIB.get());
 			damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlotType.CHEST, stack);
+			this.setItemSlot(EquipmentSlot.CHEST, stack);
 			break;
 		case 1:
 			stack = new ItemStack(TeletubbiesItems.PO_HELMET.get());
 			damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlotType.HEAD, stack);
+			this.setItemSlot(EquipmentSlot.HEAD, stack);
 			break;
 		}
 		
 		if (this.random.nextInt(20) == 0) {
-			this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.PO_SCOOTER.get()));
+			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TeletubbiesItems.PO_SCOOTER.get()));
 		}
 	}
 

@@ -2,32 +2,32 @@ package teletubbies.inventory.container;
 
 import java.util.Objects;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.ToastMachineItemHandler;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
 import teletubbies.tileentity.ToastMachineTileEntity;
 
-public class ToastMachineContainer extends Container {
+public class ToastMachineContainer extends AbstractContainerMenu {
 	
-	private final PlayerInventory playerInventory;
+	private final Inventory playerInventory;
 	private final ToastMachineTileEntity tileentity;
 	
 	// Client Constructor
-	public ToastMachineContainer(final int id, final PlayerInventory playerInventory, final PacketBuffer data) {
+	public ToastMachineContainer(final int id, final Inventory playerInventory, final FriendlyByteBuf data) {
 		this(id, playerInventory, getTileEntity(playerInventory, data));
 	}
 
 	// Server Constructor
-	public ToastMachineContainer(int id, PlayerInventory playerInventory, ToastMachineTileEntity te) {
+	public ToastMachineContainer(int id, Inventory playerInventory, ToastMachineTileEntity te) {
 		super(TeletubbiesContainers.TOAST_MACHINE_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
@@ -56,7 +56,7 @@ public class ToastMachineContainer extends Container {
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 
@@ -79,15 +79,15 @@ public class ToastMachineContainer extends Container {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return true;
 	}
 	
 	// https://github.com/DaRealTurtyWurty/1.15-Tut-Mod/blob/master/src/main/java/com/turtywurty/tutorialmod/container/ExampleFurnaceContainer.java
-	private static ToastMachineTileEntity getTileEntity(final PlayerInventory playerInv, final PacketBuffer data) {
+	private static ToastMachineTileEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
-		final TileEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
+		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
 		if (tileAtPos instanceof ToastMachineTileEntity) {
 			return (ToastMachineTileEntity) tileAtPos;
 		}

@@ -2,10 +2,10 @@ package teletubbies.inventory.container.slot;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -34,7 +34,7 @@ public class TinkyWinkyBagSlot extends SlotItemHandler {
             return false;
 		
 		if (stack.hasTag()) {
-            CompoundNBT tag = stack.getTag();
+            CompoundTag tag = stack.getTag();
             if (tag.contains("Items") || tag.contains("Inventory")) {
             	return false;
             }

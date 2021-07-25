@@ -18,7 +18,7 @@ version = "${mod_version}"
 group = 'com.rexbas.teletubbies' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Teletubbies-${mc_version}"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {

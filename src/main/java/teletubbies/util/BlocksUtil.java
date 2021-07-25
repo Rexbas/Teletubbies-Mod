@@ -1,11 +1,11 @@
 package teletubbies.util;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 
 public class BlocksUtil {
-	public static boolean isBlockSurrounded(World world, BlockPos pos) {
+	public static boolean isBlockSurrounded(Level world, BlockPos pos) {
 		if (world.getBlockState(pos.above()).getBlock() == Blocks.AIR) {
 			return false;
 		}

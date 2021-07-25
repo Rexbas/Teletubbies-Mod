@@ -1,27 +1,27 @@
 package teletubbies.client.renderer.item.model;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class DipsyHatModel extends BipedModel<LivingEntity> {
+public class DipsyHatModel extends HumanoidModel<LivingEntity> {
 	
 	public static DipsyHatModel model = new DipsyHatModel();
 	
-	public ModelRenderer hat;
+	public ModelPart hat;
 
 	public DipsyHatModel() {
 		super(1.0F);
 		texWidth = 64;
 		texHeight = 64;
 
-		hat = new ModelRenderer(this);
+		hat = new ModelPart(this);
 		hat.setPos(0.0F, 24.0F, 0.0F);
 		hat.texOffs(20, 10).addBox(-4.0F, -16.0F, -4.0F, 8.0F, 7.0F, 2.0F, 0.0F, false);
 		hat.texOffs(0, 10).addBox(-4.0F, -16.0F, 2.0F, 8.0F, 7.0F, 2.0F, 0.0F, false);
@@ -34,7 +34,7 @@ public class DipsyHatModel extends BipedModel<LivingEntity> {
 	}
 	
 	@Override
-	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack matrixStackIn, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
 		hat.copyFrom(head);
 		hat.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}

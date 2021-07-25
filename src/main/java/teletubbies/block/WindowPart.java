@@ -1,8 +1,8 @@
 package teletubbies.block;
 
-import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.StringRepresentable;
 
-public enum WindowPart implements IStringSerializable {
+public enum WindowPart implements StringRepresentable {
 	HORIZONTAL_A("ha"),
 	CENTER("c"),
 	HORIZONTAL_B("hb"),

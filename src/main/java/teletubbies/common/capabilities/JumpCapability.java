@@ -1,6 +1,6 @@
 package teletubbies.common.capabilities;
 
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class JumpCapability implements IJumpCapability {
 
@@ -11,7 +11,7 @@ public class JumpCapability implements IJumpCapability {
 	public JumpCapability() {}
 
 	@Override
-	public boolean canJump(PlayerEntity player) {
+	public boolean canJump(Player player) {
 		if(player.isOnGround() && !player.isInWater() && !player.isInLava()) {
 			return true;
 		}

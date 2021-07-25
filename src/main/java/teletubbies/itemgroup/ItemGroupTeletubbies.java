@@ -1,10 +1,10 @@
 package teletubbies.itemgroup;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import teletubbies.init.TeletubbiesItems;
 
-public class ItemGroupTeletubbies extends ItemGroup {
+public class ItemGroupTeletubbies extends CreativeModeTab {
 
 	public ItemGroupTeletubbies(String name) {
 		super(name);
