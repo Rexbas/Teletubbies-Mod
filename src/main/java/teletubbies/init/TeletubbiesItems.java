@@ -8,6 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
 import teletubbies.item.CustardItem;
 import teletubbies.item.LaaLaaBallItem;
+import teletubbies.item.TinkyWinkyBagItem;
 import teletubbies.item.ToastItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -28,7 +29,7 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> DIPSY_STICK = ITEMS.register("dipsy_stick", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> LAALAA_STICK = ITEMS.register("laalaa_stick", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> PO_STICK = ITEMS.register("po_stick", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	//public static final RegistryObject<Item> TINKYWINKY_BAG = ITEMS.register("tinkywinky_bag", TinkyWinkyBagItem::new);
+	public static final RegistryObject<Item> TINKYWINKY_BAG = ITEMS.register("tinkywinky_bag", TinkyWinkyBagItem::new);
 	public static final RegistryObject<Item> LAALAA_BALL = ITEMS.register("laalaa_ball", LaaLaaBallItem::new);
 	public static final RegistryObject<Item> BOWL = ITEMS.register("bowl", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> CUSTARD = ITEMS.register("custard", CustardItem::new);

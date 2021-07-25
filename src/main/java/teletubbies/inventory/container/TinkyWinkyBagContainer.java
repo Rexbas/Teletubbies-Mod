@@ -67,7 +67,7 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 		Slot slot = this.slots.get(index);
 
 		if (slot != null && slot.hasItem()) {
-			int bagslotcount = slots.size() - playerIn.inventory.items.size();
+			int bagslotcount = slots.size() - playerIn.getInventory().getContainerSize();
 			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < bagslotcount) {
@@ -90,16 +90,16 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 	}
 
 	@Override
-	public ItemStack clicked(int slot, int dragType, ClickType clickTypeIn, Player player) {
+	public void clicked(int slot, int dragType, ClickType clickTypeIn, Player player) {
 		if (slot >= 0) {
 			if (getSlot(slot).getItem().getItem() instanceof TinkyWinkyBagItem)
-				return ItemStack.EMPTY;
+				return;
 		}
 		if (clickTypeIn == ClickType.SWAP)
-			return ItemStack.EMPTY;
+			return;
 
 		if (slot >= 0)
 			getSlot(slot).container.setChanged();
-		return super.clicked(slot, dragType, clickTypeIn, player);
+		super.clicked(slot, dragType, clickTypeIn, player);
 	}
 }

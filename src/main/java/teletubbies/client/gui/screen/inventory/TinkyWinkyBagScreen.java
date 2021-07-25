@@ -33,13 +33,13 @@ public class TinkyWinkyBagScreen extends AbstractContainerScreen<TinkyWinkyBagCo
 	@Override
 	protected void renderLabels(PoseStack matrixStack, int x, int y) {		
 		this.font.draw(matrixStack, this.title, 8.0F, 6.0F, 4210752);
-		this.font.draw(matrixStack, this.inventory.getDisplayName(), 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
+		this.font.draw(matrixStack, this.playerInventoryTitle, 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
 	}
 	
 	@Override
 	protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
-		GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(TEXTURE);
+		GlStateManager._colorMask(true, true, true, true);
+		this.minecraft.getTextureManager().bindForSetup(TEXTURE);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.inventoryRows * 18 + 17);

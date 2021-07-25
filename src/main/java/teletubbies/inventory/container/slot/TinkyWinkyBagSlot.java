@@ -25,7 +25,7 @@ public class TinkyWinkyBagSlot extends SlotItemHandler {
 		}
 		
 		if (stack.getItem() instanceof BlockItem) {
-			if (((BlockItem) stack.getItem()).getBlock().is(BlockTags.SHULKER_BOXES)) {
+			if (((BlockItem) stack.getItem()).getBlock().defaultBlockState().is(BlockTags.SHULKER_BOXES)) {
 				return false;
 			}
 		}

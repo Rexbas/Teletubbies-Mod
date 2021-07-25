@@ -25,4 +25,3 @@ public class TinkyWinkyBagProvider implements ICapabilityProvider {
 		return cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY ? instance.cast() : LazyOptional.empty();
 	}
 }
-
