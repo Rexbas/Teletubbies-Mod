@@ -15,8 +15,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -30,10 +33,10 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolType;
-import teletubbies.tileentity.VoiceTrumpetTileEntity;
+import teletubbies.tileentity.VoiceTrumpetBlockEntity;
 import teletubbies.util.VoxelShapeRotation;
 
-public class VoiceTrumpetBlock extends Block implements SimpleWaterloggedBlock {
+public class VoiceTrumpetBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -97,9 +100,10 @@ public class VoiceTrumpetBlock extends Block implements SimpleWaterloggedBlock {
 	}
 	
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {	     
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();	     
-		BlockState otherState = world.getBlockState(other);	      
+		BlockState otherState = world.getBlockState(other);
+		
 		if (otherState.getBlock() == this) {
 			FluidState fluidState = world.getFluidState(other);
 		    if (fluidState.getType() == Fluids.WATER) {
@@ -163,17 +167,27 @@ public class VoiceTrumpetBlock extends Block implements SimpleWaterloggedBlock {
 		return false;
 	}
 	
-	@Override
-	public boolean hasTileEntity(BlockState state) {
+	public boolean hasBlockEntity(BlockState state) {
 		return state.getValue(BOTTOM);
 	}
 	
 	@Nullable
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		if (state.getValue(BOTTOM)) {
-			return new VoiceTrumpetTileEntity();
+			return new VoiceTrumpetBlockEntity(pos, state);
 		}
 		return null;
 	}
+	
+   @Nullable
+   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+	   return (w, blockPos, blockState, t) -> {
+           if (t instanceof VoiceTrumpetBlockEntity be) {
+               if (!w.isClientSide()) {
+                   be.serverTick();
+               }
+           }
+       };
+   }
 }
