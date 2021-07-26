@@ -1,6 +1,6 @@
 package teletubbies.client.gui.screen.inventory;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -32,18 +32,18 @@ public class ToastMachineScreen extends AbstractContainerScreen<ToastMachineCont
 	protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
 		String s = this.title.getString();
 		this.font.draw(matrixStack, s, (float) (this.imageWidth / 2 - this.font.width(s) / 2), 6.0F, 4210752);
-		this.font.draw(matrixStack, this.inventory.getDisplayName(), 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
+		this.font.draw(matrixStack, this.playerInventoryTitle, 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
 	}
 
 	@Override
 	protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-		GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(TEXTURE);
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.setShaderTexture(0, TEXTURE);
 		int i = this.leftPos;
 		int j = this.topPos;
 	    this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 	    
-	    switch (this.menu.getTileEntity().getProgress()) {
+	    switch (this.menu.getBlockEntity().getProgress()) {
 	    case 4:
 	    case 3:
 		    this.blit(matrixStack, i + 83, j + 26, 176, 0, 11, 11);
@@ -53,7 +53,7 @@ public class ToastMachineScreen extends AbstractContainerScreen<ToastMachineCont
 		    this.blit(matrixStack, i + 83, j + 52, 176, 0, 11, 11);
 	    }
 	    
-	    if (this.menu.getTileEntity().isPowered()) {
+	    if (this.menu.getBlockEntity().isPowered()) {
 			this.blit(matrixStack, i + 45, j + 40, 176, 11, 4, 11);
 	    }
 	}

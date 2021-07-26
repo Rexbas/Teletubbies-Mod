@@ -16,7 +16,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -36,7 +35,7 @@ import net.minecraftforge.common.ToolType;
 import teletubbies.tileentity.VoiceTrumpetBlockEntity;
 import teletubbies.util.VoxelShapeRotation;
 
-public class VoiceTrumpetBlock extends Block implements EntityBlock, SimpleWaterloggedBlock {
+public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;

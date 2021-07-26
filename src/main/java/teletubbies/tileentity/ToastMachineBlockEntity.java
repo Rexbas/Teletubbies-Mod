@@ -3,6 +3,7 @@ package teletubbies.tileentity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -18,7 +19,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
@@ -35,7 +35,7 @@ import teletubbies.inventory.container.handler.ToastMachineItemHandler;
 import teletubbies.util.Converter;
 import teletubbies.util.RandomHelper;
 
-public class ToastMachineTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
+public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider {
 
 	private static final long TICKS_PER_BAR = Converter.SecondsToTicks(1.2D / 4.0D);
 	private ToastMachineItemHandler handler = new ToastMachineItemHandler();
@@ -43,8 +43,8 @@ public class ToastMachineTileEntity extends BlockEntity implements TickableBlock
 	private int tickCounter;
     private byte powerList;
 	
-	public ToastMachineTileEntity() {
-		super(TeletubbiesBlocks.TOAST_MACHINE_TILE.get());
+	public ToastMachineBlockEntity(BlockPos pos, BlockState state) {
+		super(TeletubbiesBlocks.TOAST_MACHINE_BLOCK_ENTITY.get(), pos, state);
 		this.progress = 0;
 		this.tickCounter = 0;
 		this.powerList = 0;
@@ -55,8 +55,7 @@ public class ToastMachineTileEntity extends BlockEntity implements TickableBlock
 		return new ToastMachineContainer(windowID, playerInv, this);
 	}
 
-	@Override
-	public void tick() {	
+	public void commonTick() {	
 		boolean dirty = false;
 
 		if (!level.isClientSide) {
@@ -176,8 +175,8 @@ public class ToastMachineTileEntity extends BlockEntity implements TickableBlock
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundTag nbt) {
-		super.load(state, nbt);
+	public void load(CompoundTag nbt) {
+		super.load(nbt);
 		this.handler.deserializeNBT(nbt.getCompound("Inventory"));
 		this.progress = nbt.getInt("progress");
 		this.tickCounter = nbt.getInt("tickCounter");
@@ -204,7 +203,7 @@ public class ToastMachineTileEntity extends BlockEntity implements TickableBlock
 
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
+		this.load(pkt.getTag());
 	}
 
 	@Override
@@ -215,8 +214,8 @@ public class ToastMachineTileEntity extends BlockEntity implements TickableBlock
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundTag nbt) {
-		this.load(state, nbt);
+	public void handleUpdateTag(CompoundTag nbt) {
+		this.load(nbt);
 	}
 	
 	@Override

@@ -19,7 +19,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -37,11 +40,11 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.tileentity.ToastMachineTileEntity;
+import teletubbies.tileentity.ToastMachineBlockEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
 
-public class ToastMachineBlock extends Block {	
+public class ToastMachineBlock extends Block implements EntityBlock {	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty BOTTOM = BlockStateProperties.BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -75,7 +78,7 @@ public class ToastMachineBlock extends Block {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		BlockPos tilePos = state.getValue(BOTTOM) ? pos : pos.below();
-		ToastMachineTileEntity te = (ToastMachineTileEntity) world.getBlockEntity(tilePos);
+		ToastMachineBlockEntity te = (ToastMachineBlockEntity) world.getBlockEntity(tilePos);
 
 		if (!world.isClientSide && player instanceof ServerPlayer) {
 			NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) te, tilePos);
@@ -176,23 +179,22 @@ public class ToastMachineBlock extends Block {
 		return false;
 	}
 		
-	@Override
-	public boolean hasTileEntity(BlockState state) {
+	public boolean hasBlockEntity(BlockState state) {
 		return state.getValue(BOTTOM);
 	}
 	
 	@Nullable
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		if (state.getValue(BOTTOM)) {
-			return new ToastMachineTileEntity();
+			return new ToastMachineBlockEntity(pos, state);
 		}
 		return null;
 	}
 	
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
+		if (((ToastMachineBlock) state.getBlock()).hasBlockEntity(state) && state.getBlock() != newState.getBlock()) {
 			world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
 					popResource(world, pos, h.getStackInSlot(i));
@@ -207,8 +209,8 @@ public class ToastMachineBlock extends Block {
 		if (!world.isClientSide) {
 			BlockPos tilePos = state.getValue(BOTTOM) ? pos : pos.below();
 			
-			if (world.getBlockEntity(tilePos) instanceof ToastMachineTileEntity) {
-				ToastMachineTileEntity te = (ToastMachineTileEntity) world.getBlockEntity(tilePos);
+			if (world.getBlockEntity(tilePos) instanceof ToastMachineBlockEntity) {
+				ToastMachineBlockEntity te = (ToastMachineBlockEntity) world.getBlockEntity(tilePos);
 				
 				if (world.hasNeighborSignal(pos)) {
 					te.setPowered(state);
@@ -221,12 +223,17 @@ public class ToastMachineBlock extends Block {
 	}
 	
 	@Override
-	public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, @Nullable Direction side) {
-        return false;
-    }
-	
-	@Override
-	public int getLightValue(BlockState state, BlockGetter world, BlockPos pos) {
+	public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
 		return state.getValue(LIT) * 4;
+	}
+	
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state,
+			BlockEntityType<T> type) {
+		return (w, blockPos, blockState, t) -> {
+			if (t instanceof ToastMachineBlockEntity be) {
+				be.commonTick();
+			}
+		};
 	}
 }

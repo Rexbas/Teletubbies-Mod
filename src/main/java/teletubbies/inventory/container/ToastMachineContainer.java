@@ -14,26 +14,26 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.ToastMachineItemHandler;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
-import teletubbies.tileentity.ToastMachineTileEntity;
+import teletubbies.tileentity.ToastMachineBlockEntity;
 
 public class ToastMachineContainer extends AbstractContainerMenu {
 	
 	private final Inventory playerInventory;
-	private final ToastMachineTileEntity tileentity;
+	private final ToastMachineBlockEntity blockentity;
 	
 	// Client Constructor
 	public ToastMachineContainer(final int id, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(id, playerInventory, getTileEntity(playerInventory, data));
+		this(id, playerInventory, getBlockEntity(playerInventory, data));
 	}
 
 	// Server Constructor
-	public ToastMachineContainer(int id, Inventory playerInventory, ToastMachineTileEntity te) {
+	public ToastMachineContainer(int id, Inventory playerInventory, ToastMachineBlockEntity be) {
 		super(TeletubbiesContainers.TOAST_MACHINE_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
-		this.tileentity = te;
+		this.blockentity = be;
 		
-		ToastMachineItemHandler handler = (ToastMachineItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+		ToastMachineItemHandler handler = (ToastMachineItemHandler) be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 		
 		addMachineSlots(handler);
 		addPlayerSlots();
@@ -61,7 +61,7 @@ public class ToastMachineContainer extends AbstractContainerMenu {
 		Slot slot = this.slots.get(index);
 
 		if (slot != null && slot.hasItem()) {
-			int slotcount = slots.size() - playerIn.inventory.items.size();
+			int slotcount = slots.size() - playerIn.getInventory().getContainerSize();
 			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < slotcount) {
@@ -84,17 +84,17 @@ public class ToastMachineContainer extends AbstractContainerMenu {
 	}
 	
 	// https://github.com/DaRealTurtyWurty/1.15-Tut-Mod/blob/master/src/main/java/com/turtywurty/tutorialmod/container/ExampleFurnaceContainer.java
-	private static ToastMachineTileEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+	private static ToastMachineBlockEntity getBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
 		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
-		if (tileAtPos instanceof ToastMachineTileEntity) {
-			return (ToastMachineTileEntity) tileAtPos;
+		if (tileAtPos instanceof ToastMachineBlockEntity) {
+			return (ToastMachineBlockEntity) tileAtPos;
 		}
 		throw new IllegalStateException("TileEntity is not correct " + tileAtPos);
 	}
 	
-	public ToastMachineTileEntity getTileEntity() {
-		return this.tileentity;
+	public ToastMachineBlockEntity getBlockEntity() {
+		return this.blockentity;
 	}
 }
