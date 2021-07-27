@@ -181,12 +181,15 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	
    @Nullable
    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-	   return (w, blockPos, blockState, t) -> {
-           if (t instanceof VoiceTrumpetBlockEntity be) {
-               if (!w.isClientSide()) {
-                   be.serverTick();
-               }
-           }
-       };
+	   if (state.getValue(BOTTOM)) {
+		   return (w, blockPos, blockState, t) -> {
+	           if (t instanceof VoiceTrumpetBlockEntity be) {
+	               if (!w.isClientSide()) {
+	                   be.serverTick();
+	               }
+	           }
+	       };
+	   }
+	   return null;
    }
 }

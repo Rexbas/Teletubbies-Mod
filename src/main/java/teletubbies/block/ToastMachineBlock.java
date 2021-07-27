@@ -228,12 +228,14 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 	}
 	
 	@Nullable
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state,
-			BlockEntityType<T> type) {
-		return (w, blockPos, blockState, t) -> {
-			if (t instanceof ToastMachineBlockEntity be) {
-				be.commonTick();
-			}
-		};
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+		if (state.getValue(BOTTOM)) {
+			return (w, blockPos, blockState, t) -> {
+				if (t instanceof ToastMachineBlockEntity be) {
+					be.commonTick();
+				}
+			};
+		}
+		return null;
 	}
 }
