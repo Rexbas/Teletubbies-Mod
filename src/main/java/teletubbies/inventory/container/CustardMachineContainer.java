@@ -17,12 +17,12 @@ import teletubbies.init.TeletubbiesItems;
 import teletubbies.inventory.container.handler.CustardMachineItemHandler;
 import teletubbies.inventory.container.slot.CustardMachineOutputSlot;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
-import teletubbies.tileentity.CustardMachineTileEntity;
+import teletubbies.tileentity.CustardMachineBlockEntity;
 
 public class CustardMachineContainer extends AbstractContainerMenu {
 	
 	private final Inventory playerInventory;
-	private final CustardMachineTileEntity tileentity;
+	private final CustardMachineBlockEntity tileentity;
 	
 	// Client Constructor
 	public CustardMachineContainer(final int id, final Inventory playerInventory, final FriendlyByteBuf data) {
@@ -30,7 +30,7 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 	}
 
 	// Server Constructor
-	public CustardMachineContainer(int id, Inventory playerInventory, CustardMachineTileEntity te) {
+	public CustardMachineContainer(int id, Inventory playerInventory, CustardMachineBlockEntity te) {
 		super(TeletubbiesContainers.CUSTARD_MACHINE_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
@@ -72,7 +72,7 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 		Slot slot = this.slots.get(index);
 
 		if (slot != null && slot.hasItem()) {
-			int slotcount = slots.size() - playerIn.inventory.items.size();
+			int slotcount = slots.size() - playerIn.getInventory().getContainerSize();
 			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < slotcount) {
@@ -95,17 +95,17 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 	}
 	
 	// https://github.com/DaRealTurtyWurty/1.15-Tut-Mod/blob/master/src/main/java/com/turtywurty/tutorialmod/container/ExampleFurnaceContainer.java
-	private static CustardMachineTileEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+	private static CustardMachineBlockEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
 		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
-		if (tileAtPos instanceof CustardMachineTileEntity) {
-			return (CustardMachineTileEntity) tileAtPos;
+		if (tileAtPos instanceof CustardMachineBlockEntity) {
+			return (CustardMachineBlockEntity) tileAtPos;
 		}
 		throw new IllegalStateException("TileEntity is not correct " + tileAtPos);
 	}
 	
-	public CustardMachineTileEntity getTileEntity() {
+	public CustardMachineBlockEntity getTileEntity() {
 		return this.tileentity;
 	}
 }

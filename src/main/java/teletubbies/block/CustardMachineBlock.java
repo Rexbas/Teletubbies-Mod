@@ -19,7 +19,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -37,12 +40,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.tileentity.CustardMachineSlaveTileEntity;
-import teletubbies.tileentity.CustardMachineTileEntity;
+import teletubbies.tileentity.CustardMachineBlockEntity;
+import teletubbies.tileentity.CustardMachineSlaveBlockEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
 
-public class CustardMachineBlock extends Block {
+public class CustardMachineBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final EnumProperty<CustardMachinePart> PART = EnumProperty.create("part", CustardMachinePart.class);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -89,10 +92,10 @@ public class CustardMachineBlock extends Block {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		BlockPos tilePos = getBasePos(pos, state.getValue(PART), state.getValue(FACING));
-		CustardMachineTileEntity te = (CustardMachineTileEntity) world.getBlockEntity(tilePos);
+		CustardMachineBlockEntity be = (CustardMachineBlockEntity) world.getBlockEntity(tilePos);
 
 		if (!world.isClientSide && player instanceof ServerPlayer) {
-			NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) te, tilePos);
+			NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) be, tilePos);
 		}
 		return InteractionResult.SUCCESS;
 	}
@@ -278,29 +281,28 @@ public class CustardMachineBlock extends Block {
 		return false;
 	}
 	
-	@Override
-	public boolean hasTileEntity(BlockState state) {
+	public boolean hasBlockEntity(BlockState state) {
 		return (state.getValue(PART) == CustardMachinePart.BASE || state.getValue(PART) == CustardMachinePart.BIGBASE || state.getValue(PART) == CustardMachinePart.SMALLBASE);
 	}
 	
 	@Nullable
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		if (state.getValue(PART) == CustardMachinePart.BASE) {
-			return new CustardMachineTileEntity();
+			return new CustardMachineBlockEntity(pos, state);
 		}
 		else if (state.getValue(PART) == CustardMachinePart.BIGBASE) {
-			return new CustardMachineSlaveTileEntity();
+			return new CustardMachineSlaveBlockEntity(pos, state);
 		}
 		else if (state.getValue(PART) == CustardMachinePart.SMALLBASE) {
-			return new CustardMachineSlaveTileEntity();
+			return new CustardMachineSlaveBlockEntity(pos, state);
 		}
 		return null;
 	}
 	
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.hasTileEntity() && state.getBlock() != newState.getBlock() && state.getValue(PART) == CustardMachinePart.BASE) {
+		if (((CustardMachineBlock) state.getBlock()).hasBlockEntity(state) && state.getBlock() != newState.getBlock() && state.getValue(PART) == CustardMachinePart.BASE) {
 			world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
 					popResource(world, pos, h.getStackInSlot(i));
@@ -316,8 +318,20 @@ public class CustardMachineBlock extends Block {
 	}
 	
 	@Override
-	public int getLightValue(BlockState state, BlockGetter world, BlockPos pos) {
+	public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
 		return state.getValue(LIT) ? 6 : 0;
+	}
+	
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+		if (state.getValue(PART) == CustardMachinePart.BASE) {
+			return (w, blockPos, blockState, t) -> {
+				if (t instanceof CustardMachineBlockEntity be) {
+					be.commonTick();
+				}
+			};	
+		}
+		return null;
 	}
 	
 	public static BlockPos getSmallTowerBasePos(BlockPos base, Direction facing) {

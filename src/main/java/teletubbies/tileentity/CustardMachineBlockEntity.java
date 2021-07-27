@@ -18,7 +18,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
@@ -33,7 +32,7 @@ import teletubbies.inventory.container.CustardMachineContainer;
 import teletubbies.inventory.container.handler.CustardMachineItemHandler;
 import teletubbies.util.Converter;
 
-public class CustardMachineTileEntity extends BlockEntity implements TickableBlockEntity, MenuProvider {
+public class CustardMachineBlockEntity extends BlockEntity implements MenuProvider {
 
 	private static final int DURATION = (int) Converter.SecondsToTicks(3);
 	private CustardMachineItemHandler inputHandler = new CustardMachineItemHandler(7);
@@ -41,8 +40,8 @@ public class CustardMachineTileEntity extends BlockEntity implements TickableBlo
 	private int processTime; // Counting down
 	private boolean isProcessing;
 	
-	public CustardMachineTileEntity() {
-		super(TeletubbiesBlocks.CUSTARD_MACHINE_TILE.get());
+	public CustardMachineBlockEntity(BlockPos pos, BlockState state) {
+		super(TeletubbiesBlocks.CUSTARD_MACHINE_BLOCK_ENTITY.get(), pos, state);
 		this.processTime = 0;
 		this.isProcessing = false;
 	}
@@ -52,8 +51,7 @@ public class CustardMachineTileEntity extends BlockEntity implements TickableBlo
 		return new CustardMachineContainer(windowID, playerInv, this);
 	}
 
-	@Override
-	public void tick() {
+	public void commonTick() {
 		boolean dirty = false;
 
 		if (!level.isClientSide) {
@@ -146,8 +144,8 @@ public class CustardMachineTileEntity extends BlockEntity implements TickableBlo
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundTag nbt) {
-		super.load(state, nbt);
+	public void load(CompoundTag nbt) {
+		super.load(nbt);
 		this.inputHandler.deserializeNBT(nbt.getCompound("InventoryIn"));
 		this.outputHandler.deserializeNBT(nbt.getCompound("InventoryOut"));
 		this.processTime = nbt.getInt("processTime");
@@ -174,7 +172,7 @@ public class CustardMachineTileEntity extends BlockEntity implements TickableBlo
 
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
+		this.load(pkt.getTag());
 	}
 
 	@Override
@@ -185,8 +183,8 @@ public class CustardMachineTileEntity extends BlockEntity implements TickableBlo
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundTag nbt) {
-		this.load(state, nbt);
+	public void handleUpdateTag(CompoundTag nbt) {
+		this.load(nbt);
 	}
 	
 	@Override

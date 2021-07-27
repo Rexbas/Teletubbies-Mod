@@ -13,12 +13,12 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.ControlPanelItemHandler;
 import teletubbies.inventory.container.slot.ItemHandlerSlot;
-import teletubbies.tileentity.ControlPanelTileEntity;
+import teletubbies.tileentity.ControlPanelBlockEntity;
 
 public class ControlPanelContainer extends AbstractContainerMenu {
 
 	private final Inventory playerInventory;
-	private final ControlPanelTileEntity tileentity;
+	private final ControlPanelBlockEntity tileentity;
 	
 	// Client Constructor
 	public ControlPanelContainer(final int id, final Inventory playerInventory, final FriendlyByteBuf data) {
@@ -26,7 +26,7 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 	}
 
 	// Server Constructor
-	public ControlPanelContainer(int id, Inventory playerInventory, ControlPanelTileEntity te) {
+	public ControlPanelContainer(int id, Inventory playerInventory, ControlPanelBlockEntity te) {
 		super(TeletubbiesContainers.CONTROL_PANEL_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
@@ -60,7 +60,7 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 		Slot slot = this.slots.get(index);
 
 		if (slot != null && slot.hasItem()) {
-			int slotcount = slots.size() - playerIn.inventory.items.size();
+			int slotcount = slots.size() - playerIn.getInventory().getContainerSize();
 			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index < slotcount) {
@@ -83,17 +83,17 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 	}
 	
 	// https://github.com/DaRealTurtyWurty/1.15-Tut-Mod/blob/master/src/main/java/com/turtywurty/tutorialmod/container/ExampleFurnaceContainer.java
-	private static ControlPanelTileEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+	private static ControlPanelBlockEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
 		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
-		if (tileAtPos instanceof ControlPanelTileEntity) {
-			return (ControlPanelTileEntity) tileAtPos;
+		if (tileAtPos instanceof ControlPanelBlockEntity) {
+			return (ControlPanelBlockEntity) tileAtPos;
 		}
 		throw new IllegalStateException("TileEntity is not correct " + tileAtPos);
 	}
 	
-	public ControlPanelTileEntity getTileEntity() {
+	public ControlPanelBlockEntity getTileEntity() {
 		return this.tileentity;
 	}
 }

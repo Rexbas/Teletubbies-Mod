@@ -1,6 +1,6 @@
 package teletubbies.client.gui.screen.inventory;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -35,13 +35,13 @@ public class ControlPanelScreen extends AbstractContainerScreen<ControlPanelCont
 		Component text = new TranslatableComponent("block.teletubbies.control_panel.text");
 		this.font.draw(matrixStack, s, (float) (this.imageWidth / 2 - this.font.width(s) / 2), 6.0F, 4210752);
 		this.font.draw(matrixStack, text, 4.0F, 14.0F, 4210752);
-		this.font.draw(matrixStack, this.inventory.getDisplayName(), 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
+		this.font.draw(matrixStack, this.playerInventoryTitle, 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);
 	}
 
 	@Override
 	protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
-		GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(TEXTURE);
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.setShaderTexture(0, TEXTURE);
 		int i = this.leftPos;
 		int j = this.topPos;
 	    this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);

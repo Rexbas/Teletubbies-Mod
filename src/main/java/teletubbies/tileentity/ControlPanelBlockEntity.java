@@ -3,6 +3,7 @@ package teletubbies.tileentity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -23,12 +24,12 @@ import teletubbies.init.TeletubbiesBlocks;
 import teletubbies.inventory.container.ControlPanelContainer;
 import teletubbies.inventory.container.handler.ControlPanelItemHandler;
 
-public class ControlPanelTileEntity extends BlockEntity implements MenuProvider {
+public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider {
 
 	private ControlPanelItemHandler inputHandler = new ControlPanelItemHandler();
 	
-	public ControlPanelTileEntity() {
-		super(TeletubbiesBlocks.CONTROL_PANEL_TILE.get());
+	public ControlPanelBlockEntity(BlockPos pos, BlockState state) {
+		super(TeletubbiesBlocks.CONTROL_PANEL_BLOCK_ENTITY.get(), pos, state);
 	}
 
 	@Override
@@ -37,8 +38,8 @@ public class ControlPanelTileEntity extends BlockEntity implements MenuProvider 
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundTag nbt) {
-		super.load(state, nbt);
+	public void load(CompoundTag nbt) {
+		super.load(nbt);
 		this.inputHandler.deserializeNBT(nbt.getCompound("InventoryIn"));
 	}
 
@@ -59,7 +60,7 @@ public class ControlPanelTileEntity extends BlockEntity implements MenuProvider 
 
 	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		this.load(level.getBlockState(pkt.getPos()), pkt.getTag());
+		this.load(pkt.getTag());
 	}
 
 	@Override
@@ -70,8 +71,8 @@ public class ControlPanelTileEntity extends BlockEntity implements MenuProvider 
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundTag nbt) {
-		this.load(state, nbt);
+	public void handleUpdateTag(CompoundTag nbt) {
+		this.load(nbt);
 	}
 	
 	@Override

@@ -12,6 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -20,9 +21,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.tileentity.ControlPanelTileEntity;
+import teletubbies.tileentity.ControlPanelBlockEntity;
 
-public class ControlPanelBlock extends Block {
+public class ControlPanelBlock extends Block implements EntityBlock {
 
 	public ControlPanelBlock() {
 		super(Properties.of(Material.METAL)
@@ -38,7 +39,7 @@ public class ControlPanelBlock extends Block {
 	
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		ControlPanelTileEntity te = (ControlPanelTileEntity) world.getBlockEntity(pos);
+		ControlPanelBlockEntity te = (ControlPanelBlockEntity) world.getBlockEntity(pos);
 
 		if (!world.isClientSide && player instanceof ServerPlayer) {
 			NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) te, pos);
@@ -46,20 +47,15 @@ public class ControlPanelBlock extends Block {
 		return InteractionResult.SUCCESS;
 	}
 	
-	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
-	}
-	
 	@Nullable
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) {
-		return new ControlPanelTileEntity();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new ControlPanelBlockEntity(pos, state);
 	}
 	
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
+		if (state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
 			world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
 					popResource(world, pos, h.getStackInSlot(i));
