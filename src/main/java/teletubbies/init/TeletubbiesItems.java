@@ -1,5 +1,7 @@
 package teletubbies.init;
 
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.common.Mod;
@@ -11,6 +13,7 @@ import teletubbies.item.CustardItem;
 import teletubbies.item.LaaLaaBallItem;
 import teletubbies.item.TinkyWinkyBagItem;
 import teletubbies.item.ToastItem;
+import teletubbies.item.armor.SimpleArmorItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesItems {
@@ -40,15 +43,15 @@ public class TeletubbiesItems {
 	//public static final RegistryObject<Item> PO_SCOOTER = ITEMS.register("po_scooter", PoScooterItem::new);
 	
 	// Armor
-	/*public static final RegistryObject<Item> TUTU = ITEMS.register("tutu", TutuItem::new);
-	public static final RegistryObject<Item> NOONOO_EYES = ITEMS.register("noonoo_eyes", NooNooEyesItem::new);
-	public static final RegistryObject<Item> DIPSY_HAT = ITEMS.register("dipsy_hat", DipsyHatItem::new);
+	//public static final RegistryObject<Item> TUTU = ITEMS.register("tutu", TutuItem::new);
+	//public static final RegistryObject<Item> NOONOO_EYES = ITEMS.register("noonoo_eyes", NooNooEyesItem::new);
+	//public static final RegistryObject<Item> DIPSY_HAT = ITEMS.register("dipsy_hat", DipsyHatItem::new);
 	public static final RegistryObject<Item> TINKYWINKY_BIB = ITEMS.register("tinkywinky_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
 	public static final RegistryObject<Item> DIPSY_BIB = ITEMS.register("dipsy_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
 	public static final RegistryObject<Item> LAALAA_BIB = ITEMS.register("laalaa_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
 	public static final RegistryObject<Item> PO_BIB = ITEMS.register("po_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
 	public static final RegistryObject<Item> PO_HELMET = ITEMS.register("po_helmet", () -> new SimpleArmorItem(ArmorMaterials.IRON, EquipmentSlot.HEAD));
-	*/
+	
 	// Spawn eggs
 	/*public static final RegistryObject<Item> TINKYWINKY_SPAWN_EGG = ITEMS.register("tinkywinky_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.TINKYWINKY, 0x7E2CD3, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> DIPSY_SPAWN_EGG = ITEMS.register("dipsy_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.DIPSY, 0x84CA32, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
