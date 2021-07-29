@@ -20,6 +20,7 @@ import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.config.Config;
 import teletubbies.init.TeletubbiesBlocks;
 import teletubbies.init.TeletubbiesContainers;
+import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
 import teletubbies.itemgroup.ItemGroupTeletubbies;
@@ -40,7 +41,7 @@ public class Teletubbies {
 
 		TeletubbiesBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesBlocks.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		//TeletubbiesEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		//TeletubbiesWorldGen.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());

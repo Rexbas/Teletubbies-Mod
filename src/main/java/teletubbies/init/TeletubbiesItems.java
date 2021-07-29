@@ -11,6 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
 import teletubbies.item.CustardItem;
 import teletubbies.item.LaaLaaBallItem;
+import teletubbies.item.ModSpawnEggItem;
 import teletubbies.item.TinkyWinkyBagItem;
 import teletubbies.item.ToastItem;
 import teletubbies.item.armor.SimpleArmorItem;
@@ -57,8 +58,8 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> DIPSY_SPAWN_EGG = ITEMS.register("dipsy_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.DIPSY, 0x84CA32, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> LAALAA_SPAWN_EGG = ITEMS.register("laalaa_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.LAALAA, 0xDED32C, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> PO_SPAWN_EGG = ITEMS.register("po_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.PO, 0xD62828, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> NOONOO_SPAWN_EGG = ITEMS.register("noonoo_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.NOONOO, 0x0099FF, 0xE166CC, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> MIMI_SPAWN_EGG = ITEMS.register("mimi_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.MIMI, 0x1591B4, 0xC8946A, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
+	*/public static final RegistryObject<Item> NOONOO_SPAWN_EGG = ITEMS.register("noonoo_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.NOONOO, 0x0099FF, 0xE166CC, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
+	/*public static final RegistryObject<Item> MIMI_SPAWN_EGG = ITEMS.register("mimi_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.MIMI, 0x1591B4, 0xC8946A, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> DAADAA_SPAWN_EGG = ITEMS.register("daadaa_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.DAADAA, 0x53AC09, 0xC8946A, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> PING_SPAWN_EGG = ITEMS.register("ping_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.PING, 0xC6419E, 0xC8946A, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> BA_SPAWN_EGG = ITEMS.register("ba_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.BA, 0x062C5E, 0xC8946A, new Item.Properties().tab(Teletubbies.ITEMGROUP)));

@@ -5,9 +5,17 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.entity.passive.NooNooEntity;
 
+@OnlyIn(Dist.CLIENT)
 public class NooNooModel extends EntityModel<NooNooEntity> {
 	public ModelPart feet;
 	public ModelPart body;
@@ -16,41 +24,52 @@ public class NooNooModel extends EntityModel<NooNooEntity> {
 	public ModelPart rightEye;
 	public ModelPart leftEye;
 
-	public NooNooModel() {
-		texWidth = 128;
-		texHeight = 64;
-
-		feet = new ModelPart(this);
-		feet.setPos(0.5F, 22.25F, 4.0F);
-		feet.addBox(null, -4.5F, -1.25F, -10.0F, 9, 1, 20, 0.0F, 66, 43);
-		feet.addBox(null, -5.5F, -0.25F, -11.0F, 11, 2, 22, 0.0F, 46, 7);
-
-		body = new ModelPart(this);
-		body.setPos(0.5F, 15.5F, 9.2F);
-		body.addBox(null, -6.5F, -4.5F, -16.2F, 1, 9, 22, 0.0F, 0, 0);
-		body.addBox(null, 5.5F, -4.5F, -16.2F, 1, 9, 22, 0.0F, 0, 0);
-		body.addBox(null, -5.5F, -5.5F, -16.2F, 11, 11, 22, 0.0F, 0, 31);
-		body.addBox(null, -3.5F, -3.5F, 5.8F, 7, 7, 2, 0.0F, 0, 31);
-		body.addBox(null, -1.5F, -1.5F, 7.8F, 3, 3, 2, 0.0F, 0, 40);
-
-		brush = new ModelPart(this);
-		brush.setPos(0.5F, 10.0F, -2.5F);
-		brush.addBox(null, -0.5F, -2.0F, -0.5F, 1, 2, 1, 0.0F, 10, 50);
-		brush.addBox(null, -1.5F, -3.0F, -1.5F, 3, 1, 3, 0.0F, 10, 46);
-
-		hose = new ModelPart(this);
-		hose.setPos(0.5F, 17.0F, -8.0F);
-		hose.addBox(null, -1.5F, -2.0F, -8.0F, 3, 3, 9, 0.0F, 66, 31);
-		hose.addBox(null, -1.5F, 1.0F, -8.0F, 3, 5, 3, 0.0F, 66, 43);
-		hose.addBox(null, -2.5F, 6.0F, -9.0F, 5, 1, 5, 0.0F, 66, 51);
-
-		rightEye = new ModelPart(this);
-		rightEye.setPos(-1.5F, 11.5F, -8.0F);
-		rightEye.addBox(null, -1.5F, -1.5F, -3.0F, 3, 3, 4, 0.0F, 0, 0);
-
-		leftEye = new ModelPart(this);
-		leftEye.setPos(2.5F, 11.5F, -8.0F);
-		leftEye.addBox(null, -1.5F, -1.5F, -3.0F, 3, 3, 4, 0.0F, 0, 7);
+	public NooNooModel(ModelPart part) {		
+		feet = part.getChild("feet");
+		body = part.getChild("body");
+		brush = part.getChild("brush");
+		hose = part.getChild("hose");
+		rightEye = part.getChild("rightEye");
+		leftEye = part.getChild("leftEye");
+	}
+	
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition modelDefinition = new MeshDefinition();
+		PartDefinition def = modelDefinition.getRoot();
+		
+		def.addOrReplaceChild("feet", CubeListBuilder.create()
+				.addBox(null, -4.5F, -1.25F, -10.0F, 9, 1, 20, 66, 43)
+				.addBox(null, -5.5F, -0.25F, -11.0F, 11, 2, 22, 46, 7),
+				PartPose.offset(0.5F, 22.25F, 4.0F));
+		
+		def.addOrReplaceChild("body", CubeListBuilder.create()
+				.addBox(null, -6.5F, -4.5F, -16.2F, 1, 9, 22, 0, 0)
+				.addBox(null, 5.5F, -4.5F, -16.2F, 1, 9, 22, 0, 0)
+				.addBox(null, -5.5F, -5.5F, -16.2F, 11, 11, 22, 0, 31)
+				.addBox(null, -3.5F, -3.5F, 5.8F, 7, 7, 2, 0, 31)
+				.addBox(null, -1.5F, -1.5F, 7.8F, 3, 3, 2, 0, 40),
+				PartPose.offset(0.5F, 15.5F, 9.2F));
+		
+		def.addOrReplaceChild("brush", CubeListBuilder.create()
+				.addBox(null, -0.5F, -2.0F, -0.5F, 1, 2, 1, 10, 50)
+				.addBox(null, -1.5F, -3.0F, -1.5F, 3, 1, 3, 10, 46),
+				PartPose.offset(0.5F, 10.0F, -2.5F));
+		
+		def.addOrReplaceChild("hose", CubeListBuilder.create()
+				.addBox(null, -1.5F, -2.0F, -8.0F, 3, 3, 9, 66, 31)
+				.addBox(null, -1.5F, 1.0F, -8.0F, 3, 5, 3, 66, 43)
+				.addBox(null, -2.5F, 6.0F, -9.0F, 5, 1, 5, 66, 51),
+				PartPose.offset(0.5F, 17.0F, -8.0F));
+		
+		def.addOrReplaceChild("rightEye", CubeListBuilder.create()
+				.addBox(null, -1.5F, -1.5F, -3.0F, 3, 3, 4, 0, 0),
+				PartPose.offset(-1.5F, 11.5F, -8.0F));
+		
+		def.addOrReplaceChild("leftEye", CubeListBuilder.create()
+				.addBox(null, -1.5F, -1.5F, -3.0F, 3, 3, 4, 0, 7),
+				PartPose.offset(2.5F, 11.5F, -8.0F));
+		
+		return LayerDefinition.create(modelDefinition, 128, 64);
 	}
 
 	@Override
@@ -61,7 +80,7 @@ public class NooNooModel extends EntityModel<NooNooEntity> {
 		rightEye.yRot = netHeadYaw * ((float) Math.PI / 180F);
 
 		leftEye.xRot = rightEye.xRot;
-		leftEye.yRot = rightEye.yRot;	
+		leftEye.yRot = rightEye.yRot;
 	}
 
 	@Override

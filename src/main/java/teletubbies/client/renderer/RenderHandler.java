@@ -1,34 +1,41 @@
 package teletubbies.client.renderer;
 
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmlclient.registry.RenderingRegistry;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import teletubbies.Teletubbies;
 import teletubbies.client.renderer.entity.NooNooRenderer;
-import teletubbies.client.renderer.entity.PoScooterRenderer;
-import teletubbies.client.renderer.entity.TeletubbyRenderer;
-import teletubbies.client.renderer.entity.TiddlytubbyRenderer;
-import teletubbies.client.renderer.entity.model.DipsyModel;
-import teletubbies.client.renderer.entity.model.DipsyZombieModel;
-import teletubbies.client.renderer.entity.model.LaaLaaModel;
-import teletubbies.client.renderer.entity.model.LaaLaaZombieModel;
-import teletubbies.client.renderer.entity.model.PoModel;
-import teletubbies.client.renderer.entity.model.PoZombieModel;
-import teletubbies.client.renderer.entity.model.TinkyWinkyModel;
-import teletubbies.client.renderer.entity.model.TinkyWinkyZombieModel;
+import teletubbies.client.renderer.entity.model.NooNooModel;
 import teletubbies.init.TeletubbiesEntityTypes;
 
-@OnlyIn(Dist.CLIENT)
-public class RenderRegistry {
+@Mod.EventBusSubscriber(modid = Teletubbies.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class RenderHandler {
 	
-	public static void registryEntityRenders() {
-		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.TINKYWINKY.get(), new TeletubbyRenderer.RenderFactory<>("tinkywinky", 0.95F, new TinkyWinkyModel()));
+    public static ModelLayerLocation NOONOO_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "noonoo"), "noonoo");
+	
+    @SubscribeEvent
+    public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(TeletubbiesEntityTypes.NOONOO.get(), NooNooRenderer::new);
+    }
+    
+    
+    @SubscribeEvent
+    public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(NOONOO_LAYER, NooNooModel::createBodyLayer);
+    }
+    
+	/*public static void registryEntityRenders() {
+		/*RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.TINKYWINKY.get(), new TeletubbyRenderer.RenderFactory<>("tinkywinky", 0.95F, new TinkyWinkyModel()));
 		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.DIPSY.get(), new TeletubbyRenderer.RenderFactory<>("dipsy", 0.9F, new DipsyModel()));
 		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.LAALAA.get(), new TeletubbyRenderer.RenderFactory<>("laalaa", 0.85F, new LaaLaaModel()));
-		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.PO.get(), new TeletubbyRenderer.RenderFactory<>("po", 0.8F, new PoModel()));
+		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.PO.get(), new TeletubbyRenderer.RenderFactory<>("po", 0.8F, new PoModel()));*/
 				
-		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.NOONOO.get(), new NooNooRenderer.RenderFactory());
+		//RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.NOONOO.get(), new NooNooRenderer.RenderFactory());
 
-		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.MIMI.get(), new TiddlytubbyRenderer.RenderFactory("mimi"));
+		/*RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.MIMI.get(), new TiddlytubbyRenderer.RenderFactory("mimi"));
 		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.DAADAA.get(), new TiddlytubbyRenderer.RenderFactory("daadaa"));
 		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.PING.get(), new TiddlytubbyRenderer.RenderFactory("ping"));
 		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.BA.get(), new TiddlytubbyRenderer.RenderFactory("ba"));
@@ -43,5 +50,5 @@ public class RenderRegistry {
 		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.PO_ZOMBIE.get(), new TeletubbyRenderer.RenderFactory<>("po_zombie", 0.8F, new PoZombieModel()));
 
 		RenderingRegistry.registerEntityRenderingHandler(TeletubbiesEntityTypes.PO_SCOOTER.get(), new PoScooterRenderer.RenderFactory());
-	}	
+	}*/
 }
