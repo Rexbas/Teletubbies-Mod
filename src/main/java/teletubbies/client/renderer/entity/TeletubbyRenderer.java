@@ -4,13 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
-import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +19,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fmlclient.registry.IRenderFactory;
 import teletubbies.Teletubbies;
 import teletubbies.client.renderer.entity.model.TeletubbyModel;
 
@@ -31,12 +27,12 @@ public class TeletubbyRenderer<T extends PathfinderMob, M extends TeletubbyModel
 	private final String name;
 	private float scale;
 	
-	public TeletubbyRenderer(EntityRenderDispatcher manager, String name, float scale, M model) {
-		super(manager, null, 0.5F);
+	public TeletubbyRenderer(Context ctx, String name, float scale, M model) {
+		super(ctx, null, 0.5F);
 		this.name = name;
 		this.scale = scale;
 		this.model = model;
-		this.addLayer(new HumanoidArmorLayer<T, M, HumanoidModel<T>>(this, new HumanoidModel<>(0.5F), new HumanoidModel<>(1.0F)));
+		//this.addLayer(new HumanoidArmorLayer<T, M, HumanoidModel<T>>(this, new HumanoidModel<>(0.5F), new HumanoidModel<>(1.0F)));
 	}
 
 	@Override
@@ -78,7 +74,7 @@ public class TeletubbyRenderer<T extends PathfinderMob, M extends TeletubbyModel
 			f2 = f1 - f;
 		}
 
-		float f6 = Mth.lerp(partialTicks, entityIn.xRotO, entityIn.xRot);
+		float f6 = Mth.lerp(partialTicks, entityIn.xRotO, entityIn.getXRot());
 		if (entityIn.getPose() == Pose.SLEEPING) {
 			Direction direction = entityIn.getBedOrientation();
 			if (direction != null) {
@@ -127,22 +123,5 @@ public class TeletubbyRenderer<T extends PathfinderMob, M extends TeletubbyModel
 
 		matrixStackIn.popPose();
 		MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Post<T, M>(entityIn, this, partialTicks, matrixStackIn, bufferIn, packedLightIn));
-	}
-
-	public static class RenderFactory<T extends PathfinderMob, M extends TeletubbyModel<T>> implements IRenderFactory<T> {
-		private final String name;
-		private final float scale;
-		private final M model;
-		
-		public RenderFactory(String name, float scale, M model) {
-			this.name = name;
-			this.scale = scale;
-			this.model = model;
-		}
-		
-		@Override
-		public EntityRenderer<? super T> createRenderFor(EntityRenderDispatcher manager) {
-			return new TeletubbyRenderer<>(manager, name, scale, model);
-		}
 	}
 }

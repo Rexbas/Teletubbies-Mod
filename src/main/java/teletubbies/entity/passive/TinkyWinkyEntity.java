@@ -14,7 +14,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
 import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
@@ -59,6 +58,7 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 
 	@Override
 	public EntityType<?> getZombie() {
-		return TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get();
+		return null;
+		//return TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get();
 	}
 }

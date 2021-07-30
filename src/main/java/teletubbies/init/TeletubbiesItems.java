@@ -54,8 +54,8 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> PO_HELMET = ITEMS.register("po_helmet", () -> new SimpleArmorItem(ArmorMaterials.IRON, EquipmentSlot.HEAD));
 	
 	// Spawn eggs
-	/*public static final RegistryObject<Item> TINKYWINKY_SPAWN_EGG = ITEMS.register("tinkywinky_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.TINKYWINKY, 0x7E2CD3, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> DIPSY_SPAWN_EGG = ITEMS.register("dipsy_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.DIPSY, 0x84CA32, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> TINKYWINKY_SPAWN_EGG = ITEMS.register("tinkywinky_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.TINKYWINKY, 0x7E2CD3, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
+	/*public static final RegistryObject<Item> DIPSY_SPAWN_EGG = ITEMS.register("dipsy_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.DIPSY, 0x84CA32, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> LAALAA_SPAWN_EGG = ITEMS.register("laalaa_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.LAALAA, 0xDED32C, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	public static final RegistryObject<Item> PO_SPAWN_EGG = ITEMS.register("po_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.PO, 0xD62828, 0xFFC9AD, new Item.Properties().tab(Teletubbies.ITEMGROUP)));
 	*/public static final RegistryObject<Item> NOONOO_SPAWN_EGG = ITEMS.register("noonoo_spawn_egg", () -> new ModSpawnEggItem(TeletubbiesEntityTypes.NOONOO, 0x0099FF, 0xE166CC, new Item.Properties().tab(Teletubbies.ITEMGROUP)));

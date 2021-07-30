@@ -39,6 +39,19 @@ public class Teletubbies {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
 
+		/* TODO
+		 * 
+		 * EQUIP TUTU
+		 * ZOMBIE OVERRIDE
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
+		
+		
+		
+		
 		TeletubbiesBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesBlocks.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());

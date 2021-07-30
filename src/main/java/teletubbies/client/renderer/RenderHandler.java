@@ -8,16 +8,20 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
 import teletubbies.client.renderer.entity.NooNooRenderer;
+import teletubbies.client.renderer.entity.TeletubbyRenderer;
 import teletubbies.client.renderer.entity.model.NooNooModel;
+import teletubbies.client.renderer.entity.model.TinkyWinkyModel;
 import teletubbies.init.TeletubbiesEntityTypes;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class RenderHandler {
 	
-    public static ModelLayerLocation NOONOO_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "noonoo"), "noonoo");
+    public static final ModelLayerLocation TINKYWINKY_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "tinkywinky"), "tinkywinky");
+    public static final ModelLayerLocation NOONOO_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "noonoo"), "noonoo");
 	
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(TeletubbiesEntityTypes.TINKYWINKY.get(), (ctx) -> {return new TeletubbyRenderer<>(ctx, "tinkywinky", 0.95F, new TinkyWinkyModel(ctx.bakeLayer(TINKYWINKY_LAYER)));});
         event.registerEntityRenderer(TeletubbiesEntityTypes.NOONOO.get(), NooNooRenderer::new);
     }
     
@@ -25,6 +29,7 @@ public class RenderHandler {
     @SubscribeEvent
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(NOONOO_LAYER, NooNooModel::createBodyLayer);
+        event.registerLayerDefinition(TINKYWINKY_LAYER, TinkyWinkyModel::createBodyLayer);
     }
     
 	/*public static void registryEntityRenders() {

@@ -9,7 +9,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.SpawnGroupData;
@@ -23,7 +22,6 @@ import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -50,7 +48,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 	    this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Zombie.class, 8.0F, 0.5D, 0.5D));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.45F));
 		this.goalSelector.addGoal(3, new PanicGoal(this, 0.55F));
-		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, false, Ingredient.of(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get())));
+		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, Ingredient.of(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get()), false));
 		this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.45F));
 		this.goalSelector.addGoal(6, new InteractGoal(this, Player.class, 10F, 0.9F));
 		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
@@ -76,10 +74,10 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
+			/*ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
 			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlot.LEGS, stack);
+			this.setItemSlot(EquipmentSlot.LEGS, stack);*/
 			break;
 		}
 	}
@@ -99,7 +97,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 		Zombie zombie = (Zombie) this.getZombie().create(level);
 		zombie.copyPosition(this);
 		this.hasTransferredToZombie = true;
-		this.remove();
+		this.remove(RemovalReason.KILLED);
 		
 		zombie.setBaby(false);
 		zombie.setNoAi(this.isNoAi());

@@ -34,8 +34,8 @@ public class NooNooModel extends EntityModel<NooNooEntity> {
 	}
 	
 	public static LayerDefinition createBodyLayer() {
-		MeshDefinition modelDefinition = new MeshDefinition();
-		PartDefinition def = modelDefinition.getRoot();
+		MeshDefinition mesh = new MeshDefinition();
+		PartDefinition def = mesh.getRoot();
 		
 		def.addOrReplaceChild("feet", CubeListBuilder.create()
 				.addBox(null, -4.5F, -1.25F, -10.0F, 9, 1, 20, 66, 43)
@@ -69,7 +69,7 @@ public class NooNooModel extends EntityModel<NooNooEntity> {
 				.addBox(null, -1.5F, -1.5F, -3.0F, 3, 3, 4, 0, 7),
 				PartPose.offset(2.5F, 11.5F, -8.0F));
 		
-		return LayerDefinition.create(modelDefinition, 128, 64);
+		return LayerDefinition.create(mesh, 128, 64);
 	}
 
 	@Override
