@@ -6,17 +6,21 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import teletubbies.entity.passive.TinkyWinkyEntity;
 
 @OnlyIn(Dist.CLIENT)
-public class TinkyWinkyModel extends TeletubbyModel<TinkyWinkyEntity> {
+public class TinkyWinkyModel<T extends PathfinderMob> extends TeletubbyModel<T> {
 	public ModelPart stick;
 
-	public TinkyWinkyModel(ModelPart part) {
-		super(part);
+	public TinkyWinkyModel(ModelPart part, boolean isZombie) {
+		super(part, isZombie);
 		stick = part.getChild("head").getChild("stick");
+	}
+	
+	public TinkyWinkyModel(ModelPart part) {
+		this(part, false);
 	}
 	
 	public static LayerDefinition createBodyLayer() {

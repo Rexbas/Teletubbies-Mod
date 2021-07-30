@@ -42,8 +42,8 @@ public class Teletubbies {
 		/* TODO
 		 * 
 		 * EQUIP TUTU
-		 * ZOMBIE OVERRIDE
-		 * 
+		 * PO SCOOTER IN HAND
+		 * EQUIP HAT
 		 * 
 		 * 
 		 * 

@@ -4,11 +4,8 @@ import java.util.Arrays;
 
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import teletubbies.init.TeletubbiesItems;
 
 public class TeletubbyZombieEntity extends Zombie {
 
@@ -29,10 +26,10 @@ public class TeletubbyZombieEntity extends Zombie {
 		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:
-			ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
+			/*ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
 			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlot.LEGS, stack);
+			this.setItemSlot(EquipmentSlot.LEGS, stack);*/
 			break;
 		}
 	}

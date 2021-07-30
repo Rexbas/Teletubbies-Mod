@@ -4,6 +4,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -19,7 +21,15 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
 import teletubbies.config.Config;
+import teletubbies.entity.monster.DipsyZombieEntity;
+import teletubbies.entity.monster.LaaLaaZombieEntity;
+import teletubbies.entity.monster.PoZombieEntity;
+import teletubbies.entity.monster.TinkyWinkyZombieEntity;
+import teletubbies.entity.passive.DipsyEntity;
+import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.NooNooEntity;
+import teletubbies.entity.passive.PoEntity;
+import teletubbies.entity.passive.TeletubbyEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
 import teletubbies.item.ModSpawnEggItem;
 
@@ -34,7 +44,7 @@ public class TeletubbiesEntityTypes {
                     .sized(0.6F, 1.9F)
                     .build(new ResourceLocation(Teletubbies.MODID, "tinkywinky").toString()));
 
-    /*public static final RegistryObject<EntityType<DipsyEntity>> DIPSY = ENTITY_TYPES.register("dipsy",
+    public static final RegistryObject<EntityType<DipsyEntity>> DIPSY = ENTITY_TYPES.register("dipsy",
             () -> EntityType.Builder.of(DipsyEntity::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.8F)
                     .build(new ResourceLocation(Teletubbies.MODID, "dipsy").toString()));
@@ -47,7 +57,7 @@ public class TeletubbiesEntityTypes {
     public static final RegistryObject<EntityType<PoEntity>> PO = ENTITY_TYPES.register("po",
             () -> EntityType.Builder.of(PoEntity::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.6F)
-                    .build(new ResourceLocation(Teletubbies.MODID, "po").toString()));*/
+                    .build(new ResourceLocation(Teletubbies.MODID, "po").toString()));
     
     public static final RegistryObject<EntityType<NooNooEntity>> NOONOO = ENTITY_TYPES.register("noonoo",
             () -> EntityType.Builder.of(NooNooEntity::new, MobCategory.CREATURE)
@@ -93,7 +103,7 @@ public class TeletubbiesEntityTypes {
             () -> EntityType.Builder.of(UmpiePumpieEntity::new, MobCategory.CREATURE)
                     .sized(0.5F, 0.8F)
                     .build(new ResourceLocation(Teletubbies.MODID, "umpiepumpie").toString()));
-    
+    */
     public static final RegistryObject<EntityType<TinkyWinkyZombieEntity>> TINKYWINKY_ZOMBIE = ENTITY_TYPES.register("tinkywinky_zombie",
             () -> EntityType.Builder.of(TinkyWinkyZombieEntity::new, MobCategory.MONSTER)
                     .sized(0.6F, 1.9F)
@@ -114,7 +124,7 @@ public class TeletubbiesEntityTypes {
                     .sized(0.6F, 1.6F)
                     .build(new ResourceLocation(Teletubbies.MODID, "po_zombie").toString()));
     
-    public static final RegistryObject<EntityType<PoScooterEntity>> PO_SCOOTER = ENTITY_TYPES.register("po_scooter",
+    /*public static final RegistryObject<EntityType<PoScooterEntity>> PO_SCOOTER = ENTITY_TYPES.register("po_scooter",
             () -> EntityType.Builder.<PoScooterEntity>of(PoScooterEntity::new, MobCategory.MISC)
                     .sized(1.15F, 0.3F)
                     .setCustomClientFactory((entity, world) -> new PoScooterEntity(world))
@@ -123,12 +133,11 @@ public class TeletubbiesEntityTypes {
 	@SubscribeEvent
 	public static void registerSpawnEggAndPlacement(final RegistryEvent.Register<EntityType<?>> event) {
 		ModSpawnEggItem.initSpawnEggs();
-		/*SpawnPlacements.register(TeletubbiesEntityTypes.TINKYWINKY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
+		SpawnPlacements.register(TeletubbiesEntityTypes.TINKYWINKY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
 		SpawnPlacements.register(TeletubbiesEntityTypes.DIPSY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
 		SpawnPlacements.register(TeletubbiesEntityTypes.LAALAA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
-		SpawnPlacements.register(TeletubbiesEntityTypes.PO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
-*/
-		SpawnPlacements.register(TeletubbiesEntityTypes.TINKYWINKY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TinkyWinkyEntity::canSpawn);		
+		SpawnPlacements.register(TeletubbiesEntityTypes.PO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);		
+
 		SpawnPlacements.register(TeletubbiesEntityTypes.NOONOO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, NooNooEntity::canSpawn);		
 /*
 		SpawnPlacements.register(TeletubbiesEntityTypes.MIMI.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
@@ -139,12 +148,12 @@ public class TeletubbiesEntityTypes {
 		SpawnPlacements.register(TeletubbiesEntityTypes.NIN.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
 		SpawnPlacements.register(TeletubbiesEntityTypes.DUGGLEDEE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
 		SpawnPlacements.register(TeletubbiesEntityTypes.UMPIEPUMPIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TiddlytubbyEntity::canSpawn);
-		
+		*/
 		SpawnPlacements.register(TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
 		SpawnPlacements.register(TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
 		SpawnPlacements.register(TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
 		SpawnPlacements.register(TeletubbiesEntityTypes.PO_ZOMBIE.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules);
-	*/}
+	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void setAtributes(final EntityAttributeCreationEvent event) {
@@ -154,8 +163,16 @@ public class TeletubbiesEntityTypes {
         DefaultAttributes.put(TeletubbiesEntityTypes.PO.get(), PathfinderMob.createMobAttributes().build());*/
 		
         event.put(TeletubbiesEntityTypes.TINKYWINKY.get(), NooNooEntity.setCustomAttributes().build());
+        event.put(TeletubbiesEntityTypes.DIPSY.get(), NooNooEntity.setCustomAttributes().build());
+        event.put(TeletubbiesEntityTypes.LAALAA.get(), NooNooEntity.setCustomAttributes().build());
+        event.put(TeletubbiesEntityTypes.PO.get(), NooNooEntity.setCustomAttributes().build());
 
         event.put(TeletubbiesEntityTypes.NOONOO.get(), NooNooEntity.setCustomAttributes().build());
+        
+        event.put(TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), Zombie.createAttributes().build());
+        event.put(TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), Zombie.createAttributes().build());
+        event.put(TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), Zombie.createAttributes().build());
+        event.put(TeletubbiesEntityTypes.PO_ZOMBIE.get(), Zombie.createAttributes().build());
         
     	/*DefaultAttributes.put(TeletubbiesEntityTypes.MIMI.get(), TiddlytubbyEntity.setCustomAttributes().build());
         DefaultAttributes.put(TeletubbiesEntityTypes.DAADAA.get(), TiddlytubbyEntity.setCustomAttributes().build());

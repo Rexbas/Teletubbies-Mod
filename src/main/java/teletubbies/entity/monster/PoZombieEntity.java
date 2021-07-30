@@ -35,8 +35,8 @@ public class PoZombieEntity extends TeletubbyZombieEntity {
 			break;
 		}
 
-		if (this.random.nextInt(20) == 0) {
+		/*if (this.random.nextInt(20) == 0) {
 			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TeletubbiesItems.PO_SCOOTER.get()));
-		}
+		}*/
 	}
 }
