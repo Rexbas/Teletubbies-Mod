@@ -18,6 +18,7 @@ import teletubbies.client.renderer.entity.model.PoModel;
 import teletubbies.client.renderer.entity.model.PoScooterModel;
 import teletubbies.client.renderer.entity.model.TiddlytubbyModel;
 import teletubbies.client.renderer.entity.model.TinkyWinkyModel;
+import teletubbies.client.renderer.item.model.NooNooEyesModel;
 import teletubbies.init.TeletubbiesEntityTypes;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -27,11 +28,12 @@ public class RenderHandler {
     public static final ModelLayerLocation DIPSY_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "dipsy"), "dipsy");
     public static final ModelLayerLocation LAALAA_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "laalaa"), "laalaa");
     public static final ModelLayerLocation PO_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "po"), "po");
-    
     public static final ModelLayerLocation NOONOO_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "noonoo"), "noonoo");
     public static final ModelLayerLocation TIDDLYTUBBY_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "tiddlytubby"), "tiddlytubby");
     
     public static final ModelLayerLocation PO_SCOOTER_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "scooter"), "scooter");
+    
+    public static final ModelLayerLocation NOONOO_EYES_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "noonoo_eyes"), "noonoo_eyes");
 	
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
@@ -66,9 +68,11 @@ public class RenderHandler {
         event.registerLayerDefinition(DIPSY_LAYER, DipsyModel::createBodyLayer);
         event.registerLayerDefinition(LAALAA_LAYER, LaaLaaModel::createBodyLayer);
         event.registerLayerDefinition(PO_LAYER, PoModel::createBodyLayer);
-
         event.registerLayerDefinition(NOONOO_LAYER, NooNooModel::createBodyLayer);
         event.registerLayerDefinition(TIDDLYTUBBY_LAYER, TiddlytubbyModel::createBodyLayer);
+        
         event.registerLayerDefinition(PO_SCOOTER_LAYER, PoScooterModel::createBodyLayer);
+        
+        event.registerLayerDefinition(NOONOO_EYES_LAYER, NooNooEyesModel::createBodyLayer);
     }
 }

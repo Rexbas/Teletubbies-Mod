@@ -44,7 +44,7 @@ public class Teletubbies {
 		 * EQUIP TUTU
 		 * PO SCOOTER IN HAND
 		 * EQUIP HAT
-		 * 
+		 * FIX PO SCOOTER
 		 * 
 		 * 
 		 */

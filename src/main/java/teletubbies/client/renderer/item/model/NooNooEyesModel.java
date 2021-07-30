@@ -5,26 +5,35 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class NooNooEyesModel extends HumanoidModel<LivingEntity> {
-	
-	public static NooNooEyesModel model = new NooNooEyesModel();
-	
+public class NooNooEyesModel extends HumanoidModel<LivingEntity> {	
 	public ModelPart eyes;
 
-	public NooNooEyesModel() {
-		super(1.0F);
-		texWidth = 16;
-		texHeight = 16;
-
-		eyes = new ModelPart(this);
-		eyes.setPos(0.0F, 24.0F, 0.0F);
-		eyes.texOffs(0, 7).addBox(0.0F, -6.0F, -8.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
-		eyes.texOffs(0, 0).addBox(-3.0F, -5.0F, -8.0F, 3.0F, 3.0F, 4.0F, 0.0F, false);
+	public NooNooEyesModel(ModelPart part) {
+		super(part);
+		eyes = part.getChild("eyes");
+	}
+	
+	public static LayerDefinition createBodyLayer() {
+		MeshDefinition mesh = HumanoidModel.createMesh(CubeDeformation.NONE, 1.0f);
+		PartDefinition def = mesh.getRoot();
+		
+		def.addOrReplaceChild("eyes", CubeListBuilder.create()
+				.addBox(null, 0.0F, -6.0F, -8.0F, 3, 3, 4, 0, 7)
+				.addBox(null, -3.0F, -5.0F, -8.0F, 3, 3, 4, 0, 0),
+				PartPose.offset(0.0F, 24.0F, 0.0F));
+		
+		return LayerDefinition.create(mesh, 16, 16);
 	}
 	
 	@Override
