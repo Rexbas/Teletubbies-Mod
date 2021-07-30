@@ -37,7 +37,7 @@ public class TiddlytubbyEntity extends PathfinderMob {
 	protected void registerGoals() {
 	    this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, Zombie.class, 8.0F, 0.5D, 0.5D));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 0.55F));
-		this.goalSelector.addGoal(2, new TemptGoal(this, 0.45F, false, Ingredient.of(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get())));
+		this.goalSelector.addGoal(2, new TemptGoal(this, 0.45F, Ingredient.of(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get()), false));
 		this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.3F));
 		this.goalSelector.addGoal(4, new InteractGoal(this, Player.class, 10F, 0.9F));
 		this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
