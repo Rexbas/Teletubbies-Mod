@@ -54,7 +54,7 @@ public class PoScooterItem extends Item {
 			if (raytraceresult.getType() == HitResult.Type.BLOCK) {
 				PoScooterEntity entity = new PoScooterEntity(worldIn, raytraceresult.getLocation().x,
 						raytraceresult.getLocation().y, raytraceresult.getLocation().z);
-				entity.yRot = playerIn.yRot;
+				entity.setYRot(playerIn.getYRot());
 				if (!worldIn.noCollision(entity, entity.getBoundingBox().inflate(-0.1D))) {
 					return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
 				} else {
@@ -62,7 +62,7 @@ public class PoScooterItem extends Item {
 						worldIn.addFreshEntity(entity);
 					}
 
-					if (!playerIn.abilities.instabuild) {
+					if (!playerIn.getAbilities().instabuild) {
 						itemstack.shrink(1);
 					}
 

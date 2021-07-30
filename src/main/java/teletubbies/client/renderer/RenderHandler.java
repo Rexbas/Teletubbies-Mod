@@ -8,12 +8,14 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.Teletubbies;
 import teletubbies.client.renderer.entity.NooNooRenderer;
+import teletubbies.client.renderer.entity.PoScooterRenderer;
 import teletubbies.client.renderer.entity.TeletubbyRenderer;
 import teletubbies.client.renderer.entity.TiddlytubbyRenderer;
 import teletubbies.client.renderer.entity.model.DipsyModel;
 import teletubbies.client.renderer.entity.model.LaaLaaModel;
 import teletubbies.client.renderer.entity.model.NooNooModel;
 import teletubbies.client.renderer.entity.model.PoModel;
+import teletubbies.client.renderer.entity.model.PoScooterModel;
 import teletubbies.client.renderer.entity.model.TiddlytubbyModel;
 import teletubbies.client.renderer.entity.model.TinkyWinkyModel;
 import teletubbies.init.TeletubbiesEntityTypes;
@@ -27,7 +29,9 @@ public class RenderHandler {
     public static final ModelLayerLocation PO_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "po"), "po");
     
     public static final ModelLayerLocation NOONOO_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "noonoo"), "noonoo");
-    public static final ModelLayerLocation TIDDLYTUBBY_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "tiddlytubby"), "tiddlytubby");    
+    public static final ModelLayerLocation TIDDLYTUBBY_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "tiddlytubby"), "tiddlytubby");
+    
+    public static final ModelLayerLocation PO_SCOOTER_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "scooter"), "scooter");
 	
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
@@ -51,6 +55,8 @@ public class RenderHandler {
         event.registerEntityRenderer(TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), (ctx) -> {return new TeletubbyRenderer<>(ctx, "dipsy_zombie", 0.9F, new DipsyModel<>(ctx.bakeLayer(DIPSY_LAYER), true));});
         event.registerEntityRenderer(TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), (ctx) -> {return new TeletubbyRenderer<>(ctx, "laalaa_zombie", 0.85F, new LaaLaaModel<>(ctx.bakeLayer(LAALAA_LAYER), true));});
         event.registerEntityRenderer(TeletubbiesEntityTypes.PO_ZOMBIE.get(), (ctx) -> {return new TeletubbyRenderer<>(ctx, "po_zombie", 0.8F, new PoModel<>(ctx.bakeLayer(PO_LAYER), true));});
+        
+        event.registerEntityRenderer(TeletubbiesEntityTypes.PO_SCOOTER.get(), PoScooterRenderer::new);
     }
     
     
@@ -63,5 +69,6 @@ public class RenderHandler {
 
         event.registerLayerDefinition(NOONOO_LAYER, NooNooModel::createBodyLayer);
         event.registerLayerDefinition(TIDDLYTUBBY_LAYER, TiddlytubbyModel::createBodyLayer);
+        event.registerLayerDefinition(PO_SCOOTER_LAYER, PoScooterModel::createBodyLayer);
     }
 }

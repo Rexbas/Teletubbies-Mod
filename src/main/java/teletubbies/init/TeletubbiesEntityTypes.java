@@ -30,6 +30,7 @@ import teletubbies.entity.baby.PingEntity;
 import teletubbies.entity.baby.RuRuEntity;
 import teletubbies.entity.baby.TiddlytubbyEntity;
 import teletubbies.entity.baby.UmpiePumpieEntity;
+import teletubbies.entity.item.PoScooterEntity;
 import teletubbies.entity.monster.DipsyZombieEntity;
 import teletubbies.entity.monster.LaaLaaZombieEntity;
 import teletubbies.entity.monster.PoZombieEntity;
@@ -133,11 +134,11 @@ public class TeletubbiesEntityTypes {
                     .sized(0.6F, 1.6F)
                     .build(new ResourceLocation(Teletubbies.MODID, "po_zombie").toString()));
     
-    /*public static final RegistryObject<EntityType<PoScooterEntity>> PO_SCOOTER = ENTITY_TYPES.register("po_scooter",
+    public static final RegistryObject<EntityType<PoScooterEntity>> PO_SCOOTER = ENTITY_TYPES.register("po_scooter",
             () -> EntityType.Builder.<PoScooterEntity>of(PoScooterEntity::new, MobCategory.MISC)
                     .sized(1.15F, 0.3F)
                     .setCustomClientFactory((entity, world) -> new PoScooterEntity(world))
-                    .build(new ResourceLocation(Teletubbies.MODID, "po_scooter").toString()));*/
+                    .build(new ResourceLocation(Teletubbies.MODID, "po_scooter").toString()));
 	
 	@SubscribeEvent
 	public static void registerSpawnEggAndPlacement(final RegistryEvent.Register<EntityType<?>> event) {

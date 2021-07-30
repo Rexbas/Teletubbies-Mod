@@ -70,7 +70,6 @@ public class Teletubbies {
 	}
 
 	private void setupClient(final FMLClientSetupEvent event) {
-		//RenderRegistry.registryEntityRenders();
 		ItemBlockRenderTypes.setRenderLayer(TeletubbiesBlocks.WINDOW.get(), RenderType.translucent());
 		MenuScreens.register(TeletubbiesContainers.TINKYWINKY_BAG_CONTAINER.get(), TinkyWinkyBagScreen::new);
 		MenuScreens.register(TeletubbiesContainers.CONTROL_PANEL_CONTAINER.get(), ControlPanelScreen::new);

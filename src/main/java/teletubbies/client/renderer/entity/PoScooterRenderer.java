@@ -6,24 +6,25 @@ import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmlclient.registry.IRenderFactory;
 import teletubbies.Teletubbies;
+import teletubbies.client.renderer.RenderHandler;
 import teletubbies.client.renderer.entity.model.PoScooterModel;
 import teletubbies.entity.item.PoScooterEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
-	private static final PoScooterModel model = new PoScooterModel();
+	private static PoScooterModel model;
 
-	public PoScooterRenderer(EntityRenderDispatcher manager) {
-		super(manager);
+	public PoScooterRenderer(Context ctx) {
+		super(ctx);
+		PoScooterRenderer.model = new PoScooterModel(ctx.bakeLayer(RenderHandler.PO_SCOOTER_LAYER));
 		this.shadowRadius = 0.5F;
 	}
 	
@@ -42,9 +43,9 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	         matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float)entity.getForwardDirection()));
 	      }
 
-	      float f2 = entity.getRockingAngle(partialTicks);
+	      float f2 = entity.getBubbleAngle(partialTicks);
 	      if (!Mth.equal(f2, 0.0F)) {
-	         matrixStackIn.mulPose(new Quaternion(new Vector3f(1.0F, 0.0F, 1.0F), entity.getRockingAngle(partialTicks), true));
+	         matrixStackIn.mulPose(new Quaternion(new Vector3f(1.0F, 0.0F, 1.0F), entity.getBubbleAngle(partialTicks), true));
 	      }
 
 	      matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
@@ -58,13 +59,5 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	@Override
 	public ResourceLocation getTextureLocation(PoScooterEntity entity) {
 		return new ResourceLocation(Teletubbies.MODID, "textures/entity/po_scooter.png");
-	}
-	
-	public static class RenderFactory implements IRenderFactory<PoScooterEntity> {
-		
-		@Override
-		public EntityRenderer<? super PoScooterEntity> createRenderFor(EntityRenderDispatcher manager) {
-			return new PoScooterRenderer(manager);
-		}
 	}
 }

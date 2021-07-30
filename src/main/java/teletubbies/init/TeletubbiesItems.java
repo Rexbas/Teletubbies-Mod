@@ -12,6 +12,7 @@ import teletubbies.Teletubbies;
 import teletubbies.item.CustardItem;
 import teletubbies.item.LaaLaaBallItem;
 import teletubbies.item.ModSpawnEggItem;
+import teletubbies.item.PoScooterItem;
 import teletubbies.item.TinkyWinkyBagItem;
 import teletubbies.item.ToastItem;
 import teletubbies.item.armor.SimpleArmorItem;
@@ -41,7 +42,7 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> TOAST = ITEMS.register("toast", ToastItem::new);
 	
 	// Vehicle
-	//public static final RegistryObject<Item> PO_SCOOTER = ITEMS.register("po_scooter", PoScooterItem::new);
+	public static final RegistryObject<Item> PO_SCOOTER = ITEMS.register("po_scooter", PoScooterItem::new);
 	
 	// Armor
 	//public static final RegistryObject<Item> TUTU = ITEMS.register("tutu", TutuItem::new);
