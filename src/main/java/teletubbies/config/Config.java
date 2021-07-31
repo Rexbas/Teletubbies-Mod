@@ -45,7 +45,7 @@ public class Config {
 		public final ForgeConfigSpec.DoubleValue TOAST_SATURATION;
 		
 		// WorldGen
-		public final ForgeConfigSpec.IntValue VOICE_TRUMPET_SPAWNRATE;
+		public final ForgeConfigSpec.IntValue VOICE_TRUMPET_CHANCE;
 		public final ForgeConfigSpec.IntValue DOME_MIN_CHUNKS;
 		public final ForgeConfigSpec.IntValue DOME_MAX_CHUNKS;
 		
@@ -85,8 +85,8 @@ public class Config {
 			builder.pop();
 			
 			builder.push("WorldGen");
-			VOICE_TRUMPET_SPAWNRATE = builder.comment("Voice Trumpet Spawnrate (%)")
-					.defineInRange("probability", 10, 0, 100);
+			VOICE_TRUMPET_CHANCE = builder.comment("One Voice Trumpet approximately every N chunks (1 in N chance for a Voice Trumpet to spawn)")
+					.defineInRange("n", 20, 1, 1000);
 			
 			DOME_MIN_CHUNKS = builder.comment("Min chunks between domes")
 					.defineInRange("min", 10, 1, 1000);
@@ -100,28 +100,28 @@ public class Config {
 	
 	public static class Client {
 		// Rendering
-		public final ForgeConfigSpec.BooleanValue REPLACE_SUN;
+		/*public final ForgeConfigSpec.BooleanValue REPLACE_SUN;
 
 		public Client(ForgeConfigSpec.Builder builder) {
 			builder.push("Rendering");
 			REPLACE_SUN = builder.define("replace_sun", true);			
 			builder.pop();
-		}
+		}*/
 	}
 	
 	public static final ForgeConfigSpec COMMON_SPEC;
-	public static final ForgeConfigSpec CLIENT_SPEC;
+	//public static final ForgeConfigSpec CLIENT_SPEC;
 	public static final Common COMMON;
-	public static final Client CLIENT;
+	//public static final Client CLIENT;
 	
 	static {
 		final Pair<Common, ForgeConfigSpec> specPairCommon = new ForgeConfigSpec.Builder().configure(Common::new);
 		COMMON_SPEC = specPairCommon.getRight();
 		COMMON = specPairCommon.getLeft();
 		
-		final Pair<Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(Client::new);
+		/*final Pair<Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(Client::new);
 		CLIENT_SPEC = specPairClient.getRight();
-		CLIENT = specPairClient.getLeft();
+		CLIENT = specPairClient.getLeft();*/
 	}
 	
 	public static void loadConfig(ForgeConfigSpec config, String path) {

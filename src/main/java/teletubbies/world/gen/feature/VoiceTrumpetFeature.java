@@ -6,15 +6,14 @@ import com.mojang.serialization.Codec;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import teletubbies.block.VoiceTrumpetBlock;
-import teletubbies.config.Config;
 import teletubbies.init.TeletubbiesBlocks;
 
 public class VoiceTrumpetFeature extends Feature<NoneFeatureConfiguration> {
@@ -24,18 +23,19 @@ public class VoiceTrumpetFeature extends Feature<NoneFeatureConfiguration> {
 	}
 
 	@Override
-	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos, NoneFeatureConfiguration config) {
-		if (rand.nextInt(100) < Config.COMMON.VOICE_TRUMPET_SPAWNRATE.get()) {
-			BlockState blockstate = TeletubbiesBlocks.VOICE_TRUMPET.get().defaultBlockState();
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+		int x = ctx.random().nextInt(16);
+		int z = ctx.random().nextInt(16);
+		BlockPos pos = ctx.level().getHeightmapPos(Heightmap.Types.WORLD_SURFACE, new BlockPos(ctx.origin().getX() + x, 0, ctx.origin().getZ() + z));
+		BlockState blockstate = TeletubbiesBlocks.VOICE_TRUMPET.get().defaultBlockState();
+		
+		if (ctx.level().getBlockState(pos.below()).getBlock() instanceof GrassBlock && ctx.level().getBlockState(pos.above()).getBlock() instanceof AirBlock) {
+			Direction facing = getRandomHorizontalDirection(ctx.random());
 			
-			if (world.getBlockState(pos.below()).getBlock() instanceof GrassBlock && world.getBlockState(pos.above()).getBlock() instanceof AirBlock) {
-				Direction facing = getRandomHorizontalDirection(rand);
-				
-				world.setBlock(pos, blockstate.setValue(VoiceTrumpetBlock.FACING, facing).setValue(VoiceTrumpetBlock.BOTTOM, true), 0);
-				world.setBlock(pos.above(), blockstate.setValue(VoiceTrumpetBlock.FACING, facing).setValue(VoiceTrumpetBlock.BOTTOM, false), 0);
-				return true;
-			}	
-		}
+			ctx.level().setBlock(pos, blockstate.setValue(VoiceTrumpetBlock.FACING, facing).setValue(VoiceTrumpetBlock.BOTTOM, true), 0);
+			ctx.level().setBlock(pos.above(), blockstate.setValue(VoiceTrumpetBlock.FACING, facing).setValue(VoiceTrumpetBlock.BOTTOM, false), 0);
+			return true;
+		}	
 		return false;
 	}
 	
