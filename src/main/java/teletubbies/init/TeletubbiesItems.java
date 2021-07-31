@@ -15,8 +15,10 @@ import teletubbies.item.ModSpawnEggItem;
 import teletubbies.item.PoScooterItem;
 import teletubbies.item.TinkyWinkyBagItem;
 import teletubbies.item.ToastItem;
+import teletubbies.item.armor.DipsyHatItem;
 import teletubbies.item.armor.NooNooEyesItem;
 import teletubbies.item.armor.SimpleArmorItem;
+import teletubbies.item.armor.TutuItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesItems {
@@ -46,9 +48,9 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> PO_SCOOTER = ITEMS.register("po_scooter", PoScooterItem::new);
 	
 	// Armor
-	//public static final RegistryObject<Item> TUTU = ITEMS.register("tutu", TutuItem::new);
+	public static final RegistryObject<Item> TUTU = ITEMS.register("tutu", TutuItem::new);
 	public static final RegistryObject<Item> NOONOO_EYES = ITEMS.register("noonoo_eyes", NooNooEyesItem::new);
-	//public static final RegistryObject<Item> DIPSY_HAT = ITEMS.register("dipsy_hat", DipsyHatItem::new);
+	public static final RegistryObject<Item> DIPSY_HAT = ITEMS.register("dipsy_hat", DipsyHatItem::new);
 	public static final RegistryObject<Item> TINKYWINKY_BIB = ITEMS.register("tinkywinky_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
 	public static final RegistryObject<Item> DIPSY_BIB = ITEMS.register("dipsy_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
 	public static final RegistryObject<Item> LAALAA_BIB = ITEMS.register("laalaa_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));

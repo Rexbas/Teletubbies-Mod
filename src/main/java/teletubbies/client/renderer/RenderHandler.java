@@ -18,7 +18,9 @@ import teletubbies.client.renderer.entity.model.PoModel;
 import teletubbies.client.renderer.entity.model.PoScooterModel;
 import teletubbies.client.renderer.entity.model.TiddlytubbyModel;
 import teletubbies.client.renderer.entity.model.TinkyWinkyModel;
+import teletubbies.client.renderer.item.model.DipsyHatModel;
 import teletubbies.client.renderer.item.model.NooNooEyesModel;
+import teletubbies.client.renderer.item.model.TutuModel;
 import teletubbies.init.TeletubbiesEntityTypes;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -34,7 +36,9 @@ public class RenderHandler {
     public static final ModelLayerLocation PO_SCOOTER_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "scooter"), "scooter");
     
     public static final ModelLayerLocation NOONOO_EYES_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "noonoo_eyes"), "noonoo_eyes");
-	
+    public static final ModelLayerLocation DIPSY_HAT_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "dipsy_hat"), "dipsy_hat");
+    public static final ModelLayerLocation TUTU_LAYER = new ModelLayerLocation(new ResourceLocation(Teletubbies.MODID, "tutu"), "tutu");
+    	
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(TeletubbiesEntityTypes.TINKYWINKY.get(), (ctx) -> {return new TeletubbyRenderer<>(ctx, "tinkywinky", 0.95F, new TinkyWinkyModel<>(ctx.bakeLayer(TINKYWINKY_LAYER)));});
@@ -74,5 +78,7 @@ public class RenderHandler {
         event.registerLayerDefinition(PO_SCOOTER_LAYER, PoScooterModel::createBodyLayer);
         
         event.registerLayerDefinition(NOONOO_EYES_LAYER, NooNooEyesModel::createBodyLayer);
+        event.registerLayerDefinition(DIPSY_HAT_LAYER, DipsyHatModel::createBodyLayer);
+        event.registerLayerDefinition(TUTU_LAYER, TutuModel::createBodyLayer);
     }
 }
