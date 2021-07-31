@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import teletubbies.Teletubbies;
 import teletubbies.block.FullGrassBlock;
 import teletubbies.init.TeletubbiesBlocks;
@@ -33,33 +33,16 @@ public class DomePieces {
 	public static final ResourceLocation DOME_PO = new ResourceLocation(Teletubbies.MODID, "dome_po");
 
 	public static class Piece extends TemplateStructurePiece {
-		
-		private ResourceLocation resourceLocation;
-		
+				
 	    public Piece(StructureManager manager, ResourceLocation rl, BlockPos pos) {
-	        super(TeletubbiesWorldGen.DOME_PIECE, 0);
-	        this.templatePosition = pos;
-	        this.resourceLocation = rl;
-	        this.setupPiece(manager);
+	        super(TeletubbiesWorldGen.DOME_PIECE, 0, manager, rl, rl.toString(), new StructurePlaceSettings(), pos);
 	    }
 	
-	    public Piece(StructureManager manager, CompoundTag nbt) {
-	        super(TeletubbiesWorldGen.DOME_PIECE, nbt);
-	        this.resourceLocation = new ResourceLocation(nbt.getString("resourceLocation"));
-	        this.setupPiece(manager);
+	    public Piece(ServerLevel world, CompoundTag nbt) {
+	        super(TeletubbiesWorldGen.DOME_PIECE, nbt, world, (rl) -> {
+				return new StructurePlaceSettings();
+			});
 	    }
-	
-	    private void setupPiece(StructureManager manager) {
-	        StructureTemplate template = manager.getOrCreate(this.resourceLocation);
-	        StructurePlaceSettings placementsettings = new StructurePlaceSettings();
-	        this.setup(template, this.templatePosition, placementsettings);
-	    }
-	    
-        @Override
-        protected void addAdditionalSaveData(CompoundTag nbt) {
-            super.addAdditionalSaveData(nbt);
-            nbt.putString("resourceLocation", this.resourceLocation.toString());
-        }
 	    
 	    @Override
 	    public boolean postProcess(WorldGenLevel world, StructureFeatureManager manager, ChunkGenerator generator, Random rand, BoundingBox mbb, ChunkPos chunkPos, BlockPos pos) {

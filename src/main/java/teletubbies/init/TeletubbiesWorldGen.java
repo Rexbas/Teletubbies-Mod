@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
-import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.StructureSettings;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -30,8 +29,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
 import teletubbies.config.Config;
-import teletubbies.world.gen.feature.TeletubbiesConfiguredFeatures;
-import teletubbies.world.gen.feature.VoiceTrumpetFeature;
 import teletubbies.world.gen.feature.structure.DomePieces;
 import teletubbies.world.gen.feature.structure.DomeStructure;
 import teletubbies.world.gen.feature.structure.TeletubbiesConfiguredStructures;
@@ -41,7 +38,7 @@ public class TeletubbiesWorldGen {
 	// Features
 	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Teletubbies.MODID);
 
-	public static final RegistryObject<Feature<NoneFeatureConfiguration>> VOICE_TRUMPET_FEATURE = FEATURES.register("voice_trumpet", () -> new VoiceTrumpetFeature(NoneFeatureConfiguration.CODEC));
+	//public static final RegistryObject<Feature<NoneFeatureConfiguration>> VOICE_TRUMPET_FEATURE = FEATURES.register("voice_trumpet", () -> new VoiceTrumpetFeature(NoneFeatureConfiguration.CODEC));
 	
 	// Structures --------------------------------------------------------------------------------------------------------------------------------------------------------------
 	public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, Teletubbies.MODID);
@@ -75,7 +72,7 @@ public class TeletubbiesWorldGen {
 	@SubscribeEvent
 	public static void setup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
-			TeletubbiesConfiguredFeatures.registerConfiguredFeatures();
+			//TeletubbiesConfiguredFeatures.registerConfiguredFeatures();
 			registerStructure(DOME_STRUCTURE.get(), new StructureFeatureConfiguration(Config.COMMON.DOME_MAX_CHUNKS.get(), Config.COMMON.DOME_MIN_CHUNKS.get(), 8351309), false);
 	    	registerStructurePiece(DOME_PIECE, new ResourceLocation(Teletubbies.MODID, "dome_piece"));
 	    	TeletubbiesConfiguredStructures.registerConfiguredStructures();
@@ -87,7 +84,7 @@ public class TeletubbiesWorldGen {
     	@SubscribeEvent
         public static void biomeLoading(final BiomeLoadingEvent event) {
     		if (event.getCategory() == BiomeCategory.PLAINS) {
-    			event.getGeneration().addFeature(Decoration.LOCAL_MODIFICATIONS, TeletubbiesConfiguredFeatures.VOICE_TRUMPET_CONFIGURED_FEATURE);
+    			//event.getGeneration().addFeature(Decoration.LOCAL_MODIFICATIONS, TeletubbiesConfiguredFeatures.VOICE_TRUMPET_CONFIGURED_FEATURE);
     			
     			event.getGeneration().addStructureStart(TeletubbiesConfiguredStructures.DOME_CONFIGURED_STRUCTURE);
     		}
