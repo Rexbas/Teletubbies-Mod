@@ -36,10 +36,10 @@ public class DipsyEntity extends TeletubbyEntity {
 			this.setItemSlot(EquipmentSlot.CHEST, stack);
 			break;
 		case 1:
-			/*stack = new ItemStack(TeletubbiesItems.DIPSY_HAT.get());
+			stack = new ItemStack(TeletubbiesItems.DIPSY_HAT.get());
 			damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlot.HEAD, stack);*/
+			this.setItemSlot(EquipmentSlot.HEAD, stack);
 			break;
 		}
 	}

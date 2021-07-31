@@ -35,22 +35,8 @@ public class Teletubbies {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_SPEC);
 		
-
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-
-		/* TODO
-		 * 
-		 * EQUIP TUTU
-		 * PO SCOOTER IN HAND
-		 * EQUIP HAT
-		 * FIX PO SCOOTER
-		 * 
-		 * 
-		 */
-		
-		
-		
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);		
 		
 		TeletubbiesBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesBlocks.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
