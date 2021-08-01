@@ -325,7 +325,7 @@ public class PoScooterEntity extends Entity {
 			}
 			
 			this.deltaRotation *= 3.33F;
-			this.setYRot(this.getYRot()+ this.deltaRotation);
+			this.setYRot(this.getYRot() + this.deltaRotation);
 			if (this.forwardInputDown) {
 				f += 0.4F; // Base speed
 			}
@@ -342,7 +342,7 @@ public class PoScooterEntity extends Entity {
 	public void positionRider(Entity passenger) {
 		if (this.hasPassenger(passenger)) {
 			float f = 0.0F;
-			float f1 = (float) ((!this.isAlive() ? (double) 0.01F : this.getPassengersRidingOffset()) + passenger.getMyRidingOffset());
+			float f1 = (float) ((this.isRemoved() ? (double) 0.01F : this.getPassengersRidingOffset()) + passenger.getMyRidingOffset());
 			if (this.getPassengers().size() > 1) {
 				int i = this.getPassengers().indexOf(passenger);
 				if (i == 0) {
@@ -350,17 +350,22 @@ public class PoScooterEntity extends Entity {
 				} else {
 					f = -0.6F;
 				}
-				
+
 				if (passenger instanceof Animal) {
 					f = (float) ((double) f + 0.2D);
 				}
 			}
 
-			Vec3 Vector3d = (new Vec3((double) f, 0.0D, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
-			passenger.setPos(this.getX() + Vector3d.x, this.getY() + (double) f1, this.getZ() + Vector3d.z);
-			passenger.setYRot(this.getYRot() + this.deltaRotation);
+			Vec3 vec3 = (new Vec3((double) f, 0.0D, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+			passenger.setPos(this.getX() + vec3.x, this.getY() + (double) f1, this.getZ() + vec3.z);
+			passenger.setYRot(passenger.getYRot() + this.deltaRotation);
 			passenger.setYHeadRot(passenger.getYHeadRot() + this.deltaRotation);
 			this.clampRotation(passenger);
+			if (passenger instanceof Animal && this.getPassengers().size() > 1) {
+				int j = passenger.getId() % 2 == 0 ? 90 : 270;
+				passenger.setYBodyRot(((Animal) passenger).yBodyRot + (float) j);
+				passenger.setYHeadRot(passenger.getYHeadRot() + (float) j);
+			}
 		}
 	}
 
