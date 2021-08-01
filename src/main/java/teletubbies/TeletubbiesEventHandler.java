@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.ZombieEntity;
@@ -16,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -29,6 +31,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.client.audio.PoScooterTickableSound;
+import teletubbies.client.renderer.environment.BabyFaceRenderer;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.config.Config;
@@ -49,6 +52,16 @@ public class TeletubbiesEventHandler {
 	public static void attachtCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {		
 		if(event.getObject() instanceof PlayerEntity) {
 			event.addCapability(new ResourceLocation(Teletubbies.MODID, "capability.jump"), new JumpProvider());
+		}
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public static void setSkyRenderer(EntityJoinWorldEvent event) {
+		if (event.getEntity().equals(Minecraft.getInstance().player) && event.getWorld().isClientSide() && event.getWorld().dimension().equals(World.OVERWORLD) && Config.CLIENT.REPLACE_SUN.get()) {
+			DimensionRenderInfo di = DimensionRenderInfo.forType(event.getWorld().dimensionType());
+			ISkyRenderHandler renderer = new BabyFaceRenderer();
+			di.setSkyRenderHandler(renderer);
 		}
 	}
 	
