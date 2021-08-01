@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -29,6 +31,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import teletubbies.client.audio.PoScooterTickableSound;
+import teletubbies.client.renderer.environment.BabyFaceRenderer;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.config.Config;
@@ -49,6 +52,16 @@ public class TeletubbiesEventHandler {
 	public static void attachtCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {		
 		if(event.getObject() instanceof Player) {
 			event.addCapability(new ResourceLocation(Teletubbies.MODID, "capability.jump"), new JumpProvider());
+		}
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent
+	public static void setSkyRenderer(EntityJoinWorldEvent event) {
+		if (event.getEntity().equals(Minecraft.getInstance().player) && event.getWorld().isClientSide() && event.getWorld().dimension().equals(Level.OVERWORLD) && Config.CLIENT.REPLACE_SUN.get()) {
+			DimensionSpecialEffects de = DimensionSpecialEffects.forType(event.getWorld().dimensionType());
+			ISkyRenderHandler renderer = new BabyFaceRenderer();
+			de.setSkyRenderHandler(renderer);
 		}
 	}
 	

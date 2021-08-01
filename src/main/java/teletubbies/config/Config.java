@@ -100,28 +100,28 @@ public class Config {
 	
 	public static class Client {
 		// Rendering
-		/*public final ForgeConfigSpec.BooleanValue REPLACE_SUN;
+		public final ForgeConfigSpec.BooleanValue REPLACE_SUN;
 
 		public Client(ForgeConfigSpec.Builder builder) {
 			builder.push("Rendering");
 			REPLACE_SUN = builder.define("replace_sun", true);			
 			builder.pop();
-		}*/
+		}
 	}
 	
 	public static final ForgeConfigSpec COMMON_SPEC;
-	//public static final ForgeConfigSpec CLIENT_SPEC;
+	public static final ForgeConfigSpec CLIENT_SPEC;
 	public static final Common COMMON;
-	//public static final Client CLIENT;
+	public static final Client CLIENT;
 	
 	static {
 		final Pair<Common, ForgeConfigSpec> specPairCommon = new ForgeConfigSpec.Builder().configure(Common::new);
 		COMMON_SPEC = specPairCommon.getRight();
 		COMMON = specPairCommon.getLeft();
 		
-		/*final Pair<Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(Client::new);
+		final Pair<Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(Client::new);
 		CLIENT_SPEC = specPairClient.getRight();
-		CLIENT = specPairClient.getLeft();*/
+		CLIENT = specPairClient.getLeft();
 	}
 	
 	public static void loadConfig(ForgeConfigSpec config, String path) {
