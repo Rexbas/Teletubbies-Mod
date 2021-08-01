@@ -18,7 +18,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import teletubbies.Teletubbies;
-import teletubbies.entity.item.PoScooterEntity;
+import teletubbies.entity.vehicle.PoScooterEntity;
 
 public class PoScooterItem extends Item {
 	private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);

@@ -2,7 +2,6 @@ package teletubbies.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -16,7 +15,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.Teletubbies;
 import teletubbies.client.renderer.RenderHandler;
 import teletubbies.client.renderer.entity.model.PoScooterModel;
-import teletubbies.entity.item.PoScooterEntity;
+import teletubbies.entity.vehicle.PoScooterEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
@@ -42,12 +41,7 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	      if (f > 0.0F) {
 	         matrixStackIn.mulPose(Vector3f.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float)entity.getForwardDirection()));
 	      }
-
-	      float f2 = entity.getBubbleAngle(partialTicks);
-	      if (!Mth.equal(f2, 0.0F)) {
-	         matrixStackIn.mulPose(new Quaternion(new Vector3f(1.0F, 0.0F, 1.0F), entity.getBubbleAngle(partialTicks), true));
-	      }
-
+	      
 	      matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
 	      PoScooterRenderer.model.setupAnim(entity, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
 	      VertexConsumer ivertexbuilder = bufferIn.getBuffer(PoScooterRenderer.model.renderType(this.getTextureLocation(entity)));

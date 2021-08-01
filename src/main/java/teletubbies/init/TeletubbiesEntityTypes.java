@@ -38,7 +38,6 @@ import teletubbies.entity.baby.PingEntity;
 import teletubbies.entity.baby.RuRuEntity;
 import teletubbies.entity.baby.TiddlytubbyEntity;
 import teletubbies.entity.baby.UmpiePumpieEntity;
-import teletubbies.entity.item.PoScooterEntity;
 import teletubbies.entity.monster.DipsyZombieEntity;
 import teletubbies.entity.monster.LaaLaaZombieEntity;
 import teletubbies.entity.monster.PoZombieEntity;
@@ -49,6 +48,7 @@ import teletubbies.entity.passive.NooNooEntity;
 import teletubbies.entity.passive.PoEntity;
 import teletubbies.entity.passive.TeletubbyEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
+import teletubbies.entity.vehicle.PoScooterEntity;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesEntityTypes {

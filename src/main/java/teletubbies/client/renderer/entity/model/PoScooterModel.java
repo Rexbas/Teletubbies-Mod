@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import teletubbies.entity.item.PoScooterEntity;
+import teletubbies.entity.vehicle.PoScooterEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterModel extends EntityModel<PoScooterEntity> {

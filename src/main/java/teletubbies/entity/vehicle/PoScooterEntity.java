@@ -1,4 +1,4 @@
-package teletubbies.entity.item;
+package teletubbies.entity.vehicle;
 
 import java.util.List;
 
@@ -45,7 +45,6 @@ public class PoScooterEntity extends Entity {
 	private static final EntityDataAccessor<Integer> TIME_SINCE_HIT = SynchedEntityData.defineId(PoScooterEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Integer> FORWARD_DIRECTION = SynchedEntityData.defineId(PoScooterEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Float> DAMAGE_TAKEN = SynchedEntityData.defineId(PoScooterEntity.class, EntityDataSerializers.FLOAT);
-	private static final EntityDataAccessor<Integer> DATA_ID_BUBBLE_TIME = SynchedEntityData.defineId(PoScooterEntity.class, EntityDataSerializers.INT);
 	private float outOfControlTicks;
 	private float deltaRotation;
 	private int lerpSteps;
@@ -59,11 +58,6 @@ public class PoScooterEntity extends Entity {
 	private boolean forwardInputDown;
 	private boolean backInputDown;
 	private double lastYd;
-	private boolean isAboveBubbleColumn;
-	private boolean bubbleColumnDirectionIsDown;
-	private float bubbleMultiplier;
-	private float bubbleAngle;
-	private float bubbleAngleO;
 	private float maxFallDistance;
 	
 	public PoScooterEntity(EntityType<? extends Entity> type, Level world) {
@@ -96,7 +90,6 @@ public class PoScooterEntity extends Entity {
 		this.entityData.define(TIME_SINCE_HIT, 0);
 		this.entityData.define(FORWARD_DIRECTION, 1);
 		this.entityData.define(DAMAGE_TAKEN, 0.0F);
-		this.entityData.define(DATA_ID_BUBBLE_TIME, 0);
 	}
 	
 	@Override
@@ -234,8 +227,6 @@ public class PoScooterEntity extends Entity {
 		} else {
 			this.setDeltaMovement(Vec3.ZERO);
 		}
-
-		this.tickBubbleColumn();
 		
 		this.checkInsideBlocks();
 		List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate((double) 0.2F, (double) -0.01F, (double) 0.2F), EntitySelector.pushableBy(this));
@@ -252,47 +243,6 @@ public class PoScooterEntity extends Entity {
 						this.push(entity);
 					}
 				}
-			}
-		}
-	}
-
-	private void tickBubbleColumn() {
-		if (this.level.isClientSide) {
-			int i = this.getBubbleTime();
-			if (i > 0) {
-				this.bubbleMultiplier += 0.05F;
-			} else {
-				this.bubbleMultiplier -= 0.1F;
-			}
-
-			this.bubbleMultiplier = Mth.clamp(this.bubbleMultiplier, 0.0F, 1.0F);
-			this.bubbleAngleO = this.bubbleAngle;
-			this.bubbleAngle = 10.0F * (float) Math.sin((double) (0.5F * (float) this.level.getGameTime()))
-					* this.bubbleMultiplier;
-		} else {
-			if (!this.isAboveBubbleColumn) {
-				this.setBubbleTime(0);
-			}
-
-			int k = this.getBubbleTime();
-			if (k > 0) {
-				--k;
-				this.setBubbleTime(k);
-				int j = 60 - k - 1;
-				if (j > 0 && k == 0) {
-					this.setBubbleTime(0);
-					Vec3 vec3 = this.getDeltaMovement();
-					if (this.bubbleColumnDirectionIsDown) {
-						this.setDeltaMovement(vec3.add(0.0D, -0.7D, 0.0D));
-						this.ejectPassengers();
-					} else {
-						this.setDeltaMovement(vec3.x, this.hasPassenger((p_150274_) -> {
-							return p_150274_ instanceof Player;
-						}) ? 2.7D : 0.6D, vec3.z);
-					}
-				}
-
-				this.isAboveBubbleColumn = false;
 			}
 		}
 	}
@@ -485,19 +435,6 @@ public class PoScooterEntity extends Entity {
 
 	public int getTimeSinceHit() {
 		return this.entityData.get(TIME_SINCE_HIT);
-	}
-	
-	private void setBubbleTime(int p_203055_1_) {
-		this.entityData.set(DATA_ID_BUBBLE_TIME, p_203055_1_);
-	}
-
-	private int getBubbleTime() {
-		return this.entityData.get(DATA_ID_BUBBLE_TIME);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public float getBubbleAngle(float partialTicks) {
-		return Mth.lerp(partialTicks, this.bubbleAngleO, this.bubbleAngle);
 	}
 
 	public void setForwardDirection(int forwardDirection) {
