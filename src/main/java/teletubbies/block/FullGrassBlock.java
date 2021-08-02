@@ -57,45 +57,51 @@ public class FullGrassBlock extends GrassBlock {
 		return false;
 	}
 	
-	// Need to compare with GrassBlock
-	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-		this.tick(state, world, pos, rand);
+	private static boolean canBeGrass(BlockState state, IWorldReader world, BlockPos pos) {
+		BlockState aboveState = world.getBlockState(pos.above());
+		if (aboveState.is(Blocks.SNOW) && aboveState.getValue(SnowBlock.LAYERS) == 1) {
+			return true;
+		} else if (aboveState.getFluidState().getAmount() == 8) {
+			return false;
+		} else {
+			BlockState northState = world.getBlockState(pos.north());
+			BlockState eastState = world.getBlockState(pos.east());
+			BlockState southState = world.getBlockState(pos.south());
+			BlockState westState = world.getBlockState(pos.west());
+			BlockState belowState = world.getBlockState(pos.below());
+			
+			int aboveLevel = LightEngine.getLightBlockInto(world, state, pos, aboveState, pos.above(), Direction.UP, aboveState.getLightBlock(world, pos.above()));
+			int northLevel = LightEngine.getLightBlockInto(world, state, pos, northState, pos.north(), Direction.NORTH, northState.getLightBlock(world, pos.north()));
+			int eastLevel = LightEngine.getLightBlockInto(world, state, pos, eastState, pos.east(), Direction.EAST, eastState.getLightBlock(world, pos.east()));
+			int southLevel = LightEngine.getLightBlockInto(world, state, pos, southState, pos.south(), Direction.SOUTH, southState.getLightBlock(world, pos.south()));
+			int westLevel = LightEngine.getLightBlockInto(world, state, pos, westState, pos.west(), Direction.WEST, westState.getLightBlock(world, pos.west()));
+			int belowLevel = LightEngine.getLightBlockInto(world, state, pos, belowState, pos.below(), Direction.DOWN, belowState.getLightBlock(world, pos.below()));
+
+			return aboveLevel < world.getMaxLightLevel() || northLevel < world.getMaxLightLevel() || eastLevel < world.getMaxLightLevel() ||
+					southLevel < world.getMaxLightLevel() || westLevel < world.getMaxLightLevel() || belowLevel < world.getMaxLightLevel();
+		}
+	}
+
+	private static boolean canPropagate(BlockState state, IWorldReader world, BlockPos pos) {
+		return canBeGrass(state, world, pos) && !world.getFluidState(pos.above()).is(FluidTags.WATER);
 	}
 	
 	@Override
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-		if (!worldIn.isClientSide) {
-			if (!worldIn.isAreaLoaded(pos, 3)) return; 
-			if (canBeGrass(state, worldIn, pos)) {
-				if (worldIn.getMaxLocalRawBrightness(pos.above()) >= 9) {
-					BlockState blockstate = this.defaultBlockState();
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+		if (!canBeGrass(state, world, pos)) {
+			if (!world.isAreaLoaded(pos, 3))
+				return; // Forge: prevent loading unloaded chunks when checking neighbor's light and
+						// spreading
+			world.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
+		} else {
+			BlockState blockstate = this.defaultBlockState();
 
-					for (int i = 0; i < 4; ++i) {
-						BlockPos blockpos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
-						if (worldIn.getBlockState(blockpos).getBlock() == Blocks.DIRT && canPropagate(blockstate, worldIn, blockpos)) {
-							worldIn.setBlockAndUpdate(blockpos, blockstate);
-						}
-					}
+			for (int i = 0; i < 4; ++i) {
+				BlockPos blockpos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+				if (world.getBlockState(blockpos).is(Blocks.DIRT) && canPropagate(blockstate, world, blockpos)) {
+					world.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, Boolean.valueOf(world.getBlockState(blockpos.above()).is(Blocks.SNOW))));
 				}
 			}
 		}
-	}
-	
-	private static boolean canBeGrass(BlockState p_220257_0_, IWorldReader p_220257_1_, BlockPos p_220257_2_) {
-		BlockPos blockpos = p_220257_2_.above();
-		BlockState blockstate = p_220257_1_.getBlockState(blockpos);
-		if (blockstate.getBlock() == Blocks.SNOW && blockstate.getValue(SnowBlock.LAYERS) == 1) {
-			return true;
-		} else {
-			int i = LightEngine.getLightBlockInto(p_220257_1_, p_220257_0_, p_220257_2_, blockstate, blockpos, Direction.UP,
-					blockstate.getLightBlock(p_220257_1_, blockpos));
-			return i < p_220257_1_.getMaxLightLevel();
-		}
-	}
-
-	private static boolean canPropagate(BlockState p_220256_0_, IWorldReader p_220256_1_, BlockPos p_220256_2_) {
-		BlockPos blockpos = p_220256_2_.above();
-		return canBeGrass(p_220256_0_, p_220256_1_, p_220256_2_) && !p_220256_1_.getFluidState(blockpos).is(FluidTags.WATER);
 	}
 }
