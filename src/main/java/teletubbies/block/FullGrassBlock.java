@@ -22,6 +22,7 @@ import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
+import teletubbies.config.Config;
 
 public class FullGrassBlock extends GrassBlock {
 	
@@ -100,9 +101,14 @@ public class FullGrassBlock extends GrassBlock {
 			BlockState blockstate = this.defaultBlockState();
 
 			for (int i = 0; i < 4; ++i) {
-				BlockPos blockpos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
-				if (world.getBlockState(blockpos).is(Blocks.DIRT) && canPropagate(blockstate, world, blockpos)) {
-					world.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, Boolean.valueOf(world.getBlockState(blockpos.above()).is(Blocks.SNOW))));
+				BlockPos blockpos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(3) - 1, rand.nextInt(3) - 1);
+				if (canPropagate(blockstate, world, blockpos)) {
+					if (world.getBlockState(blockpos).is(Blocks.DIRT)) {
+						world.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, Boolean.valueOf(world.getBlockState(blockpos.above()).is(Blocks.SNOW))));
+					}
+					else if (Config.COMMON.INVASIVE_GRASS.get() && world.getBlockState(blockpos).is(Blocks.GRASS_BLOCK)) {
+						world.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, Boolean.valueOf(world.getBlockState(blockpos.above()).is(Blocks.SNOW))));
+					}
 				}
 			}
 		}

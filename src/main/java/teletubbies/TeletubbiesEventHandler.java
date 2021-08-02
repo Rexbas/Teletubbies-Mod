@@ -9,6 +9,7 @@ import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.ZombieEntity;
+import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.DamageSource;
@@ -38,6 +39,7 @@ import teletubbies.client.renderer.environment.BabyFaceRenderer;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.config.Config;
+import teletubbies.entity.ai.goal.EatFullGrassGoal;
 import teletubbies.entity.item.PoScooterEntity;
 import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
@@ -157,12 +159,17 @@ public class TeletubbiesEventHandler {
 	
 	@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
-		if(event.getEntity() instanceof ZombieEntity) {
+		if (event.getEntity() instanceof ZombieEntity) {
 			ZombieEntity zombie = (ZombieEntity) event.getEntity();
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, TinkyWinkyEntity.class, true));
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, DipsyEntity.class, true));
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, LaaLaaEntity.class, true));
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, PoEntity.class, true));
+		}
+		
+		if (event.getEntity() instanceof SheepEntity) {
+			SheepEntity sheep = (SheepEntity) event.getEntity();
+			sheep.goalSelector.addGoal(5, new EatFullGrassGoal(sheep));
 		}
 	}
 	
