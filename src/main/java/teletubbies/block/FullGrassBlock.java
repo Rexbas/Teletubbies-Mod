@@ -6,18 +6,12 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowerBlock;
 import net.minecraft.block.GrassBlock;
-import net.minecraft.block.MushroomBlock;
-import net.minecraft.block.SaplingBlock;
-import net.minecraft.block.SeaPickleBlock;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.SweetBerryBushBlock;
-import net.minecraft.block.TallFlowerBlock;
-import net.minecraft.block.TallGrassBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
@@ -27,6 +21,7 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.PlantType;
 
 public class FullGrassBlock extends GrassBlock {
 	
@@ -45,14 +40,22 @@ public class FullGrassBlock extends GrassBlock {
 	
 	@Override
 	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
-		if (plantable instanceof TallFlowerBlock ||
-				plantable instanceof FlowerBlock ||
-				plantable instanceof MushroomBlock ||
-				plantable instanceof SaplingBlock ||
-				plantable instanceof SeaPickleBlock ||
-				plantable instanceof SweetBerryBushBlock ||
-				plantable instanceof TallGrassBlock) {
+	    PlantType type = plantable.getPlantType(world, pos.relative(facing));
+		
+		if (PlantType.PLAINS.equals(type)) {
 			return true;
+		} else if (PlantType.BEACH.equals(type)) {
+			boolean isBeach = true;
+			boolean hasWater = false;
+			for (Direction face : Direction.Plane.HORIZONTAL) {
+				BlockState blockState = world.getBlockState(pos.relative(face));
+				FluidState fluidState = world.getFluidState(pos.relative(face));
+				hasWater |= blockState.is(Blocks.FROSTED_ICE);
+				hasWater |= fluidState.is(FluidTags.WATER);
+				if (hasWater)
+					break; // No point continuing.
+			}
+			return isBeach && hasWater;
 		}
 		return false;
 	}
