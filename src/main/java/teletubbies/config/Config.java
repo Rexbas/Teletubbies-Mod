@@ -48,6 +48,7 @@ public class Config {
 		public final ForgeConfigSpec.IntValue VOICE_TRUMPET_CHANCE;
 		public final ForgeConfigSpec.IntValue DOME_MIN_CHUNKS;
 		public final ForgeConfigSpec.IntValue DOME_MAX_CHUNKS;
+		public final ForgeConfigSpec.BooleanValue INVASIVE_GRASS;
 		
 		public Common(ForgeConfigSpec.Builder builder) {			
 			builder.push("Entities");
@@ -93,6 +94,9 @@ public class Config {
 			
 			DOME_MAX_CHUNKS = builder.comment("Max chunks between domes")
 					.defineInRange("max", 25, 1, 1000);
+			
+			INVASIVE_GRASS = builder.comment("Whether or not the full grass block should turn vanilla grass into full grass (like how dirt turns into grass)")
+					.define("invasive_grass", true);
 
 			builder.pop();
 		}

@@ -9,16 +9,19 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -27,6 +30,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +39,7 @@ import teletubbies.client.renderer.environment.BabyFaceRenderer;
 import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.config.Config;
+import teletubbies.entity.ai.goal.EatFullGrassGoal;
 import teletubbies.entity.passive.DipsyEntity;
 import teletubbies.entity.passive.LaaLaaEntity;
 import teletubbies.entity.passive.PoEntity;
@@ -62,6 +67,17 @@ public class TeletubbiesEventHandler {
 			DimensionSpecialEffects de = DimensionSpecialEffects.forType(event.getWorld().dimensionType());
 			ISkyRenderHandler renderer = new BabyFaceRenderer();
 			de.setSkyRenderHandler(renderer);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void toolUse(BlockToolInteractEvent event) {
+		if (event.getToolType() == ToolType.HOE && event.getState().is(TeletubbiesBlocks.FULL_GRASS.get())) {
+			event.setFinalState(Blocks.FARMLAND.defaultBlockState());
+		}
+		
+		if (event.getToolType() == ToolType.SHOVEL && event.getState().is(TeletubbiesBlocks.FULL_GRASS.get())) {
+			event.setFinalState(Blocks.DIRT_PATH.defaultBlockState());
 		}
 	}
 	
@@ -148,6 +164,11 @@ public class TeletubbiesEventHandler {
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, DipsyEntity.class, true));
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, LaaLaaEntity.class, true));
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, PoEntity.class, true));
+		}
+		
+		if (event.getEntity() instanceof Sheep) {
+			Sheep sheep = (Sheep) event.getEntity();
+			sheep.goalSelector.addGoal(5, new EatFullGrassGoal(sheep));
 		}
 	}
 	
