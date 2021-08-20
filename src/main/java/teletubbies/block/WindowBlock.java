@@ -39,9 +39,7 @@ public class WindowBlock extends Block {
 	protected static final VoxelShape AABB_X = VoxelShapeRotation.rotateY(AABB_Z, Math.toRadians(90));
 	
 	public WindowBlock() {
-		super(Properties.of(Material.GLASS)
-				.strength(0.3F)
-				.sound(SoundType.GLASS));
+		super(Properties.copy(Blocks.GLASS_PANE));
 		
 		this.registerDefaultState(this.stateDefinition.any().setValue(X_AXIS, false).setValue(PART, WindowPart.CENTER).setValue(WATERLOGGED, false));
 	}

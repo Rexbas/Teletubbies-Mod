@@ -21,15 +21,14 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
+import net.minecraftforge.common.ToolType;
 import teletubbies.config.Config;
 
 public class FullGrassBlock extends GrassBlock {
 	
 	public FullGrassBlock() {
-		super(Properties.of(Material.GRASS)
-				.randomTicks()
-				.strength(0.6F)
-				.sound(SoundType.GRASS));
+		super(Properties.copy(Blocks.GRASS_BLOCK)
+				.harvestTool(ToolType.SHOVEL));
 	}
 	
 	@Override
@@ -60,7 +59,14 @@ public class FullGrassBlock extends GrassBlock {
 		return false;
 	}
 	
-	private static boolean canBeGrass(BlockState state, BlockGetter world, BlockPos pos) {
+    @Nullable
+    public BlockState getToolModifiedState(BlockState state, World world, BlockPos pos, PlayerEntity player, ItemStack stack, ToolType toolType)  {
+        if (toolType == ToolType.HOE) return Blocks.FARMLAND.defaultBlockState();
+        else if (toolType == ToolType.SHOVEL) return Blocks.GRASS_PATH.defaultBlockState();
+        return null;
+    }
+	
+	private static boolean canBeGrass(BlockState state, IWorldReader world, BlockPos pos) {
 		BlockState aboveState = world.getBlockState(pos.above());
 		if (aboveState.is(Blocks.SNOW) && aboveState.getValue(SnowLayerBlock.LAYERS) == 1) {
 			return true;

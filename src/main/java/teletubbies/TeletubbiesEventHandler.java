@@ -1,5 +1,7 @@
 package teletubbies;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.player.LocalPlayer;
@@ -21,7 +23,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.common.ToolActions;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -30,7 +32,6 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -72,12 +73,12 @@ public class TeletubbiesEventHandler {
 	
 	@SubscribeEvent
 	public static void toolUse(BlockToolInteractEvent event) {
-		/*if (event.getToolAction() == ToolActions.HOE_DIG && event.getState().is(TeletubbiesBlocks.FULL_GRASS.get())) {
+		if (event.getToolType() == ToolType.HOE && event.getState().getBlock().is(TeletubbiesBlocks.FULL_GRASS.get())) {
 			event.setFinalState(Blocks.FARMLAND.defaultBlockState());
-		}*/
+		}
 		
-		if (event.getToolAction() == ToolActions.SHOVEL_FLATTEN && event.getState().is(TeletubbiesBlocks.FULL_GRASS.get())) {
-			event.setFinalState(Blocks.DIRT_PATH.defaultBlockState());
+		if (event.getToolType() == ToolType.SHOVEL && event.getState().getBlock().is(TeletubbiesBlocks.FULL_GRASS.get())) {
+			event.setFinalState(Blocks.GRASS_PATH.defaultBlockState());
 		}
 	}
 	
