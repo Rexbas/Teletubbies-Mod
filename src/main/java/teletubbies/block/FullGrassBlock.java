@@ -8,29 +8,29 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.GrassBlock;
 import net.minecraft.block.SnowBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
+import net.minecraftforge.common.ToolType;
 import teletubbies.config.Config;
 
 public class FullGrassBlock extends GrassBlock {
 	
 	public FullGrassBlock() {
-		super(Properties.of(Material.GRASS)
-				.randomTicks()
-				.strength(0.6F)
-				.sound(SoundType.GRASS));
+		super(Properties.copy(Blocks.GRASS_BLOCK)
+				.harvestTool(ToolType.SHOVEL));
 	}
 	
 	@Override
@@ -60,6 +60,13 @@ public class FullGrassBlock extends GrassBlock {
 		}
 		return false;
 	}
+	
+    @Nullable
+    public BlockState getToolModifiedState(BlockState state, World world, BlockPos pos, PlayerEntity player, ItemStack stack, ToolType toolType)  {
+        if (toolType == ToolType.HOE) return Blocks.FARMLAND.defaultBlockState();
+        else if (toolType == ToolType.SHOVEL) return Blocks.GRASS_PATH.defaultBlockState();
+        return null;
+    }
 	
 	private static boolean canBeGrass(BlockState state, IWorldReader world, BlockPos pos) {
 		BlockState aboveState = world.getBlockState(pos.above());

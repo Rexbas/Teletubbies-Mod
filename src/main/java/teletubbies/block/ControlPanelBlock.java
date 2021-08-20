@@ -27,6 +27,7 @@ public class ControlPanelBlock extends Block {
 	public ControlPanelBlock() {
 		super(Properties.of(Material.METAL)
 				.strength(3.0f, 5.0f)
+				.harvestLevel(1)
 				.harvestTool(ToolType.PICKAXE));
 	}
 	

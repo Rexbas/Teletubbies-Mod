@@ -61,6 +61,7 @@ public class ToastMachineBlock extends Block {
 	public ToastMachineBlock() {
 		super(Properties.of(Material.METAL)
 				.strength(3.0f, 5.0f)
+				.harvestLevel(1)
 				.harvestTool(ToolType.PICKAXE));
 		
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BOTTOM, true).setValue(WATERLOGGED, false).setValue(LIT, 0));

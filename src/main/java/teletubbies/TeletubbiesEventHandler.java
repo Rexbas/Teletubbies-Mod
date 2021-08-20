@@ -1,7 +1,6 @@
 package teletubbies;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -21,7 +20,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -30,14 +28,13 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.world.BlockEvent.BlockToolInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import teletubbies.capabilities.IJumpCapability;
+import teletubbies.capabilities.JumpProvider;
 import teletubbies.client.audio.PoScooterTickableSound;
 import teletubbies.client.renderer.environment.BabyFaceRenderer;
-import teletubbies.common.capabilities.IJumpCapability;
-import teletubbies.common.capabilities.JumpProvider;
 import teletubbies.config.Config;
 import teletubbies.entity.ai.goal.EatFullGrassGoal;
 import teletubbies.entity.item.PoScooterEntity;
@@ -67,17 +64,6 @@ public class TeletubbiesEventHandler {
 			DimensionRenderInfo di = DimensionRenderInfo.forType(event.getWorld().dimensionType());
 			ISkyRenderHandler renderer = new BabyFaceRenderer();
 			di.setSkyRenderHandler(renderer);
-		}
-	}
-	
-	@SubscribeEvent
-	public static void toolUse(BlockToolInteractEvent event) {
-		if (event.getToolType() == ToolType.HOE && event.getState().getBlock().is(TeletubbiesBlocks.FULL_GRASS.get())) {
-			event.setFinalState(Blocks.FARMLAND.defaultBlockState());
-		}
-		
-		if (event.getToolType() == ToolType.SHOVEL && event.getState().getBlock().is(TeletubbiesBlocks.FULL_GRASS.get())) {
-			event.setFinalState(Blocks.GRASS_PATH.defaultBlockState());
 		}
 	}
 	
