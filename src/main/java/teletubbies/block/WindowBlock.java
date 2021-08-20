@@ -5,8 +5,6 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,9 +37,7 @@ public class WindowBlock extends Block {
 	protected static final VoxelShape AABB_X = VoxelShapeRotation.rotateY(AABB_Z, Math.toRadians(90));
 	
 	public WindowBlock() {
-		super(Properties.of(Material.GLASS)
-				.strength(0.3F)
-				.sound(SoundType.GLASS));
+		super(Properties.copy(Blocks.GLASS_PANE));
 		
 		this.registerDefaultState(this.stateDefinition.any().setValue(X_AXIS, false).setValue(PART, WindowPart.CENTER).setValue(WATERLOGGED, false));
 	}
