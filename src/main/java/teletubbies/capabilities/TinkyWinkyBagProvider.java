@@ -1,4 +1,4 @@
-package teletubbies.common.capabilities;
+package teletubbies.capabilities;
 
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;

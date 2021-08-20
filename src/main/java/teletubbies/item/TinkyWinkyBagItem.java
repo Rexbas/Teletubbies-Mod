@@ -25,7 +25,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.Teletubbies;
-import teletubbies.common.capabilities.TinkyWinkyBagProvider;
+import teletubbies.capabilities.TinkyWinkyBagProvider;
 import teletubbies.inventory.container.TinkyWinkyBagContainer;
 import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 

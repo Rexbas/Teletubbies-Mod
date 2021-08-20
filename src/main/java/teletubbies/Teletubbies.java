@@ -12,11 +12,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import teletubbies.capabilities.IJumpCapability;
 import teletubbies.client.gui.screen.inventory.ControlPanelScreen;
 import teletubbies.client.gui.screen.inventory.CustardMachineScreen;
 import teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
 import teletubbies.client.gui.screen.inventory.ToastMachineScreen;
-import teletubbies.common.capabilities.IJumpCapability;
 import teletubbies.config.Config;
 import teletubbies.init.TeletubbiesBlocks;
 import teletubbies.init.TeletubbiesContainers;
@@ -52,7 +52,7 @@ public class Teletubbies {
 		Config.loadConfig(Config.CLIENT_SPEC, FMLPaths.CONFIGDIR.get().resolve("teletubbies-client.toml").toString());
 	}
 
-	private void setup(final FMLCommonSetupEvent event) {
+	private void setup(final FMLCommonSetupEvent event) {		
 		CapabilityManager.INSTANCE.register(IJumpCapability.class);
 	}
 
