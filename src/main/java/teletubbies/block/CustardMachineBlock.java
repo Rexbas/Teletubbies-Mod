@@ -37,7 +37,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.tileentity.CustardMachineBlockEntity;
@@ -77,8 +76,7 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 		
 	public CustardMachineBlock() {
 		super(Properties.of(Material.METAL)
-				.strength(3.0f, 5.0f)
-				.harvestTool(ToolType.PICKAXE));
+				.strength(3.0f, 5.0f));
 
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(PART, CustardMachinePart.BASE).setValue(WATERLOGGED, false).setValue(LIT, false));
 	}

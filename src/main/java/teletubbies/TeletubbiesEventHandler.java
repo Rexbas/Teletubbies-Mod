@@ -21,7 +21,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -72,11 +72,11 @@ public class TeletubbiesEventHandler {
 	
 	@SubscribeEvent
 	public static void toolUse(BlockToolInteractEvent event) {
-		if (event.getToolType() == ToolType.HOE && event.getState().is(TeletubbiesBlocks.FULL_GRASS.get())) {
+		/*if (event.getToolAction() == ToolActions.HOE_DIG && event.getState().is(TeletubbiesBlocks.FULL_GRASS.get())) {
 			event.setFinalState(Blocks.FARMLAND.defaultBlockState());
-		}
+		}*/
 		
-		if (event.getToolType() == ToolType.SHOVEL && event.getState().is(TeletubbiesBlocks.FULL_GRASS.get())) {
+		if (event.getToolAction() == ToolActions.SHOVEL_FLATTEN && event.getState().is(TeletubbiesBlocks.FULL_GRASS.get())) {
 			event.setFinalState(Blocks.DIRT_PATH.defaultBlockState());
 		}
 	}

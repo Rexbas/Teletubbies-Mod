@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "teletubbies:control_panel",
+    "teletubbies:voice_trumpet",
+    "teletubbies:toast_machine",
+    "teletubbies:custard_machine"
+  ]
+}

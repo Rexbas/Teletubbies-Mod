@@ -31,7 +31,6 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 import teletubbies.tileentity.VoiceTrumpetBlockEntity;
 import teletubbies.util.VoxelShapeRotation;
 
@@ -58,9 +57,7 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	
 	public VoiceTrumpetBlock() {
 		super(Properties.of(Material.METAL)
-				.strength(3.0f, 5.0f)
-				.harvestLevel(1)
-				.harvestTool(ToolType.PICKAXE));
+				.strength(3.0f, 5.0f));
 
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BOTTOM, true).setValue(WATERLOGGED, false));
 	}

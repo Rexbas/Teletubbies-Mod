@@ -37,7 +37,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import teletubbies.tileentity.ToastMachineBlockEntity;
@@ -63,8 +62,7 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 		
 	public ToastMachineBlock() {
 		super(Properties.of(Material.METAL)
-				.strength(3.0f, 5.0f)
-				.harvestTool(ToolType.PICKAXE));
+				.strength(3.0f, 5.0f));
 		
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BOTTOM, true).setValue(WATERLOGGED, false).setValue(LIT, 0));
 	}
