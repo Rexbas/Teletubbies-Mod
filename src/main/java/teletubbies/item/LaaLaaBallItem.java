@@ -13,8 +13,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import teletubbies.Teletubbies;
-import teletubbies.common.capabilities.IJumpCapability;
-import teletubbies.common.capabilities.JumpProvider;
+import teletubbies.capabilities.IJumpCapability;
+import teletubbies.capabilities.JumpProvider;
 import teletubbies.init.TeletubbiesSounds;
 
 public class LaaLaaBallItem extends Item {

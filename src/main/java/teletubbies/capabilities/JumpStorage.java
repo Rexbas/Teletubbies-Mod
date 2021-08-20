@@ -1,4 +1,4 @@
-package teletubbies.common.capabilities;
+package teletubbies.capabilities;
 
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
