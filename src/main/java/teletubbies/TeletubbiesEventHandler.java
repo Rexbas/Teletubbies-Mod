@@ -1,7 +1,5 @@
 package teletubbies;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.player.LocalPlayer;
@@ -17,13 +15,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
@@ -68,17 +64,6 @@ public class TeletubbiesEventHandler {
 			DimensionSpecialEffects de = DimensionSpecialEffects.forType(event.getWorld().dimensionType());
 			ISkyRenderHandler renderer = new BabyFaceRenderer();
 			de.setSkyRenderHandler(renderer);
-		}
-	}
-	
-	@SubscribeEvent
-	public static void toolUse(BlockToolInteractEvent event) {
-		if (event.getToolType() == ToolType.HOE && event.getState().getBlock().is(TeletubbiesBlocks.FULL_GRASS.get())) {
-			event.setFinalState(Blocks.FARMLAND.defaultBlockState());
-		}
-		
-		if (event.getToolType() == ToolType.SHOVEL && event.getState().getBlock().is(TeletubbiesBlocks.FULL_GRASS.get())) {
-			event.setFinalState(Blocks.GRASS_PATH.defaultBlockState());
 		}
 	}
 	

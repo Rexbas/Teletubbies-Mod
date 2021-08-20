@@ -16,6 +16,6 @@ public class DataGenerators {
 		ExistingFileHelper fileHelper = event.getExistingFileHelper();
 
         gen.addProvider(new TeletubbiesItemModelProvider(gen, fileHelper));
-		gen.addProvider(new BlockTagProvider(gen, fileHelper));
+		gen.addProvider(new TeletubbiesBlockTagsProvider(gen, fileHelper));
 	}
 }

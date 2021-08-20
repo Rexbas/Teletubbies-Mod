@@ -9,26 +9,27 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.SnowLayerBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LayerLightEngine;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import teletubbies.config.Config;
 
 public class FullGrassBlock extends GrassBlock {
 	
 	public FullGrassBlock() {
-		super(Properties.copy(Blocks.GRASS_BLOCK)
-				.harvestTool(ToolType.SHOVEL));
+		super(Properties.copy(Blocks.GRASS_BLOCK));
 	}
 	
 	@Override
@@ -59,14 +60,15 @@ public class FullGrassBlock extends GrassBlock {
 		return false;
 	}
 	
-    @Nullable
-    public BlockState getToolModifiedState(BlockState state, World world, BlockPos pos, PlayerEntity player, ItemStack stack, ToolType toolType)  {
-        if (toolType == ToolType.HOE) return Blocks.FARMLAND.defaultBlockState();
-        else if (toolType == ToolType.SHOVEL) return Blocks.GRASS_PATH.defaultBlockState();
+	@Nullable
+    public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolAction toolAction) {
+		// TODO
+        /*if (toolAction == ToolActions.HOE_TILL) return Blocks.FARMLAND.defaultBlockState();
+        else*/ if (toolAction == ToolActions.SHOVEL_FLATTEN) return Blocks.DIRT_PATH.defaultBlockState();
         return null;
     }
 	
-	private static boolean canBeGrass(BlockState state, IWorldReader world, BlockPos pos) {
+	private static boolean canBeGrass(BlockState state, BlockGetter world, BlockPos pos) {
 		BlockState aboveState = world.getBlockState(pos.above());
 		if (aboveState.is(Blocks.SNOW) && aboveState.getValue(SnowLayerBlock.LAYERS) == 1) {
 			return true;
