@@ -86,8 +86,8 @@ public class Config {
 			builder.pop();
 			
 			builder.push("WorldGen");
-			VOICE_TRUMPET_CHANCE = builder.comment("One Voice Trumpet approximately every N chunks (1 in N chance for a Voice Trumpet to spawn)")
-					.defineInRange("n", 20, 1, 1000);
+			VOICE_TRUMPET_CHANCE = builder.comment("One Voice Trumpet approximately every N chunks (1 in N chance for a Voice Trumpet to spawn. For N = 0 no Voice Trumpets will spawn)")
+					.defineInRange("n", 20, 0, 1000);
 			
 			DOME_MIN_CHUNKS = builder.comment("Min chunks between domes")
 					.defineInRange("min", 10, 1, 1000);

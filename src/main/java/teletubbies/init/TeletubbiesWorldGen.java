@@ -87,7 +87,8 @@ public class TeletubbiesWorldGen {
     	@SubscribeEvent
         public static void biomeLoading(final BiomeLoadingEvent event) {
     		if (event.getCategory() == BiomeCategory.PLAINS) {
-    			event.getGeneration().addFeature(Decoration.LOCAL_MODIFICATIONS, TeletubbiesConfiguredFeatures.VOICE_TRUMPET_CONFIGURED_FEATURE);
+    			if (Config.COMMON.VOICE_TRUMPET_CHANCE.get() != 0)
+    				event.getGeneration().addFeature(Decoration.LOCAL_MODIFICATIONS, TeletubbiesConfiguredFeatures.VOICE_TRUMPET_CONFIGURED_FEATURE);
     			
     			event.getGeneration().addStructureStart(TeletubbiesConfiguredStructures.DOME_CONFIGURED_STRUCTURE);
     		}
