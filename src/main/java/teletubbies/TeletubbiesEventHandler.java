@@ -5,6 +5,7 @@ import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -28,6 +30,8 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -50,6 +54,19 @@ import teletubbies.item.LaaLaaBallItem;
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
 public class TeletubbiesEventHandler {
 	
+	
+	// Temporary until ToolActions.HOE_TILL works
+	@SubscribeEvent
+	public static void hoeEvent(UseHoeEvent event) {
+		Level level = event.getContext().getLevel();
+		BlockPos pos = event.getContext().getClickedPos();
+		
+		if (level.getBlockState(pos).is(TeletubbiesBlocks.FULL_GRASS.get()) ) {
+			level.setBlock(pos, Blocks.FARMLAND.defaultBlockState(), 0);
+			event.setResult(Result.ALLOW);
+		}
+	}
+
 	@SubscribeEvent
 	public static void attachtCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {		
 		if(event.getObject() instanceof Player) {

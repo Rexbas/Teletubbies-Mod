@@ -67,7 +67,7 @@ public class FullGrassBlock extends GrassBlock {
         else*/ if (toolAction == ToolActions.SHOVEL_FLATTEN) return Blocks.DIRT_PATH.defaultBlockState();
         return null;
     }
-	
+		
 	private static boolean canBeGrass(BlockState state, BlockGetter world, BlockPos pos) {
 		BlockState aboveState = world.getBlockState(pos.above());
 		if (aboveState.is(Blocks.SNOW) && aboveState.getValue(SnowLayerBlock.LAYERS) == 1) {
