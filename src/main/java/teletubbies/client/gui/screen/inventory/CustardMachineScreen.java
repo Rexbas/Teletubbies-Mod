@@ -44,8 +44,8 @@ public class CustardMachineScreen extends AbstractContainerScreen<CustardMachine
 		int j = this.topPos;
 	    this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 
-	    if (this.menu.getTileEntity().isProcessing()) {
-	    	this.blit(matrixStack, i + 51, j + 47, 176, 0, (int) (this.menu.getTileEntity().getProgress() * 74), 9);
+	    if (this.menu.getBlockEntity().isProcessing()) {
+	    	this.blit(matrixStack, i + 51, j + 47, 176, 0, (int) (this.menu.getBlockEntity().getProgress() * 74), 9);
 	    }
 	}
 }

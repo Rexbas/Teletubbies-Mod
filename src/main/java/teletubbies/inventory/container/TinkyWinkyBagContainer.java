@@ -8,6 +8,7 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import teletubbies.inventory.container.slot.TinkyWinkyBagSlot;
@@ -62,21 +63,25 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(Player playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {		
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 
 		if (slot != null && slot.hasItem()) {
-			int bagslotcount = slots.size() - playerIn.getInventory().getContainerSize();
-			ItemStack itemstack1 = slot.getItem();
-			itemstack = itemstack1.copy();
-			if (index < bagslotcount) {
-				if (!this.moveItemStackTo(itemstack1, bagslotcount, this.slots.size(), true))
+			
+			IItemHandler handler = bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+					
+            ItemStack slotStack = slot.getItem();
+			itemstack = slotStack.copy();
+			if (index < handler.getSlots()) {
+				if (!this.moveItemStackTo(slotStack, handler.getSlots(), this.slots.size(), true)) {
 					return ItemStack.EMPTY;
-			} else if (!this.moveItemStackTo(itemstack1, 0, bagslotcount, false)) {
+				}
+			} else if (!this.moveItemStackTo(slotStack, 0, handler.getSlots(), false)) {
 				return ItemStack.EMPTY;
 			}
-			if (itemstack1.isEmpty())
+			
+			if (slotStack.isEmpty())
 				slot.set(ItemStack.EMPTY);
 			else
 				slot.setChanged();

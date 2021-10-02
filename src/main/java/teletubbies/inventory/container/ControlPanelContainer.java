@@ -10,6 +10,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.ControlPanelItemHandler;
 import teletubbies.inventory.container.slot.ItemHandlerSlot;
@@ -18,21 +19,21 @@ import teletubbies.tileentity.ControlPanelBlockEntity;
 public class ControlPanelContainer extends AbstractContainerMenu {
 
 	private final Inventory playerInventory;
-	private final ControlPanelBlockEntity tileentity;
+	private final ControlPanelBlockEntity blockentity;
 	
 	// Client Constructor
 	public ControlPanelContainer(final int id, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(id, playerInventory, getTileEntity(playerInventory, data));
+		this(id, playerInventory, getBlockEntity(playerInventory, data));
 	}
 
 	// Server Constructor
-	public ControlPanelContainer(int id, Inventory playerInventory, ControlPanelBlockEntity te) {
+	public ControlPanelContainer(int id, Inventory playerInventory, ControlPanelBlockEntity be) {
 		super(TeletubbiesContainers.CONTROL_PANEL_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
-		this.tileentity = te;
+		this.blockentity = be;
 		
-		ControlPanelItemHandler inputHandler = (ControlPanelItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+		ControlPanelItemHandler inputHandler = (ControlPanelItemHandler) be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
 		
 		addMachineSlots(inputHandler);
 		addPlayerSlots();
@@ -60,16 +61,20 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 		Slot slot = this.slots.get(index);
 
 		if (slot != null && slot.hasItem()) {
-			int slotcount = slots.size() - playerIn.getInventory().getContainerSize();
-			ItemStack itemstack1 = slot.getItem();
-			itemstack = itemstack1.copy();
-			if (index < slotcount) {
-				if (!this.moveItemStackTo(itemstack1, slotcount, this.slots.size(), true))
+			
+			IItemHandler handler = this.blockentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+			
+            ItemStack slotStack = slot.getItem();
+			itemstack = slotStack.copy();
+			if (index < handler.getSlots()) {
+				if (!this.moveItemStackTo(slotStack, handler.getSlots(), this.slots.size(), true)) {
 					return ItemStack.EMPTY;
-			} else if (!this.moveItemStackTo(itemstack1, 0, slotcount, false)) {
+				}
+			} else if (!this.moveItemStackTo(slotStack, 0, handler.getSlots(), false)) {
 				return ItemStack.EMPTY;
 			}
-			if (itemstack1.isEmpty())
+			
+			if (slotStack.isEmpty())
 				slot.set(ItemStack.EMPTY);
 			else
 				slot.setChanged();
@@ -83,7 +88,7 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 	}
 	
 	// https://github.com/DaRealTurtyWurty/1.15-Tut-Mod/blob/master/src/main/java/com/turtywurty/tutorialmod/container/ExampleFurnaceContainer.java
-	private static ControlPanelBlockEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+	private static ControlPanelBlockEntity getBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
 		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
@@ -93,7 +98,7 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 		throw new IllegalStateException("TileEntity is not correct " + tileAtPos);
 	}
 	
-	public ControlPanelBlockEntity getTileEntity() {
-		return this.tileentity;
+	public ControlPanelBlockEntity getBlockEntity() {
+		return this.blockentity;
 	}
 }

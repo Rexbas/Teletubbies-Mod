@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.inventory.container.handler.CustardMachineItemHandler;
@@ -22,22 +23,22 @@ import teletubbies.tileentity.CustardMachineBlockEntity;
 public class CustardMachineContainer extends AbstractContainerMenu {
 	
 	private final Inventory playerInventory;
-	private final CustardMachineBlockEntity tileentity;
+	private final CustardMachineBlockEntity blockentity;
 	
 	// Client Constructor
 	public CustardMachineContainer(final int id, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(id, playerInventory, getTileEntity(playerInventory, data));
+		this(id, playerInventory, getBlockEntity(playerInventory, data));
 	}
 
 	// Server Constructor
-	public CustardMachineContainer(int id, Inventory playerInventory, CustardMachineBlockEntity te) {
+	public CustardMachineContainer(int id, Inventory playerInventory, CustardMachineBlockEntity be) {
 		super(TeletubbiesContainers.CUSTARD_MACHINE_CONTAINER.get(), id);
 		
 		this.playerInventory = playerInventory;
-		this.tileentity = te;
+		this.blockentity = be;
 		
-		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).orElse(null);
+		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).orElse(null);
 		
 		addMachineSlots(inputHandler, outputHandler);
 		addPlayerSlots();
@@ -72,16 +73,22 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 		Slot slot = this.slots.get(index);
 
 		if (slot != null && slot.hasItem()) {
-			int slotcount = slots.size() - playerIn.getInventory().getContainerSize();
-			ItemStack itemstack1 = slot.getItem();
-			itemstack = itemstack1.copy();
-			if (index < slotcount) {
-				if (!this.moveItemStackTo(itemstack1, slotcount, this.slots.size(), true))
+			
+			IItemHandler inputHandler = this.blockentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+			IItemHandler outputHandler = this.blockentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).orElse(null);
+			int numSlots = inputHandler.getSlots() + outputHandler.getSlots();
+			
+            ItemStack slotStack = slot.getItem();
+			itemstack = slotStack.copy();
+			if (index < numSlots) {
+				if (!this.moveItemStackTo(slotStack, numSlots, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
-			} else if (!this.moveItemStackTo(itemstack1, 0, slotcount, false)) {
+				}
+			} else if (!this.moveItemStackTo(slotStack, 0, numSlots, false)) {
 				return ItemStack.EMPTY;
 			}
-			if (itemstack1.isEmpty())
+			
+			if (slotStack.isEmpty())
 				slot.set(ItemStack.EMPTY);
 			else
 				slot.setChanged();
@@ -95,7 +102,7 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 	}
 	
 	// https://github.com/DaRealTurtyWurty/1.15-Tut-Mod/blob/master/src/main/java/com/turtywurty/tutorialmod/container/ExampleFurnaceContainer.java
-	private static CustardMachineBlockEntity getTileEntity(final Inventory playerInv, final FriendlyByteBuf data) {
+	private static CustardMachineBlockEntity getBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
 		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
@@ -105,7 +112,7 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 		throw new IllegalStateException("TileEntity is not correct " + tileAtPos);
 	}
 	
-	public CustardMachineBlockEntity getTileEntity() {
-		return this.tileentity;
+	public CustardMachineBlockEntity getBlockEntity() {
+		return this.blockentity;
 	}
 }
