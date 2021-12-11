@@ -53,9 +53,7 @@ public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider
 	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		CompoundTag nbt = new CompoundTag();
-		this.save(nbt);
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, nbt);
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override

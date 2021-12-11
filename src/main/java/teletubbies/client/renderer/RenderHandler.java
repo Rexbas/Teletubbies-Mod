@@ -65,7 +65,6 @@ public class RenderHandler {
         event.registerEntityRenderer(TeletubbiesEntityTypes.PO_SCOOTER.get(), PoScooterRenderer::new);
     }
     
-    
     @SubscribeEvent
     public static void registerLayerDefinition(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(TINKYWINKY_LAYER, TinkyWinkyModel::createBodyLayer);

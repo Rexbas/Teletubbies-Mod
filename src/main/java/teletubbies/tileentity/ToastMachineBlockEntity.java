@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -93,7 +94,7 @@ public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider
 		
 		if (dirty) {
 			this.setChanged();
-			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_CLIENTS);
 		}
 	}
 	
@@ -195,9 +196,7 @@ public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider
 	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		CompoundTag nbt = new CompoundTag();
-		this.save(nbt);
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, nbt);
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override

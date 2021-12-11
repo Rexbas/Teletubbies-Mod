@@ -39,7 +39,7 @@ import teletubbies.world.gen.feature.structure.TeletubbiesConfiguredStructures;
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesWorldGen {
 	// Features
-	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Teletubbies.MODID);
+	/*public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Teletubbies.MODID);
 
 	public static final RegistryObject<Feature<NoneFeatureConfiguration>> VOICE_TRUMPET_FEATURE = FEATURES.register("voice_trumpet", () -> new VoiceTrumpetFeature(NoneFeatureConfiguration.CODEC));
 	
@@ -109,5 +109,5 @@ public class TeletubbiesWorldGen {
 				serverWorld.getChunkSource().generator.getSettings().structureConfig = tempMap;
 			}
 		}
-	}
+	}*/
 }
