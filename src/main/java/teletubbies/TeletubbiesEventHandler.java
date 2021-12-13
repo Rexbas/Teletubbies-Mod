@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -16,8 +17,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.FlatLevelSource;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
@@ -32,6 +36,8 @@ import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -49,6 +55,7 @@ import teletubbies.entity.passive.TeletubbyEntity;
 import teletubbies.entity.passive.TinkyWinkyEntity;
 import teletubbies.entity.vehicle.PoScooterEntity;
 import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesConfiguredFeatures;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.item.LaaLaaBallItem;
 
@@ -192,6 +199,32 @@ public class TeletubbiesEventHandler {
 					teletubby.transferToZombie();
 				}
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void biomeLoading(final BiomeLoadingEvent event) {
+		if (event.getCategory() == BiomeCategory.PLAINS) {
+			if (Config.COMMON.VOICE_TRUMPET_CHANCE.get() != 0)
+				event.getGeneration().addFeature(Decoration.LOCAL_MODIFICATIONS, TeletubbiesConfiguredFeatures.VOICE_TRUMPET_PLACED_FEATURE);
+			
+			//event.getGeneration().addStructureStart(TeletubbiesConfiguredStructures.DOME_CONFIGURED_STRUCTURE);
+		}
+	}
+	
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	public static void addDimensionalSpacing(final WorldEvent.Load event) {
+		if (event.getWorld() instanceof ServerLevel) {
+			ServerLevel serverWorld = (ServerLevel) event.getWorld();
+
+			if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource
+					&& serverWorld.dimension().equals(Level.OVERWORLD)) {
+				return;
+			}
+
+			/*Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+			tempMap.put(DOME_STRUCTURE.get(), StructureSettings.DEFAULTS.get(DOME_STRUCTURE.get()));
+			serverWorld.getChunkSource().getGenerator().getSettings().structureConfig = tempMap;*/
 		}
 	}
 	
