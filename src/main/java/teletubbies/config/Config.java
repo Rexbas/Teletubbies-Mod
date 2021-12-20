@@ -34,7 +34,7 @@ public class Config {
 		public final ForgeConfigSpec.IntValue TINKYWINKY_ZOMBIE_WEIGHT;
 		public final ForgeConfigSpec.IntValue DIPSY_ZOMBIE_WEIGHT;
 		public final ForgeConfigSpec.IntValue LAALAA_ZOMBIE_WEIGHT;
-		public  final ForgeConfigSpec.IntValue PO_ZOMBIE_WEIGHT;
+		public final ForgeConfigSpec.IntValue PO_ZOMBIE_WEIGHT;
 		
 		public final ForgeConfigSpec.IntValue TRANSFORMATION_PROBABILITY;
 		
