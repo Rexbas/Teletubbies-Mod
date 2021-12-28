@@ -7,7 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teletubbies.Teletubbies;
-import teletubbies.world.gen.feature.VoiceTrumpetFeature;
+import teletubbies.worldgen.feature.VoiceTrumpetFeature;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesFeatures {

@@ -18,11 +18,13 @@ import teletubbies.client.gui.screen.inventory.ToastMachineScreen;
 import teletubbies.config.Config;
 import teletubbies.init.TeletubbiesBlocks;
 import teletubbies.init.TeletubbiesConfiguredFeatures;
+import teletubbies.init.TeletubbiesConfiguredStructures;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesFeatures;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
+import teletubbies.init.TeletubbiesStructures;
 import teletubbies.itemgroup.ItemGroupTeletubbies;
 
 @Mod(Teletubbies.MODID)
@@ -44,6 +46,7 @@ public class Teletubbies {
 		TeletubbiesItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesFeatures.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesStructures.STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesContainers.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		Config.loadConfig(Config.COMMON_SPEC, FMLPaths.CONFIGDIR.get().resolve("teletubbies-common.toml").toString());
@@ -54,6 +57,8 @@ public class Teletubbies {
 		event.enqueueWork(() -> {
 			TeletubbiesConfiguredFeatures.registerConfiguredFeatures();
 			TeletubbiesConfiguredFeatures.registerPlacedFeatures();
+			TeletubbiesStructures.setupStructures();
+			TeletubbiesConfiguredStructures.registerConfiguredStructures();
 		});
 	}
 

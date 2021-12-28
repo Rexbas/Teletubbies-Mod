@@ -1,4 +1,4 @@
-package teletubbies.world.gen.feature;
+package teletubbies.worldgen.feature;
 
 import java.util.Random;
 
