@@ -124,6 +124,6 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
     }
     
 	public static PoolElementStructurePiece pieceFactory(StructureManager structureManager, StructurePoolElement element, BlockPos blockpos, int groundLevelDelta, Rotation rotation, BoundingBox bb) {
-		return new PoolElementStructurePiece(structureManager, element, blockpos, groundLevelDelta, Rotation.NONE, bb);
+		return new PoolElementStructurePiece(structureManager, element, blockpos, groundLevelDelta, Rotation.NONE, element.getBoundingBox(structureManager, blockpos, Rotation.NONE));
 	}
 }
