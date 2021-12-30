@@ -1,21 +1,36 @@
 package teletubbies.init;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 
+import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
+import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teletubbies.Teletubbies;
+import teletubbies.config.Config;
 import teletubbies.worldgen.structure.DomeStructure;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -27,48 +42,16 @@ public class TeletubbiesStructures {
 
     // https://github.com/TelepathicGrunt/StructureTutorialMod/blob/1.18.x-Forge-Jigsaw/src/main/java/com/telepathicgrunt/structuretutorial/STStructures.java
     public static void setupStructures() {
-        setupMapSpacingAndLand(
-                DOME_STRUCTURE_FEATURE.get(), /* The instance of the structure */
-                new StructureFeatureConfiguration(10 /* average distance apart in chunks between spawn attempts */,
-                        5 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
-                        1234567890 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
-                true);
-
-
-        // Add more structures here and so on
+		setupMapSpacingAndLand(DOME_STRUCTURE_FEATURE.get(), new StructureFeatureConfiguration(
+				Config.COMMON.DOME_MAX_CHUNKS.get(), Config.COMMON.DOME_MIN_CHUNKS.get(), 8351309), true);
     }
 
-    /**
-     * Adds the provided structure to the registry, and adds the separation settings.
-     * The rarity of the structure is determined based on the values passed into
-     * this method in the StructureFeatureConfiguration argument.
-     * This method is called by setupStructures above.
-     */
-    public static <F extends StructureFeature<?>> void setupMapSpacingAndLand(
-            F structure,
-            StructureFeatureConfiguration structureFeatureConfiguration,
-            boolean transformSurroundingLand)
-    {
-        /*
-         * We need to add our structures into the map in StructureFeature class
-         * alongside vanilla structures or else it will cause errors.
-         *
-         * If the registration is setup properly for the structure,
-         * getRegistryName() should never return null.
-         */
+	public static <F extends StructureFeature<?>> void setupMapSpacingAndLand(F structure,
+			StructureFeatureConfiguration structureFeatureConfiguration, boolean transformSurroundingLand) {
+
         StructureFeature.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 
-        /*
-         * Whether surrounding land will be modified automatically to conform to the bottom of the structure.
-         * Basically, it adds land at the base of the structure like it does for Villages and Outposts.
-         * Doesn't work well on structure that have pieces stacked vertically or change in heights.
-         *
-         * Note: The air space this method will create will be filled with water if the structure is below sealevel.
-         * This means this is best for structure above sealevel so keep that in mind.
-         *
-         * NOISE_AFFECTING_FEATURES requires AccessTransformer  (See resources/META-INF/accesstransformer.cfg)
-         */
-        if(transformSurroundingLand){
+        if (transformSurroundingLand) {
             StructureFeature.NOISE_AFFECTING_FEATURES =
                     ImmutableList.<StructureFeature<?>>builder()
                             .addAll(StructureFeature.NOISE_AFFECTING_FEATURES)
@@ -76,49 +59,76 @@ public class TeletubbiesStructures {
                             .build();
         }
 
-        /*
-         * This is the map that holds the default spacing of all structures.
-         * Always add your structure to here so that other mods can utilize it if needed.
-         *
-         * However, while it does propagate the spacing to some correct dimensions from this map,
-         * it seems it doesn't always work for code made dimensions as they read from this list beforehand.
-         *
-         * Instead, we will use the WorldEvent.Load event in StructureTutorialMain to add the structure
-         * spacing from this list into that dimension or to do dimension blacklisting properly.
-         *
-         * DEFAULTS requires AccessTransformer  (See resources/META-INF/accesstransformer.cfg)
-         */
         StructureSettings.DEFAULTS =
                 ImmutableMap.<StructureFeature<?>, StructureFeatureConfiguration>builder()
                         .putAll(StructureSettings.DEFAULTS)
                         .put(structure, structureFeatureConfiguration)
                         .build();
 
-
-        /*
-         * There are very few mods that relies on seeing your structure in the noise settings registry before the world is made.
-         *
-         * You may see some mods add their spacings to DimensionSettings.BUILTIN_OVERWORLD instead of the NOISE_GENERATOR_SETTINGS loop below but
-         * that field only applies for the default overworld and won't add to other worldtypes or dimensions (like amplified or Nether).
-         * So yeah, don't do DimensionSettings.BUILTIN_OVERWORLD. Use the NOISE_GENERATOR_SETTINGS loop below instead if you must.
-         */
         BuiltinRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach(settings -> {
             Map<StructureFeature<?>, StructureFeatureConfiguration> structureMap = settings.getValue().structureSettings().structureConfig();
 
-            /*
-             * Pre-caution in case a mod makes the structure map immutable like datapacks do.
-             * I take no chances myself. You never know what another mods does...
-             *
-             * structureConfig requires AccessTransformer (See resources/META-INF/accesstransformer.cfg)
-             */
-            if(structureMap instanceof ImmutableMap){
+            if (structureMap instanceof ImmutableMap) {
                 Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(structureMap);
                 tempMap.put(structure, structureFeatureConfiguration);
                 settings.getValue().structureSettings().structureConfig = tempMap;
             }
-            else{
+            else {
                 structureMap.put(structure, structureFeatureConfiguration);
             }
         });
     }
+    
+    @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
+	private static class ForgeBusEvents {
+		
+    	// https://github.com/TelepathicGrunt/StructureTutorialMod/blob/1.18.x-Forge-Jigsaw/src/main/java/com/telepathicgrunt/structuretutorial/StructureTutorialMain.java
+        private static Method GETCODEC_METHOD;
+    	@SubscribeEvent(priority = EventPriority.HIGH)
+    	public static void addDimensionalSpacing(final WorldEvent.Load event) {
+    		if (event.getWorld() instanceof ServerLevel serverLevel) {
+
+                ChunkGenerator chunkGenerator = serverLevel.getChunkSource().getGenerator();
+                if (chunkGenerator instanceof FlatLevelSource && serverLevel.dimension().equals(Level.OVERWORLD)) {
+                    return;
+                }
+                StructureSettings worldStructureConfig = chunkGenerator.getSettings();
+
+                // Create a mutable map we will use for easier adding to biomes
+                HashMap<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> structureToMultiMap = new HashMap<>();
+
+                // Add the resourcekey of all biomes that this Configured Structure can spawn in.
+                for (Map.Entry<ResourceKey<Biome>, Biome> biomeEntry : serverLevel.registryAccess().ownedRegistryOrThrow(Registry.BIOME_REGISTRY).entrySet()) {
+                    // Only Plains biomes
+                    Biome.BiomeCategory biomeCategory = biomeEntry.getValue().getBiomeCategory();
+                    if(biomeCategory == Biome.BiomeCategory.PLAINS) {
+                        associateBiomeToConfiguredStructure(structureToMultiMap, TeletubbiesConfiguredStructures.DOME_CONFIGURED_STRUCTURE, biomeEntry.getKey());
+                    }
+                }
+
+                // Grab the map that holds what ConfigureStructures a structure has and what biomes it can spawn in.
+                // Requires AccessTransformer  (see resources/META-INF/accesstransformer.cfg)
+                ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builder();
+                worldStructureConfig.configuredStructures.entrySet().stream().filter(entry -> !structureToMultiMap.containsKey(entry.getKey())).forEach(tempStructureToMultiMap::put);
+
+                // Add our structures to the structure map/multimap and set the world to use this combined map/multimap.
+                structureToMultiMap.forEach((key, value) -> tempStructureToMultiMap.put(key, ImmutableMultimap.copyOf(value)));
+
+                // Requires AccessTransformer  (see resources/META-INF/accesstransformer.cfg)
+                worldStructureConfig.configuredStructures = tempStructureToMultiMap.build();
+
+                Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(worldStructureConfig.structureConfig());
+                tempMap.putIfAbsent(TeletubbiesStructures.DOME_STRUCTURE_FEATURE.get(), StructureSettings.DEFAULTS.get(TeletubbiesStructures.DOME_STRUCTURE_FEATURE.get()));
+                worldStructureConfig.structureConfig = tempMap;
+    		}
+    	}
+    	
+        private static void associateBiomeToConfiguredStructure(Map<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> STStructureToMultiMap, ConfiguredStructureFeature<?, ?> configuredStructureFeature, ResourceKey<Biome> biomeRegistryKey) {
+            STStructureToMultiMap.putIfAbsent(configuredStructureFeature.feature, HashMultimap.create());
+            HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> configuredStructureToBiomeMultiMap = STStructureToMultiMap.get(configuredStructureFeature.feature);
+            if(!configuredStructureToBiomeMultiMap.containsValue(biomeRegistryKey)) {
+            	configuredStructureToBiomeMultiMap.put(configuredStructureFeature, biomeRegistryKey);
+            }
+        }
+	}
 }
