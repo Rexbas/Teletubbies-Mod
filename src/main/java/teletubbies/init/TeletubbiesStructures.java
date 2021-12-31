@@ -43,7 +43,7 @@ public class TeletubbiesStructures {
     // https://github.com/TelepathicGrunt/StructureTutorialMod/blob/1.18.x-Forge-Jigsaw/src/main/java/com/telepathicgrunt/structuretutorial/STStructures.java
     public static void setupStructures() {
 		setupMapSpacingAndLand(DOME_STRUCTURE_FEATURE.get(), new StructureFeatureConfiguration(
-				Config.COMMON.DOME_MAX_CHUNKS.get(), Config.COMMON.DOME_MIN_CHUNKS.get(), 8351309), true);
+				Config.COMMON.DOME_MAX_CHUNKS.get(), Config.COMMON.DOME_MIN_CHUNKS.get(), 8351309), false);
     }
 
 	public static <F extends StructureFeature<?>> void setupMapSpacingAndLand(F structure,
@@ -126,7 +126,7 @@ public class TeletubbiesStructures {
         private static void associateBiomeToConfiguredStructure(Map<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> STStructureToMultiMap, ConfiguredStructureFeature<?, ?> configuredStructureFeature, ResourceKey<Biome> biomeRegistryKey) {
             STStructureToMultiMap.putIfAbsent(configuredStructureFeature.feature, HashMultimap.create());
             HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> configuredStructureToBiomeMultiMap = STStructureToMultiMap.get(configuredStructureFeature.feature);
-            if(!configuredStructureToBiomeMultiMap.containsValue(biomeRegistryKey)) {
+            if (!configuredStructureToBiomeMultiMap.containsValue(biomeRegistryKey)) {
             	configuredStructureToBiomeMultiMap.put(configuredStructureFeature, biomeRegistryKey);
             }
         }
