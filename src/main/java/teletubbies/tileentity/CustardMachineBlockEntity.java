@@ -153,13 +153,12 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag nbt) {
-		super.save(nbt);
+	public void saveAdditional(CompoundTag nbt) {
+		super.saveAdditional(nbt);
 		nbt.put("InventoryIn", this.inputHandler.serializeNBT());
 		nbt.put("InventoryOut", this.outputHandler.serializeNBT());
 		nbt.putInt("processTime", this.processTime);
 		nbt.putBoolean("isProcessing", this.isProcessing);
-		return nbt;
 	}
 	
 	@Nullable
@@ -176,7 +175,7 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	@Override
 	public CompoundTag getUpdateTag() {
 		CompoundTag nbt = new CompoundTag();
-		this.save(nbt);
+		this.saveAdditional(nbt);
 		return nbt;
 	}
 

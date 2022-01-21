@@ -44,10 +44,9 @@ public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag nbt) {
-		super.save(nbt);
+	public void saveAdditional(CompoundTag nbt) {
+		super.saveAdditional(nbt);
 		nbt.put("InventoryIn", this.inputHandler.serializeNBT());
-		return nbt;
 	}
 	
 	@Nullable
@@ -64,7 +63,7 @@ public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider
 	@Override
 	public CompoundTag getUpdateTag() {
 		CompoundTag nbt = new CompoundTag();
-		this.save(nbt);
+		this.saveAdditional(nbt);
 		return nbt;
 	}
 
