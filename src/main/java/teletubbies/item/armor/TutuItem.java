@@ -34,10 +34,11 @@ public class TutuItem extends ArmorItem {
 	@Override
 	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
 		consumer.accept(new IItemRenderProperties() {
-		    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
+			@Override
+		    public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
 		    	HumanoidModel<LivingEntity> armorModel = new TutuModel(Minecraft.getInstance().getEntityModels().bakeLayer(RenderHandler.TUTU_LAYER));
 		    	armorModel.setupAnim(entityLiving, entityLiving.animationPosition, entityLiving.animationSpeed, entityLiving.tickCount, entityLiving.yHeadRot, entityLiving.getXRot());
-				return (A) armorModel;
+				return armorModel;
 		    }
 		});
 	}
