@@ -12,11 +12,11 @@ import teletubbies.block.FullGrassBlock;
 import teletubbies.block.ToastMachineBlock;
 import teletubbies.block.VoiceTrumpetBlock;
 import teletubbies.block.WindowBlock;
-import teletubbies.tileentity.ControlPanelBlockEntity;
-import teletubbies.tileentity.CustardMachineBlockEntity;
-import teletubbies.tileentity.CustardMachineSlaveBlockEntity;
-import teletubbies.tileentity.ToastMachineBlockEntity;
-import teletubbies.tileentity.VoiceTrumpetBlockEntity;
+import teletubbies.blockentity.ControlPanelBlockEntity;
+import teletubbies.blockentity.CustardMachineBlockEntity;
+import teletubbies.blockentity.CustardMachineSlaveBlockEntity;
+import teletubbies.blockentity.ToastMachineBlockEntity;
+import teletubbies.blockentity.VoiceTrumpetBlockEntity;
 
 public class TeletubbiesBlocks {
 

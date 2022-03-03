@@ -20,7 +20,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.network.NetworkHooks;
-import teletubbies.tileentity.ControlPanelBlockEntity;
+import teletubbies.blockentity.ControlPanelBlockEntity;
 
 public class ControlPanelBlock extends Block implements EntityBlock {
 

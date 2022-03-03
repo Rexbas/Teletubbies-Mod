@@ -13,12 +13,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import teletubbies.blockentity.CustardMachineBlockEntity;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.inventory.container.handler.CustardMachineItemHandler;
 import teletubbies.inventory.container.slot.CustardMachineOutputSlot;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
-import teletubbies.tileentity.CustardMachineBlockEntity;
 
 public class CustardMachineContainer extends AbstractContainerMenu {
 	

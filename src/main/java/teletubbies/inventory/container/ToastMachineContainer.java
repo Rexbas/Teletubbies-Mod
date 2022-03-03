@@ -12,10 +12,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import teletubbies.blockentity.ToastMachineBlockEntity;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.ToastMachineItemHandler;
 import teletubbies.inventory.container.slot.SpecificItemSlot;
-import teletubbies.tileentity.ToastMachineBlockEntity;
 
 public class ToastMachineContainer extends AbstractContainerMenu {
 	

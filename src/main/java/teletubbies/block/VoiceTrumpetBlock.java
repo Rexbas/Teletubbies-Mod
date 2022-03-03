@@ -31,7 +31,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import teletubbies.tileentity.VoiceTrumpetBlockEntity;
+import teletubbies.blockentity.VoiceTrumpetBlockEntity;
 import teletubbies.util.VoxelShapeRotation;
 
 public class VoiceTrumpetBlock extends Block implements EntityBlock {

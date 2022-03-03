@@ -11,10 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import teletubbies.blockentity.ControlPanelBlockEntity;
 import teletubbies.init.TeletubbiesContainers;
 import teletubbies.inventory.container.handler.ControlPanelItemHandler;
 import teletubbies.inventory.container.slot.ItemHandlerSlot;
-import teletubbies.tileentity.ControlPanelBlockEntity;
 
 public class ControlPanelContainer extends AbstractContainerMenu {
 

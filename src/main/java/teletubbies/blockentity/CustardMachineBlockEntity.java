@@ -1,4 +1,4 @@
-package teletubbies.tileentity;
+package teletubbies.blockentity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

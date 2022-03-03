@@ -1,4 +1,4 @@
-package teletubbies.tileentity;
+package teletubbies.blockentity;
 
 import java.util.Random;
 

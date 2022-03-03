@@ -39,8 +39,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.network.NetworkHooks;
-import teletubbies.tileentity.CustardMachineBlockEntity;
-import teletubbies.tileentity.CustardMachineSlaveBlockEntity;
+import teletubbies.blockentity.CustardMachineBlockEntity;
+import teletubbies.blockentity.CustardMachineSlaveBlockEntity;
 import teletubbies.util.BlocksUtil;
 import teletubbies.util.VoxelShapeRotation;
 
