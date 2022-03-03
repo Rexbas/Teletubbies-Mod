@@ -3,16 +3,15 @@ package teletubbies.worldgen.structure;
 import java.util.Optional;
 import java.util.Random;
 
-import com.mojang.serialization.Codec;
-
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -26,22 +25,14 @@ import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-import teletubbies.Teletubbies;
 import teletubbies.block.FullGrassBlock;
 import teletubbies.init.TeletubbiesBlocks;
 
 public class DomeStructure extends StructureFeature<JigsawConfiguration> {
-	
-	public DomeStructure(Codec<JigsawConfiguration> codec) {
-        super(codec, (context) -> {
-                if (!DomeStructure.isFeatureChunk(context)) {
-                    return Optional.empty();
-                }
-                else {
-                    return DomeStructure.createPiecesGenerator(context);
-                }
-            },
-            DomeStructure::afterPlace);
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+
+	public DomeStructure() {
+        super(JigsawConfiguration.CODEC, DomeStructure::createPiecesGenerator, DomeStructure::afterPlace);
     }
 
     @Override
@@ -84,37 +75,25 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
         return false;
     }
 
-    public static Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        BlockPos chunkBlockPos = new BlockPos(context.chunkPos().getWorldPosition().getX(), context.chunkPos().getWorldPosition().getY() - 3, context.chunkPos().getWorldPosition().getZ());
+    private static Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+        if (!isFeatureChunk(context)) {
+        	return Optional.empty();
+        }
+    	
+    	BlockPos chunkBlockPos = new BlockPos(context.chunkPos().getWorldPosition().getX(), context.chunkPos().getWorldPosition().getY() - 3, context.chunkPos().getWorldPosition().getZ());
 
-        JigsawConfiguration newConfig = new JigsawConfiguration(
-                () -> context.registryAccess().ownedRegistryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-                        .get(new ResourceLocation(Teletubbies.MODID, "dome/start_pool")), 7
-        );
-
-        PieceGeneratorSupplier.Context<JigsawConfiguration> newContext = new PieceGeneratorSupplier.Context<>(
-                context.chunkGenerator(),
-                context.biomeSource(),
-                context.seed(),
-                context.chunkPos(),
-                newConfig,
-                context.heightAccessor(),
-                context.validBiome(),
-                context.structureManager(),
-                context.registryAccess()
-        );
-
-        Optional<PieceGenerator<JigsawConfiguration>> structurePiecesGenerator = JigsawPlacement.addPieces(newContext, DomeStructure::pieceFactory, chunkBlockPos, false, true);
+        Optional<PieceGenerator<JigsawConfiguration>> structurePiecesGenerator = JigsawPlacement.addPieces(context, DomeStructure::pieceFactory, chunkBlockPos, false, true);
         return structurePiecesGenerator;
     }
     
-	public static PoolElementStructurePiece pieceFactory(StructureManager structureManager, StructurePoolElement element, BlockPos blockpos, int groundLevelDelta, Rotation rotation, BoundingBox bb) {
+	private static PoolElementStructurePiece pieceFactory(StructureManager structureManager, StructurePoolElement element, BlockPos blockpos, int groundLevelDelta, Rotation rotation, BoundingBox bb) {
 		return new PoolElementStructurePiece(structureManager, element, blockpos, groundLevelDelta, Rotation.NONE, element.getBoundingBox(structureManager, blockpos, Rotation.NONE));
 	}
 	
-	public static void afterPlace(WorldGenLevel level, StructureFeatureManager structureManager, ChunkGenerator chunkGenerator, Random rand, BoundingBox bb, ChunkPos chunkPos, PiecesContainer container) {
+	private static void afterPlace(WorldGenLevel level, StructureFeatureManager structureManager, ChunkGenerator chunkGenerator, Random rand, BoundingBox bb, ChunkPos chunkPos, PiecesContainer container) {
 		BlockPos piecePos;
 		final int maxFillLengthDown = 10;
+		final int height = 6;
 
 		// Check if there are pieces. Number of pieces should always be 1
 		if (container.pieces().size() > 0) {
@@ -129,7 +108,6 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
     		for (int j = 0; j < bb.getZSpan(); j++) {
     			
     			BlockPos blockPos = new BlockPos(piecePos.getX() + i, piecePos.getY(), piecePos.getZ() + j);
-    			
     			if (level.getBlockState(blockPos).getBlock() instanceof FullGrassBlock) {
     							
 					// Fill all air under the dome down to maxFillLengthDown blocks
@@ -141,6 +119,16 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
 						}
 						else {
 							break;
+						}
+					}
+					
+					// Remove all waterlogged blockstates
+					for (int m = 1; m < height; m++) {
+						if (blockPos.above(m).getY() >= level.getMaxBuildHeight()) break;
+						
+						BlockState blockState = level.getBlockState(blockPos.above(m));
+						if (blockState.hasProperty(WATERLOGGED) && blockState.getValue(WATERLOGGED)) {
+							level.setBlock(blockPos.above(m), blockState.setValue(WATERLOGGED, false), 2);
 						}
 					}
     			}

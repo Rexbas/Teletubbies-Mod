@@ -1,5 +1,5 @@
 {
-  "name": "teletubbies:dome/start_pool",
+  "name": "teletubbies:dome",
   "fallback": "minecraft:empty",
   "elements": [
     {

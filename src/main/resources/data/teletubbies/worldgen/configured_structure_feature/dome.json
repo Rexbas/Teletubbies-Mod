@@ -1,0 +1,11 @@
+{
+  "type": "teletubbies:dome_structure",
+
+  "config": {
+    "start_pool": "teletubbies:dome",
+    "size": 1
+  },
+  "biomes": "#teletubbies:has_structure/dome_biomes",
+  "adapt_noise": false,
+  "spawn_overrides": {}
+}

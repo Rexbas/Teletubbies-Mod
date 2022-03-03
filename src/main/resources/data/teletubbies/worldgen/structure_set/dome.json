@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "teletubbies:dome",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 83513092,
+    "spacing": 25,
+    "separation": 10,
+    "type": "minecraft:random_spread"
+  }
+}

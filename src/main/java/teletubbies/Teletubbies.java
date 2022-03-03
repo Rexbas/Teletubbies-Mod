@@ -23,6 +23,7 @@ import teletubbies.init.TeletubbiesEntityTypes;
 import teletubbies.init.TeletubbiesFeatures;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
+import teletubbies.init.TeletubbiesStructures;
 import teletubbies.itemgroup.ItemGroupTeletubbies;
 
 @Mod(Teletubbies.MODID)
@@ -31,6 +32,10 @@ public class Teletubbies {
 	
 	public static final CreativeModeTab ITEMGROUP = new ItemGroupTeletubbies(MODID);
 
+	// TODO check config files
+	// TODO check accesstransofrmer
+	// TODO test structures
+	
 	public Teletubbies() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_SPEC);
@@ -44,7 +49,7 @@ public class Teletubbies {
 		TeletubbiesItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesFeatures.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		//TeletubbiesStructures.STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesStructures.STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesContainers.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		Config.loadConfig(Config.COMMON_SPEC, FMLPaths.CONFIGDIR.get().resolve("teletubbies-common.toml").toString());
@@ -55,8 +60,6 @@ public class Teletubbies {
 		event.enqueueWork(() -> {
 			TeletubbiesConfiguredFeatures.registerConfiguredFeatures();
 			TeletubbiesConfiguredFeatures.registerPlacedFeatures();
-			//TeletubbiesStructures.setupStructures();
-			//TeletubbiesConfiguredStructures.registerConfiguredStructures();
 		});
 	}
 
