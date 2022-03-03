@@ -4,6 +4,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -55,4 +56,23 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> LAALAA_BIB = ITEMS.register("laalaa_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
 	public static final RegistryObject<Item> PO_BIB = ITEMS.register("po_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
 	public static final RegistryObject<Item> PO_HELMET = ITEMS.register("po_helmet", () -> new SimpleArmorItem(ArmorMaterials.IRON, EquipmentSlot.HEAD));
+	
+	// Spawn Eggs
+	public static final RegistryObject<Item> TINKYWINKY_SPAWN_EGG = ITEMS.register("tinkywinky_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.TINKYWINKY.get(), 0x7E2CD3, 0xFFC9AD, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> DIPSY_SPAWN_EGG = ITEMS.register("dipsy_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.DIPSY.get(), 0x84CA32, 0xFFC9AD, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> LAALAA_SPAWN_EGG = ITEMS.register("laalaa_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.LAALAA.get(), 0xDED32C, 0xFFC9AD, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> PO_SPAWN_EGG = ITEMS.register("po_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.PO.get(), 0xD62828, 0xFFC9AD, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> NOONOO_SPAWN_EGG = ITEMS.register("noonoo_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.NOONOO.get(), 0x0099FF, 0xE166CC, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> MIMI_SPAWN_EGG = ITEMS.register("mimi_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.MIMI.get(), 0x1591B4, 0xC8946A, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> DAADAA_SPAWN_EGG = ITEMS.register("daadaa_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.DAADAA.get(), 0x53AC09, 0xC8946A, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> PING_SPAWN_EGG = ITEMS.register("ping_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.PING.get(), 0xC6419E, 0xC8946A, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> BA_SPAWN_EGG = ITEMS.register("ba_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.BA.get(), 0x062C5E, 0xC8946A, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> RURU_SPAWN_EGG = ITEMS.register("ruru_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.RURU.get(), 0xDA7123, 0xC8946A, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> NIN_SPAWN_EGG = ITEMS.register("nin_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.NIN.get(), 0x9F286E, 0xC8946A, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> DUGGLEDEE_SPAWN_EGG = ITEMS.register("duggledee_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.DUGGLEDEE.get(), 0xB4213E, 0xC8946A, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> UMPIEPUMPIE_SPAWN_EGG = ITEMS.register("umpiepumpie_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.UMPIEPUMPIE.get(), 0xD8BF29, 0xC8946A, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> TINKYWINKY_ZOMBIE_SPAWN_EGG = ITEMS.register("tinkywinky_zombie_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), 0x7E2CD3, 0x660000, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> DIPSY_ZOMBIE_SPAWN_EGG = ITEMS.register("dipsy_zombie_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), 0x84CA32, 0x660000, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> LAALAA_ZOMBIE_SPAWN_EGG = ITEMS.register("laalaa_zombie_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), 0xDED32C, 0x660000, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> PO_ZOMBIE_SPAWN_EGG = ITEMS.register("po_zombie_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.PO_ZOMBIE.get(), 0xD62828, 0x660000, (new Item.Properties()).tab(Teletubbies.ITEMGROUP)));
 }

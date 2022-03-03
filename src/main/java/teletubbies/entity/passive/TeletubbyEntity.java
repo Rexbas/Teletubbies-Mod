@@ -13,6 +13,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.InteractGoal;
@@ -54,6 +56,12 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 		this.goalSelector.addGoal(5, new RandomStrollGoal(this, 0.45F));
 		this.goalSelector.addGoal(6, new InteractGoal(this, Player.class, 10F, 0.9F));
 		this.goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+	}
+	
+	public static Builder setCustomAttributes() {
+		return NooNooEntity.createMobAttributes()
+				.add(Attributes.MOVEMENT_SPEED, 0.5D)
+				.add(Attributes.MAX_HEALTH, 25.0D);
 	}
 	
 	@Override
