@@ -1,5 +1,8 @@
 package teletubbies.worldgen.structure;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -25,6 +28,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
+import net.minecraft.world.level.material.Fluids;
 import teletubbies.block.FullGrassBlock;
 import teletubbies.init.TeletubbiesBlocks;
 
@@ -41,8 +45,10 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
     }
 
     private static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        BlockPos chunkBlockPos = context.chunkPos().getWorldPosition();
-        final int maxHeightDifference = 3;
+    	BlockPos chunkBlockPos = context.chunkPos().getWorldPosition();
+    	final int halfRectangleLength = 16;
+    	final int stepSize = 4;
+        final int maxHeightDifference = 2;
         
         int centerY = context.chunkGenerator().getFirstOccupiedHeight(chunkBlockPos.getX(), chunkBlockPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
         BlockPos centerPos = new BlockPos(
@@ -50,26 +56,28 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
         		centerY,
         		chunkBlockPos.getZ() + 15);
         
-        BlockPos pos_tinkywinky = new BlockPos(centerPos.getX() - 16, centerPos.getY(), centerPos.getZ() - 16);
-        int height_tinkywinky = context.chunkGenerator().getFirstOccupiedHeight(pos_tinkywinky.getX(), pos_tinkywinky.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
-        NoiseColumn columnOfBlocks_tinkywinky = context.chunkGenerator().getBaseColumn(pos_tinkywinky.getX(), pos_tinkywinky.getZ(), context.heightAccessor());
-
-        BlockPos pos_dipsy = new BlockPos(centerPos.getX() + 12, centerPos.getY(), centerPos.getZ() - 16);
-        int height_dipsy = context.chunkGenerator().getFirstOccupiedHeight(pos_dipsy.getX(), pos_dipsy.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
-        NoiseColumn columnOfBlocks_dipsy = context.chunkGenerator().getBaseColumn(pos_dipsy.getX(), pos_dipsy.getZ(), context.heightAccessor());
-
-        BlockPos pos_laalaa = new BlockPos(centerPos.getX() + 12, centerPos.getY(), centerPos.getZ() + 14);
-        int height_laalaa = context.chunkGenerator().getFirstOccupiedHeight(pos_laalaa.getX(), pos_laalaa.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
-        NoiseColumn columnOfBlocks_laalaa = context.chunkGenerator().getBaseColumn(pos_laalaa.getX(), pos_laalaa.getZ(), context.heightAccessor());
-
-        BlockPos pos_po = new BlockPos(centerPos.getX() - 16, centerPos.getY(), centerPos.getZ() + 14);
-        int height_po = context.chunkGenerator().getFirstOccupiedHeight(pos_po.getX(), pos_po.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
-        NoiseColumn columnOfBlocks_po = context.chunkGenerator().getBaseColumn(pos_po.getX(), pos_po.getZ(), context.heightAccessor());
+        List<Integer> heightList = new ArrayList<>();
         
-        if (Math.abs(centerY - height_tinkywinky) <= maxHeightDifference && columnOfBlocks_tinkywinky.getBlock(height_tinkywinky).getFluidState().isEmpty() &&
-    		Math.abs(centerY - height_dipsy) <= maxHeightDifference && columnOfBlocks_dipsy.getBlock(height_dipsy).getFluidState().isEmpty() &&
-			Math.abs(centerY - height_laalaa) <= maxHeightDifference && columnOfBlocks_laalaa.getBlock(height_laalaa).getFluidState().isEmpty() &&
-			Math.abs(centerY - height_po) <= maxHeightDifference && columnOfBlocks_po.getBlock(height_po).getFluidState().isEmpty()) {
+        for (int i = -halfRectangleLength; i < halfRectangleLength; i += stepSize) {
+        	for (int j = -halfRectangleLength; j < halfRectangleLength; j += stepSize) {
+        		BlockPos pos = new BlockPos(centerPos.getX() + i, centerPos.getY(), centerPos.getZ() + j);
+                int height = context.chunkGenerator().getFirstOccupiedHeight(pos.getX(), pos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
+                heightList.add(height);
+                
+                // If there is fluid than return false
+                NoiseColumn columnOfBlocks = context.chunkGenerator().getBaseColumn(pos.getX(), pos.getZ(), context.heightAccessor());
+                if (!columnOfBlocks.getBlock(height).getFluidState().isEmpty()) {
+                	return false;
+                }
+        	}
+        }
+        
+        Collections.sort(heightList);
+        int median = (heightList.get(heightList.size() / 2) + heightList.get(heightList.size() / 2 - 1)) / 2;
+        int min = heightList.get(0);
+        int max = heightList.get(heightList.size() - 1);
+        
+        if (median - min <= maxHeightDifference || max - median <= maxHeightDifference) {
         	return true;
         }
         return false;
@@ -110,11 +118,11 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
     			BlockPos blockPos = new BlockPos(piecePos.getX() + i, piecePos.getY(), piecePos.getZ() + j);
     			if (level.getBlockState(blockPos).getBlock() instanceof FullGrassBlock) {
     							
-					// Fill all air under the dome down to maxFillLengthDown blocks
+					// Fill all air or water under the dome down to maxFillLengthDown blocks
 					for (int m = 1; m < maxFillLengthDown; m++) {
 						if (blockPos.below(m).getY() <= 0) break;
 						
-						if (level.getBlockState(blockPos.below(m)).isAir()) {
+						if (level.getBlockState(blockPos.below(m)).isAir() || level.getFluidState(blockPos.below(m)).getType() == Fluids.WATER) {
 							level.setBlock(blockPos.below(m), TeletubbiesBlocks.FULL_GRASS.get().defaultBlockState(), 2);
 						}
 						else {
