@@ -1,5 +1,6 @@
 package teletubbies.init;
 
+import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -28,7 +29,7 @@ public class TeletubbiesFeatures {
 		public static void biomeLoading(final BiomeLoadingEvent event) {
 			if (event.getCategory() == BiomeCategory.PLAINS) {
 				if (Config.COMMON.VOICE_TRUMPET_CHANCE.get() != 0)
-					event.getGeneration().addFeature(Decoration.LOCAL_MODIFICATIONS, TeletubbiesConfiguredFeatures.VOICE_TRUMPET_PLACED_FEATURE);
+					event.getGeneration().getFeatures(Decoration.LOCAL_MODIFICATIONS).add(Holder.direct(TeletubbiesConfiguredFeatures.VOICE_TRUMPET_PLACED_FEATURE));
 			}
 		}
 	}
