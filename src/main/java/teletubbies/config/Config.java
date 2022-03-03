@@ -46,8 +46,6 @@ public class Config {
 		
 		// WorldGen
 		public final ForgeConfigSpec.IntValue VOICE_TRUMPET_CHANCE;
-		public final ForgeConfigSpec.IntValue DOME_MIN_CHUNKS;
-		public final ForgeConfigSpec.IntValue DOME_MAX_CHUNKS;
 		public final ForgeConfigSpec.BooleanValue INVASIVE_GRASS;
 		
 		public Common(ForgeConfigSpec.Builder builder) {			
@@ -88,12 +86,6 @@ public class Config {
 			builder.push("WorldGen");
 			VOICE_TRUMPET_CHANCE = builder.comment("One Voice Trumpet approximately every N chunks (1 in N chance for a Voice Trumpet to spawn. For N = 0 no Voice Trumpets will spawn)")
 					.defineInRange("n", 20, 0, 1000);
-			
-			DOME_MIN_CHUNKS = builder.comment("Min chunks between domes")
-					.defineInRange("min", 10, 1, 1000);
-			
-			DOME_MAX_CHUNKS = builder.comment("Max chunks between domes")
-					.defineInRange("max", 25, 1, 1000);
 			
 			INVASIVE_GRASS = builder.comment("Whether or not the full grass block should turn vanilla grass into full grass (like how dirt turns into grass)")
 					.define("invasive_grass", true);

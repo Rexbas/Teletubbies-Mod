@@ -31,10 +31,6 @@ public class Teletubbies {
     public static final String MODID = "teletubbies";
 	
 	public static final CreativeModeTab ITEMGROUP = new ItemGroupTeletubbies(MODID);
-
-	// TODO check config files
-	// TODO check accesstransofrmer
-	// TODO test structures
 	
 	public Teletubbies() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
