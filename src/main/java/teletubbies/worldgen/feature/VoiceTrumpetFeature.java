@@ -1,11 +1,10 @@
 package teletubbies.worldgen.feature;
 
-import java.util.Random;
-
 import com.mojang.serialization.Codec;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,11 +34,11 @@ public class VoiceTrumpetFeature extends Feature<NoneFeatureConfiguration> {
 			ctx.level().setBlock(pos, blockstate.setValue(VoiceTrumpetBlock.FACING, facing).setValue(VoiceTrumpetBlock.BOTTOM, true), 0);
 			ctx.level().setBlock(pos.above(), blockstate.setValue(VoiceTrumpetBlock.FACING, facing).setValue(VoiceTrumpetBlock.BOTTOM, false), 0);
 			return true;
-		}	
+		}
 		return false;
 	}
 	
-	private Direction getRandomHorizontalDirection(Random rand) {
-		return Direction.values()[rand.nextInt(4) + 2];
+	private Direction getRandomHorizontalDirection(RandomSource random) {
+		return Direction.values()[random.nextInt(4) + 2];
 	}
 }

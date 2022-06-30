@@ -1,0 +1,4 @@
+{
+    "type": "teletubbies:voice_trumpet_biome_modifier",
+    "biomes": ["plains", "sunflower_plains", "snowy_plains"]
+}
