@@ -1,0 +1,112 @@
+{
+    "type": "forge:add_spawns",
+    "biomes": [
+        "plains",
+        "sunflower_plains",
+        "snowy_plains"
+    ],
+    "spawners": [
+        {
+            "type": "teletubbies:tinkywinky",
+            "weight": 20,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:dipsy",
+            "weight": 20,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:laalaa",
+            "weight": 20,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:po",
+            "weight": 20,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:noonoo",
+            "weight": 20,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:mimi",
+            "weight": 5,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:daadaa",
+            "weight": 5,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:ping",
+            "weight": 5,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:ba",
+            "weight": 5,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:ruru",
+            "weight": 5,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:nin",
+            "weight": 5,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:duggledee",
+            "weight": 5,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:umpiepumpie",
+            "weight": 5,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:tinkywinky_zombie",
+            "weight": 100,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:dipsy_zombie",
+            "weight": 100,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:laalaa_zombie",
+            "weight": 100,
+            "minCount": 1,
+            "maxCount": 1
+        },
+        {
+            "type": "teletubbies:po_zombie",
+            "weight": 100,
+            "minCount": 1,
+            "maxCount": 1
+        }
+    ]
+}

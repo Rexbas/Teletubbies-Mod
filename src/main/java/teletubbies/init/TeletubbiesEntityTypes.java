@@ -7,13 +7,8 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.level.biome.Biome.BiomeCategory;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +16,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import teletubbies.Teletubbies;
-import teletubbies.config.Config;
 import teletubbies.entity.baby.BaEntity;
 import teletubbies.entity.baby.DaaDaaEntity;
 import teletubbies.entity.baby.DuggleDeeEntity;
@@ -79,12 +73,11 @@ public class TeletubbiesEntityTypes {
         		.build(new ResourceLocation(Teletubbies.MODID, name).toString());
     }
 	
-	@SubscribeEvent
-	public static void registerPlacement(final RegistryEvent.Register<EntityType<?>> event) {
+	public static void registerPlacement() {
 		SpawnPlacements.register(TeletubbiesEntityTypes.TINKYWINKY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
 		SpawnPlacements.register(TeletubbiesEntityTypes.DIPSY.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
 		SpawnPlacements.register(TeletubbiesEntityTypes.LAALAA.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);
-		SpawnPlacements.register(TeletubbiesEntityTypes.PO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);		
+		SpawnPlacements.register(TeletubbiesEntityTypes.PO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, TeletubbyEntity::canSpawn);	
 
 		SpawnPlacements.register(TeletubbiesEntityTypes.NOONOO.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, NooNooEntity::canSpawn);
 		
@@ -125,41 +118,5 @@ public class TeletubbiesEntityTypes {
         event.put(TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), Zombie.createAttributes().build());
         event.put(TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), Zombie.createAttributes().build());
         event.put(TeletubbiesEntityTypes.PO_ZOMBIE.get(), Zombie.createAttributes().build());
-	}
-	
-	@Mod.EventBusSubscriber(modid = Teletubbies.MODID)
-	static class EntitySpawns {
-		
-		private static void registerWorldSpawns(BiomeLoadingEvent event, EntityType<?> entity, MobCategory classification, IntValue weight, BiomeCategory...categories) {		
-			for (BiomeCategory category : categories) {
-				if (event.getCategory() == category) {
-					event.getSpawns().addSpawn(classification, new SpawnerData(entity, weight.get(), 1, 1));
-				}
-			}		
-		}
-		
-		@SubscribeEvent
-		public static void createEntitySpawns(BiomeLoadingEvent event) {		
-			registerWorldSpawns(event, TeletubbiesEntityTypes.TINKYWINKY.get(), MobCategory.CREATURE, Config.COMMON.TINKYWINKY_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.DIPSY.get(), MobCategory.CREATURE, Config.COMMON.DIPSY_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.LAALAA.get(), MobCategory.CREATURE, Config.COMMON.LAALAA_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.PO.get(), MobCategory.CREATURE, Config.COMMON.PO_WEIGHT, BiomeCategory.PLAINS);
-			
-			registerWorldSpawns(event, TeletubbiesEntityTypes.NOONOO.get(), MobCategory.CREATURE, Config.COMMON.NOONOO_WEIGHT, BiomeCategory.PLAINS);
-			
-			registerWorldSpawns(event, TeletubbiesEntityTypes.MIMI.get(), MobCategory.CREATURE, Config.COMMON.MIMI_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.DAADAA.get(), MobCategory.CREATURE, Config.COMMON.DAADAA_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.PING.get(), MobCategory.CREATURE, Config.COMMON.PING_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.BA.get(), MobCategory.CREATURE, Config.COMMON.BA_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.RURU.get(), MobCategory.CREATURE, Config.COMMON.RURU_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.NIN.get(), MobCategory.CREATURE, Config.COMMON.NIN_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.DUGGLEDEE.get(), MobCategory.CREATURE, Config.COMMON.DUGGLEDEE_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.UMPIEPUMPIE.get(), MobCategory.CREATURE, Config.COMMON.UMPIEPUMPIE_WEIGHT, BiomeCategory.PLAINS);
-
-			registerWorldSpawns(event, TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), MobCategory.MONSTER, Config.COMMON.TINKYWINKY_ZOMBIE_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), MobCategory.MONSTER, Config.COMMON.DIPSY_ZOMBIE_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), MobCategory.MONSTER, Config.COMMON.LAALAA_ZOMBIE_WEIGHT, BiomeCategory.PLAINS);
-			registerWorldSpawns(event, TeletubbiesEntityTypes.PO_ZOMBIE.get(), MobCategory.MONSTER, Config.COMMON.PO_ZOMBIE_WEIGHT, BiomeCategory.PLAINS);
-		}
 	}
 }

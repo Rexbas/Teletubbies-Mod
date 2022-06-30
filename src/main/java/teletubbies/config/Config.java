@@ -14,28 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 public class Config {
 	
 	public static class Common {		
-		// Entities
-		public final ForgeConfigSpec.IntValue TINKYWINKY_WEIGHT;
-		public final ForgeConfigSpec.IntValue DIPSY_WEIGHT;
-		public final ForgeConfigSpec.IntValue LAALAA_WEIGHT;
-		public final ForgeConfigSpec.IntValue PO_WEIGHT;
-
-		public final ForgeConfigSpec.IntValue NOONOO_WEIGHT;
-
-		public final ForgeConfigSpec.IntValue MIMI_WEIGHT;
-		public final ForgeConfigSpec.IntValue DAADAA_WEIGHT;
-		public final ForgeConfigSpec.IntValue PING_WEIGHT;
-		public final ForgeConfigSpec.IntValue BA_WEIGHT;
-		public final ForgeConfigSpec.IntValue RURU_WEIGHT;
-		public final ForgeConfigSpec.IntValue NIN_WEIGHT;
-		public final ForgeConfigSpec.IntValue DUGGLEDEE_WEIGHT;
-		public final ForgeConfigSpec.IntValue UMPIEPUMPIE_WEIGHT;
-
-		public final ForgeConfigSpec.IntValue TINKYWINKY_ZOMBIE_WEIGHT;
-		public final ForgeConfigSpec.IntValue DIPSY_ZOMBIE_WEIGHT;
-		public final ForgeConfigSpec.IntValue LAALAA_ZOMBIE_WEIGHT;
-		public final ForgeConfigSpec.IntValue PO_ZOMBIE_WEIGHT;
-		
+		// Entities		
 		public final ForgeConfigSpec.IntValue TRANSFORMATION_PROBABILITY;
 		
 		// Food
@@ -50,26 +29,6 @@ public class Config {
 		
 		public Common(ForgeConfigSpec.Builder builder) {			
 			builder.push("Entities");
-			TINKYWINKY_WEIGHT = builder.defineInRange("tinkywinky_weight", 20, 1, 1000000);
-			DIPSY_WEIGHT = builder.defineInRange("dipsy_weight", 20, 1, 1000000);
-			LAALAA_WEIGHT = builder.defineInRange("laalaa_weight", 20, 1, 1000000);
-			PO_WEIGHT = builder.defineInRange("po_weight", 20, 1, 1000000);
-			
-			NOONOO_WEIGHT = builder.defineInRange("noonoo_weight", 20, 1, 1000000);
-			
-			MIMI_WEIGHT = builder.defineInRange("mimi_weight", 5, 1, 1000000);		
-			DAADAA_WEIGHT = builder.defineInRange("daadaa_weight", 5, 1, 1000000);		
-			PING_WEIGHT = builder.defineInRange("ping_weight", 5, 1, 1000000);		
-			BA_WEIGHT = builder.defineInRange("ba_weight", 5, 1, 1000000);		
-			RURU_WEIGHT = builder.defineInRange("ruru_weight", 5, 1, 1000000);	
-			NIN_WEIGHT = builder.defineInRange("nin_weight", 5, 1, 1000000);		
-			DUGGLEDEE_WEIGHT = builder.defineInRange("duggledee_weight", 5, 1, 1000000);
-			UMPIEPUMPIE_WEIGHT = builder.defineInRange("umpiepumpie_weight", 5, 1, 1000000);
-			
-			TINKYWINKY_ZOMBIE_WEIGHT = builder.defineInRange("tinkywinky_zombie_weight", 100, 1, 1000000);
-			DIPSY_ZOMBIE_WEIGHT = builder.defineInRange("dipsy_zombie_weight", 100, 1, 1000000);
-			LAALAA_ZOMBIE_WEIGHT = builder.defineInRange("laalaa_zombie_weight", 100, 1, 1000000);
-			PO_ZOMBIE_WEIGHT = builder.defineInRange("po_zombie_weight", 100, 1, 1000000);
 			
 			TRANSFORMATION_PROBABILITY = builder.comment("Chance of Teletubby transforming into zombie Teletubby")
 					.defineInRange("transformation_probability", 25, 1, 100);
