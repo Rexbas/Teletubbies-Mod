@@ -1,5 +1,6 @@
 package teletubbies.entity.monster;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,8 +16,8 @@ public class PoZombieEntity extends TeletubbyZombieEntity {
 	}
 	
 	@Override
-	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
-		super.populateDefaultEquipmentSlots(difficulty);
+	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(random, difficulty);
 		int i = this.random.nextInt(10);
 		ItemStack stack = null;
 		int damage = 0;

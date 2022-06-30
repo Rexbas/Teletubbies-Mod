@@ -1,7 +1,5 @@
 package teletubbies.client.renderer.environment;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -25,6 +23,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -93,8 +92,7 @@ public class BabyFaceRenderer implements ISkyRenderHandler {
 					bufferbuilder.vertex(matrix4f, f8 * 120.0F, f9 * 120.0F, -f9 * 40.0F * afloat[3]).color(afloat[0], afloat[1], afloat[2], 0.0F).endVertex();
 				}
 
-				bufferbuilder.end();
-				BufferUploader.end(bufferbuilder);
+				BufferUploader.drawWithShader(bufferbuilder.end());
 				matrixStack.popPose();
 			}
 
@@ -146,8 +144,7 @@ public class BabyFaceRenderer implements ISkyRenderHandler {
 			bufferbuilder.vertex(matrix4f1, f12, 100.0F, -f12).uv(1.0F, 0.0F).endVertex();
 			bufferbuilder.vertex(matrix4f1, f12, 100.0F, f12).uv(1.0F, 1.0F).endVertex();
 			bufferbuilder.vertex(matrix4f1, -f12, 100.0F, f12).uv(0.0F, 1.0F).endVertex();
-			bufferbuilder.end();
-			BufferUploader.end(bufferbuilder);
+			BufferUploader.drawWithShader(bufferbuilder.end());
 			matrixStack.popPose();
 			
 			matrix4f1 = matrixStack.last().pose();
@@ -168,8 +165,7 @@ public class BabyFaceRenderer implements ISkyRenderHandler {
 			bufferbuilder.vertex(matrix4f1, f12, -100.0F, f12).uv(f13, f16).endVertex();
 			bufferbuilder.vertex(matrix4f1, f12, -100.0F, -f12).uv(f13, f14).endVertex();
 			bufferbuilder.vertex(matrix4f1, -f12, -100.0F, -f12).uv(f15, f14).endVertex();
-			bufferbuilder.end();
-			BufferUploader.end(bufferbuilder);
+			BufferUploader.drawWithShader(bufferbuilder.end());
 			RenderSystem.disableTexture();
 			float f10 = mc.level.getStarBrightness(partialTicks) * f11;
 			if (f10 > 0.0F) {
@@ -210,28 +206,29 @@ public class BabyFaceRenderer implements ISkyRenderHandler {
 		if (this.starBuffer != null) {
 			this.starBuffer.close();
 		}
-
+		
 		this.starBuffer = new VertexBuffer();
-		this.drawStars(bufferbuilder);
-		bufferbuilder.end();
-		this.starBuffer.upload(bufferbuilder);
+		BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = this.drawStars(bufferbuilder);
+		this.starBuffer.bind();
+		this.starBuffer.upload(bufferbuilder$renderedbuffer);
+		VertexBuffer.unbind();
 	}
 
-	private void drawStars(BufferBuilder p_109555_) {
-		Random random = new Random(10842L);
-		p_109555_.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+	private BufferBuilder.RenderedBuffer drawStars(BufferBuilder p_234260_) {
+		RandomSource randomsource = RandomSource.create(10842L);
+		p_234260_.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
 		for (int i = 0; i < 1500; ++i) {
-			double d0 = (double) (random.nextFloat() * 2.0F - 1.0F);
-			double d1 = (double) (random.nextFloat() * 2.0F - 1.0F);
-			double d2 = (double) (random.nextFloat() * 2.0F - 1.0F);
-			double d3 = (double) (0.15F + random.nextFloat() * 0.1F);
+			double d0 = (double) (randomsource.nextFloat() * 2.0F - 1.0F);
+			double d1 = (double) (randomsource.nextFloat() * 2.0F - 1.0F);
+			double d2 = (double) (randomsource.nextFloat() * 2.0F - 1.0F);
+			double d3 = (double) (0.15F + randomsource.nextFloat() * 0.1F);
 			double d4 = d0 * d0 + d1 * d1 + d2 * d2;
 			if (d4 < 1.0D && d4 > 0.01D) {
 				d4 = 1.0D / Math.sqrt(d4);
-				d0 = d0 * d4;
-				d1 = d1 * d4;
-				d2 = d2 * d4;
+				d0 *= d4;
+				d1 *= d4;
+				d2 *= d4;
 				double d5 = d0 * 100.0D;
 				double d6 = d1 * 100.0D;
 				double d7 = d2 * 100.0D;
@@ -241,7 +238,7 @@ public class BabyFaceRenderer implements ISkyRenderHandler {
 				double d11 = Math.atan2(Math.sqrt(d0 * d0 + d2 * d2), d1);
 				double d12 = Math.sin(d11);
 				double d13 = Math.cos(d11);
-				double d14 = random.nextDouble() * Math.PI * 2.0D;
+				double d14 = randomsource.nextDouble() * Math.PI * 2.0D;
 				double d15 = Math.sin(d14);
 				double d16 = Math.cos(d14);
 
@@ -254,11 +251,11 @@ public class BabyFaceRenderer implements ISkyRenderHandler {
 					double d24 = 0.0D * d12 - d21 * d13;
 					double d25 = d24 * d9 - d22 * d10;
 					double d26 = d22 * d9 + d24 * d10;
-					p_109555_.vertex(d5 + d25, d6 + d23, d7 + d26).endVertex();
+					p_234260_.vertex(d5 + d25, d6 + d23, d7 + d26).endVertex();
 				}
 			}
 		}
-
+		return p_234260_.end();
 	}
 
 	private void createDarkSky() {
@@ -267,10 +264,12 @@ public class BabyFaceRenderer implements ISkyRenderHandler {
 		if (this.darkBuffer != null) {
 			this.darkBuffer.close();
 		}
-
+		
 		this.darkBuffer = new VertexBuffer();
-		buildSkyDisc(bufferbuilder, -16.0F);
-		this.darkBuffer.upload(bufferbuilder);
+		BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = buildSkyDisc(bufferbuilder, -16.0F);
+		this.darkBuffer.bind();
+		this.darkBuffer.upload(bufferbuilder$renderedbuffer);
+		VertexBuffer.unbind();
 	}
 
 	private void createLightSky() {
@@ -281,21 +280,23 @@ public class BabyFaceRenderer implements ISkyRenderHandler {
 		}
 
 		this.skyBuffer = new VertexBuffer();
-		buildSkyDisc(bufferbuilder, 16.0F);
-		this.skyBuffer.upload(bufferbuilder);
+	    BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = buildSkyDisc(bufferbuilder, 16.0F);
+	    this.skyBuffer.bind();
+	    this.skyBuffer.upload(bufferbuilder$renderedbuffer);
+	    VertexBuffer.unbind();
 	}
 
-	private static void buildSkyDisc(BufferBuilder p_172948_, float p_172949_) {
-		float f = Math.signum(p_172949_) * 512.0F;
+	private static BufferBuilder.RenderedBuffer buildSkyDisc(BufferBuilder p_234268_, float p_234269_) {
+		float f = Math.signum(p_234269_) * 512.0F;
 		RenderSystem.setShader(GameRenderer::getPositionShader);
-		p_172948_.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION);
-		p_172948_.vertex(0.0D, (double) p_172949_, 0.0D).endVertex();
+		p_234268_.begin(VertexFormat.Mode.TRIANGLE_FAN, DefaultVertexFormat.POSITION);
+		p_234268_.vertex(0.0D, (double) p_234269_, 0.0D).endVertex();
 
 		for (int i = -180; i <= 180; i += 45) {
-			p_172948_.vertex((double) (f * Mth.cos((float) i * ((float) Math.PI / 180F))), (double) p_172949_,
+			p_234268_.vertex((double) (f * Mth.cos((float) i * ((float) Math.PI / 180F))), (double) p_234269_,
 					(double) (512.0F * Mth.sin((float) i * ((float) Math.PI / 180F)))).endVertex();
 		}
 
-		p_172948_.end();
+		return p_234268_.end();
 	}
 }

@@ -1,9 +1,8 @@
 package teletubbies.entity.passive;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -15,7 +14,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import teletubbies.init.TeletubbiesSounds;
 
 public class NooNooEntity extends PathfinderMob {
@@ -24,7 +23,7 @@ public class NooNooEntity extends PathfinderMob {
 		super(type, world);
 	}
 	
-	public static boolean canSpawn(EntityType<NooNooEntity> entityType, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
+	public static boolean canSpawn(EntityType<NooNooEntity> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource rand) {
 		return true;
 	}
 	

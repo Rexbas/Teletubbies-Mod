@@ -6,8 +6,6 @@ import javax.annotation.Nullable;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -47,7 +45,7 @@ public class TinkyWinkyBagItem extends Item {
 			player.openMenu(new MenuProvider() {
 				@Override
 				public Component getDisplayName() {
-					return new TranslatableComponent("item.teletubbies.tinkywinky_bag");
+					return Component.translatable("item.teletubbies.tinkywinky_bag");
 				}
 				
 				@Override
@@ -79,14 +77,14 @@ public class TinkyWinkyBagItem extends Item {
 					
 					if (lines < MAX_TOOLTIP_ITEMS) {
 						ItemStack s = handler.getStackInSlot(i);
-						tooltip.add(s.getHoverName().plainCopy().append(new TextComponent(" x" + s.getCount())));
+						tooltip.add(s.getHoverName().plainCopy().append(Component.literal(" x" + s.getCount())));
 						lines++;
 					}
 				}
 			}
 			int remainder = num_items - lines;
 			if (remainder > 0) {
-				tooltip.add(new TextComponent("\u00A7oand " + remainder + " more..."));
+				tooltip.add(Component.literal("\u00A7oand " + remainder + " more..."));
 			}
 		}
 	}

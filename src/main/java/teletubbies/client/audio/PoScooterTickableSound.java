@@ -2,6 +2,7 @@ package teletubbies.client.audio;
 
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import teletubbies.entity.vehicle.PoScooterEntity;
@@ -11,8 +12,8 @@ import teletubbies.init.TeletubbiesSounds;
 public class PoScooterTickableSound extends AbstractTickableSoundInstance {
 	private final PoScooterEntity scooter;
 
-	public PoScooterTickableSound(PoScooterEntity scooter) {
-		super(TeletubbiesSounds.ENTITY_SCOOTER.get(), SoundSource.NEUTRAL);
+	public PoScooterTickableSound(PoScooterEntity scooter, RandomSource random) {
+		super(TeletubbiesSounds.ENTITY_SCOOTER.get(), SoundSource.NEUTRAL, random);
 		this.scooter = scooter;
 		looping = true;
 		delay = 0;

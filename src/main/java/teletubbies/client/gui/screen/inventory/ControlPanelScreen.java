@@ -5,7 +5,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
@@ -32,7 +31,7 @@ public class ControlPanelScreen extends AbstractContainerScreen<ControlPanelCont
 	@Override
 	protected void renderLabels(PoseStack matrixStack, int mouseX, int mouseY) {
 		String s = this.title.getString();
-		Component text = new TranslatableComponent("block.teletubbies.control_panel.text");
+		Component text = Component.translatable("block.teletubbies.control_panel.text");
 		this.font.draw(matrixStack, s, (float) (this.imageWidth / 2 - this.font.width(s) / 2), 6.0F, 4210752);
 		this.font.draw(matrixStack, text, 4.0F, 14.0F, 4210752);
 		this.font.draw(matrixStack, this.playerInventoryTitle, 8.0F, (float) (this.imageHeight - 96 + 2), 4210752);

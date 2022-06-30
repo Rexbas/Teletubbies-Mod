@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
@@ -201,6 +200,6 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 
 	@Override
 	public Component getDisplayName() {
-		return new TranslatableComponent("block.teletubbies.custard_machine");
+		return Component.translatable("block.teletubbies.custard_machine");
 	}
 }

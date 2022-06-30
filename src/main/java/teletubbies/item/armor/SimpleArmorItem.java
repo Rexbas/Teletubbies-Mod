@@ -6,6 +6,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 import teletubbies.Teletubbies;
 
 public class SimpleArmorItem extends ArmorItem {
@@ -17,6 +18,6 @@ public class SimpleArmorItem extends ArmorItem {
 	
 	@Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return Teletubbies.MODID + ":textures/model/armor/" + this.getRegistryName().getPath() + ".png";
+		return Teletubbies.MODID + ":textures/model/armor/" + ForgeRegistries.ITEMS.getKey(this).getPath() + ".png";
     }
 }

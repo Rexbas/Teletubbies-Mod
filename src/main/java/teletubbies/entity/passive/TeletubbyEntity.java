@@ -1,12 +1,12 @@
 package teletubbies.entity.passive;
 
 import java.util.Arrays;
-import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,7 +28,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import teletubbies.init.TeletubbiesItems;
 
@@ -42,7 +41,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 		Arrays.fill(this.handDropChances, 1.0F);
 	}
 	
-	public static boolean canSpawn(EntityType<? extends TeletubbyEntity> entityType, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
+	public static boolean canSpawn(EntityType<? extends TeletubbyEntity> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource rand) {
 		return true;
 	}
 	
@@ -65,7 +64,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 	}
 	
 	@Override
-	protected boolean shouldDropExperience() {
+	public boolean shouldDropExperience() {
 		return super.shouldDropExperience() && !hasTransferredToZombie;
 	}
 	
@@ -80,7 +79,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 	}
 	
 	@Override
-	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
 		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:
@@ -94,10 +93,9 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 	
 	@Override
 	@Nullable
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData,
-			@Nullable CompoundTag dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
 		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
-		this.populateDefaultEquipmentSlots(difficulty);
+		this.populateDefaultEquipmentSlots(world.getRandom(), difficulty);
 		return spawnData;
 	}
 	

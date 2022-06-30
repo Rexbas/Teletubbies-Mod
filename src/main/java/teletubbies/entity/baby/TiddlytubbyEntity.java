@@ -1,9 +1,8 @@
 package teletubbies.entity.baby;
 
-import java.util.Random;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -19,7 +18,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import teletubbies.init.TeletubbiesItems;
 import teletubbies.init.TeletubbiesSounds;
 
@@ -29,7 +28,7 @@ public class TiddlytubbyEntity extends PathfinderMob {
 		super(type, world);
 	}
 	
-	public static boolean canSpawn(EntityType<? extends TiddlytubbyEntity> entityType, LevelAccessor world, MobSpawnType reason, BlockPos pos, Random rand) {
+	public static boolean canSpawn(EntityType<? extends TiddlytubbyEntity> entityType, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource rand) {
 		return true;
 	}
 	

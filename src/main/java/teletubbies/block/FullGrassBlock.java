@@ -1,13 +1,12 @@
 package teletubbies.block;
 
-import java.util.Random;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +33,7 @@ public class FullGrassBlock extends GrassBlock {
 	
 	@Override
     @Nullable
-	public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+	public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
         return BlockPathTypes.BLOCKED;
     }
 	
@@ -62,9 +61,8 @@ public class FullGrassBlock extends GrassBlock {
 	
 	@Nullable
     public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolAction toolAction) {
-		// TODO
-        /*if (toolAction == ToolActions.HOE_TILL) return Blocks.FARMLAND.defaultBlockState();
-        else*/ if (toolAction == ToolActions.SHOVEL_FLATTEN) return Blocks.DIRT_PATH.defaultBlockState();
+        if (toolAction == ToolActions.HOE_TILL) return Blocks.FARMLAND.defaultBlockState();
+        else if (toolAction == ToolActions.SHOVEL_FLATTEN) return Blocks.DIRT_PATH.defaultBlockState();
         return null;
     }
 		
@@ -98,7 +96,7 @@ public class FullGrassBlock extends GrassBlock {
 	}
 	
 	@Override
-	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
 		if (!canBeGrass(state, world, pos)) {
 			if (!world.isAreaLoaded(pos, 3))
 				return; // Forge: prevent loading unloaded chunks when checking neighbor's light and

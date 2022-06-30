@@ -31,7 +31,7 @@ public class ControlPanelBlock extends Block implements EntityBlock {
 	
 	@Override
     @Nullable
-	public BlockPathTypes getAiPathNodeType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
+	public BlockPathTypes getBlockPathType(BlockState state, BlockGetter world, BlockPos pos, @Nullable Mob entity) {
         return BlockPathTypes.BLOCKED;
     }
 	

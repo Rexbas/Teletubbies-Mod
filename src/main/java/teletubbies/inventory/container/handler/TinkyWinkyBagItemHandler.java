@@ -3,12 +3,12 @@ package teletubbies.inventory.container.handler;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import com.google.common.collect.Lists;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -43,8 +43,8 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
     
 	public void fillInventory(LootTable table, LootContext context) {
 		List<ItemStack> list = table.getRandomItems(context);
-		Random rand = context.getRandom();
-		List<Integer> list1 = getEmptySlotsRandomized(rand);
+		RandomSource rand = context.getRandom();
+		List<Integer> list1 = getEmptySlotsRandomized();
 		shuffleItems(list, list1.size(), rand);
 
 		for (ItemStack itemstack : list) {
@@ -60,7 +60,7 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
 		}
 	}
 	
-	private List<Integer> getEmptySlotsRandomized(Random rand) {
+	private List<Integer> getEmptySlotsRandomized() {
 		List<Integer> list = Lists.newArrayList();
 
 		for (int i = 0; i < stacks.size(); ++i) {
@@ -68,12 +68,12 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
 				list.add(i);
 			}
 		}
-
-		Collections.shuffle(list, rand);
+		
+		Collections.shuffle(list);
 		return list;
 	}
 	
-	private void shuffleItems(List<ItemStack> stacks, int size, Random rand) {
+	private void shuffleItems(List<ItemStack> stacks, int size, RandomSource rand) {
 		List<ItemStack> list = Lists.newArrayList();
 		Iterator<ItemStack> iterator = stacks.iterator();
 
@@ -105,6 +105,6 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
 		}
 
 		stacks.addAll(list);
-		Collections.shuffle(stacks, rand);
+		Collections.shuffle(stacks);
 	}
 }

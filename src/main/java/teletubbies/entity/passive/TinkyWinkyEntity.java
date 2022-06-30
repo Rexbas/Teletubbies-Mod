@@ -2,6 +2,7 @@ package teletubbies.entity.passive;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -32,8 +33,8 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 	}
 	
 	@Override
-	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
-		super.populateDefaultEquipmentSlots(difficulty);
+	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(random, difficulty);
 		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:

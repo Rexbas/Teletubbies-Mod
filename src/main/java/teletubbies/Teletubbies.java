@@ -44,8 +44,8 @@ public class Teletubbies {
 		TeletubbiesEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
-		TeletubbiesFeatures.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
-		TeletubbiesStructures.STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		//TeletubbiesFeatures.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
+		//TeletubbiesStructures.STRUCTURES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesContainers.CONTAINER_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 
 		Config.loadConfig(Config.COMMON_SPEC, FMLPaths.CONFIGDIR.get().resolve("teletubbies-common.toml").toString());
@@ -54,8 +54,9 @@ public class Teletubbies {
 	
 	private void setup(final FMLCommonSetupEvent event) {
 		event.enqueueWork(() -> {
-			TeletubbiesConfiguredFeatures.registerConfiguredFeatures();
-			TeletubbiesConfiguredFeatures.registerPlacedFeatures();
+			//TeletubbiesConfiguredFeatures.registerConfiguredFeatures();
+			//TeletubbiesConfiguredFeatures.registerPlacedFeatures();
+			TeletubbiesEntityTypes.registerPlacement();
 		});
 	}
 
