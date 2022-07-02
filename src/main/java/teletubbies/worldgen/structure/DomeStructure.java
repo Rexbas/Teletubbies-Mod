@@ -11,12 +11,15 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -24,7 +27,6 @@ import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
-import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.material.Fluids;
 import teletubbies.block.FullGrassBlock;
 import teletubbies.init.TeletubbiesBlocks;
@@ -41,18 +43,19 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 
-    private static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-    	BlockPos chunkBlockPos = context.chunkPos().getWorldPosition();
+    private static Optional<BlockPos> isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context, Rotation rotation) {
+    	BlockPos chunkBlockPos = new BlockPos(context.chunkPos().getWorldPosition().getX(), context.chunkPos().getWorldPosition().getY() - 3, context.chunkPos().getWorldPosition().getZ());
     	final int halfRectangleLength = 16;
     	final int stepSize = 4;
         final int maxHeightDifference = 2;
         
         int centerY = context.chunkGenerator().getFirstOccupiedHeight(chunkBlockPos.getX(), chunkBlockPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
+        BlockPos relativeCenter = new BlockPos(14, 0, 15).rotate(rotation); // Defined for entrance towards east and rotated for other rotations
         BlockPos centerPos = new BlockPos(
-        		chunkBlockPos.getX() + 14,
+        		chunkBlockPos.getX() + relativeCenter.getX(),
         		centerY,
-        		chunkBlockPos.getZ() + 15);
-        
+        		chunkBlockPos.getZ() + relativeCenter.getZ());
+                
         List<Integer> heightList = new ArrayList<>();
         
         for (int i = -halfRectangleLength; i < halfRectangleLength; i += stepSize) {
@@ -64,7 +67,7 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
                 // If there is fluid than return false
                 NoiseColumn columnOfBlocks = context.chunkGenerator().getBaseColumn(pos.getX(), pos.getZ(), context.heightAccessor());
                 if (!columnOfBlocks.getBlock(height).getFluidState().isEmpty()) {
-                	return false;
+                	return Optional.empty();
                 }
         	}
         }
@@ -75,19 +78,23 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
         int max = heightList.get(heightList.size() - 1);
         
         if (median - min <= maxHeightDifference || max - median <= maxHeightDifference) {
-        	return true;
+        	return Optional.of(chunkBlockPos);
         }
-        return false;
+        return Optional.empty();
     }
 
     private static Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        if (!isFeatureChunk(context)) {
+		WorldgenRandom worldgenrandom = new WorldgenRandom(new LegacyRandomSource(0L));
+		worldgenrandom.setLargeFeatureSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
+		Rotation rotation = Rotation.getRandom(worldgenrandom);
+
+    	Optional<BlockPos> chunkPosition = isFeatureChunk(context, rotation);
+        if (!chunkPosition.isPresent()) {
         	return Optional.empty();
         }
-    	
-    	BlockPos chunkBlockPos = new BlockPos(context.chunkPos().getWorldPosition().getX(), context.chunkPos().getWorldPosition().getY() - 3, context.chunkPos().getWorldPosition().getZ());
+    	BlockPos chunkBlockPos = chunkPosition.get();
 
-        Optional<PieceGenerator<JigsawConfiguration>> structurePiecesGenerator = JigsawPlacement.addPieces(context, PoolElementStructurePiece::new, chunkBlockPos, false, true);
+    	Optional<PieceGenerator<JigsawConfiguration>> structurePiecesGenerator = DomeJigsawPlacement.addPieces(context, PoolElementStructurePiece::new, chunkBlockPos, worldgenrandom, rotation);
         return structurePiecesGenerator;
     }
 	
