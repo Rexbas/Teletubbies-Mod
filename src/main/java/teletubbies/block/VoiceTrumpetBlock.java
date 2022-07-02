@@ -16,6 +16,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -177,6 +178,7 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	}
 	
    @Nullable
+   @Override
    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
 	   if (state.getValue(BOTTOM)) {
 		   return (w, blockPos, blockState, t) -> {
@@ -189,4 +191,9 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	   }
 	   return null;
    }
+   
+	@Override
+	public BlockState rotate(BlockState state, Rotation rotation) {
+		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+	}
 }
