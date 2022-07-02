@@ -4,65 +4,74 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
-import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.material.Fluids;
 import teletubbies.block.FullGrassBlock;
 import teletubbies.init.TeletubbiesBlocks;
+import teletubbies.init.TeletubbiesStructures;
 
-public class DomeStructure extends StructureFeature<JigsawConfiguration> {
+public class DomeStructure extends Structure {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-	public DomeStructure() {
-        super(JigsawConfiguration.CODEC, DomeStructure::createPiecesGenerator, DomeStructure::afterPlace);
-    }
+    public static final Codec<DomeStructure> CODEC = RecordCodecBuilder.<DomeStructure>mapCodec(instance ->
+	    instance.group(DomeStructure.settingsCodec(instance),
+	            StructureTemplatePool.CODEC.fieldOf("start_pool").forGetter(structure -> structure.startPool),
+	            HeightProvider.CODEC.fieldOf("start_height").forGetter(structure -> structure.startHeight)
+	    ).apply(instance, DomeStructure::new)).codec();
+    
+    private final Holder<StructureTemplatePool> startPool;
+    private final HeightProvider startHeight;
+    
+	public DomeStructure(Structure.StructureSettings config, Holder<StructureTemplatePool> startPool, HeightProvider startHeight) {
+		super(config);
+		this.startPool = startPool;
+		this.startHeight = startHeight;
+	}
 
-    @Override
-    public GenerationStep.Decoration step() {
-        return GenerationStep.Decoration.SURFACE_STRUCTURES;
-    }
-
-    private static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+    private static boolean isFeatureChunk(GenerationContext context) {
     	BlockPos chunkBlockPos = context.chunkPos().getWorldPosition();
     	final int halfRectangleLength = 16;
     	final int stepSize = 4;
         final int maxHeightDifference = 2;
         
-        int centerY = context.chunkGenerator().getFirstOccupiedHeight(chunkBlockPos.getX(), chunkBlockPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
+        int centerY = context.chunkGenerator().getFirstOccupiedHeight(chunkBlockPos.getX(), chunkBlockPos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
         BlockPos centerPos = new BlockPos(
         		chunkBlockPos.getX() + 14,
         		centerY,
         		chunkBlockPos.getZ() + 15);
-        
+                
         List<Integer> heightList = new ArrayList<>();
         
         for (int i = -halfRectangleLength; i < halfRectangleLength; i += stepSize) {
         	for (int j = -halfRectangleLength; j < halfRectangleLength; j += stepSize) {
         		BlockPos pos = new BlockPos(centerPos.getX() + i, centerPos.getY(), centerPos.getZ() + j);
-                int height = context.chunkGenerator().getFirstOccupiedHeight(pos.getX(), pos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor());
+                int height = context.chunkGenerator().getFirstOccupiedHeight(pos.getX(), pos.getZ(), Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
                 heightList.add(height);
                 
                 // If there is fluid than return false
-                NoiseColumn columnOfBlocks = context.chunkGenerator().getBaseColumn(pos.getX(), pos.getZ(), context.heightAccessor());
+                NoiseColumn columnOfBlocks = context.chunkGenerator().getBaseColumn(pos.getX(), pos.getZ(), context.heightAccessor(), context.randomState());
                 if (!columnOfBlocks.getBlock(height).getFluidState().isEmpty()) {
                 	return false;
                 }
@@ -79,19 +88,22 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
         }
         return false;
     }
-
-    private static Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
-        if (!isFeatureChunk(context)) {
+    
+	@Override
+	public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+		if (!isFeatureChunk(context)) {
         	return Optional.empty();
         }
-    	
-    	BlockPos chunkBlockPos = new BlockPos(context.chunkPos().getWorldPosition().getX(), context.chunkPos().getWorldPosition().getY() - 3, context.chunkPos().getWorldPosition().getZ());
+    	BlockPos chunkBlockPos = new BlockPos(context.chunkPos().getWorldPosition().getX(), context.chunkPos().getWorldPosition().getY(), context.chunkPos().getWorldPosition().getZ());
 
-        Optional<PieceGenerator<JigsawConfiguration>> structurePiecesGenerator = JigsawPlacement.addPieces(context, PoolElementStructurePiece::new, chunkBlockPos, false, true);
-        return structurePiecesGenerator;
-    }
+    	Optional<Structure.GenerationStub> structurePiecesGenerator =
+				JigsawPlacement.addPieces(context, this.startPool, Optional.empty(), 1, chunkBlockPos, false, Optional.of(Heightmap.Types.WORLD_SURFACE_WG), 1);
+    	
+		return structurePiecesGenerator;
+	}
 	
-	private static void afterPlace(WorldGenLevel level, StructureFeatureManager structureManager, ChunkGenerator chunkGenerator, Random rand, BoundingBox bb, ChunkPos chunkPos, PiecesContainer container) {
+	@Override
+	public void afterPlace(WorldGenLevel level, StructureManager structureManager, ChunkGenerator chunkGenerator, RandomSource rand, BoundingBox bb, ChunkPos chunkPos, PiecesContainer container) {
 		BlockPos piecePos;
 		final int maxFillLengthDown = 10;
 		final int height = 6;
@@ -135,5 +147,10 @@ public class DomeStructure extends StructureFeature<JigsawConfiguration> {
     			}
     		}
     	}
+	}
+
+	@Override
+	public StructureType<?> type() {
+		return TeletubbiesStructures.DOME_STRUCTURE.get();
 	}
 }
