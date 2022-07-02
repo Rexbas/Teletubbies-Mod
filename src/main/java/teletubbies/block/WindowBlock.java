@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -210,6 +211,47 @@ public class WindowBlock extends Block {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(X_AXIS, PART, WATERLOGGED);
+	}
+	
+	@Override
+	public BlockState rotate(BlockState state, Rotation rotation) {
+		BlockState newState = state;
+
+		// Fix the axis
+		if (rotation == Rotation.CLOCKWISE_90 || rotation == Rotation.COUNTERCLOCKWISE_90) {
+			newState = newState.setValue(X_AXIS, !state.getValue(X_AXIS));
+		}
+		
+		// Fix the A and B sides
+		if (rotation == Rotation.CLOCKWISE_180) {
+			return flipABSides(newState);
+		}
+		else if (rotation == Rotation.CLOCKWISE_90 && !newState.getValue(X_AXIS)) {
+			return flipABSides(newState);
+		}
+		else if (rotation == Rotation.COUNTERCLOCKWISE_90 && newState.getValue(X_AXIS)) {
+			return flipABSides(newState);
+		}
+		return newState;
+	}
+	
+	private BlockState flipABSides(BlockState state) {
+		BlockState newState = state;
+
+		// Flip A and B side
+		if (state.getValue(PART) == WindowPart.HORIZONTAL_A) {
+			newState = newState.setValue(PART, WindowPart.HORIZONTAL_B);
+		}
+		if (state.getValue(PART) == WindowPart.SLANTED_A) {
+			newState = newState.setValue(PART, WindowPart.SLANTED_B);
+		}
+		if (state.getValue(PART) == WindowPart.HORIZONTAL_B) {
+			newState = newState.setValue(PART, WindowPart.HORIZONTAL_A);
+		}
+		if (state.getValue(PART) == WindowPart.SLANTED_B) {
+			newState = newState.setValue(PART, WindowPart.SLANTED_A);
+		}
+		return newState;
 	}
 	
 	private BlockPos getHA(BlockPos base, Axis axis) {
