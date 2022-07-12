@@ -94,7 +94,7 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 		CustardMachineBlockEntity be = (CustardMachineBlockEntity) world.getBlockEntity(tilePos);
 
 		if (!world.isClientSide && player instanceof ServerPlayer) {
-			NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) be, tilePos);
+			NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) be, tilePos);
 		}
 		return InteractionResult.SUCCESS;
 	}

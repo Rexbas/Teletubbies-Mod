@@ -1,4 +1,4 @@
-package teletubbies.data;
+package teletubbies.datagen;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ItemModelProvider;

@@ -1,4 +1,4 @@
-package teletubbies.data;
+package teletubbies.datagen;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;

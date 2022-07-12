@@ -80,7 +80,7 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 		ToastMachineBlockEntity te = (ToastMachineBlockEntity) world.getBlockEntity(tilePos);
 
 		if (!world.isClientSide && player instanceof ServerPlayer) {
-			NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) te, tilePos);
+			NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) te, tilePos);
 		}
 		return InteractionResult.SUCCESS;
 	}

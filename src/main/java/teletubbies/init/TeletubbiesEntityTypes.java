@@ -40,7 +40,7 @@ import teletubbies.entity.vehicle.PoScooterEntity;
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesEntityTypes {
 
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, Teletubbies.MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Teletubbies.MODID);
 
     // Entity Types    
     public static final RegistryObject<EntityType<TinkyWinkyEntity>> TINKYWINKY = ENTITY_TYPES.register("tinkywinky", () -> createEntity("tinkywinky", TinkyWinkyEntity::new, MobCategory.CREATURE, 0.6F, 1.9F));

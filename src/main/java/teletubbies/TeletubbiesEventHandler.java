@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -16,18 +15,19 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ISkyRenderHandler;
-import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -65,26 +65,16 @@ public class TeletubbiesEventHandler {
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void setSkyRenderer(EntityJoinWorldEvent event) {
-		if (event.getEntity().equals(Minecraft.getInstance().player) && event.getWorld().isClientSide() && event.getWorld().dimension().equals(Level.OVERWORLD) && Config.CLIENT.REPLACE_SUN.get()) {
-			DimensionSpecialEffects de = DimensionSpecialEffects.forType(event.getWorld().dimensionType());
-			ISkyRenderHandler renderer = new BabyFaceRenderer();
-			de.setSkyRenderHandler(renderer);
-		}
-	}
-	
-	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
-	public static void joinClientWorld(EntityJoinWorldEvent event) {
+	public static void joinClientWorld(EntityJoinLevelEvent event) {
 		if(event.getEntity() instanceof PoScooterEntity) {
-			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity(), event.getWorld().getRandom()));
+			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity(), event.getLevel().getRandom()));
 		}
 	}
 	
 	@SubscribeEvent
-	public static void onLivingUpdate(LivingUpdateEvent event) {
-		if(event.getEntityLiving() instanceof Player) {
-			Player player = (Player) event.getEntityLiving();
+	public static void onLivingUpdate(LivingTickEvent event) {
+		if(event.getEntity() instanceof Player) {
+			Player player = (Player) event.getEntity();
 						
 			LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getDirection());
 			cap.ifPresent(c -> {
@@ -121,8 +111,8 @@ public class TeletubbiesEventHandler {
 	
 	@SubscribeEvent
 	public static void fallEvent(LivingFallEvent event) {
-		if(event.getEntityLiving() instanceof Player) {
-			Player player = (Player) event.getEntityLiving();
+		if(event.getEntity() instanceof Player) {
+			Player player = (Player) event.getEntity();
 			if(player.getMainHandItem() != null) {
 				if(player.getMainHandItem().getItem() instanceof LaaLaaBallItem) {
 					event.setCanceled(true);
@@ -149,7 +139,7 @@ public class TeletubbiesEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
+	public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
 		if(event.getEntity() instanceof Zombie) {
 			Zombie zombie = (Zombie) event.getEntity();
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, TinkyWinkyEntity.class, true));
@@ -167,12 +157,12 @@ public class TeletubbiesEventHandler {
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public static void onLivingDeathEvent(LivingDeathEvent event) {
 		DamageSource damageSource = (DamageSource) event.getSource();
-		Level world = event.getEntityLiving().level;
+		Level world = event.getEntity().level;
 
 		if (!world.isClientSide) {
 			if (damageSource.getDirectEntity() instanceof Zombie) {
 				if (event.getEntity() instanceof TeletubbyEntity && world.random.nextInt(100) < Config.COMMON.TRANSFORMATION_PROBABILITY.get()) {
-					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntityLiving();
+					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntity();
 					teletubby.transferToZombie();
 				}
 			}
@@ -183,9 +173,9 @@ public class TeletubbiesEventHandler {
 	public static class TeletubbiesBus {
 		@OnlyIn(Dist.CLIENT)
 	    @SubscribeEvent
-	    public static void BlockColorHandler(final ColorHandlerEvent.Block event) {
+	    public static void BlockColorHandler(RegisterColorHandlersEvent.Block event) {
 			if (TeletubbiesBlocks.FULL_GRASS.get() != null) {
-	        event.getBlockColors().register((state, reader, pos, tint) -> reader != null
+				event.register((state, reader, pos, tint) -> reader != null
 	                && pos != null ? BiomeColors.getAverageGrassColor(reader, pos)
 	                : GrassColor.get(0.5D, 1.0D), TeletubbiesBlocks.FULL_GRASS.get());
 			}
@@ -193,14 +183,22 @@ public class TeletubbiesEventHandler {
 	    
 	    @OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
-		public static void ItemColorHandler(final ColorHandlerEvent.Item event) {
+		public static void ItemColorHandler(final RegisterColorHandlersEvent.Item event) {
 	    	if (TeletubbiesItems.FULL_GRASS.get() != null) {
 				final ItemColor colorHandler = (stack, tint) -> {
 					final BlockState state = ((BlockItem) stack.getItem()).getBlock().defaultBlockState();
 					return event.getBlockColors().getColor(state, null, null, tint);
 				};
-				event.getItemColors().register(colorHandler, TeletubbiesItems.FULL_GRASS.get());
+				event.register(colorHandler, TeletubbiesItems.FULL_GRASS.get());
 	    	}
+		}
+	    
+		@OnlyIn(Dist.CLIENT)
+		@SubscribeEvent
+		public static void setSkyRenderer(RegisterDimensionSpecialEffectsEvent event) {
+			if (Config.CLIENT.REPLACE_SUN.get()) {
+				event.register(BuiltinDimensionTypes.OVERWORLD_EFFECTS, new BabyFaceRenderer());
+			}
 		}
 	}
 }

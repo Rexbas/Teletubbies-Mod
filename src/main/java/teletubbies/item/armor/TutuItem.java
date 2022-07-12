@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import teletubbies.Teletubbies;
 import teletubbies.client.renderer.RenderHandler;
 import teletubbies.client.renderer.item.model.TutuModel;
@@ -32,10 +32,10 @@ public class TutuItem extends ArmorItem {
     
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-		consumer.accept(new IItemRenderProperties() {
+	public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+		consumer.accept(new IClientItemExtensions() {
 			@Override
-		    public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
+		    public HumanoidModel<?> getHumanoidArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
 		    	HumanoidModel<LivingEntity> armorModel = new TutuModel(Minecraft.getInstance().getEntityModels().bakeLayer(RenderHandler.TUTU_LAYER));
 		    	armorModel.setupAnim(entityLiving, entityLiving.animationPosition, entityLiving.animationSpeed, entityLiving.tickCount, entityLiving.yHeadRot, entityLiving.getXRot());
 				return armorModel;

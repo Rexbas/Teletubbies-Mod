@@ -15,7 +15,7 @@ import teletubbies.inventory.container.ToastMachineContainer;
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesContainers {
 
-	public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, Teletubbies.MODID);
+	public static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Teletubbies.MODID);
 	
 	public static final RegistryObject<MenuType<TinkyWinkyBagContainer>> TINKYWINKY_BAG_CONTAINER = CONTAINER_TYPES
 			.register("tinkywinky_bag_container", () -> IForgeMenuType.create(TinkyWinkyBagContainer::new));
@@ -29,4 +29,3 @@ public class TeletubbiesContainers {
 	public static final RegistryObject<MenuType<CustardMachineContainer>> CUSTARD_MACHINE_CONTAINER = CONTAINER_TYPES
 			.register("custard_machine_container", () -> IForgeMenuType .create(CustardMachineContainer::new));
 }
-

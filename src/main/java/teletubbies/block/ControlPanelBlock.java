@@ -40,7 +40,7 @@ public class ControlPanelBlock extends Block implements EntityBlock {
 		ControlPanelBlockEntity te = (ControlPanelBlockEntity) world.getBlockEntity(pos);
 
 		if (!world.isClientSide && player instanceof ServerPlayer) {
-			NetworkHooks.openGui((ServerPlayer) player, (MenuProvider) te, pos);
+			NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) te, pos);
 		}
 		return InteractionResult.SUCCESS;
 	}
