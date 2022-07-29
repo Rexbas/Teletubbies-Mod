@@ -1,14 +1,11 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-      "DLD",
+      "LLL",
       "LSL",
-      "DLD"
+      "LLL"
     ],
     "key": {
-      "D": {
-        "item": "minecraft:yellow_dye"
-      },
       "L": {
         "item": "minecraft:slime_ball"
       },
