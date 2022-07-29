@@ -74,7 +74,7 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 	
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
-		int i = this.random.nextInt(10);
+		int i = this.random.nextInt(15);
 		switch (i) {
 		case 0:
 			ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
@@ -82,13 +82,18 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 			stack.setDamageValue(damage);
 			this.setItemSlot(EquipmentSlotType.LEGS, stack);
 			break;
+		case 1:
+			this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.CUSTARD.get()));
+			break;
+		case 2:
+			this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.TOAST.get()));
+			break;
 		}
 	}
 	
 	@Override
 	@Nullable
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData,
-			@Nullable CompoundNBT dataTag) {
+	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
 		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 		this.populateDefaultEquipmentSlots(difficulty);
 		return spawnData;
