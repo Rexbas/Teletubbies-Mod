@@ -3,8 +3,8 @@ package com.rexbas.teletubbies;
 import com.rexbas.teletubbies.client.audio.PoScooterTickableSound;
 import com.rexbas.teletubbies.client.renderer.environment.BabyFaceRenderer;
 import com.rexbas.teletubbies.config.Config;
+import com.rexbas.teletubbies.entity.PoScooterEntity;
 import com.rexbas.teletubbies.entity.ai.goal.EatFullGrassGoal;
-import com.rexbas.teletubbies.entity.item.PoScooterEntity;
 import com.rexbas.teletubbies.entity.passive.DipsyEntity;
 import com.rexbas.teletubbies.entity.passive.LaaLaaEntity;
 import com.rexbas.teletubbies.entity.passive.PoEntity;
@@ -92,7 +92,7 @@ public class TeletubbiesEventHandler {
 		DamageSource damageSource = (DamageSource) event.getSource();
 		World world = event.getEntityLiving().level;
 
-		if (!world.isClientSide) {
+		if (!world.isClientSide()) {
 			if (damageSource.getDirectEntity() instanceof ZombieEntity) {
 				if (event.getEntity() instanceof TeletubbyEntity && world.random.nextInt(100) < Config.COMMON.TRANSFORMATION_PROBABILITY.get()) {
 					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntityLiving();

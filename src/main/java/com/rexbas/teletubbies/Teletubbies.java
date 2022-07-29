@@ -12,12 +12,12 @@ import com.rexbas.teletubbies.init.TeletubbiesEntityTypes;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
 import com.rexbas.teletubbies.init.TeletubbiesSounds;
 import com.rexbas.teletubbies.init.TeletubbiesWorldGen;
-import com.rexbas.teletubbies.itemgroup.ItemGroupTeletubbies;
 
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -29,8 +29,13 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class Teletubbies {
     public static final String MODID = "teletubbies";
 	
-	public static final ItemGroup TAB = new ItemGroupTeletubbies(MODID);
-
+    public static final ItemGroup TAB = new ItemGroup(MODID) {
+		@Override
+		public ItemStack makeIcon() {
+			return new ItemStack(TeletubbiesItems.PO_STICK.get());
+		}
+	};
+	
 	public Teletubbies() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_SPEC);

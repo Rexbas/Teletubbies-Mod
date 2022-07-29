@@ -1,4 +1,4 @@
-package com.rexbas.teletubbies.data;
+package com.rexbas.teletubbies.datagen;
 
 import com.rexbas.teletubbies.Teletubbies;
 

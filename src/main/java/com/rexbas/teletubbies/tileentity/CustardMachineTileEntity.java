@@ -9,7 +9,6 @@ import com.rexbas.teletubbies.init.TeletubbiesItems;
 import com.rexbas.teletubbies.init.TeletubbiesSounds;
 import com.rexbas.teletubbies.inventory.container.CustardMachineContainer;
 import com.rexbas.teletubbies.inventory.container.handler.CustardMachineItemHandler;
-import com.rexbas.teletubbies.util.Converter;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,7 +35,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class CustardMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
-	private static final int DURATION = (int) Converter.SecondsToTicks(3);
+	private static final int DURATION = (int) TeletubbiesBlocks.secondsToTicks(3);
 	private CustardMachineItemHandler inputHandler = new CustardMachineItemHandler(7);
 	private CustardMachineItemHandler outputHandler = new CustardMachineItemHandler(5);
 	private int processTime; // Counting down

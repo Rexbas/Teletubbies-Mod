@@ -2,9 +2,8 @@ package com.rexbas.teletubbies.block;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.tileentity.ToastMachineTileEntity;
-import com.rexbas.teletubbies.util.BlocksUtil;
-import com.rexbas.teletubbies.util.VoxelShapeRotation;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -55,9 +54,9 @@ public class ToastMachineBlock extends Block {
 			box(3.0D, 6.0D, 6.0D, 13.0D, 8.0D, 10.0D))
 			.optimize();
 	
-	protected static final VoxelShape TOP_AABB_EAST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(270));
-	protected static final VoxelShape TOP_AABB_SOUTH = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(180));
-	protected static final VoxelShape TOP_AABB_WEST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(90));
+	protected static final VoxelShape TOP_AABB_EAST = TeletubbiesBlocks.voxelShapeRotateY(TOP_AABB_NORTH, Math.toRadians(270));
+	protected static final VoxelShape TOP_AABB_SOUTH = TeletubbiesBlocks.voxelShapeRotateY(TOP_AABB_NORTH, Math.toRadians(180));
+	protected static final VoxelShape TOP_AABB_WEST = TeletubbiesBlocks.voxelShapeRotateY(TOP_AABB_NORTH, Math.toRadians(90));
 		
 	public ToastMachineBlock() {
 		super(Properties.of(Material.METAL)
@@ -174,7 +173,7 @@ public class ToastMachineBlock extends Block {
 	
 	public static boolean isUnderwater(World world, BlockPos pos) {
 		BlockPos tilePos = world.getBlockState(pos).getValue(BOTTOM) ? pos : pos.below();
-		if (BlocksUtil.isBlockSurrounded(world, tilePos) && world.getBlockState(tilePos.above()).getValue(WATERLOGGED)) return true;
+		if (TeletubbiesBlocks.isBlockSurrounded(world, tilePos) && world.getBlockState(tilePos.above()).getValue(WATERLOGGED)) return true;
 		return false;
 	}
 		

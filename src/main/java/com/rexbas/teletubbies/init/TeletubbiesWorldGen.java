@@ -7,11 +7,11 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.config.Config;
-import com.rexbas.teletubbies.world.gen.feature.TeletubbiesConfiguredFeatures;
-import com.rexbas.teletubbies.world.gen.feature.VoiceTrumpetFeature;
-import com.rexbas.teletubbies.world.gen.feature.structure.DomePieces;
-import com.rexbas.teletubbies.world.gen.feature.structure.DomeStructure;
-import com.rexbas.teletubbies.world.gen.feature.structure.TeletubbiesConfiguredStructures;
+import com.rexbas.teletubbies.worldgen.feature.TeletubbiesConfiguredFeatures;
+import com.rexbas.teletubbies.worldgen.feature.VoiceTrumpetFeature;
+import com.rexbas.teletubbies.worldgen.feature.structure.DomePieces;
+import com.rexbas.teletubbies.worldgen.feature.structure.DomeStructure;
+import com.rexbas.teletubbies.worldgen.feature.structure.TeletubbiesConfiguredStructures;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;

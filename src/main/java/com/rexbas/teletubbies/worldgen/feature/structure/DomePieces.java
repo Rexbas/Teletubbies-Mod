@@ -1,4 +1,4 @@
-package com.rexbas.teletubbies.world.gen.feature.structure;
+package com.rexbas.teletubbies.worldgen.feature.structure;
 
 import java.util.Random;
 

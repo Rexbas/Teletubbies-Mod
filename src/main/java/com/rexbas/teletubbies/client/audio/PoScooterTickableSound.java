@@ -1,6 +1,6 @@
 package com.rexbas.teletubbies.client.audio;
 
-import com.rexbas.teletubbies.entity.item.PoScooterEntity;
+import com.rexbas.teletubbies.entity.PoScooterEntity;
 import com.rexbas.teletubbies.init.TeletubbiesSounds;
 
 import net.minecraft.client.audio.TickableSound;

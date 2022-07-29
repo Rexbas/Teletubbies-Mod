@@ -9,8 +9,6 @@ import com.rexbas.teletubbies.init.TeletubbiesItems;
 import com.rexbas.teletubbies.init.TeletubbiesSounds;
 import com.rexbas.teletubbies.inventory.container.ToastMachineContainer;
 import com.rexbas.teletubbies.inventory.container.handler.ToastMachineItemHandler;
-import com.rexbas.teletubbies.util.Converter;
-import com.rexbas.teletubbies.util.RandomHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
@@ -38,7 +36,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class ToastMachineTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
 
-	private static final long TICKS_PER_BAR = Converter.SecondsToTicks(1.2D / 4.0D);
+	private static final long TICKS_PER_BAR = TeletubbiesBlocks.secondsToTicks(1.2D / 4.0D);
 	private ToastMachineItemHandler handler = new ToastMachineItemHandler();
 	private int progress; // [0, 4] -> 4 is cooldown
 	private int tickCounter;
@@ -140,11 +138,11 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
         		motionZ = v.z();
         	}
         	else {
-        		motionX = RandomHelper.getRandomNumber(-0.25, 0.25);
-        		motionZ = RandomHelper.getRandomNumber(-0.25, 0.25);
+        		motionX = getRandomNumber(-0.25, 0.25);
+        		motionZ = getRandomNumber(-0.25, 0.25);
         	}
         	
-            motionY = RandomHelper.getRandomNumber(0.45, 0.6);
+            motionY = getRandomNumber(0.45, 0.6);
 
         	item.setDeltaMovement(motionX, motionY, motionZ);
         	level.addFreshEntity(item);
@@ -152,6 +150,10 @@ public class ToastMachineTileEntity extends TileEntity implements ITickableTileE
         	float soundPitch = ToastMachineBlock.isUnderwater(level, worldPosition) ? 0.5F : 1F;
 			level.playSound(null, worldPosition, TeletubbiesSounds.MACHINE_TOAST.get(), SoundCategory.BLOCKS, 2, soundPitch);
     	}
+	}
+	
+	public static double getRandomNumber(double min, double max) {
+	    return Math.random() * (max - min) + min;
 	}
 	
 	public void setPowered(BlockState state) {

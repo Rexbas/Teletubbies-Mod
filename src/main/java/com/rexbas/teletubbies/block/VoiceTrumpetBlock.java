@@ -2,8 +2,8 @@ package com.rexbas.teletubbies.block;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.tileentity.VoiceTrumpetTileEntity;
-import com.rexbas.teletubbies.util.VoxelShapeRotation;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -49,9 +49,9 @@ public class VoiceTrumpetBlock extends Block implements IWaterLoggable {
 			box(6.0D, 3.0D, 9.0D, 10.0D, 7.0D, 10.0D))
 			.optimize();
 	
-	protected static final VoxelShape TOP_AABB_EAST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(270));
-	protected static final VoxelShape TOP_AABB_SOUTH = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(180));
-	protected static final VoxelShape TOP_AABB_WEST = VoxelShapeRotation.rotateY(TOP_AABB_NORTH, Math.toRadians(90));
+	protected static final VoxelShape TOP_AABB_EAST = TeletubbiesBlocks.voxelShapeRotateY(TOP_AABB_NORTH, Math.toRadians(270));
+	protected static final VoxelShape TOP_AABB_SOUTH = TeletubbiesBlocks.voxelShapeRotateY(TOP_AABB_NORTH, Math.toRadians(180));
+	protected static final VoxelShape TOP_AABB_WEST = TeletubbiesBlocks.voxelShapeRotateY(TOP_AABB_NORTH, Math.toRadians(90));
 	
 	protected static final VoxelShape BOTTOM_AABB = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
 	

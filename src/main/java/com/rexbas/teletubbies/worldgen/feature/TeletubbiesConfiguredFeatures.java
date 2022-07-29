@@ -1,4 +1,4 @@
-package com.rexbas.teletubbies.world.gen.feature;
+package com.rexbas.teletubbies.worldgen.feature;
 
 import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.init.TeletubbiesWorldGen;

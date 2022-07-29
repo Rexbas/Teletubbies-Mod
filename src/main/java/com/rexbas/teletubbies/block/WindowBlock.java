@@ -2,7 +2,7 @@ package com.rexbas.teletubbies.block;
 
 import javax.annotation.Nullable;
 
-import com.rexbas.teletubbies.util.VoxelShapeRotation;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -35,7 +35,7 @@ public class WindowBlock extends Block {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;	
 	
 	protected static final VoxelShape AABB_Z = box(0.0D, 0.0D, 7.0D, 16.0D, 16.0D, 9.0D);
-	protected static final VoxelShape AABB_X = VoxelShapeRotation.rotateY(AABB_Z, Math.toRadians(90));
+	protected static final VoxelShape AABB_X = TeletubbiesBlocks.voxelShapeRotateY(AABB_Z, Math.toRadians(90));
 	
 	public WindowBlock() {
 		super(Properties.copy(Blocks.GLASS_PANE));

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.entity.item.PoScooterEntity;
+import com.rexbas.teletubbies.entity.PoScooterEntity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;

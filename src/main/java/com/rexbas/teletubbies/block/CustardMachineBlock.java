@@ -2,10 +2,9 @@ package com.rexbas.teletubbies.block;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.tileentity.CustardMachineSlaveTileEntity;
 import com.rexbas.teletubbies.tileentity.CustardMachineTileEntity;
-import com.rexbas.teletubbies.util.BlocksUtil;
-import com.rexbas.teletubbies.util.VoxelShapeRotation;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -66,12 +65,12 @@ public class CustardMachineBlock extends Block {
 			box(7.0D, 0.0D, 2.0D, 12.0D, 3.0D, 5.0D))
 			.optimize();
 	
-	protected static final VoxelShape SMALLTOWER_AABB_EAST = VoxelShapeRotation.rotateY(SMALLTOWER_AABB_NORTH, Math.toRadians(270));
-	protected static final VoxelShape SMALLTOWER_AABB_SOUTH = VoxelShapeRotation.rotateY(SMALLTOWER_AABB_NORTH, Math.toRadians(180));
-	protected static final VoxelShape SMALLTOWER_AABB_WEST = VoxelShapeRotation.rotateY(SMALLTOWER_AABB_NORTH, Math.toRadians(90));
-	protected static final VoxelShape BIGTOWER_AABB_EAST = VoxelShapeRotation.rotateY(BIGTOWER_AABB_NORTH, Math.toRadians(270));
-	protected static final VoxelShape BIGTOWER_AABB_SOUTH = VoxelShapeRotation.rotateY(BIGTOWER_AABB_NORTH, Math.toRadians(180));
-	protected static final VoxelShape BIGTOWER_AABB_WEST = VoxelShapeRotation.rotateY(BIGTOWER_AABB_NORTH, Math.toRadians(90));
+	protected static final VoxelShape SMALLTOWER_AABB_EAST = TeletubbiesBlocks.voxelShapeRotateY(SMALLTOWER_AABB_NORTH, Math.toRadians(270));
+	protected static final VoxelShape SMALLTOWER_AABB_SOUTH = TeletubbiesBlocks.voxelShapeRotateY(SMALLTOWER_AABB_NORTH, Math.toRadians(180));
+	protected static final VoxelShape SMALLTOWER_AABB_WEST = TeletubbiesBlocks.voxelShapeRotateY(SMALLTOWER_AABB_NORTH, Math.toRadians(90));
+	protected static final VoxelShape BIGTOWER_AABB_EAST = TeletubbiesBlocks.voxelShapeRotateY(BIGTOWER_AABB_NORTH, Math.toRadians(270));
+	protected static final VoxelShape BIGTOWER_AABB_SOUTH = TeletubbiesBlocks.voxelShapeRotateY(BIGTOWER_AABB_NORTH, Math.toRadians(180));
+	protected static final VoxelShape BIGTOWER_AABB_WEST = TeletubbiesBlocks.voxelShapeRotateY(BIGTOWER_AABB_NORTH, Math.toRadians(90));
 		
 	public CustardMachineBlock() {
 		super(Properties.of(Material.METAL)
@@ -270,9 +269,9 @@ public class CustardMachineBlock extends Block {
 	public static boolean isUnderwater(World world, BlockPos pos) {
 		Direction facing = world.getBlockState(pos).getValue(FACING);
 		BlockPos basePos = getBasePos(pos, world.getBlockState(pos).getValue(PART), facing);
-		if (BlocksUtil.isBlockSurrounded(world, basePos) &&
-				BlocksUtil.isBlockSurrounded(world, getSmallTowerBasePos(basePos, facing)) &&
-				BlocksUtil.isBlockSurrounded(world, getBigTowerBasePos(basePos, facing)) &&
+		if (TeletubbiesBlocks.isBlockSurrounded(world, basePos) &&
+				TeletubbiesBlocks.isBlockSurrounded(world, getSmallTowerBasePos(basePos, facing)) &&
+				TeletubbiesBlocks.isBlockSurrounded(world, getBigTowerBasePos(basePos, facing)) &&
 				world.getBlockState(getSmallTowerPos(basePos, facing)).getValue(WATERLOGGED) &&
 				world.getBlockState(getBigTowerPos(basePos, facing)).getValue(WATERLOGGED)) { 
 			return true; 

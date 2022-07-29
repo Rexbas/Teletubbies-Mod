@@ -1,4 +1,4 @@
-package com.rexbas.teletubbies.entity.item;
+package com.rexbas.teletubbies.entity;
 
 import java.util.List;
 
