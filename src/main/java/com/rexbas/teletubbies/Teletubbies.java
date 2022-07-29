@@ -1,8 +1,5 @@
 package com.rexbas.teletubbies;
 
-import com.rexbas.teletubbies.capabilities.IJumpCapability;
-import com.rexbas.teletubbies.capabilities.JumpCapability;
-import com.rexbas.teletubbies.capabilities.JumpStorage;
 import com.rexbas.teletubbies.client.gui.screen.inventory.ControlPanelScreen;
 import com.rexbas.teletubbies.client.gui.screen.inventory.CustardMachineScreen;
 import com.rexbas.teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
@@ -21,12 +18,10 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -34,14 +29,12 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class Teletubbies {
     public static final String MODID = "teletubbies";
 	
-	public static final ItemGroup ITEMGROUP = new ItemGroupTeletubbies(MODID);
+	public static final ItemGroup TAB = new ItemGroupTeletubbies(MODID);
 
 	public Teletubbies() {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, Config.CLIENT_SPEC);
-		
 
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
 
 		TeletubbiesBlocks.BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -55,10 +48,6 @@ public class Teletubbies {
 
 		Config.loadConfig(Config.COMMON_SPEC, FMLPaths.CONFIGDIR.get().resolve("teletubbies-common.toml").toString());
 		Config.loadConfig(Config.CLIENT_SPEC, FMLPaths.CONFIGDIR.get().resolve("teletubbies-client.toml").toString());
-	}
-
-	private void setup(final FMLCommonSetupEvent event) {
-		CapabilityManager.INSTANCE.register(IJumpCapability.class, new JumpStorage(), JumpCapability::new);
 	}
 
 	private void setupClient(final FMLClientSetupEvent event) {

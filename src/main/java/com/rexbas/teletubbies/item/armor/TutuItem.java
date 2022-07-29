@@ -17,8 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class TutuItem extends ArmorItem {
 		
 	public TutuItem() {
-		super(ArmorMaterial.LEATHER, EquipmentSlotType.LEGS, new Item.Properties()
-				.tab(Teletubbies.ITEMGROUP));
+		super(ArmorMaterial.LEATHER, EquipmentSlotType.LEGS, new Item.Properties().tab(Teletubbies.TAB));
 	}
 	
 	@Override

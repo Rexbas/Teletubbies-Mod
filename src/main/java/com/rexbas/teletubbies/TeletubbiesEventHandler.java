@@ -1,7 +1,5 @@
 package com.rexbas.teletubbies;
 
-import com.rexbas.teletubbies.capabilities.IJumpCapability;
-import com.rexbas.teletubbies.capabilities.JumpProvider;
 import com.rexbas.teletubbies.client.audio.PoScooterTickableSound;
 import com.rexbas.teletubbies.client.renderer.environment.BabyFaceRenderer;
 import com.rexbas.teletubbies.config.Config;
@@ -14,21 +12,17 @@ import com.rexbas.teletubbies.entity.passive.TeletubbyEntity;
 import com.rexbas.teletubbies.entity.passive.TinkyWinkyEntity;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
-import com.rexbas.teletubbies.item.LaaLaaBallItem;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.world.DimensionRenderInfo;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.SheepEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GrassColors;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
@@ -36,27 +30,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
 public class TeletubbiesEventHandler {
-	
-	@SubscribeEvent
-	public static void attachtCapabilityEntity(AttachCapabilitiesEvent<Entity> event) {		
-		if(event.getObject() instanceof PlayerEntity) {
-			event.addCapability(new ResourceLocation(Teletubbies.MODID, "capability.jump"), new JumpProvider());
-		}
-	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -71,64 +54,8 @@ public class TeletubbiesEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void joinClientWorld(EntityJoinWorldEvent event) {
-		if(event.getEntity() instanceof PoScooterEntity) {
+		if (event.getEntity() instanceof PoScooterEntity) {
 			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
-		}
-	}
-	
-	@SubscribeEvent
-	public static void onLivingUpdate(LivingUpdateEvent event) {
-		if(event.getEntityLiving() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-						
-			LazyOptional<IJumpCapability> cap = player.getCapability(JumpProvider.JUMP_CAPABILITY, player.getDirection());
-			cap.ifPresent(c -> {
-				float fallDistance = c.fallDistance();
-				
-				int ticks = c.ticksOnGround();
-				
-				if(player.isOnGround() && ticks < 50) {
-					c.setTicksOnGround(ticks + 1);
-				}
-				if(!player.isOnGround() && ticks != 0) {
-					c.setTicksOnGround(0);
-				}
-				if(player.fallDistance > fallDistance) {
-					c.setFallDistance(player.fallDistance);
-				}
-				
-				if (player.getMainHandItem() != null && player.getMainHandItem().getItem() instanceof LaaLaaBallItem
-						|| player.getOffhandItem() != null && player.getOffhandItem().getItem() instanceof LaaLaaBallItem) {
-					if (c.canJump(player) && fallDistance >= 10) {
-						LaaLaaBallItem.jump(player, true);
-					}
-				}
-
-				if(player.isOnGround()) {
-					c.setFallDistance(0);
-				}
-				if(player.isInWater() || player.isInLava()) {
-					c.setFallDistance(0);
-				}
-			});
-		}
-	}
-	
-	@SubscribeEvent
-	public static void fallEvent(LivingFallEvent event) {
-		if(event.getEntityLiving() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-			if(player.getMainHandItem() != null) {
-				if(player.getMainHandItem().getItem() instanceof LaaLaaBallItem) {
-					event.setCanceled(true);
-				}
-			}
-			
-			if(player.getOffhandItem() != null) {
-				if(player.getOffhandItem().getItem() instanceof LaaLaaBallItem) {
-					event.setCanceled(true);
-				}
-			}
 		}
 	}
 

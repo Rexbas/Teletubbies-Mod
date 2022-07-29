@@ -25,9 +25,7 @@ public class PoScooterItem extends Item {
 	private static final Predicate<Entity> ENTITY_PREDICATE = EntityPredicates.NO_SPECTATORS.and(Entity::isPickable);
 
 	public PoScooterItem() {
-		super(new Item.Properties()
-				.stacksTo(1)
-				.tab(Teletubbies.ITEMGROUP));
+		super(new Item.Properties().stacksTo(1).tab(Teletubbies.TAB));
 	}
 
 	@Override

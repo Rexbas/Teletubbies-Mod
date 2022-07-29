@@ -19,10 +19,7 @@ public class CustardItem extends Item {
 			.build();
 	
 	public CustardItem() {
-		super(new Item.Properties()
-				.food(CUSTARD_FOOD)
-				.stacksTo(1)
-				.tab(Teletubbies.ITEMGROUP));
+		super(new Item.Properties().food(CUSTARD_FOOD).stacksTo(1).tab(Teletubbies.TAB));
 	}
 	
 	@Override

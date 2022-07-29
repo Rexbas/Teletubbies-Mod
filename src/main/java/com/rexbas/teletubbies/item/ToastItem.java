@@ -15,8 +15,6 @@ public class ToastItem extends Item {
 			.build();
 
 	public ToastItem() {
-		super(new Item.Properties()
-				.food(TOAST_FOOD)
-				.tab(Teletubbies.ITEMGROUP));
+		super(new Item.Properties().food(TOAST_FOOD).tab(Teletubbies.TAB));
 	}
 }

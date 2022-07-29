@@ -12,8 +12,7 @@ import net.minecraft.item.ItemStack;
 public class SimpleArmorItem extends ArmorItem {
 	
 	public SimpleArmorItem(IArmorMaterial material, EquipmentSlotType slot) {
-		super(material, slot, new Item.Properties()
-				.tab(Teletubbies.ITEMGROUP));
+		super(material, slot, new Item.Properties().tab(Teletubbies.TAB));
 	}
 	
 	@Override

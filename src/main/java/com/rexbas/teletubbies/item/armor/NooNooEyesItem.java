@@ -17,8 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class NooNooEyesItem extends ArmorItem {
 		
 	public NooNooEyesItem() {
-		super(ArmorMaterial.IRON, EquipmentSlotType.HEAD, new Item.Properties()
-				.tab(Teletubbies.ITEMGROUP));
+		super(ArmorMaterial.IRON, EquipmentSlotType.HEAD, new Item.Properties().tab(Teletubbies.TAB));
 	}
 
 	@Override

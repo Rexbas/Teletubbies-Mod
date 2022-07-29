@@ -1,8 +1,8 @@
 package com.rexbas.teletubbies.init;
 
+import com.rexbas.bouncingballs.api.item.BouncingBall;
 import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.item.CustardItem;
-import com.rexbas.teletubbies.item.LaaLaaBallItem;
 import com.rexbas.teletubbies.item.PoScooterItem;
 import com.rexbas.teletubbies.item.TinkyWinkyBagItem;
 import com.rexbas.teletubbies.item.ToastItem;
@@ -15,6 +15,7 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.tags.FluidTags;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -26,21 +27,24 @@ public class TeletubbiesItems {
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Teletubbies.MODID);
 	
 	// Blocks
-	public static final RegistryObject<Item> FULL_GRASS = ITEMS.register("full_grass", () -> new BlockItem(TeletubbiesBlocks.FULL_GRASS.get(), new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> CONTROL_PANEL = ITEMS.register("control_panel", () -> new BlockItem(TeletubbiesBlocks.CONTROL_PANEL.get(), new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> VOICE_TRUMPET = ITEMS.register("voice_trumpet", () -> new BlockItem(TeletubbiesBlocks.VOICE_TRUMPET.get(), new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> TOAST_MACHINE = ITEMS.register("toast_machine", () -> new BlockItem(TeletubbiesBlocks.TOAST_MACHINE.get(), new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> CUSTARD_MACHINE = ITEMS.register("custard_machine", () -> new BlockItem(TeletubbiesBlocks.CUSTARD_MACHINE.get(), new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> WINDOW = ITEMS.register("window", () -> new BlockItem(TeletubbiesBlocks.WINDOW.get(), new Item.Properties().tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> FULL_GRASS = ITEMS.register("full_grass", () -> new BlockItem(TeletubbiesBlocks.FULL_GRASS.get(), new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> CONTROL_PANEL = ITEMS.register("control_panel", () -> new BlockItem(TeletubbiesBlocks.CONTROL_PANEL.get(), new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> VOICE_TRUMPET = ITEMS.register("voice_trumpet", () -> new BlockItem(TeletubbiesBlocks.VOICE_TRUMPET.get(), new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> TOAST_MACHINE = ITEMS.register("toast_machine", () -> new BlockItem(TeletubbiesBlocks.TOAST_MACHINE.get(), new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> CUSTARD_MACHINE = ITEMS.register("custard_machine", () -> new BlockItem(TeletubbiesBlocks.CUSTARD_MACHINE.get(), new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> WINDOW = ITEMS.register("window", () -> new BlockItem(TeletubbiesBlocks.WINDOW.get(), new Item.Properties().tab(Teletubbies.TAB)));
 
 	// Items
-	public static final RegistryObject<Item> TINKYWINKY_STICK = ITEMS.register("tinkywinky_stick", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> DIPSY_STICK = ITEMS.register("dipsy_stick", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> LAALAA_STICK = ITEMS.register("laalaa_stick", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
-	public static final RegistryObject<Item> PO_STICK = ITEMS.register("po_stick", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> TINKYWINKY_STICK = ITEMS.register("tinkywinky_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> DIPSY_STICK = ITEMS.register("dipsy_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> LAALAA_STICK = ITEMS.register("laalaa_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> PO_STICK = ITEMS.register("po_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
 	public static final RegistryObject<Item> TINKYWINKY_BAG = ITEMS.register("tinkywinky_bag", TinkyWinkyBagItem::new);
-	public static final RegistryObject<Item> LAALAA_BALL = ITEMS.register("laalaa_ball", LaaLaaBallItem::new);
-	public static final RegistryObject<Item> BOWL = ITEMS.register("bowl", () -> new Item(new Item.Properties().tab(Teletubbies.ITEMGROUP)));
+	public static final RegistryObject<Item> LAALAA_BALL = ITEMS.register("laalaa_ball",
+			() -> new BouncingBall(new Item.Properties().tab(Teletubbies.TAB), new BouncingBall.Properties(1f, 1f, 10f, 0)
+					.recipeItem(TeletubbiesItems.LAALAA_STICK.get())
+					.addFluid(FluidTags.WATER)));
+	public static final RegistryObject<Item> BOWL = ITEMS.register("bowl", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
 	public static final RegistryObject<Item> CUSTARD = ITEMS.register("custard", CustardItem::new);
 	public static final RegistryObject<Item> TOAST = ITEMS.register("toast", ToastItem::new);
 	

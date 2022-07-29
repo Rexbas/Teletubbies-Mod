@@ -87,7 +87,7 @@ public class TeletubbiesEntityTypes {
         		.sized(width, height)
         		.build(new ResourceLocation(Teletubbies.MODID, name).toString());
 
-		Item spawnEgg = new SpawnEggItem(entity, eggPrimary, eggSecondary, (new Item.Properties()).tab(Teletubbies.ITEMGROUP));
+		Item spawnEgg = new SpawnEggItem(entity, eggPrimary, eggSecondary, (new Item.Properties()).tab(Teletubbies.TAB));
 		spawnEgg.setRegistryName(new ResourceLocation(Teletubbies.MODID, name + "_spawn_egg"));
 		SPAWN_EGGS.add(spawnEgg);
 		
