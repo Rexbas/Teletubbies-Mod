@@ -1,7 +1,7 @@
 package com.rexbas.teletubbies.client.renderer.entity;
 
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.client.renderer.entity.model.NooNooModel;
+import com.rexbas.teletubbies.client.renderer.model.NooNooModel;
 import com.rexbas.teletubbies.entity.passive.NooNooEntity;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;

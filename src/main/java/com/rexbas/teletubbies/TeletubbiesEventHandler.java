@@ -1,5 +1,7 @@
 package com.rexbas.teletubbies;
 
+import com.rexbas.bouncingballs.api.BouncingBallsAPI;
+import com.rexbas.bouncingballs.api.capability.BounceCapability;
 import com.rexbas.teletubbies.client.audio.PoScooterTickableSound;
 import com.rexbas.teletubbies.client.renderer.environment.BabyFaceRenderer;
 import com.rexbas.teletubbies.config.Config;
@@ -18,11 +20,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.world.DimensionRenderInfo;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GrassColors;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
@@ -30,6 +34,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -40,6 +45,13 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
 public class TeletubbiesEventHandler {
+	
+	@SubscribeEvent
+	public static void attachtCapability(AttachCapabilitiesEvent<Entity> event) {	
+		if (event.getObject() instanceof TeletubbyEntity) {
+			event.addCapability(new ResourceLocation(BouncingBallsAPI.MODID, "capability.bounce"), new BounceCapability());
+		}
+	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent

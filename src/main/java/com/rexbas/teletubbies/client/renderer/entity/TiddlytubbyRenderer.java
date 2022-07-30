@@ -1,7 +1,7 @@
 package com.rexbas.teletubbies.client.renderer.entity;
 
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.client.renderer.entity.model.TiddlytubbyModel;
+import com.rexbas.teletubbies.client.renderer.model.TiddlytubbyModel;
 import com.rexbas.teletubbies.entity.baby.TiddlytubbyEntity;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;

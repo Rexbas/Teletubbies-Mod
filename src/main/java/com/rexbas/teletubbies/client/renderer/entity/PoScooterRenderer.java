@@ -3,7 +3,7 @@ package com.rexbas.teletubbies.client.renderer.entity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.client.renderer.entity.model.PoScooterModel;
+import com.rexbas.teletubbies.client.renderer.model.PoScooterModel;
 import com.rexbas.teletubbies.entity.PoScooterEntity;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;

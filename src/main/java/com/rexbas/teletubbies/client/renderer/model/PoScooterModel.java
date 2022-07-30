@@ -1,4 +1,4 @@
-package com.rexbas.teletubbies.client.renderer.entity.model;
+package com.rexbas.teletubbies.client.renderer.model;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;

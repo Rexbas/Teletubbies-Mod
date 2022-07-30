@@ -1,4 +1,4 @@
-package com.rexbas.teletubbies.client.renderer.entity.model;
+package com.rexbas.teletubbies.client.renderer.model;
 
 import com.rexbas.teletubbies.entity.passive.DipsyEntity;
 

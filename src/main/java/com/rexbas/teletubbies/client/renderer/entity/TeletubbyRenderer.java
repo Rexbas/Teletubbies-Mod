@@ -3,7 +3,7 @@ package com.rexbas.teletubbies.client.renderer.entity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.client.renderer.entity.model.TeletubbyModel;
+import com.rexbas.teletubbies.client.renderer.model.TeletubbyModel;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -46,8 +46,7 @@ public class TeletubbyRenderer<T extends CreatureEntity, M extends TeletubbyMode
 	
 	@Override
 	public void render(T entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-		if (MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Pre<T, M>(entityIn, this, partialTicks, matrixStackIn, bufferIn, packedLightIn)))
-			return;
+		if (MinecraftForge.EVENT_BUS.post(new RenderLivingEvent.Pre<T, M>(entityIn, this, partialTicks, matrixStackIn, bufferIn, packedLightIn))) return;
 		matrixStackIn.pushPose();
 		this.model.attackTime = this.getAttackAnim(entityIn, partialTicks);
 

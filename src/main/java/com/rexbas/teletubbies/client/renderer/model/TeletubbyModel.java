@@ -1,4 +1,4 @@
-package com.rexbas.teletubbies.client.renderer.entity.model;
+package com.rexbas.teletubbies.client.renderer.model;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
