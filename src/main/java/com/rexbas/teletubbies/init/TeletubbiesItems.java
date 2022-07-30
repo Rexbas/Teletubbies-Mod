@@ -1,8 +1,8 @@
 package com.rexbas.teletubbies.init;
 
-import com.rexbas.bouncingballs.api.item.BouncingBall;
 import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.item.CustardItem;
+import com.rexbas.teletubbies.item.LaaLaaBall;
 import com.rexbas.teletubbies.item.PoScooterItem;
 import com.rexbas.teletubbies.item.TinkyWinkyBagItem;
 import com.rexbas.teletubbies.item.ToastItem;
@@ -15,7 +15,6 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.tags.FluidTags;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
@@ -41,10 +40,7 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> LAALAA_STICK = ITEMS.register("laalaa_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
 	public static final RegistryObject<Item> PO_STICK = ITEMS.register("po_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
 	public static final RegistryObject<Item> TINKYWINKY_BAG = ITEMS.register("tinkywinky_bag", TinkyWinkyBagItem::new);
-	public static final RegistryObject<Item> LAALAA_BALL = ITEMS.register("laalaa_ball",
-			() -> new BouncingBall(new Item.Properties().tab(Teletubbies.TAB), new BouncingBall.Properties(1f, 1f, 10f, 0)
-					.recipeItem(TeletubbiesItems.LAALAA_STICK.get())
-					.addFluid(FluidTags.WATER)));
+	public static final RegistryObject<Item> LAALAA_BALL = ITEMS.register("laalaa_ball", LaaLaaBall::new);
 	public static final RegistryObject<Item> BOWL = ITEMS.register("bowl", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
 	public static final RegistryObject<Item> CUSTARD = ITEMS.register("custard", CustardItem::new);
 	public static final RegistryObject<Item> TOAST = ITEMS.register("toast", ToastItem::new);

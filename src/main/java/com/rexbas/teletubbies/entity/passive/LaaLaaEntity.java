@@ -26,7 +26,7 @@ public class LaaLaaEntity extends TeletubbyEntity {
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(difficulty);
-		int i = this.random.nextInt(10);
+		int i = this.random.nextInt(2);
 		switch (i) {
 		case 0:
 			ItemStack stack = new ItemStack(TeletubbiesItems.LAALAA_BIB.get());

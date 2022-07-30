@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.entity.ai.goal.WaterAvoidingRandomBouncingGoal;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
 
 import net.minecraft.entity.CreatureEntity;
@@ -15,10 +16,8 @@ import net.minecraft.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.entity.ai.goal.LookAtWithoutMovingGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -49,12 +48,11 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 	protected void registerGoals() {
 		this.goalSelector.addGoal(0, new SwimGoal(this));
 	    this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, ZombieEntity.class, 8.0F, 0.5D, 0.5D));
-		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.45F));
-		this.goalSelector.addGoal(3, new PanicGoal(this, 0.55F));
-		this.goalSelector.addGoal(4, new TemptGoal(this, 0.45F, false, Ingredient.of(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get())));
-		this.goalSelector.addGoal(5, new RandomWalkingGoal(this, 0.45F));
-		this.goalSelector.addGoal(6, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
-		this.goalSelector.addGoal(7, new LookRandomlyGoal(this));
+		this.goalSelector.addGoal(2, new PanicGoal(this, 0.7F));
+		this.goalSelector.addGoal(3, new TemptGoal(this, 0.45F, false, Ingredient.of(TeletubbiesItems.TOAST.get(), TeletubbiesItems.CUSTARD.get())));
+		this.goalSelector.addGoal(4, new WaterAvoidingRandomBouncingGoal(this, 0.45F));
+		this.goalSelector.addGoal(5, new LookAtWithoutMovingGoal(this, PlayerEntity.class, 10F, 0.9F));
+		this.goalSelector.addGoal(6, new LookRandomlyGoal(this));
 	}
 	
 	@Override
