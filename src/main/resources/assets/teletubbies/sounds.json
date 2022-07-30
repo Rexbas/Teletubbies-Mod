@@ -1,106 +1,138 @@
-{"entity.tinkywinky.voice": {
-"category": "voice",
- "sounds": [ {
-    "name": "teletubbies:entity/tinkywinky",
-    "stream": true
-    }]},
-
-"entity.dipsy.voice": {
-"category": "voice",
- "sounds": [ {
-    "name": "teletubbies:entity/dipsy",
-    "stream": true
-    }]},
-
-"entity.laalaa.voice": {
-"category": "voice",
- "sounds": [ {
-    "name": "teletubbies:entity/laalaa",
-    "stream": true
-    }]},
-
-"entity.po.voice": {
-"category": "voice",
- "sounds": [ {
-    "name": "teletubbies:entity/po",
-    "stream": true
-    }]},
-
-"entity.noonoo.ambient1": {
-"category": "ambient",
- "sounds": [ {
-    "name": "teletubbies:entity/noonoo_ambient1",
-    "stream": true
-    }]},
-    
-"entity.noonoo.ambient2": {
-"category": "ambient",
- "sounds": [ {
-    "name": "teletubbies:entity/noonoo_ambient2",
-    "stream": true
-    }]},
-
-"entity.noonoo.hurt": {
-"category": "ambient",
- "sounds": [ {
-    "name": "teletubbies:entity/noonoo_hurt",
-    "stream": true
-    }]},
-
-"entity.noonoo.death": {
-"category": "ambient",
- "sounds": [ {
-    "name": "teletubbies:entity/noonoo_death",
-    "stream": true
-    }]},
-    
-"entity.mimi.voice": {
-    "category": "voice",
-        "sounds": [ {
-        "name": "teletubbies:entity/mimi",
-        "stream": true
-        }]},
-
-"entity.daadaa.voice": {
-"category": "voice",
- "sounds": [ {
-    "name": "teletubbies:entity/daadaa",
-    "stream": true
-    }]},
-
-"ball.bounce": {
-"category": "neutral",
- "sounds": [ {
-    "name": "teletubbies:ball/bounce",
-    "stream": true,
-    "attenuation_distance": 50
-    }]},
-    
-"entity.scooter": {
-"category": "neutral",
- "sounds": [ {
-    "name": "teletubbies:entity/scooter",
-    "stream": false
-    }]},
-    
-"machine.voice_trumpet": {
-"category": "blocks",
- "sounds": [ {
-    "name": "teletubbies:machine/voice_trumpet",
-    "stream": true
-    }]},
-    
-"machine.toast": {
-"category": "blocks",
- "sounds": [ {
-    "name": "teletubbies:machine/toast",
-    "stream": true
-    }]},
-    
-"machine.custard": {
-"category": "blocks",
- "sounds": [ {
-    "name": "teletubbies:machine/custard",
-    "stream": true
-    }]}
+{
+    "entity.tinkywinky.voice": {
+        "category": "voice",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/tinkywinky",
+                "stream": true
+            }
+        ]
+    },
+    "entity.dipsy.voice": {
+        "category": "voice",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/dipsy",
+                "stream": true
+            }
+        ]
+    },
+    "entity.laalaa.voice": {
+        "category": "voice",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/laalaa",
+                "stream": true
+            }
+        ]
+    },
+    "entity.po.voice": {
+        "category": "voice",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/po",
+                "stream": true
+            }
+        ]
+    },
+    "entity.noonoo.ambient1": {
+        "category": "ambient",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/noonoo_ambient1",
+                "stream": true
+            }
+        ]
+    },
+    "entity.noonoo.ambient2": {
+        "category": "ambient",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/noonoo_ambient2",
+                "stream": true
+            }
+        ]
+    },
+    "entity.noonoo.hurt": {
+        "category": "ambient",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/noonoo_hurt",
+                "stream": true
+            }
+        ]
+    },
+    "entity.noonoo.death": {
+        "category": "ambient",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/noonoo_death",
+                "stream": true
+            }
+        ]
+    },
+    "entity.mimi.voice": {
+        "category": "voice",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/mimi",
+                "stream": true
+            }
+        ]
+    },
+    "entity.daadaa.voice": {
+        "category": "voice",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/daadaa",
+                "stream": true
+            }
+        ]
+    },
+    "ball.bounce": {
+        "category": "neutral",
+        "sounds": [
+            {
+                "name": "teletubbies:ball/bounce",
+                "stream": true,
+                "attenuation_distance": 75
+            }
+        ]
+    },
+    "entity.scooter": {
+        "category": "neutral",
+        "sounds": [
+            {
+                "name": "teletubbies:entity/scooter",
+                "stream": false
+            }
+        ]
+    },
+    "machine.voice_trumpet": {
+        "category": "blocks",
+        "sounds": [
+            {
+                "name": "teletubbies:machine/voice_trumpet",
+                "stream": true
+            }
+        ]
+    },
+    "machine.toast": {
+        "category": "blocks",
+        "sounds": [
+            {
+                "name": "teletubbies:machine/toast",
+                "stream": true
+            }
+        ]
+    },
+    "machine.custard": {
+        "category": "blocks",
+        "sounds": [
+            {
+                "name": "teletubbies:machine/custard",
+                "stream": true
+            }
+        ]
+    }
 }

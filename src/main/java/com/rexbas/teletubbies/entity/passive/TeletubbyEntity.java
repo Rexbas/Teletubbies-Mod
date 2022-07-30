@@ -5,6 +5,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.bouncingballs.api.capability.BounceCapability;
+import com.rexbas.bouncingballs.api.item.IBouncingBall;
 import com.rexbas.teletubbies.entity.ai.goal.WaterAvoidingRandomBouncingGoal;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
 
@@ -24,11 +26,14 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 
 public abstract class TeletubbyEntity extends CreatureEntity {
 
@@ -95,6 +100,26 @@ public abstract class TeletubbyEntity extends CreatureEntity {
 		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 		this.populateDefaultEquipmentSlots(difficulty);
 		return spawnData;
+	}
+	
+	@Override
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+		if (this.isAlive() && capability == BounceCapability.BOUNCE_CAPABILITY) {
+			IBouncingBall ball = null;
+			if (this.getOffhandItem().getItem() instanceof IBouncingBall) {
+				ball = (IBouncingBall) this.getOffhandItem().getItem();
+			}
+			else if (this.getMainHandItem().getItem() instanceof IBouncingBall) {
+				ball = (IBouncingBall) this.getMainHandItem().getItem();
+			}
+			
+			// For Teletubbies only if they have a ball in their hands
+			if (ball != null) {
+				return super.getCapability(capability, facing);
+			}
+			return LazyOptional.empty();
+		}
+		return super.getCapability(capability, facing);
 	}
 	
 	public abstract EntityType<?> getZombie();

@@ -27,7 +27,7 @@ public class LaaLaaZombieEntity extends TeletubbyZombieEntity {
 			this.setItemSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
+			this.setItemSlot(EquipmentSlotType.OFFHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
 			break;
 		}
 	}

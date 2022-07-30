@@ -7,6 +7,7 @@ import com.rexbas.teletubbies.client.renderer.environment.BabyFaceRenderer;
 import com.rexbas.teletubbies.config.Config;
 import com.rexbas.teletubbies.entity.PoScooterEntity;
 import com.rexbas.teletubbies.entity.ai.goal.EatFullGrassGoal;
+import com.rexbas.teletubbies.entity.monster.TeletubbyZombieEntity;
 import com.rexbas.teletubbies.entity.passive.DipsyEntity;
 import com.rexbas.teletubbies.entity.passive.LaaLaaEntity;
 import com.rexbas.teletubbies.entity.passive.PoEntity;
@@ -48,7 +49,7 @@ public class TeletubbiesEventHandler {
 	
 	@SubscribeEvent
 	public static void attachtCapability(AttachCapabilitiesEvent<Entity> event) {	
-		if (event.getObject() instanceof TeletubbyEntity) {
+		if (event.getObject() instanceof TeletubbyEntity || event.getObject() instanceof TeletubbyZombieEntity) {
 			event.addCapability(new ResourceLocation(BouncingBallsAPI.MODID, "capability.bounce"), new BounceCapability());
 		}
 	}

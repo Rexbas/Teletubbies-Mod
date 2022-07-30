@@ -26,7 +26,7 @@ public class LaaLaaEntity extends TeletubbyEntity {
 	@Override
 	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(difficulty);
-		int i = this.random.nextInt(2);
+		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:
 			ItemStack stack = new ItemStack(TeletubbiesItems.LAALAA_BIB.get());
@@ -35,7 +35,7 @@ public class LaaLaaEntity extends TeletubbyEntity {
 			this.setItemSlot(EquipmentSlotType.CHEST, stack);
 			break;
 		case 1:
-			this.setItemSlot(EquipmentSlotType.MAINHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
+			this.setItemSlot(EquipmentSlotType.OFFHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
 			break;
 		}
 	}

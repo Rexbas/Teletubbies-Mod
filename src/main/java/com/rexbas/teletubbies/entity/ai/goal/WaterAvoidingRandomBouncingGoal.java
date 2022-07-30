@@ -16,7 +16,7 @@ public class WaterAvoidingRandomBouncingGoal extends WaterAvoidingRandomWalkingG
 	@Override
 	public void tick() {
 		super.tick();
-		if (!this.mob.getNavigation().getTargetPos().closerThan(this.mob.position(), 5)) {
+		if (this.mob.getNavigation().getTargetPos() != null && !this.mob.getNavigation().getTargetPos().closerThan(this.mob.position(), 5)) {
 			if (this.mob.getCapability(BounceCapability.BOUNCE_CAPABILITY).isPresent()) {
 				ItemStack ballStack = null;
 				if (this.mob.getOffhandItem().getItem() instanceof BouncingBall) {
