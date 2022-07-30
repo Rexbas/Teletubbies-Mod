@@ -79,7 +79,7 @@ public class TeletubbiesEventHandler {
 			ClientPlayerEntity player = (ClientPlayerEntity) event.player;
 			if (player.getVehicle() instanceof PoScooterEntity) {
 				PoScooterEntity scooter = (PoScooterEntity) player.getVehicle();
-				scooter.updateInputs(player.input.left, player.input.right, player.input.up, player.input.down);
+				scooter.setInput(player.input.left, player.input.right, player.input.up, player.input.down);
 			}
 		}
 	}
