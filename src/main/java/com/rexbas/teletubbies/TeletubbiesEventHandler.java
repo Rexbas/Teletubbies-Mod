@@ -15,6 +15,7 @@ import com.rexbas.teletubbies.entity.passive.TeletubbyEntity;
 import com.rexbas.teletubbies.entity.passive.TinkyWinkyEntity;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
+import com.rexbas.teletubbies.item.PoScooterItem;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -25,7 +26,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.SheepEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.GrassColors;
@@ -64,9 +67,23 @@ public class TeletubbiesEventHandler {
 		}
 	}
 	
+	@SubscribeEvent
+	public static void onJoinWorld(EntityJoinWorldEvent event) {
+		if (event.getEntity() instanceof PoEntity) {
+			PoEntity po = (PoEntity) event.getEntity();
+			if (po.getMainHandItem().getItem() instanceof PoScooterItem) {
+				PoScooterEntity scooter = new PoScooterEntity(event.getWorld(), po.getX(), po.getY(), po.getZ());
+				event.getWorld().addFreshEntity(scooter);
+				scooter.yRot = po.yRot;
+				po.startRiding(scooter);
+				po.setItemSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
+			}
+		}
+	}
+	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void joinClientWorld(EntityJoinWorldEvent event) {
+	public static void onJoinClientWorld(EntityJoinWorldEvent event) {
 		if (event.getEntity() instanceof PoScooterEntity) {
 			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
 		}
