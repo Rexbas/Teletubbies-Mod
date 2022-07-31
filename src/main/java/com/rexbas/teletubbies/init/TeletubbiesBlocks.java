@@ -43,7 +43,7 @@ public class TeletubbiesBlocks {
 	public static final RegistryObject<Block> WINDOW = BLOCKS.register("window", WindowBlock::new);
 
 	// Tile Entities
-	public static final RegistryObject<TileEntityType<?>> CONTROL_PANEL_TILE = TILE_ENTITIES.register("control_panel_tile", () -> TileEntityType.Builder.of(ControlPanelTileEntity::new, VOICE_TRUMPET.get()).build(null));
+	public static final RegistryObject<TileEntityType<?>> CONTROL_PANEL_TILE = TILE_ENTITIES.register("control_panel_tile", () -> TileEntityType.Builder.of(ControlPanelTileEntity::new, CONTROL_PANEL.get()).build(null));
 	public static final RegistryObject<TileEntityType<?>> VOICE_TRUMPET_TILE = TILE_ENTITIES.register("voice_trumpet_tile", () -> TileEntityType.Builder.of(VoiceTrumpetTileEntity::new, VOICE_TRUMPET.get()).build(null));
 	public static final RegistryObject<TileEntityType<?>> TOAST_MACHINE_TILE = TILE_ENTITIES.register("toast_machine_tile", () -> TileEntityType.Builder.of(ToastMachineTileEntity::new, TOAST_MACHINE.get()).build(null));
 	public static final RegistryObject<TileEntityType<?>> CUSTARD_MACHINE_TILE = TILE_ENTITIES.register("custard_machine_tile", () -> TileEntityType.Builder.of(CustardMachineTileEntity::new, CUSTARD_MACHINE.get()).build(null));
