@@ -423,6 +423,9 @@ public class PoScooterEntity extends Entity {
 			return ActionResultType.PASS;
 		} else {
 			if (!this.level.isClientSide()) {
+				if (this.getControllingPassenger() != null && !(this.getControllingPassenger() instanceof PlayerEntity)) {
+					this.getControllingPassenger().stopRiding();
+				}
 				return player.startRiding(this) ? ActionResultType.CONSUME : ActionResultType.PASS;
 			}
 		}
