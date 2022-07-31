@@ -6,10 +6,10 @@
       "LLL"
     ],
     "key": {
-      "L": {
-        "item": "minecraft:slime_ball"
-      },
       "S": {
+        "item": "minecraft:slime_block"
+      },
+      "L": {
         "item": "teletubbies:laalaa_stick"
       }
     },
