@@ -15,8 +15,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.Pose;
-import net.minecraft.entity.item.BoatEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -165,7 +163,7 @@ public class PoScooterEntity extends Entity {
 
 	@Override
 	public void push(Entity entity) {
-		if (entity instanceof BoatEntity) {
+		if (entity instanceof PoScooterEntity) {
 			if (entity.getBoundingBox().minY < this.getBoundingBox().maxY) {
 				super.push(entity);
 			}
@@ -373,22 +371,8 @@ public class PoScooterEntity extends Entity {
 	@Override
 	public void positionRider(Entity passenger) {
 		if (this.hasPassenger(passenger)) {
-			float f = 0.0F;
 			float f1 = (float) ((!this.isAlive() ? (double) 0.01F : this.getPassengersRidingOffset()) + passenger.getMyRidingOffset());
-			if (this.getPassengers().size() > 1) {
-				int i = this.getPassengers().indexOf(passenger);
-				if (i == 0) {
-					f = 0.2F;
-				} else {
-					f = -0.6F;
-				}
-
-				if (passenger instanceof AnimalEntity) {
-					f = (float) ((double) f + 0.2D);
-				}
-			}
-
-			Vector3d vector3d = (new Vector3d((double) f, 0.0D, 0.0D)).yRot(-this.yRot * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+			Vector3d vector3d = (new Vector3d(0.0D, 0.0D, 0.0D)).yRot(-this.yRot * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
 			passenger.setPos(this.getX() + vector3d.x, this.getY() + (double) f1, this.getZ() + vector3d.z);
 			passenger.yRot += this.deltaRotation;
 			passenger.setYHeadRot(passenger.getYHeadRot() + this.deltaRotation);
