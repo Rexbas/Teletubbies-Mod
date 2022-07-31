@@ -104,7 +104,8 @@
         "sounds": [
             {
                 "name": "teletubbies:entity/scooter",
-                "stream": false
+                "stream": false,
+                "attenuation_distance": 50
             }
         ]
     },
