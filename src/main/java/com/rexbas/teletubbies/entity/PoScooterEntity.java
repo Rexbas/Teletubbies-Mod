@@ -85,8 +85,8 @@ public class PoScooterEntity extends Entity {
 	}
 	
 	@Override
-	protected float getEyeHeight(Pose p_213316_1_, EntitySize p_213316_2_) {
-		return p_213316_2_.height;
+	protected float getEyeHeight(Pose pose, EntitySize entitySize) {
+		return entitySize.height;
 	}
 	
 	@Override
@@ -106,8 +106,8 @@ public class PoScooterEntity extends Entity {
 		return canVehicleCollide(this, entity);
 	}
 
-	public static boolean canVehicleCollide(Entity p_242378_0_, Entity p_242378_1_) {
-		return (p_242378_1_.canBeCollidedWith() || p_242378_1_.isPushable()) && !p_242378_0_.isPassengerOfSameVehicle(p_242378_1_);
+	public static boolean canVehicleCollide(Entity scooter, Entity entity) {
+		return (entity.canBeCollidedWith() || entity.isPushable()) && !scooter.isPassengerOfSameVehicle(entity);
 	}
 	
 	@Override
@@ -127,6 +127,11 @@ public class PoScooterEntity extends Entity {
 
 	@Override
 	public double getPassengersRidingOffset() {
+		if (this.getControllingPassenger() != null) {
+			if (this.getControllingPassenger() instanceof TeletubbyEntity) {
+				return 0.25D;
+			}
+		}
 		return 0.6D;
 	}
 
@@ -218,11 +223,35 @@ public class PoScooterEntity extends Entity {
 		super.tick();
 		this.tickLerp();
 		if (this.isControlledByLocalInstance()) {
-			this.updateMotion();
-			if (this.level.isClientSide()) {
-				this.controlScooter();
+			// Positive Z is 0 deg
+			// Positive X is -90 deg
+			// Clockwise for positive angle
+			if (this.getControllingPassenger() instanceof TeletubbyEntity) {
+				TeletubbyEntity passenger = (TeletubbyEntity) this.getControllingPassenger();
+				if (passenger.getNavigation().isInProgress()) {
+					Vector3d viewVec = this.getViewVector(1);
+					double viewAngle = -Math.atan2(viewVec.x(), viewVec.z());
+					double relativeWantedX = passenger.getMoveControl().getWantedX() - passenger.position().x();
+					double relativeWantedZ = passenger.getMoveControl().getWantedZ() - passenger.position().z();
+					double wantedAngle = -Math.atan2(relativeWantedX, relativeWantedZ);
+					double rotationError = wantedAngle - viewAngle;
+					if (rotationError > Math.PI) {
+						rotationError -= 2 * Math.PI;
+					}
+					if (rotationError < -Math.PI) {
+						rotationError += 2 * Math.PI;
+					}
+					
+					boolean right = rotationError > 0;
+					boolean forward = Math.abs(rotationError) < 0.25 * Math.PI;
+					this.setInput(!right, right, forward, false);
+				}
+				else {
+					this.setInput(false, false, false, false);
+				}
 			}
-
+			this.updateMotion();
+			this.controlScooter();
 			this.move(MoverType.SELF, this.getDeltaMovement());
 		} else {
 			this.setDeltaMovement(Vector3d.ZERO);
@@ -312,21 +341,21 @@ public class PoScooterEntity extends Entity {
 		if (this.isVehicle()) {
 			float f = 0.0F;
 			if (this.inputLeft) {
-				--this.deltaRotation;
+				this.deltaRotation -= 1.5;
 			}
 
 			if (this.inputRight) {
-				++this.deltaRotation;
+				this.deltaRotation += 1.5;
 			}
 
 			if (this.inputRight != this.inputLeft && !this.inputUp && !this.inputDown) {
-				f += 0.05F;
+				f += 0.005F;
 			}
 			
 			this.deltaRotation *= 3.33;
 			this.yRot += this.deltaRotation;
 			if (this.inputUp) {
-				f += 0.4F; // Base speed
+				f += 0.6F; // Base speed
 			}
 
 			if (this.inputDown) {
@@ -336,6 +365,7 @@ public class PoScooterEntity extends Entity {
 			if (this.isInWater()) {
 				f *= 0.25;
 			}
+
 			this.setDeltaMovement(this.getDeltaMovement().add(MathHelper.sin(-this.yRot * ((float) Math.PI / 180F)) * f, 0.0D, MathHelper.cos(this.yRot * ((float) Math.PI / 180F)) * f));
 		}
 	}
@@ -459,12 +489,11 @@ public class PoScooterEntity extends Entity {
 		return list.isEmpty() ? null : list.get(0);
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public void setInput(boolean p_184442_1_, boolean p_184442_2_, boolean p_184442_3_, boolean p_184442_4_) {
-		this.inputLeft = p_184442_1_;
-		this.inputRight = p_184442_2_;
-		this.inputUp = p_184442_3_;
-		this.inputDown = p_184442_4_;
+	public void setInput(boolean left, boolean right, boolean up, boolean down) {
+		this.inputLeft = left;
+		this.inputRight = right;
+		this.inputUp = up;
+		this.inputDown = down;
 	}
 
 	@Override
