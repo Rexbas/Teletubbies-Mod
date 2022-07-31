@@ -1,6 +1,7 @@
 package com.rexbas.teletubbies.client.renderer.model;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.renderer.model.ModelHelper;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -10,9 +11,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class TeletubbyModel<T extends CreatureEntity> extends BipedModel<T> {
 	public ModelRenderer leftEar;
 	public ModelRenderer rightEar;
+	private boolean isZombie;
 		
-	public TeletubbyModel() {
+	public TeletubbyModel(boolean isZombie) {
 		super(0.0F);
+		this.isZombie = isZombie;
 		leftEar = new ModelRenderer(this);
 		leftEar.setPos(-6.8333F, 19.5F, -0.3333F);
 		leftEar.addBox(null, 1.8333F, -26.5F, 0.3333F, 1, 3, 1, 0.0F, 56, 21);
@@ -27,5 +30,13 @@ public class TeletubbyModel<T extends CreatureEntity> extends BipedModel<T> {
 		
 		head.addChild(leftEar);
 		head.addChild(rightEar);
+	}
+	
+	@Override
+	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		if (this.isZombie) {
+			ModelHelper.animateZombieArms(this.leftArm, this.rightArm, entity.isAggressive(), this.attackTime, ageInTicks);
+		}
 	}
 }
