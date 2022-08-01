@@ -1,11 +1,12 @@
-package teletubbies.init;
+package com.rexbas.teletubbies.init;
+
+import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.worldgen.structure.DomeStructure;
 
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import teletubbies.Teletubbies;
-import teletubbies.worldgen.structure.DomeStructure;
 
 public class TeletubbiesStructures {
 

@@ -1,6 +1,9 @@
-package teletubbies.init;
+package com.rexbas.teletubbies.init;
 
 import java.util.List;
+
+import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.config.Config;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -10,8 +13,6 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
-import teletubbies.Teletubbies;
-import teletubbies.config.Config;
 
 public class TeletubbiesConfiguredFeatures {    
     

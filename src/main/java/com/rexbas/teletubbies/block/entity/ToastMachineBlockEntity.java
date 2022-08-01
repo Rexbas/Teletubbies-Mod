@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/main/java/teletubbies/blockentity/ToastMachineBlockEntity.java
-package teletubbies.blockentity;
-========
 package com.rexbas.teletubbies.block.entity;
->>>>>>>> origin/1.17:src/main/java/com/rexbas/teletubbies/block/entity/ToastMachineBlockEntity.java
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

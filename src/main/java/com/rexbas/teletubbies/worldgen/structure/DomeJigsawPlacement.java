@@ -1,4 +1,4 @@
-package teletubbies.worldgen.structure;
+package com.rexbas.teletubbies.worldgen.structure;
 
 import java.util.List;
 import java.util.Optional;
@@ -67,7 +67,6 @@ public class DomeJigsawPlacement {
 					List<PoolElementStructurePiece> list = Lists.newArrayList();
 					list.add(poolelementstructurepiece);
 					if (jigsawconfiguration.maxDepth() > 0) {
-						int i1 = 80;
 						AABB aabb = new AABB((double) (i - 80), (double) (k - 80), (double) (j - 80), (double) (i + 80 + 1), (double) (k + 80 + 1), (double) (j + 80 + 1));
 						JigsawPlacement.Placer jigsawplacement$placer = new JigsawPlacement.Placer(registry, jigsawconfiguration.maxDepth(), factory, chunkgenerator, structuremanager, list, worldgenrandom);
 						jigsawplacement$placer.placing.addLast(new JigsawPlacement.PieceState(poolelementstructurepiece, new MutableObject<>(Shapes.join(Shapes.create(aabb), Shapes.create(AABB.of(boundingbox)), BooleanOp.ONLY_FIRST)), 0));

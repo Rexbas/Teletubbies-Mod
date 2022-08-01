@@ -1,4 +1,8 @@
-package teletubbies.init;
+package com.rexbas.teletubbies.init;
+
+import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.config.Config;
+import com.rexbas.teletubbies.worldgen.feature.VoiceTrumpetFeature;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
@@ -11,9 +15,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import teletubbies.Teletubbies;
-import teletubbies.config.Config;
-import teletubbies.worldgen.feature.VoiceTrumpetFeature;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesFeatures {

@@ -35,7 +35,7 @@ public class NooNooEyesItem extends ArmorItem {
 	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
 		consumer.accept(new IItemRenderProperties() {
 			@Override
-		    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
+		    public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> _default) {
 		    	HumanoidModel<LivingEntity> armorModel = new NooNooEyesModel(Minecraft.getInstance().getEntityModels().bakeLayer(RenderHandler.NOONOO_EYES_LAYER));
 				return armorModel;
 		    }

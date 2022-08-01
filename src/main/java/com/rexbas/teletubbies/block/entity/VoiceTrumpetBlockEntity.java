@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/main/java/teletubbies/blockentity/VoiceTrumpetBlockEntity.java
-package teletubbies.blockentity;
-========
 package com.rexbas.teletubbies.block.entity;
->>>>>>>> origin/1.17:src/main/java/com/rexbas/teletubbies/block/entity/VoiceTrumpetBlockEntity.java
 
 import java.util.Random;
 

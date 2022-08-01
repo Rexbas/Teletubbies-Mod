@@ -1,8 +1,4 @@
-<<<<<<<< HEAD:src/main/java/teletubbies/worldgen/feature/VoiceTrumpetFeature.java
-package teletubbies.worldgen.feature;
-========
 package com.rexbas.teletubbies.worldgen.feature;
->>>>>>>> origin/1.17:src/main/java/com/rexbas/teletubbies/worldgen/feature/VoiceTrumpetFeature.java
 
 import java.util.Random;
 

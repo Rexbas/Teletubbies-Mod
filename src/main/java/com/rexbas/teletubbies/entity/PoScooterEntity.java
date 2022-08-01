@@ -40,7 +40,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 /* This class is based on @Boat */
 public class PoScooterEntity extends Entity {
@@ -65,7 +65,6 @@ public class PoScooterEntity extends Entity {
 	public PoScooterEntity(EntityType<? extends Entity> type, Level world) {
 		super(type, world);
 		this.blocksBuilding = true;
-		maxUpStep = 1.0F;
 		maxFallDistance = 5;
 	}
 
@@ -80,6 +79,11 @@ public class PoScooterEntity extends Entity {
 		this.xo = x;
 		this.yo = y;
 		this.zo = z;
+	}
+	
+	@Override
+	public float getStepHeight() {
+		return 1;
 	}
 	
 	@Override

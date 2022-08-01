@@ -38,26 +38,17 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.event.ColorHandlerEvent;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
 public class TeletubbiesEventHandler {
-	
-	@SubscribeEvent
-	public static void registerCapabilities(final RegisterCapabilitiesEvent event) {
-		event.register(IJumpCapability.class);
-	}
 
 	@SubscribeEvent
 	public static void attachtCapability(AttachCapabilitiesEvent<Entity> event) {	
@@ -82,7 +73,7 @@ public class TeletubbiesEventHandler {
 		if (event.getEntity() instanceof PoScooterEntity) {
 			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
 		}
-	}
+	} 
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent

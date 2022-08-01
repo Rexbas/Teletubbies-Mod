@@ -1,10 +1,13 @@
-package teletubbies.worldgen.structure;
+package com.rexbas.teletubbies.worldgen.structure;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+
+import com.rexbas.teletubbies.block.FullGrassBlock;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
@@ -28,8 +31,6 @@ import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.material.Fluids;
-import teletubbies.block.FullGrassBlock;
-import teletubbies.init.TeletubbiesBlocks;
 
 public class DomeStructure extends StructureFeature<JigsawConfiguration> {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
