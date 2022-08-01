@@ -1,9 +1,15 @@
-package com.rexbas.teletubbies.tileentity;
+package com.rexbas.teletubbies.block.entity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-<<<<<<<< HEAD:src/main/java/com/rexbas/teletubbies/tileentity/CustardMachineBlockEntity.java
+import com.rexbas.teletubbies.block.CustardMachineBlock;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
+import com.rexbas.teletubbies.init.TeletubbiesItems;
+import com.rexbas.teletubbies.init.TeletubbiesSounds;
+import com.rexbas.teletubbies.inventory.container.CustardMachineContainer;
+import com.rexbas.teletubbies.inventory.container.handler.CustardMachineItemHandler;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -20,32 +26,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-========
-import com.rexbas.teletubbies.block.CustardMachineBlock;
-import com.rexbas.teletubbies.init.TeletubbiesBlocks;
-import com.rexbas.teletubbies.init.TeletubbiesItems;
-import com.rexbas.teletubbies.init.TeletubbiesSounds;
-import com.rexbas.teletubbies.inventory.container.CustardMachineContainer;
-import com.rexbas.teletubbies.inventory.container.handler.CustardMachineItemHandler;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
->>>>>>>> origin/1.16:src/main/java/com/rexbas/teletubbies/tileentity/CustardMachineTileEntity.java
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
@@ -67,7 +47,7 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	}
 	
 	@Override
-	public AbstractContainerMenu createMenu(final int windowID, final Inventory playerInv, final Player playerIn) {
+	public AbstractContainerMenu createMenu(final int windowID, final Inventory playerInv, final Player player) {
 		return new CustardMachineContainer(windowID, playerInv, this);
 	}
 

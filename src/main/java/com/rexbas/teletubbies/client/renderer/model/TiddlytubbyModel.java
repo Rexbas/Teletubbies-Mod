@@ -2,6 +2,7 @@ package com.rexbas.teletubbies.client.renderer.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.rexbas.teletubbies.entity.baby.TiddlytubbyEntity;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

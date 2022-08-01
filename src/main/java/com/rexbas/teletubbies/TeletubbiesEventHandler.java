@@ -26,11 +26,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -44,28 +45,11 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import teletubbies.capabilities.IJumpCapability;
-import teletubbies.capabilities.JumpProvider;
-import teletubbies.client.audio.PoScooterTickableSound;
-import teletubbies.client.renderer.environment.BabyFaceRenderer;
-import teletubbies.config.Config;
-import teletubbies.entity.ai.goal.EatFullGrassGoal;
-import teletubbies.entity.passive.DipsyEntity;
-import teletubbies.entity.passive.LaaLaaEntity;
-import teletubbies.entity.passive.PoEntity;
-import teletubbies.entity.passive.TeletubbyEntity;
-import teletubbies.entity.passive.TinkyWinkyEntity;
-import teletubbies.entity.vehicle.PoScooterEntity;
-import teletubbies.init.TeletubbiesBlocks;
-import teletubbies.init.TeletubbiesItems;
-import teletubbies.item.LaaLaaBallItem;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
 public class TeletubbiesEventHandler {
@@ -121,7 +105,7 @@ public class TeletubbiesEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void onJoinWorld(EntityJoinWorldEvent event) {
+	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (event.getEntity() instanceof Zombie) {
 			Zombie zombie = (Zombie) event.getEntity();
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, TinkyWinkyEntity.class, true));
@@ -140,9 +124,9 @@ public class TeletubbiesEventHandler {
 			if (po.getMainHandItem().getItem() instanceof PoScooterItem) {
 				PoScooterEntity scooter = new PoScooterEntity(event.getWorld(), po.getX(), po.getY(), po.getZ());
 				event.getWorld().addFreshEntity(scooter);
-				scooter.yRot = po.yRot;
+				scooter.setYRot(po.getYRot());
 				po.startRiding(scooter);
-				po.setItemSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
+				po.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
 			}
 		}
 	}
@@ -153,7 +137,7 @@ public class TeletubbiesEventHandler {
 		Level world = event.getEntityLiving().level;
 
 		if (!world.isClientSide()) {
-			if (damageSource.getDirectEntity() instanceof ZombieEntity) {
+			if (damageSource.getDirectEntity() instanceof Zombie) {
 				if (event.getEntity() instanceof TeletubbyEntity && world.random.nextInt(100) < Config.COMMON.TRANSFORMATION_PROBABILITY.get()) {
 					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntityLiving();
 					teletubby.transferToZombie();

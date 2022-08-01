@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.mojang.serialization.Codec;
 import com.rexbas.teletubbies.block.VoiceTrumpetBlock;
-import com.rexbas.teletubbies.config.Config;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 
 import net.minecraft.core.BlockPos;
@@ -16,8 +15,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import teletubbies.block.VoiceTrumpetBlock;
-import teletubbies.init.TeletubbiesBlocks;
 
 public class VoiceTrumpetFeature extends Feature<NoneFeatureConfiguration> {
 

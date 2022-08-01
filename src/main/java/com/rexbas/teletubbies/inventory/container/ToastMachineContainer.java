@@ -2,6 +2,11 @@ package com.rexbas.teletubbies.inventory.container;
 
 import java.util.Objects;
 
+import com.rexbas.teletubbies.block.entity.ToastMachineBlockEntity;
+import com.rexbas.teletubbies.init.TeletubbiesContainers;
+import com.rexbas.teletubbies.inventory.container.handler.ToastMachineItemHandler;
+import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,10 +17,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import teletubbies.init.TeletubbiesContainers;
-import teletubbies.inventory.container.handler.ToastMachineItemHandler;
-import teletubbies.inventory.container.slot.SpecificItemSlot;
-import teletubbies.tileentity.ToastMachineBlockEntity;
 
 public class ToastMachineContainer extends AbstractContainerMenu {
 	

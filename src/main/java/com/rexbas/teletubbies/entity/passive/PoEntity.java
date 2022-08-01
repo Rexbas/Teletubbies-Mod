@@ -11,9 +11,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import teletubbies.init.TeletubbiesEntityTypes;
-import teletubbies.init.TeletubbiesItems;
-import teletubbies.init.TeletubbiesSounds;
 
 public class PoEntity extends TeletubbyEntity {
 

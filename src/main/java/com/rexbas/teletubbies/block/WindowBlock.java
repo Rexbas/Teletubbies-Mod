@@ -2,6 +2,8 @@ package com.rexbas.teletubbies.block;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
@@ -26,7 +28,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import teletubbies.util.VoxelShapeRotation;
 
 public class WindowBlock extends Block {
 	public static final BooleanProperty X_AXIS = BooleanProperty.create("x_axis");

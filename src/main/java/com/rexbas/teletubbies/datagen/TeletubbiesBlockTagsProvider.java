@@ -1,11 +1,12 @@
-package teletubbies.data;
+package com.rexbas.teletubbies.datagen;
+
+import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import teletubbies.Teletubbies;
-import teletubbies.init.TeletubbiesBlocks;
 
 public class TeletubbiesBlockTagsProvider extends BlockTagsProvider {
 

@@ -1,16 +1,13 @@
 package com.rexbas.teletubbies.client.renderer.entity;
 
 import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.client.renderer.RenderHandler;
 import com.rexbas.teletubbies.client.renderer.model.TiddlytubbyModel;
 import com.rexbas.teletubbies.entity.baby.TiddlytubbyEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import teletubbies.Teletubbies;
-import teletubbies.client.renderer.RenderHandler;
-import teletubbies.client.renderer.entity.model.TiddlytubbyModel;
-import teletubbies.entity.baby.TiddlytubbyEntity;
 
 public class TiddlytubbyRenderer extends MobRenderer<TiddlytubbyEntity, TiddlytubbyModel<TiddlytubbyEntity>> {
 	private final String name;

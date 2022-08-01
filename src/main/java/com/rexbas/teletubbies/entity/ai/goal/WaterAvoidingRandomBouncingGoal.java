@@ -3,13 +3,13 @@ package com.rexbas.teletubbies.entity.ai.goal;
 import com.rexbas.bouncingballs.api.capability.BounceCapability;
 import com.rexbas.bouncingballs.api.item.BouncingBall;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.item.ItemStack;
 
-public class WaterAvoidingRandomBouncingGoal extends WaterAvoidingRandomWalkingGoal {
+public class WaterAvoidingRandomBouncingGoal extends WaterAvoidingRandomStrollGoal {
 
-	public WaterAvoidingRandomBouncingGoal(CreatureEntity entity, double speed) {
+	public WaterAvoidingRandomBouncingGoal(PathfinderMob entity, double speed) {
 		super(entity, speed);
 	}
 	

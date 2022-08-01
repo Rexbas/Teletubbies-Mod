@@ -2,6 +2,7 @@ package com.rexbas.teletubbies.client.renderer.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.rexbas.teletubbies.entity.PoScooterEntity;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,7 +13,6 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import teletubbies.entity.vehicle.PoScooterEntity;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterModel extends EntityModel<PoScooterEntity> {

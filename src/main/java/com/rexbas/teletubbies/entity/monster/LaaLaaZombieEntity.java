@@ -8,7 +8,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import teletubbies.init.TeletubbiesItems;
 
 public class LaaLaaZombieEntity extends TeletubbyZombieEntity {
 
@@ -28,7 +27,7 @@ public class LaaLaaZombieEntity extends TeletubbyZombieEntity {
 			this.setItemSlot(EquipmentSlot.CHEST, stack);
 			break;
 		case 1:
-			this.setItemSlot(EquipmentSlotType.OFFHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
+			this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
 			break;
 		}
 	}

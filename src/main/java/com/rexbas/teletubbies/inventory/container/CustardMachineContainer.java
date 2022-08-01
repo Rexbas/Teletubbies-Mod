@@ -2,6 +2,13 @@ package com.rexbas.teletubbies.inventory.container;
 
 import java.util.Objects;
 
+import com.rexbas.teletubbies.block.entity.CustardMachineBlockEntity;
+import com.rexbas.teletubbies.init.TeletubbiesContainers;
+import com.rexbas.teletubbies.init.TeletubbiesItems;
+import com.rexbas.teletubbies.inventory.container.handler.CustardMachineItemHandler;
+import com.rexbas.teletubbies.inventory.container.slot.CustardMachineOutputSlot;
+import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
+
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,12 +20,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import teletubbies.init.TeletubbiesContainers;
-import teletubbies.init.TeletubbiesItems;
-import teletubbies.inventory.container.handler.CustardMachineItemHandler;
-import teletubbies.inventory.container.slot.CustardMachineOutputSlot;
-import teletubbies.inventory.container.slot.SpecificItemSlot;
-import teletubbies.tileentity.CustardMachineBlockEntity;
 
 public class CustardMachineContainer extends AbstractContainerMenu {
 	

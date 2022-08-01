@@ -1,9 +1,10 @@
 package com.rexbas.teletubbies.item.armor;
 
-import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.client.renderer.item.model.TutuModel;
-
 import java.util.function.Consumer;
+
+import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.client.renderer.RenderHandler;
+import com.rexbas.teletubbies.client.renderer.item.model.TutuModel;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -17,14 +18,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.IItemRenderProperties;
-import teletubbies.Teletubbies;
-import teletubbies.client.renderer.RenderHandler;
-import teletubbies.client.renderer.item.model.TutuModel;
 
 public class TutuItem extends ArmorItem {
 	
 	public TutuItem() {
-		super(ArmorMaterial.LEATHER, EquipmentSlotType.LEGS, new Item.Properties().tab(Teletubbies.TAB));
+		super(ArmorMaterials.LEATHER, EquipmentSlot.LEGS, new Item.Properties().tab(Teletubbies.TAB));
 	}
 	
 	@Override

@@ -2,6 +2,11 @@ package com.rexbas.teletubbies.worldgen.feature.structure;
 
 import java.util.Random;
 
+import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.block.FullGrassBlock;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
+import com.rexbas.teletubbies.init.TeletubbiesWorldGen;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -20,10 +25,6 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import teletubbies.Teletubbies;
-import teletubbies.block.FullGrassBlock;
-import teletubbies.init.TeletubbiesBlocks;
-import teletubbies.init.TeletubbiesWorldGen;
 
 public class DomePieces {
 	

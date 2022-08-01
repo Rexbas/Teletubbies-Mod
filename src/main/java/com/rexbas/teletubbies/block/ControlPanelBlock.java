@@ -2,6 +2,8 @@ package com.rexbas.teletubbies.block;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.block.entity.ControlPanelBlockEntity;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -20,7 +22,6 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.tileentity.ControlPanelBlockEntity;
 
 public class ControlPanelBlock extends Block implements EntityBlock {
 

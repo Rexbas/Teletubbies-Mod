@@ -135,10 +135,10 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    compileOnly fg.deobf("curse.maven:bouncing-balls-api-api-${boucing_balls_api_id}:${boucing_balls_api_file_api_id}")
-    runtimeOnly fg.deobf("curse.maven:bouncing-balls-api-${boucing_balls_api_id}:${boucing_balls_api_file_id}")
-    //compileOnly fg.deobf('com.rexbas.bouncingballs:bouncing-balls-api-1.16.5:1.1.1.0:api')
-    //runtimeOnly fg.deobf('com.rexbas.bouncingballs:bouncing-balls-api-1.16.5:1.1.1.0')
+    //compileOnly fg.deobf("curse.maven:bouncing-balls-api-api-${boucing_balls_api_id}:${boucing_balls_api_file_api_id}")
+    //runtimeOnly fg.deobf("curse.maven:bouncing-balls-api-${boucing_balls_api_id}:${boucing_balls_api_file_id}")
+    compileOnly fg.deobf('com.rexbas.bouncingballs:bouncing-balls-api-1.17.1:2.0.1.0:api')
+    runtimeOnly fg.deobf('com.rexbas.bouncingballs:bouncing-balls-api-1.17.1:2.0.1.0')
 }
 
 import groovy.json.JsonSlurper

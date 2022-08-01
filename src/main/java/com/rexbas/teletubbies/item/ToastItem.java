@@ -5,8 +5,6 @@ import com.rexbas.teletubbies.config.Config;
 
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
-import teletubbies.Teletubbies;
-import teletubbies.config.Config;
 
 public class ToastItem extends Item {
 	

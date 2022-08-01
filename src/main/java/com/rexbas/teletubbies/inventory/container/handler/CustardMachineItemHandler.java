@@ -2,6 +2,8 @@ package com.rexbas.teletubbies.inventory.container.handler;
 
 import javax.annotation.Nonnull;
 
+import com.rexbas.teletubbies.init.TeletubbiesItems;
+
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.items.ItemStackHandler;

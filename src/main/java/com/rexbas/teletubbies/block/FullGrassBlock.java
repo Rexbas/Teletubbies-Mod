@@ -4,6 +4,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.config.Config;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -24,7 +26,6 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
-import teletubbies.config.Config;
 
 public class FullGrassBlock extends GrassBlock {
 	

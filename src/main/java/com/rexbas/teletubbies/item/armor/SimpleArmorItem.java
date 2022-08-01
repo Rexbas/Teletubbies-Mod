@@ -2,16 +2,16 @@ package com.rexbas.teletubbies.item.armor;
 
 import com.rexbas.teletubbies.Teletubbies;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class SimpleArmorItem extends ArmorItem {
 	
-	public SimpleArmorItem(IArmorMaterial material, EquipmentSlotType slot) {
+	public SimpleArmorItem(ArmorMaterial material, EquipmentSlot slot) {
 		super(material, slot, new Item.Properties().tab(Teletubbies.TAB));
 	}
 	

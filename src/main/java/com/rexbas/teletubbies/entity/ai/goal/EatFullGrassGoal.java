@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.EatBlockGoal;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import teletubbies.init.TeletubbiesBlocks;
 
 public class EatFullGrassGoal extends EatBlockGoal {
 

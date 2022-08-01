@@ -14,10 +14,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import teletubbies.init.TeletubbiesContainers;
-import teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
-import teletubbies.inventory.container.slot.TinkyWinkyBagSlot;
-import teletubbies.item.TinkyWinkyBagItem;
 
 // https://github.com/Flanks255/simplybackpacks/tree/master/src/main/java/com/flanks255/simplybackpacks
 

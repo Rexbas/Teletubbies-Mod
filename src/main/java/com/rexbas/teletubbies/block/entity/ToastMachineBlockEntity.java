@@ -1,9 +1,15 @@
-package com.rexbas.teletubbies.tileentity;
+package com.rexbas.teletubbies.block.entity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-<<<<<<<< HEAD:src/main/java/com/rexbas/teletubbies/tileentity/ToastMachineBlockEntity.java
+import com.rexbas.teletubbies.block.ToastMachineBlock;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
+import com.rexbas.teletubbies.init.TeletubbiesItems;
+import com.rexbas.teletubbies.init.TeletubbiesSounds;
+import com.rexbas.teletubbies.inventory.container.ToastMachineContainer;
+import com.rexbas.teletubbies.inventory.container.handler.ToastMachineItemHandler;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -22,33 +28,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-========
-import com.rexbas.teletubbies.block.ToastMachineBlock;
-import com.rexbas.teletubbies.init.TeletubbiesBlocks;
-import com.rexbas.teletubbies.init.TeletubbiesItems;
-import com.rexbas.teletubbies.init.TeletubbiesSounds;
-import com.rexbas.teletubbies.inventory.container.ToastMachineContainer;
-import com.rexbas.teletubbies.inventory.container.handler.ToastMachineItemHandler;
-
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
->>>>>>>> origin/1.16:src/main/java/com/rexbas/teletubbies/tileentity/ToastMachineTileEntity.java
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;

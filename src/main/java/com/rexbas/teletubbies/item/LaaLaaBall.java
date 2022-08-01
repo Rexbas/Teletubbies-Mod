@@ -5,9 +5,9 @@ import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
 import com.rexbas.teletubbies.init.TeletubbiesSounds;
 
-import net.minecraft.item.Item;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.world.item.Item;
 
 public class LaaLaaBall extends BouncingBall {
 

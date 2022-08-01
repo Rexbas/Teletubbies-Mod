@@ -1,16 +1,13 @@
 package com.rexbas.teletubbies.client.renderer.entity;
 
 import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.client.renderer.RenderHandler;
 import com.rexbas.teletubbies.client.renderer.model.NooNooModel;
 import com.rexbas.teletubbies.entity.passive.NooNooEntity;
 
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
-import teletubbies.Teletubbies;
-import teletubbies.client.renderer.RenderHandler;
-import teletubbies.client.renderer.entity.model.NooNooModel;
-import teletubbies.entity.passive.NooNooEntity;
 
 public class NooNooRenderer extends MobRenderer<NooNooEntity, NooNooModel> {
 

@@ -7,8 +7,6 @@ import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import teletubbies.entity.vehicle.PoScooterEntity;
-import teletubbies.init.TeletubbiesSounds;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterTickableSound extends AbstractTickableSoundInstance {

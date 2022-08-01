@@ -2,6 +2,9 @@ package com.rexbas.teletubbies.block;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.block.entity.VoiceTrumpetBlockEntity;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,8 +34,6 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import teletubbies.tileentity.VoiceTrumpetBlockEntity;
-import teletubbies.util.VoxelShapeRotation;
 
 public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;

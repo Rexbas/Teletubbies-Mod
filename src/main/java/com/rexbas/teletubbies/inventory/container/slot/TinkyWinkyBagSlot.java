@@ -2,6 +2,9 @@ package com.rexbas.teletubbies.inventory.container.slot;
 
 import javax.annotation.Nonnull;
 
+import com.rexbas.teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
+import com.rexbas.teletubbies.item.TinkyWinkyBagItem;
+
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;

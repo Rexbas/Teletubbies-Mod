@@ -9,8 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
-import teletubbies.Teletubbies;
-import teletubbies.init.TeletubbiesWorldGen;
 
 public class TeletubbiesConfiguredStructures {
 	public static final ConfiguredStructureFeature<?, ?> DOME_CONFIGURED_STRUCTURE = TeletubbiesWorldGen.DOME_STRUCTURE.get().configured(FeatureConfiguration.NONE);

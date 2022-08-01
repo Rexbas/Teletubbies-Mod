@@ -1,21 +1,15 @@
-package com.rexbas.teletubbies.tileentity;
+package com.rexbas.teletubbies.block.entity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-<<<<<<<< HEAD:src/main/java/com/rexbas/teletubbies/tileentity/CustardMachineSlaveBlockEntity.java
+import com.rexbas.teletubbies.block.CustardMachineBlock;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-========
-import com.rexbas.teletubbies.block.CustardMachineBlock;
-import com.rexbas.teletubbies.init.TeletubbiesBlocks;
-
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
->>>>>>>> origin/1.16:src/main/java/com/rexbas/teletubbies/tileentity/CustardMachineSlaveTileEntity.java
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;

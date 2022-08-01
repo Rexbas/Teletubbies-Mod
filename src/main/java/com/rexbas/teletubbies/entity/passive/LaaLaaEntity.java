@@ -11,9 +11,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import teletubbies.init.TeletubbiesEntityTypes;
-import teletubbies.init.TeletubbiesItems;
-import teletubbies.init.TeletubbiesSounds;
 
 public class LaaLaaEntity extends TeletubbyEntity {
 
@@ -38,7 +35,7 @@ public class LaaLaaEntity extends TeletubbyEntity {
 			this.setItemSlot(EquipmentSlot.CHEST, stack);
 			break;
 		case 1:
-			this.setItemSlot(EquipmentSlotType.OFFHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
+			this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(TeletubbiesItems.LAALAA_BALL.get()));
 			break;
 		}
 	}

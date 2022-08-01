@@ -2,15 +2,12 @@ package com.rexbas.teletubbies.item;
 
 import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.config.Config;
-import com.rexbas.teletubbies.init.TeletubbiesItems;
 
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
-import teletubbies.Teletubbies;
-import teletubbies.config.Config;
 
 public class CustardItem extends BowlFoodItem {
 	

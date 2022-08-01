@@ -10,29 +10,29 @@ import com.rexbas.teletubbies.block.FullGrassBlock;
 import com.rexbas.teletubbies.block.ToastMachineBlock;
 import com.rexbas.teletubbies.block.VoiceTrumpetBlock;
 import com.rexbas.teletubbies.block.WindowBlock;
-import com.rexbas.teletubbies.tileentity.ControlPanelTileEntity;
-import com.rexbas.teletubbies.tileentity.CustardMachineSlaveTileEntity;
-import com.rexbas.teletubbies.tileentity.CustardMachineTileEntity;
-import com.rexbas.teletubbies.tileentity.ToastMachineTileEntity;
-import com.rexbas.teletubbies.tileentity.VoiceTrumpetTileEntity;
+import com.rexbas.teletubbies.block.entity.ControlPanelBlockEntity;
+import com.rexbas.teletubbies.block.entity.CustardMachineBlockEntity;
+import com.rexbas.teletubbies.block.entity.CustardMachineSlaveBlockEntity;
+import com.rexbas.teletubbies.block.entity.ToastMachineBlockEntity;
+import com.rexbas.teletubbies.block.entity.VoiceTrumpetBlockEntity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class TeletubbiesBlocks {
 
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Teletubbies.MODID);
-	public static final DeferredRegister<TileEntityType<?>> TILE_ENTITIES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Teletubbies.MODID);
+	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Teletubbies.MODID);
 
 	// Blocks
 	public static final RegistryObject<Block> FULL_GRASS = BLOCKS.register("full_grass", FullGrassBlock::new);
@@ -42,12 +42,12 @@ public class TeletubbiesBlocks {
 	public static final RegistryObject<Block> CUSTARD_MACHINE = BLOCKS.register("custard_machine", CustardMachineBlock::new);
 	public static final RegistryObject<Block> WINDOW = BLOCKS.register("window", WindowBlock::new);
 
-	// Tile Entities
-	public static final RegistryObject<TileEntityType<?>> CONTROL_PANEL_TILE = TILE_ENTITIES.register("control_panel_tile", () -> TileEntityType.Builder.of(ControlPanelTileEntity::new, CONTROL_PANEL.get()).build(null));
-	public static final RegistryObject<TileEntityType<?>> VOICE_TRUMPET_TILE = TILE_ENTITIES.register("voice_trumpet_tile", () -> TileEntityType.Builder.of(VoiceTrumpetTileEntity::new, VOICE_TRUMPET.get()).build(null));
-	public static final RegistryObject<TileEntityType<?>> TOAST_MACHINE_TILE = TILE_ENTITIES.register("toast_machine_tile", () -> TileEntityType.Builder.of(ToastMachineTileEntity::new, TOAST_MACHINE.get()).build(null));
-	public static final RegistryObject<TileEntityType<?>> CUSTARD_MACHINE_TILE = TILE_ENTITIES.register("custard_machine_tile", () -> TileEntityType.Builder.of(CustardMachineTileEntity::new, CUSTARD_MACHINE.get()).build(null));
-	public static final RegistryObject<TileEntityType<?>> CUSTARD_MACHINE_SLAVE_TILE = TILE_ENTITIES.register("custard_machine_slave_tile", () -> TileEntityType.Builder.of(CustardMachineSlaveTileEntity::new, CUSTARD_MACHINE.get()).build(null));
+	// Block Entities
+	public static final RegistryObject<BlockEntityType<?>> CONTROL_PANEL_BLOCK_ENTITY = BLOCK_ENTITIES.register("control_panel_tile", () -> BlockEntityType.Builder.of(ControlPanelBlockEntity::new, CONTROL_PANEL.get()).build(null));
+	public static final RegistryObject<BlockEntityType<?>> VOICE_TRUMPET_BLOCK_ENTITY = BLOCK_ENTITIES.register("voice_trumpet_tile", () -> BlockEntityType.Builder.of(VoiceTrumpetBlockEntity::new, VOICE_TRUMPET.get()).build(null));
+	public static final RegistryObject<BlockEntityType<?>> TOAST_MACHINE_BLOCK_ENTITY = BLOCK_ENTITIES.register("toast_machine_tile", () -> BlockEntityType.Builder.of(ToastMachineBlockEntity::new, TOAST_MACHINE.get()).build(null));
+	public static final RegistryObject<BlockEntityType<?>> CUSTARD_MACHINE_BLOCK_ENTITY = BLOCK_ENTITIES.register("custard_machine_tile", () -> BlockEntityType.Builder.of(CustardMachineBlockEntity::new, CUSTARD_MACHINE.get()).build(null));
+	public static final RegistryObject<BlockEntityType<?>> CUSTARD_MACHINE_SLAVE_BLOCK_ENTITY = BLOCK_ENTITIES.register("custard_machine_slave_tile", () -> BlockEntityType.Builder.of(CustardMachineSlaveBlockEntity::new, CUSTARD_MACHINE.get()).build(null));
 	
 	// General help functions
 	
@@ -56,20 +56,21 @@ public class TeletubbiesBlocks {
 	 * formula: (rotmat dot (vector - [8, 0, 8])) + [8, 0, 8]
 	 */
 	public static VoxelShape voxelShapeRotateY(final VoxelShape shape, double a) {
-		List<AxisAlignedBB> bbList = shape.toAabbs();
+		List<AABB> bbList = shape.toAabbs();
 		List<VoxelShape> shapeList = new ArrayList<>();
 
-		for (AxisAlignedBB aabb : bbList) {
-			double minX = Math.cos(a) * (aabb.minX - .5) + Math.sin(a) * (aabb.minZ - .5) + .5;
-			double minZ = -Math.sin(a) * (aabb.minX - .5) + Math.cos(a) * (aabb.minZ - .5) + .5;
-			double maxX = Math.cos(a) * (aabb.maxX - .5) + Math.sin(a) * (aabb.maxZ - .5) + .5;
-			double maxZ = -Math.sin(a) * (aabb.maxX - .5) + Math.cos(a) * (aabb.maxZ - .5) + .5;
-			shapeList.add(VoxelShapes.box(minX, aabb.minY, minZ, maxX, aabb.maxY, maxZ));
+		for (AABB aabb : bbList) {
+			double x1 = Math.cos(a) * (aabb.minX - .5) + Math.sin(a) * (aabb.minZ - .5) + .5;
+			double z1 = -Math.sin(a) * (aabb.minX - .5) + Math.cos(a) * (aabb.minZ - .5) + .5;
+			double x2 = Math.cos(a) * (aabb.maxX - .5) + Math.sin(a) * (aabb.maxZ - .5) + .5;
+			double z2 = -Math.sin(a) * (aabb.maxX - .5) + Math.cos(a) * (aabb.maxZ - .5) + .5;
+
+			shapeList.add(Shapes.box(Math.min(x1, x2), aabb.minY, Math.min(z1, z2), Math.max(x1, x2), aabb.maxY, Math.max(z1, z2)));
 		}
 
 		VoxelShape newShape = shapeList.get(0);
 		for (int i = 1; i < shapeList.size(); i++) {
-			newShape = VoxelShapes.joinUnoptimized(newShape, shapeList.get(i), IBooleanFunction.OR);
+			newShape = Shapes.joinUnoptimized(newShape, shapeList.get(i), BooleanOp.OR);
 		}
 		newShape.optimize();
 
@@ -80,23 +81,23 @@ public class TeletubbiesBlocks {
 		return Math.round(seconds * 20);
 	}
 	
-	public static boolean isBlockSurrounded(World world, BlockPos pos) {
-		if (world.getBlockState(pos.above()).getBlock() == Blocks.AIR) {
+	public static boolean isBlockSurrounded(Level level, BlockPos pos) {
+		if (level.getBlockState(pos.above()).getBlock() == Blocks.AIR) {
 			return false;
 		}
-		if (world.getBlockState(pos.below()).getBlock() == Blocks.AIR) {
+		if (level.getBlockState(pos.below()).getBlock() == Blocks.AIR) {
 			return false;
 		}
-		if (world.getBlockState(pos.north()).getBlock() == Blocks.AIR) {
+		if (level.getBlockState(pos.north()).getBlock() == Blocks.AIR) {
 			return false;
 		}
-		if (world.getBlockState(pos.east()).getBlock() == Blocks.AIR) {
+		if (level.getBlockState(pos.east()).getBlock() == Blocks.AIR) {
 			return false;
 		}
-		if (world.getBlockState(pos.south()).getBlock() == Blocks.AIR) {
+		if (level.getBlockState(pos.south()).getBlock() == Blocks.AIR) {
 			return false;
 		}
-		if (world.getBlockState(pos.west()).getBlock() == Blocks.AIR) {
+		if (level.getBlockState(pos.west()).getBlock() == Blocks.AIR) {
 			return false;
 		}
 		return true;

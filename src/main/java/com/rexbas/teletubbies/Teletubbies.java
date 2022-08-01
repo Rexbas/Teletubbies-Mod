@@ -4,7 +4,6 @@ import com.rexbas.teletubbies.client.gui.screen.inventory.ControlPanelScreen;
 import com.rexbas.teletubbies.client.gui.screen.inventory.CustardMachineScreen;
 import com.rexbas.teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
 import com.rexbas.teletubbies.client.gui.screen.inventory.ToastMachineScreen;
-import com.rexbas.teletubbies.client.renderer.RenderRegistry;
 import com.rexbas.teletubbies.config.Config;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.init.TeletubbiesContainers;
@@ -17,32 +16,19 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import teletubbies.capabilities.IJumpCapability;
-import teletubbies.client.gui.screen.inventory.ControlPanelScreen;
-import teletubbies.client.gui.screen.inventory.CustardMachineScreen;
-import teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
-import teletubbies.client.gui.screen.inventory.ToastMachineScreen;
-import teletubbies.config.Config;
-import teletubbies.init.TeletubbiesBlocks;
-import teletubbies.init.TeletubbiesContainers;
-import teletubbies.init.TeletubbiesEntityTypes;
-import teletubbies.init.TeletubbiesItems;
-import teletubbies.init.TeletubbiesSounds;
-import teletubbies.init.TeletubbiesWorldGen;
-import teletubbies.itemgroup.ItemGroupTeletubbies;
 
 @Mod(Teletubbies.MODID)
 public class Teletubbies {
     public static final String MODID = "teletubbies";
 	
-    public static final ItemGroup TAB = new ItemGroup(MODID) {
+    public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
 		@Override
 		public ItemStack makeIcon() {
 			return new ItemStack(TeletubbiesItems.PO_STICK.get());

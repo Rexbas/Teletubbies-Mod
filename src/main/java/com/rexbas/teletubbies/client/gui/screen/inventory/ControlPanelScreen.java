@@ -2,6 +2,8 @@ package com.rexbas.teletubbies.client.gui.screen.inventory;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.inventory.container.ControlPanelContainer;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;

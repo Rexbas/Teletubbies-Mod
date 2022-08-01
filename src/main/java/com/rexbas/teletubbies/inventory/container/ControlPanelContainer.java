@@ -2,6 +2,11 @@ package com.rexbas.teletubbies.inventory.container;
 
 import java.util.Objects;
 
+import com.rexbas.teletubbies.block.entity.ControlPanelBlockEntity;
+import com.rexbas.teletubbies.init.TeletubbiesContainers;
+import com.rexbas.teletubbies.inventory.container.handler.ControlPanelItemHandler;
+import com.rexbas.teletubbies.inventory.container.slot.ItemHandlerSlot;
+
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -11,10 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import teletubbies.init.TeletubbiesContainers;
-import teletubbies.inventory.container.handler.ControlPanelItemHandler;
-import teletubbies.inventory.container.slot.ItemHandlerSlot;
-import teletubbies.tileentity.ControlPanelBlockEntity;
 
 public class ControlPanelContainer extends AbstractContainerMenu {
 

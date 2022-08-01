@@ -2,6 +2,9 @@ package com.rexbas.teletubbies.block;
 
 import javax.annotation.Nullable;
 
+import com.rexbas.teletubbies.block.entity.ToastMachineBlockEntity;
+import com.rexbas.teletubbies.init.TeletubbiesBlocks;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -39,9 +42,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
-import teletubbies.tileentity.ToastMachineBlockEntity;
-import teletubbies.util.BlocksUtil;
-import teletubbies.util.VoxelShapeRotation;
 
 public class ToastMachineBlock extends Block implements EntityBlock {	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;

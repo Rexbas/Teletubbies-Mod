@@ -1,6 +1,7 @@
 package com.rexbas.teletubbies.worldgen.feature;
 
 import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.config.Config;
 import com.rexbas.teletubbies.init.TeletubbiesWorldGen;
 
 import net.minecraft.core.Registry;
@@ -10,9 +11,6 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.ChanceDecoratorConfiguration;
 import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
-import teletubbies.Teletubbies;
-import teletubbies.config.Config;
-import teletubbies.init.TeletubbiesWorldGen;
 
 public class TeletubbiesConfiguredFeatures {
 	public static final ConfiguredFeature<?, ?> VOICE_TRUMPET_CONFIGURED_FEATURE = TeletubbiesWorldGen.VOICE_TRUMPET_FEATURE.get()
