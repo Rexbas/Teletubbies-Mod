@@ -4,6 +4,7 @@
 		"0": "teletubbies:block/window_center",
 		"particle": "teletubbies:block/window_center"
 	},
+	"render_type": "translucent",
 	"elements": [
 		{
 			"from": [0, 0, 7],

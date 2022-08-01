@@ -9,6 +9,7 @@
 		"5": "teletubbies:block/window_slanted_left",
 		"particle": "teletubbies:block/window_center"
 	},
+	"render_type": "translucent",
 	"elements": [
 		{
 			"from": [0, 0, 7],

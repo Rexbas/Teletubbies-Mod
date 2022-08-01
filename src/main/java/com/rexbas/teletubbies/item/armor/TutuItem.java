@@ -18,9 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import teletubbies.Teletubbies;
-import teletubbies.client.renderer.RenderHandler;
-import teletubbies.client.renderer.item.model.TutuModel;
 
 public class TutuItem extends ArmorItem {
 	

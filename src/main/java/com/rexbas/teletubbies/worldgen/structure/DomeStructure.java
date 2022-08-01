@@ -7,9 +7,9 @@ import java.util.Optional;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
 import com.rexbas.teletubbies.block.FullGrassBlock;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
+import com.rexbas.teletubbies.init.TeletubbiesStructures;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -33,9 +33,6 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.material.Fluids;
-import teletubbies.block.FullGrassBlock;
-import teletubbies.init.TeletubbiesBlocks;
-import teletubbies.init.TeletubbiesStructures;
 
 public class DomeStructure extends Structure {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;

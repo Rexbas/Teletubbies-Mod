@@ -1,21 +1,12 @@
-<<<<<<<< HEAD:src/main/java/teletubbies/datagen/DataGenerators.java
-package teletubbies.datagen;
-========
 package com.rexbas.teletubbies.datagen;
 
 import com.rexbas.teletubbies.Teletubbies;
->>>>>>>> origin/1.18:src/main/java/com/rexbas/teletubbies/datagen/DataGenerators.java
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-<<<<<<<< HEAD:src/main/java/teletubbies/datagen/DataGenerators.java
-import teletubbies.Teletubbies;
-========
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
->>>>>>>> origin/1.18:src/main/java/com/rexbas/teletubbies/datagen/DataGenerators.java
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {

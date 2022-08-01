@@ -38,15 +38,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -63,19 +59,9 @@ public class TeletubbiesEventHandler {
 	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void setSkyRenderer(EntityJoinWorldEvent event) {
-		if (event.getEntity().equals(Minecraft.getInstance().player) && event.getWorld().isClientSide() && event.getWorld().dimension().equals(Level.OVERWORLD) && Config.CLIENT.REPLACE_SUN.get()) {
-			DimensionSpecialEffects de = DimensionSpecialEffects.forType(event.getWorld().dimensionType());
-			ISkyRenderHandler renderer = new BabyFaceRenderer();
-			de.setSkyRenderHandler(renderer);
-		}
-	}
-	
-	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent
-	public static void onJoinClientWorld(EntityJoinWorldEvent event) {
+	public static void onJoinClientWorld(EntityJoinLevelEvent event) {
 		if (event.getEntity() instanceof PoScooterEntity) {
-			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity()));
+			Minecraft.getInstance().getSoundManager().play(new PoScooterTickableSound((PoScooterEntity) event.getEntity(), event.getLevel().getRandom()));
 		}
 	} 
 
@@ -109,8 +95,8 @@ public class TeletubbiesEventHandler {
 		if (event.getEntity() instanceof PoEntity) {
 			PoEntity po = (PoEntity) event.getEntity();
 			if (po.getMainHandItem().getItem() instanceof PoScooterItem) {
-				PoScooterEntity scooter = new PoScooterEntity(event.getWorld(), po.getX(), po.getY(), po.getZ());
-				event.getWorld().addFreshEntity(scooter);
+				PoScooterEntity scooter = new PoScooterEntity(event.getLevel(), po.getX(), po.getY(), po.getZ());
+				event.getLevel().addFreshEntity(scooter);
 				scooter.setYRot(po.getYRot());
 				po.startRiding(scooter);
 				po.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);

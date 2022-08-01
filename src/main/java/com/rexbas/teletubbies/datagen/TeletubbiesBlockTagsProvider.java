@@ -1,11 +1,7 @@
-<<<<<<<< HEAD:src/main/java/teletubbies/datagen/TeletubbiesBlockTagsProvider.java
-package teletubbies.datagen;
-========
 package com.rexbas.teletubbies.datagen;
 
 import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
->>>>>>>> origin/1.18:src/main/java/com/rexbas/teletubbies/datagen/TeletubbiesBlockTagsProvider.java
 
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;

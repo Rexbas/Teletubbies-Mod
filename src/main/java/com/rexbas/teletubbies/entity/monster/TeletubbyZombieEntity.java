@@ -9,6 +9,7 @@ import com.rexbas.bouncingballs.api.item.IBouncingBall;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
 
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -32,8 +33,8 @@ public class TeletubbyZombieEntity extends Zombie {
 	}
 	
 	@Override
-	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
-		super.populateDefaultEquipmentSlots(difficulty);
+	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
+		super.populateDefaultEquipmentSlots(random, difficulty);
 		int i = this.random.nextInt(10);
 		switch (i) {
 		case 0:

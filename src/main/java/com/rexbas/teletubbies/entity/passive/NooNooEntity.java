@@ -1,5 +1,7 @@
 package com.rexbas.teletubbies.entity.passive;
 
+import com.rexbas.teletubbies.init.TeletubbiesSounds;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -15,7 +17,6 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import teletubbies.init.TeletubbiesSounds;
 
 public class NooNooEntity extends PathfinderMob {
 

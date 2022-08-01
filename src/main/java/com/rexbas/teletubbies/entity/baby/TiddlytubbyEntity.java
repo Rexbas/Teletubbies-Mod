@@ -1,5 +1,8 @@
 package com.rexbas.teletubbies.entity.baby;
 
+import com.rexbas.teletubbies.init.TeletubbiesItems;
+import com.rexbas.teletubbies.init.TeletubbiesSounds;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
@@ -19,8 +22,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import teletubbies.init.TeletubbiesItems;
-import teletubbies.init.TeletubbiesSounds;
 
 public class TiddlytubbyEntity extends PathfinderMob {
 	

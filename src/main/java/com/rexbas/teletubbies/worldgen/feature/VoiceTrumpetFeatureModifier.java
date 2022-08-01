@@ -1,6 +1,9 @@
-package teletubbies.worldgen.feature;
+package com.rexbas.teletubbies.worldgen.feature;
 
 import com.mojang.serialization.Codec;
+import com.rexbas.teletubbies.config.Config;
+import com.rexbas.teletubbies.init.TeletubbiesConfiguredFeatures;
+import com.rexbas.teletubbies.init.TeletubbiesFeatures;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -9,9 +12,6 @@ import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ModifiableBiomeInfo.BiomeInfo.Builder;
-import teletubbies.config.Config;
-import teletubbies.init.TeletubbiesConfiguredFeatures;
-import teletubbies.init.TeletubbiesFeatures;
 
 public record VoiceTrumpetFeatureModifier(HolderSet<Biome> biomes) implements BiomeModifier {
 

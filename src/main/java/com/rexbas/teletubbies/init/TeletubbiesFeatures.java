@@ -1,11 +1,10 @@
 package com.rexbas.teletubbies.init;
 
-import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.config.Config;
-import com.rexbas.teletubbies.worldgen.feature.VoiceTrumpetFeature;
-
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.rexbas.teletubbies.Teletubbies;
+import com.rexbas.teletubbies.worldgen.feature.VoiceTrumpetFeature;
+import com.rexbas.teletubbies.worldgen.feature.VoiceTrumpetFeatureModifier;
 
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -15,9 +14,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import teletubbies.Teletubbies;
-import teletubbies.worldgen.feature.VoiceTrumpetFeature;
-import teletubbies.worldgen.feature.VoiceTrumpetFeatureModifier;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesFeatures {

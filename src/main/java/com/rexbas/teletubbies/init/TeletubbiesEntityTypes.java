@@ -1,7 +1,6 @@
 package com.rexbas.teletubbies.init;
 
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.config.Config;
 import com.rexbas.teletubbies.entity.PoScooterEntity;
 import com.rexbas.teletubbies.entity.baby.TiddlytubbyEntity;
 import com.rexbas.teletubbies.entity.monster.DipsyZombieEntity;
@@ -30,27 +29,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import teletubbies.Teletubbies;
-import teletubbies.entity.baby.BaEntity;
-import teletubbies.entity.baby.DaaDaaEntity;
-import teletubbies.entity.baby.DuggleDeeEntity;
-import teletubbies.entity.baby.MiMiEntity;
-import teletubbies.entity.baby.NinEntity;
-import teletubbies.entity.baby.PingEntity;
-import teletubbies.entity.baby.RuRuEntity;
-import teletubbies.entity.baby.TiddlytubbyEntity;
-import teletubbies.entity.baby.UmpiePumpieEntity;
-import teletubbies.entity.monster.DipsyZombieEntity;
-import teletubbies.entity.monster.LaaLaaZombieEntity;
-import teletubbies.entity.monster.PoZombieEntity;
-import teletubbies.entity.monster.TinkyWinkyZombieEntity;
-import teletubbies.entity.passive.DipsyEntity;
-import teletubbies.entity.passive.LaaLaaEntity;
-import teletubbies.entity.passive.NooNooEntity;
-import teletubbies.entity.passive.PoEntity;
-import teletubbies.entity.passive.TeletubbyEntity;
-import teletubbies.entity.passive.TinkyWinkyEntity;
-import teletubbies.entity.vehicle.PoScooterEntity;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesEntityTypes {

@@ -1,10 +1,6 @@
-<<<<<<<< HEAD:src/main/java/teletubbies/datagen/TeletubbiesItemModelProvider.java
-package teletubbies.datagen;
-========
 package com.rexbas.teletubbies.datagen;
 
 import com.rexbas.teletubbies.Teletubbies;
->>>>>>>> origin/1.18:src/main/java/com/rexbas/teletubbies/datagen/TeletubbiesItemModelProvider.java
 
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ItemModelProvider;

@@ -24,10 +24,10 @@ public class TeletubbyRenderer<T extends PathfinderMob, M extends TeletubbyModel
 	public TeletubbyRenderer(EntityRendererProvider.Context context, float scale, M model, ResourceLocation texture) {
 		super(context, model, 0.5F, texture);
 		this.scale = scale;
-	    this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));
-		this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), 1, 1, 1));
+	    this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel<>(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));	    
+	    this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), 1, 1, 1, context.getItemInHandRenderer()));
 		this.addLayer(new ElytraLayer<>(this, context.getModelSet()));
-		this.addLayer(new BouncingBallItemInHandLayer<>(this));
+		this.addLayer(new BouncingBallItemInHandLayer<>(this, context.getItemInHandRenderer()));
 	}
 	
 	@Override

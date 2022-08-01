@@ -9,7 +9,6 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import teletubbies.Teletubbies;
 
 public class SimpleArmorItem extends ArmorItem {
 	
