@@ -1,7 +1,5 @@
 package com.rexbas.teletubbies.client.renderer.model;
 
-import com.rexbas.teletubbies.entity.passive.DipsyEntity;
-
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
@@ -19,10 +17,6 @@ public class DipsyModel<T extends PathfinderMob> extends TeletubbyModel<T> {
 	public DipsyModel(ModelPart part, boolean isZombie) {
 		super(part, isZombie);
 		stick = part.getChild("head").getChild("stick");
-	}
-	
-	public DipsyModel(ModelPart part) {
-		this(part, false);
 	}
 	
 	public static LayerDefinition createBodyLayer() {

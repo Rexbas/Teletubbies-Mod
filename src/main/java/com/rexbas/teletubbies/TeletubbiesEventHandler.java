@@ -100,20 +100,6 @@ public class TeletubbiesEventHandler {
 		}
 	}
 	
-	@SubscribeEvent
-	public static void onJoinWorld(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof PoEntity) {
-			PoEntity po = (PoEntity) event.getEntity();
-			if (po.getMainHandItem().getItem() instanceof PoScooterItem) {
-				PoScooterEntity scooter = new PoScooterEntity(event.getWorld(), po.getX(), po.getY(), po.getZ());
-				event.getWorld().addFreshEntity(scooter);
-				scooter.yRot = po.yRot;
-				po.startRiding(scooter);
-				po.setItemSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
-			}
-		}
-	}
-	
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void onJoinClientWorld(EntityJoinWorldEvent event) {
@@ -135,8 +121,8 @@ public class TeletubbiesEventHandler {
 	}
 	
 	@SubscribeEvent
-	public static void onEntityJoinWorld(EntityJoinWorldEvent event) {
-		if(event.getEntity() instanceof Zombie) {
+	public static void onJoinWorld(EntityJoinWorldEvent event) {
+		if (event.getEntity() instanceof Zombie) {
 			Zombie zombie = (Zombie) event.getEntity();
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, TinkyWinkyEntity.class, true));
 	        zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, DipsyEntity.class, true));
@@ -147,6 +133,17 @@ public class TeletubbiesEventHandler {
 		if (event.getEntity() instanceof Sheep) {
 			Sheep sheep = (Sheep) event.getEntity();
 			sheep.goalSelector.addGoal(5, new EatFullGrassGoal(sheep));
+		}
+		
+		if (event.getEntity() instanceof PoEntity) {
+			PoEntity po = (PoEntity) event.getEntity();
+			if (po.getMainHandItem().getItem() instanceof PoScooterItem) {
+				PoScooterEntity scooter = new PoScooterEntity(event.getWorld(), po.getX(), po.getY(), po.getZ());
+				event.getWorld().addFreshEntity(scooter);
+				scooter.yRot = po.yRot;
+				po.startRiding(scooter);
+				po.setItemSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
+			}
 		}
 	}
 	

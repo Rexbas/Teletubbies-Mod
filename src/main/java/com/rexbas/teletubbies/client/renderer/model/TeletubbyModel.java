@@ -66,4 +66,12 @@ public class TeletubbyModel<T extends PathfinderMob> extends HumanoidModel<T> {
 			leftArm.xRot -= Mth.sin(ageInTicks * 0.067F) * 0.05F;
 		}
 	}
+	
+	@Override
+	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		if (this.isZombie) {
+			ModelHelper.animateZombieArms(this.leftArm, this.rightArm, entity.isAggressive(), this.attackTime, ageInTicks);
+		}
+	}
 }

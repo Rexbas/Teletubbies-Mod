@@ -21,10 +21,6 @@ public class LaaLaaModel<T extends PathfinderMob> extends TeletubbyModel<T> {
 		stick = part.getChild("head").getChild("stick");
 	}
 	
-	public LaaLaaModel(ModelPart part) {
-		this(part, false);
-	}
-	
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition mesh = TeletubbyModel.createMesh();
 		PartDefinition def = mesh.getRoot();
