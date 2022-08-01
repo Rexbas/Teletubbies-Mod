@@ -54,8 +54,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
 public class TeletubbiesEventHandler {
 	
-	
-	// Temporary until ToolActions.HOE_TILL works
 	@SubscribeEvent
 	public static void hoeEvent(UseHoeEvent event) {
 		Level level = event.getContext().getLevel();

@@ -86,6 +86,11 @@ public class PoScooterEntity extends Entity {
 	protected float getEyeHeight(Pose pose, EntityDimensions entitySize) {
 		return entitySize.height;
 	}
+	
+	@Override
+	protected Entity.MovementEmission getMovementEmission() {
+		return Entity.MovementEmission.NONE;
+	}
 
 	@Override
 	protected void defineSynchedData() {

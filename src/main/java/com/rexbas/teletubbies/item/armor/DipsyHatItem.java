@@ -34,6 +34,7 @@ public class DipsyHatItem extends ArmorItem {
 	@Override
 	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
 		consumer.accept(new IItemRenderProperties() {
+			@Override
 		    public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
 		    	HumanoidModel<LivingEntity> armorModel = new DipsyHatModel(Minecraft.getInstance().getEntityModels().bakeLayer(RenderHandler.DIPSY_HAT_LAYER));
 				return (A) armorModel;

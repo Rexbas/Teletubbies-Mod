@@ -63,9 +63,7 @@ public class FullGrassBlock extends GrassBlock {
 	
 	@Nullable
     public BlockState getToolModifiedState(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, ToolAction toolAction) {
-		// TODO
-        /*if (toolAction == ToolActions.HOE_TILL) return Blocks.FARMLAND.defaultBlockState();
-        else*/ if (toolAction == ToolActions.SHOVEL_FLATTEN) return Blocks.DIRT_PATH.defaultBlockState();
+		if (toolAction == ToolActions.SHOVEL_FLATTEN) return Blocks.DIRT_PATH.defaultBlockState();
         return null;
     }
 		
