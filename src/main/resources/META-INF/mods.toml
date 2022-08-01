@@ -1,50 +1,22 @@
-# This is an example mods.toml file. It contains the data relating to the loading mods.
-# There are several mandatory fields (#mandatory), and many more that are optional (#optional).
-# The overall format is standard TOML format, v0.5.0.
-# Note that there are a couple of TOML lists in this file.
-# Find more information on toml format here:  https://github.com/toml-lang/toml
-
-# The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
-modLoader="javafml" #mandatory
-
-# A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[40,)" #mandatory
-
-# The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
-# Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
+modLoader="javafml"
+loaderVersion="[40,)"
 license="GNU Lesser General Public License v3.0"
-
-# A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/Rexbas/Teletubbies-Mod/issues" #optional
-
-# A file name (in the root of the mod JAR) containing a logo for display
-logoFile="logo.png" #optional
-
-# A list of mods - how many allowed here is determined by the individual mod loader
-[[mods]] #mandatory
-
-# The modid of the mod
-modId="teletubbies" #mandatory
-
-# The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="${file.jarVersion}" #mandatory
-
- # A display name for the mod
-displayName="Teletubbies" #mandatory
-
-# A URL to query for updates for this mod. See the JSON update specification <here>
-updateJSONURL="https://raw.githubusercontent.com/Rexbas/Teletubbies-Mod/update/update.json" #optional
-
-# A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="https://www.curseforge.com/minecraft/mc-mods/teletubbies-mod" #optional
-
-# A text field displayed in the mod UI
-credits="McHorse (Dome parts)" #optional
-
-# A text field displayed in the mod UI
-authors="Rexbas" #optional
-
-# The description text for the mod (multi line!) (#mandatory)
+issueTrackerURL="https://github.com/Rexbas/Teletubbies-Mod/issues"
+logoFile="logo.png"
+[[mods]]
+modId="teletubbies"
+version="${file.jarVersion}"
+displayName="Teletubbies"
+updateJSONURL="https://raw.githubusercontent.com/Rexbas/Teletubbies-Mod/update/update.json"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/teletubbies-mod"
+credits="McHorse (Dome parts)"
+authors="Rexbas"
 description='''
 Teletubbies for Minecraft!
 '''
+[[dependencies.bouncingballs]]
+    modId="bouncingballs_api"
+    mandatory=true
+    versionRange="[3.0.1,)"
+    ordering="AFTER"
+    side="BOTH"
