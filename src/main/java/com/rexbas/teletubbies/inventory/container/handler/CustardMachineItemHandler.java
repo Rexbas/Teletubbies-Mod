@@ -3,6 +3,7 @@ package com.rexbas.teletubbies.inventory.container.handler;
 import javax.annotation.Nonnull;
 
 import com.rexbas.teletubbies.init.TeletubbiesItems;
+import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -22,13 +23,13 @@ public class CustardMachineItemHandler extends ItemStackHandler {
 	        case 1:
 	        case 2:
 	        case 3:
-	            return stack.getItem().equals(Items.MILK_BUCKET);
+	            return stack.is(SpecificItemSlot.MILK);
 	        case 4:
-	            return stack.getItem().equals(Items.SUGAR);
+	            return stack.is(SpecificItemSlot.SUGAR);
 	        case 5:
-	            return stack.getItem().equals(Items.EGG);
+	            return stack.is(SpecificItemSlot.EGG);
 	        case 6:
-	            return stack.getItem().equals(TeletubbiesItems.BOWL.get());
+	            return stack.is(SpecificItemSlot.BOWL);
 	        }
     	}
     	else if (this.stacks.size() == 5) {
@@ -37,9 +38,9 @@ public class CustardMachineItemHandler extends ItemStackHandler {
 	        case 1:
 	        case 2:
 	        case 3:
-	            return stack.getItem().equals(TeletubbiesItems.CUSTARD.get());
+	            return stack.is(TeletubbiesItems.CUSTARD.get());
 	        case 4:
-	            return stack.getItem().equals(Items.BUCKET);
+	            return stack.is(Items.BUCKET);
 	        }
     	}
     		

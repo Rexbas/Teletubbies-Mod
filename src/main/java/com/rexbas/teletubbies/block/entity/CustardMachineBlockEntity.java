@@ -9,6 +9,7 @@ import com.rexbas.teletubbies.init.TeletubbiesItems;
 import com.rexbas.teletubbies.init.TeletubbiesSounds;
 import com.rexbas.teletubbies.inventory.container.CustardMachineContainer;
 import com.rexbas.teletubbies.inventory.container.handler.CustardMachineItemHandler;
+import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,6 +39,7 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	private CustardMachineItemHandler outputHandler = new CustardMachineItemHandler(5);
 	private int processTime; // Counting down
 	private boolean isProcessing;
+	private boolean isHoldingBucket;
 	
 	public CustardMachineBlockEntity(BlockPos pos, BlockState state) {
 		super(TeletubbiesBlocks.CUSTARD_MACHINE_BLOCK_ENTITY.get(), pos, state);
@@ -63,7 +65,8 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 							break;
 						}	
 					}
-					outputHandler.insertItem(4, new ItemStack(Items.BUCKET), false);
+					if (isHoldingBucket)
+						outputHandler.insertItem(4, new ItemStack(Items.BUCKET), false);
 					isProcessing = false;
 					setLightState();
 				}
@@ -72,7 +75,9 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 			if (canMakeCustard() && !isProcessing) {
 				
 				for (int i = 0; i < 4; i++) {
-					if (inputHandler.getStackInSlot(i).getItem().equals(Items.MILK_BUCKET)) {
+					ItemStack inputItem = inputHandler.getStackInSlot(i);
+					if (inputItem.is(SpecificItemSlot.MILK)) {
+						isHoldingBucket = inputItem.is(Items.MILK_BUCKET);
 						inputHandler.extractItem(i, 1, false);
 						break;
 					}	
@@ -115,10 +120,10 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	// returns true if the required items are available and the output slots are not filled, also consumes the imput items
 	public boolean canMakeCustard() {
 		for (int i = 0; i < 4; i++) {
-			if (inputHandler.getStackInSlot(i).getItem().equals(Items.MILK_BUCKET)) {
-				if (inputHandler.getStackInSlot(4).getItem().equals(Items.SUGAR)
-						&& inputHandler.getStackInSlot(5).getItem().equals(Items.EGG)
-						&& inputHandler.getStackInSlot(6).getItem().equals(TeletubbiesItems.BOWL.get())) {
+			if (inputHandler.getStackInSlot(i).is(SpecificItemSlot.MILK)) {
+				if (inputHandler.getStackInSlot(4).is(SpecificItemSlot.SUGAR)
+						&& inputHandler.getStackInSlot(5).is(SpecificItemSlot.EGG)
+						&& inputHandler.getStackInSlot(6).is(SpecificItemSlot.BOWL)) {
 
 					// All items available, check output
 					if (outputHandler.getStackInSlot(4).getCount() < outputHandler.getStackInSlot(4).getMaxStackSize()) {
