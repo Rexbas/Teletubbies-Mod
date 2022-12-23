@@ -13,7 +13,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -42,7 +41,7 @@ public class ToastMachineContainer extends AbstractContainerMenu {
 	}
 	
 	private void addMachineSlots(ToastMachineItemHandler handler) {
-		this.addSlot(new SpecificItemSlot(handler, 0, 61, 37, Items.WHEAT));
+		this.addSlot(new SpecificItemSlot(handler, 0, 61, 37, SpecificItemSlot.GRAIN));
 	}
 	
 	private void addPlayerSlots() {
