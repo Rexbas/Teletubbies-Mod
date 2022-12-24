@@ -2,7 +2,7 @@ package com.rexbas.teletubbies.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.client.renderer.RenderHandler;
 import com.rexbas.teletubbies.client.renderer.model.PoScooterModel;
@@ -31,7 +31,7 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	public void render(PoScooterEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffers, int light) {
 		poseStack.pushPose();
 		poseStack.translate(0.0D, 0.375D, 0.0D);
-		poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - entityYaw));
+		poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - entityYaw));
 		float f = (float) entity.getHurtTime() - partialTicks;
 		float f1 = entity.getDamage() - partialTicks;
 		if (f1 < 0.0F) {
@@ -39,7 +39,7 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 		}
 
 		if (f > 0.0F) {
-			poseStack.mulPose(Vector3f.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float) entity.getHurtDir()));
+			poseStack.mulPose(Axis.XP.rotationDegrees(Mth.sin(f) * f * f1 / 10.0F * (float) entity.getHurtDir()));
 		}
 
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
@@ -52,6 +52,6 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	
 	@Override
 	public ResourceLocation getTextureLocation(PoScooterEntity entity) {
-		return new ResourceLocation(Teletubbies.MODID, "textures/entity/po_scooter.png");
+		return new ResourceLocation(Teletubbies.MODID, "textures/item/po_scooter.png");
 	}
 }

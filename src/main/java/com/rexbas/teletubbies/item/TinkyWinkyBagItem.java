@@ -34,7 +34,7 @@ public class TinkyWinkyBagItem extends Item {
 	private static final int MAX_TOOLTIP_ITEMS = 5;
 	
 	public TinkyWinkyBagItem() {
-		super(new Item.Properties().stacksTo(1).tab(Teletubbies.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 		
 	@Override

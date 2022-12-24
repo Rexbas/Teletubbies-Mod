@@ -1,4 +1,10 @@
 {
-    "type": "teletubbies:voice_trumpet_biome_modifier",
-    "biomes": ["plains", "sunflower_plains", "snowy_plains"]
+    "type": "forge:add_features",
+    "biomes": [
+        "plains",
+        "sunflower_plains",
+        "snowy_plains"
+    ],
+    "features": "teletubbies:voice_trumpet_feature",
+    "step": "local_modifications"
 }

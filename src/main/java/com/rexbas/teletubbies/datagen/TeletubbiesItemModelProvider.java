@@ -2,15 +2,15 @@ package com.rexbas.teletubbies.datagen;
 
 import com.rexbas.teletubbies.Teletubbies;
 
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class TeletubbiesItemModelProvider extends ItemModelProvider {
 
-	public TeletubbiesItemModelProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, Teletubbies.MODID, existingFileHelper);
+	public TeletubbiesItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+		super(output, Teletubbies.MODID, existingFileHelper);
 	}
 
 	@Override

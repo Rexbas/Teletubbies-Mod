@@ -3,13 +3,11 @@ package com.rexbas.teletubbies.item;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.entity.PoScooterEntity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
@@ -27,7 +25,7 @@ public class PoScooterItem extends Item {
 	private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
 
 	public PoScooterItem() {
-		super(new Item.Properties().stacksTo(1).tab(Teletubbies.TAB));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override
@@ -35,7 +33,7 @@ public class PoScooterItem extends Item {
 		ItemStack itemstack = player.getItemInHand(hand);
 		HitResult raytraceresult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.ANY);
 		if (raytraceresult.getType() == HitResult.Type.MISS) {
-			return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+			return InteractionResultHolder.pass(itemstack);
 		} else {
 			Vec3 vec3d = player.getViewVector(1.0F);
 			List<Entity> list = level.getEntities(player, player.getBoundingBox().expandTowards(vec3d.scale(5.0D)).inflate(1.0D), ENTITY_PREDICATE);
@@ -45,7 +43,7 @@ public class PoScooterItem extends Item {
 				for (Entity entity : list) {
 					AABB axisalignedbb = entity.getBoundingBox().inflate((double) entity.getPickRadius());
 					if (axisalignedbb.contains(vec3d1)) {
-						return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+						return InteractionResultHolder.pass(itemstack);
 					}
 				}
 			}
@@ -56,7 +54,7 @@ public class PoScooterItem extends Item {
 					PoScooterEntity entity = new PoScooterEntity(level, raytraceresult.getLocation().x, raytraceresult.getLocation().y, raytraceresult.getLocation().z);
 					entity.setYRot(player.getYRot());
 					if (!level.noCollision(entity, entity.getBoundingBox().inflate(-0.1D))) {
-						return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
+						return InteractionResultHolder.fail(itemstack);
 					} else {
 						if (!level.isClientSide()) {
 							level.addFreshEntity(entity);
@@ -67,11 +65,11 @@ public class PoScooterItem extends Item {
 						}
 
 						player.awardStat(Stats.ITEM_USED.get(this));
-						return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
+						return InteractionResultHolder.success(itemstack);
 					}
 				}
 			}
-			return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
+			return InteractionResultHolder.pass(itemstack);
 		}
 	}
 }

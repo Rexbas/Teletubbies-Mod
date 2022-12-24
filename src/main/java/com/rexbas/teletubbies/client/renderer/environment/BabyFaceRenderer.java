@@ -2,6 +2,8 @@ package com.rexbas.teletubbies.client.renderer.environment;
 
 import javax.annotation.Nullable;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -11,8 +13,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexBuffer;
 import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.rexbas.teletubbies.Teletubbies;
 
 import net.minecraft.client.Camera;
@@ -88,10 +89,10 @@ public class BabyFaceRenderer extends OverworldEffects {
 						RenderSystem.disableTexture();
 						RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 						poseStack.pushPose();
-						poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+						poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
 						float f3 = Mth.sin(level.getSunAngle(partialTick)) < 0.0F ? 180.0F : 0.0F;
-						poseStack.mulPose(Vector3f.ZP.rotationDegrees(f3));
-						poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+						poseStack.mulPose(Axis.ZP.rotationDegrees(f3));
+						poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
 						float f4 = afloat[0];
 						float f5 = afloat[1];
 						float f6 = afloat[2];
@@ -115,8 +116,8 @@ public class BabyFaceRenderer extends OverworldEffects {
 					poseStack.pushPose();
 					float f11 = 1.0F - level.getRainLevel(partialTick);
 					RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, f11);
-					poseStack.mulPose(Vector3f.YP.rotationDegrees(-90.0F));
-					poseStack.mulPose(Vector3f.XP.rotationDegrees(level.getTimeOfDay(partialTick) * 360.0F));
+					poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F));
+					poseStack.mulPose(Axis.XP.rotationDegrees(level.getTimeOfDay(partialTick) * 360.0F));
 					
 					// START ROTATION
 					poseStack.pushPose();
@@ -146,7 +147,7 @@ public class BabyFaceRenderer extends OverworldEffects {
 						offset += 180f;
 					}
 					
-					poseStack.mulPose(Vector3f.YP.rotationDegrees(-yaw + offset));
+					poseStack.mulPose(Axis.YP.rotationDegrees(-yaw + offset));
 					
 					Matrix4f matrix4f1 = poseStack.last().pose();
 					float f12 = 30.0F;

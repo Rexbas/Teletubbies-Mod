@@ -10,6 +10,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -36,7 +37,7 @@ public class DomeJigsawPlacement {
 		ChunkGenerator chunkgenerator = context.chunkGenerator();
 		StructureTemplateManager structuretemplatemanager = context.structureTemplateManager();
 		LevelHeightAccessor levelheightaccessor = context.heightAccessor();
-		Registry<StructureTemplatePool> registry = registryaccess.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+		Registry<StructureTemplatePool> registry = registryaccess.registryOrThrow(Registries.TEMPLATE_POOL);
 		StructureTemplatePool structuretemplatepool = startPool.value();
 		StructurePoolElement structurepoolelement = structuretemplatepool.getRandomTemplate(worldgenrandom);
 		

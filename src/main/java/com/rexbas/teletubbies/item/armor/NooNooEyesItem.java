@@ -22,7 +22,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 public class NooNooEyesItem extends ArmorItem {
 		
 	public NooNooEyesItem() {
-		super(ArmorMaterials.IRON, EquipmentSlot.HEAD, new Item.Properties().tab(Teletubbies.TAB));
+		super(ArmorMaterials.IRON, EquipmentSlot.HEAD, new Item.Properties());
 	}
 
 	@Override

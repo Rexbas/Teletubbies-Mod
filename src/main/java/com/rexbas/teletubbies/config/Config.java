@@ -24,7 +24,6 @@ public class Config {
 		public final ForgeConfigSpec.DoubleValue TOAST_SATURATION;
 		
 		// WorldGen
-		public final ForgeConfigSpec.IntValue VOICE_TRUMPET_CHANCE;
 		public final ForgeConfigSpec.BooleanValue INVASIVE_GRASS;
 		
 		public Common(ForgeConfigSpec.Builder builder) {			
@@ -43,9 +42,6 @@ public class Config {
 			builder.pop();
 			
 			builder.push("WorldGen");
-			VOICE_TRUMPET_CHANCE = builder.comment("One Voice Trumpet approximately every N chunks (1 in N chance for a Voice Trumpet to spawn. For N = 0 no Voice Trumpets will spawn)")
-					.defineInRange("n", 20, 0, 1000);
-			
 			INVASIVE_GRASS = builder.comment("Whether or not the full grass block should turn vanilla grass into full grass (like how dirt turns into grass)")
 					.define("invasive_grass", true);
 

@@ -1,6 +1,5 @@
 package com.rexbas.teletubbies.item;
 
-import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.config.Config;
 
 import net.minecraft.world.food.FoodProperties;
@@ -17,7 +16,7 @@ public class CustardItem extends BowlFoodItem {
 			.build();
 	
 	public CustardItem() {
-		super(new Item.Properties().food(CUSTARD_FOOD).stacksTo(1).tab(Teletubbies.TAB));
+		super(new Item.Properties().food(CUSTARD_FOOD).stacksTo(1));
 	}
 	
 	@Override

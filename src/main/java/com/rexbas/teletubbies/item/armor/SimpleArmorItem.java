@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class SimpleArmorItem extends ArmorItem {
 	
 	public SimpleArmorItem(ArmorMaterial material, EquipmentSlot slot) {
-		super(material, slot, new Item.Properties().tab(Teletubbies.TAB));
+		super(material, slot, new Item.Properties());
 	}
 	
 	@Override

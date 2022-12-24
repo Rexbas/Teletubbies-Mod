@@ -22,7 +22,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 public class TutuItem extends ArmorItem {
 	
 	public TutuItem() {
-		super(ArmorMaterials.LEATHER, EquipmentSlot.LEGS, new Item.Properties().tab(Teletubbies.TAB));
+		super(ArmorMaterials.LEATHER, EquipmentSlot.LEGS, new Item.Properties());
 	}
 	
 	@Override

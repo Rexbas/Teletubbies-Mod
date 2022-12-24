@@ -1,6 +1,5 @@
 package com.rexbas.teletubbies.worldgen.feature;
 
-import com.mojang.serialization.Codec;
 import com.rexbas.teletubbies.block.VoiceTrumpetBlock;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 
@@ -17,8 +16,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 public class VoiceTrumpetFeature extends Feature<NoneFeatureConfiguration> {
 
-	public VoiceTrumpetFeature(Codec<NoneFeatureConfiguration> codec) {
-		super(codec);
+	public VoiceTrumpetFeature() {
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override

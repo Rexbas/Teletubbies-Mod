@@ -9,7 +9,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.rexbas.teletubbies.block.FullGrassBlock;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
-import com.rexbas.teletubbies.init.TeletubbiesStructures;
+import com.rexbas.teletubbies.init.TeletubbiesWorldGen;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -158,6 +158,6 @@ public class DomeStructure extends Structure {
 
 	@Override
 	public StructureType<?> type() {
-		return TeletubbiesStructures.DOME_STRUCTURE.get();
+		return TeletubbiesWorldGen.DOME_STRUCTURE.get();
 	}
 }

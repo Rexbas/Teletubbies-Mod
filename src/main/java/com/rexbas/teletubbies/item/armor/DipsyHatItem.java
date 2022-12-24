@@ -22,7 +22,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 public class DipsyHatItem extends ArmorItem {
 		
 	public DipsyHatItem() {
-		super(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new Item.Properties().tab(Teletubbies.TAB));
+		super(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new Item.Properties());
 	}
 
 	@Override

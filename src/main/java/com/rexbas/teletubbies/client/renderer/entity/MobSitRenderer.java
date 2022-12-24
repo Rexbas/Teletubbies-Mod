@@ -3,9 +3,10 @@ package com.rexbas.teletubbies.client.renderer.entity;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix4f;
 import com.rexbas.bouncingballs.api.client.renderer.SitRenderer;
 
 import net.minecraft.client.model.ArmedModel;
@@ -67,7 +68,7 @@ public class MobSitRenderer<T extends Mob, M extends EntityModel<T> & ArmedModel
 		poseStack.pushPose();
 		Vec3 vec3 = entityLeash.getRopeHoldPosition(partialRenderTick);
 		double d0 = (double) (Mth.lerp(partialRenderTick, entity.yBodyRot, entity.yBodyRotO) * ((float) Math.PI / 180F)) + (Math.PI / 2D);
-		Vec3 vec31 = entity.getLeashOffset();
+		Vec3 vec31 = entity.getLeashOffset(partialRenderTick);
 		double d1 = Math.cos(d0) * vec31.z + Math.sin(d0) * vec31.x;
 		double d2 = Math.sin(d0) * vec31.z - Math.cos(d0) * vec31.x;
 		double d3 = Mth.lerp((double) partialRenderTick, entity.xo, entity.getX()) + d1;

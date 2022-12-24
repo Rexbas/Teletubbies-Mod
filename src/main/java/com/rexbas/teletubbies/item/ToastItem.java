@@ -1,6 +1,5 @@
 package com.rexbas.teletubbies.item;
 
-import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.config.Config;
 
 import net.minecraft.world.food.FoodProperties;
@@ -15,6 +14,6 @@ public class ToastItem extends Item {
 			.build();
 
 	public ToastItem() {
-		super(new Item.Properties().food(TOAST_FOOD).tab(Teletubbies.TAB));
+		super(new Item.Properties().food(TOAST_FOOD));
 	}
 }
