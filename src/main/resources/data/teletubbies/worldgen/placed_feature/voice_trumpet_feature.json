@@ -2,8 +2,48 @@
   "feature": "teletubbies:voice_trumpet_feature",
   "placement": [
     {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE"
+    },
+    {
       "type": "minecraft:rarity_filter",
       "chance": 20
+    },
+    {
+      "type": "minecraft:random_offset",
+      "xz_spread": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 0,
+          "max_inclusive": 16
+        }
+      },
+      "y_spread": 0
+    },
+    {
+      "type": "minecraft:environment_scan",
+      "direction_of_search": "up",
+      "max_steps": 1,
+      "target_condition": {
+        "type": "minecraft:replaceable"
+      }
+    },
+    {
+      "type": "minecraft:environment_scan",
+      "direction_of_search": "down",
+      "max_steps": 1,
+      "target_condition": {
+        "type": "minecraft:matching_blocks",
+        "offset": [
+          0,
+          -1,
+          0
+        ],
+        "blocks": [
+          "minecraft:grass_block",
+          "teletubbies:full_grass"
+        ]
+      }
     }
   ]
 }
