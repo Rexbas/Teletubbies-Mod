@@ -32,7 +32,7 @@ public class Teletubbies {
     public static final ItemGroup TAB = new ItemGroup(MODID) {
 		@Override
 		public ItemStack makeIcon() {
-			return new ItemStack(TeletubbiesItems.PO_STICK.get());
+			return new ItemStack(TeletubbiesItems.PO_ANTENNA.get());
 		}
 	};
 	

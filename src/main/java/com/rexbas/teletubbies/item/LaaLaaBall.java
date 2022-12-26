@@ -13,7 +13,7 @@ public class LaaLaaBall extends BouncingBall {
 
 	public LaaLaaBall() {
 		super(new Item.Properties().tab(Teletubbies.TAB), new BouncingBall.Properties(1f, 1f, 10f, 0)
-				.recipeItem(TeletubbiesItems.LAALAA_STICK.get())
+				.recipeItem(TeletubbiesItems.LAALAA_ANTENNA.get())
 				.addFluid(FluidTags.WATER));
 	}
 	

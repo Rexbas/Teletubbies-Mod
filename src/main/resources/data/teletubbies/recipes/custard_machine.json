@@ -14,16 +14,16 @@
     },
     "S": [
       {
-        "item": "teletubbies:tinkywinky_stick"
+        "item": "teletubbies:tinkywinky_antenna"
       },
       {
-        "item": "teletubbies:dipsy_stick"
+        "item": "teletubbies:dipsy_antenna"
       },
       {
-        "item": "teletubbies:laalaa_stick"
+        "item": "teletubbies:laalaa_antenna"
       },
       {
-        "item": "teletubbies:po_stick"
+        "item": "teletubbies:po_antenna"
       }
     ]
   },
