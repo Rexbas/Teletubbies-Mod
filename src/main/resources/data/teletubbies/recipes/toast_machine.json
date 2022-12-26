@@ -15,20 +15,9 @@
     "L": {
       "item": "minecraft:lapis_block"
     },
-    "S": [
-      {
-        "item": "teletubbies:tinkywinky_stick"
-      },
-      {
-        "item": "teletubbies:dipsy_stick"
-      },
-      {
-        "item": "teletubbies:laalaa_stick"
-      },
-      {
-        "item": "teletubbies:po_stick"
-      }
-    ]
+    "S": {
+      "tag": "forge:rods/teletubbies"
+    }
   },
   "result": {
     "item": "teletubbies:toast_machine"
