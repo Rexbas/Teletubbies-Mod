@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import com.rexbas.teletubbies.block.entity.CustardMachineBlockEntity;
 import com.rexbas.teletubbies.init.TeletubbiesContainers;
-import com.rexbas.teletubbies.init.TeletubbiesItems;
 import com.rexbas.teletubbies.inventory.container.handler.CustardMachineItemHandler;
 import com.rexbas.teletubbies.inventory.container.slot.CustardMachineOutputSlot;
 import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
@@ -16,7 +15,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -47,12 +45,12 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 	
 	private void addMachineSlots(CustardMachineItemHandler inputHandler, CustardMachineItemHandler outputHandler) {
 		for (int i = 0; i < 4; ++i) {
-			this.addSlot(new SpecificItemSlot(inputHandler, i, 8, 16 + i * 18, Items.MILK_BUCKET));
+			this.addSlot(new SpecificItemSlot(inputHandler, i, 8, 16 + i * 18, SpecificItemSlot.MILK));
 			this.addSlot(new CustardMachineOutputSlot(outputHandler, i, 152, 16 + i * 18));
 		}
-		this.addSlot(new SpecificItemSlot(inputHandler, 4, 32, 25, Items.SUGAR));
-		this.addSlot(new SpecificItemSlot(inputHandler, 5, 32, 43, Items.EGG));
-		this.addSlot(new SpecificItemSlot(inputHandler, 6, 32, 61, TeletubbiesItems.BOWL.get()));
+		this.addSlot(new SpecificItemSlot(inputHandler, 4, 32, 25, SpecificItemSlot.SUGAR));
+		this.addSlot(new SpecificItemSlot(inputHandler, 5, 32, 43, SpecificItemSlot.EGG));
+		this.addSlot(new SpecificItemSlot(inputHandler, 6, 32, 61, SpecificItemSlot.BOWL));
 		this.addSlot(new CustardMachineOutputSlot(outputHandler, 4, 128, 43));
 	}
 	

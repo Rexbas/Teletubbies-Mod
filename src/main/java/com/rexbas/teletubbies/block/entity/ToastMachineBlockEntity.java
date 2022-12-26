@@ -9,6 +9,7 @@ import com.rexbas.teletubbies.init.TeletubbiesItems;
 import com.rexbas.teletubbies.init.TeletubbiesSounds;
 import com.rexbas.teletubbies.inventory.container.ToastMachineContainer;
 import com.rexbas.teletubbies.inventory.container.handler.ToastMachineItemHandler;
+import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -59,7 +60,7 @@ public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider
 
 		if (!level.isClientSide) {
 			if (this.isPowered()) {
-				if (handler.getStackInSlot(0).getItem().equals(Items.WHEAT)) {
+				if (handler.getStackInSlot(0).is(SpecificItemSlot.GRAIN)) {
 					this.tickCounter++;
 					
 					if (tickCounter >= TICKS_PER_BAR) {

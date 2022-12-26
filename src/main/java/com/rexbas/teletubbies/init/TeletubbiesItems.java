@@ -35,10 +35,10 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> WINDOW = ITEMS.register("window", () -> new BlockItem(TeletubbiesBlocks.WINDOW.get(), new Item.Properties().tab(Teletubbies.TAB)));
 
 	// Items
-	public static final RegistryObject<Item> TINKYWINKY_STICK = ITEMS.register("tinkywinky_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
-	public static final RegistryObject<Item> DIPSY_STICK = ITEMS.register("dipsy_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
-	public static final RegistryObject<Item> LAALAA_STICK = ITEMS.register("laalaa_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
-	public static final RegistryObject<Item> PO_STICK = ITEMS.register("po_stick", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> TINKYWINKY_ANTENNA = ITEMS.register("tinkywinky_antenna", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> DIPSY_ANTENNA = ITEMS.register("dipsy_antenna", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> LAALAA_ANTENNA = ITEMS.register("laalaa_antenna", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
+	public static final RegistryObject<Item> PO_ANTENNA = ITEMS.register("po_antenna", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));
 	public static final RegistryObject<Item> TINKYWINKY_BAG = ITEMS.register("tinkywinky_bag", TinkyWinkyBagItem::new);
 	public static final RegistryObject<Item> LAALAA_BALL = ITEMS.register("laalaa_ball", LaaLaaBall::new);
 	public static final RegistryObject<Item> BOWL = ITEMS.register("bowl", () -> new Item(new Item.Properties().tab(Teletubbies.TAB)));

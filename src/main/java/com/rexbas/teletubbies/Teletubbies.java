@@ -34,7 +34,7 @@ public class Teletubbies {
     public static final CreativeModeTab TAB = new CreativeModeTab(MODID) {
 		@Override
 		public ItemStack makeIcon() {
-			return new ItemStack(TeletubbiesItems.PO_STICK.get());
+			return new ItemStack(TeletubbiesItems.PO_ANTENNA.get());
 		}
 	};
 	
