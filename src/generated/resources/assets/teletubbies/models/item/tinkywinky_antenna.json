@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "teletubbies:item/laalaa_stick"
+    "layer0": "teletubbies:item/tinkywinky_antenna"
   }
 }
