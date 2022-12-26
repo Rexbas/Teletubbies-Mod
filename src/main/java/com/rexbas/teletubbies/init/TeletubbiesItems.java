@@ -40,10 +40,10 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> WINDOW = ITEMS.register("window", () -> new BlockItem(TeletubbiesBlocks.WINDOW.get(), new Item.Properties()));
 
 	// Items
-	public static final RegistryObject<Item> TINKYWINKY_STICK = ITEMS.register("tinkywinky_stick", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> DIPSY_STICK = ITEMS.register("dipsy_stick", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> LAALAA_STICK = ITEMS.register("laalaa_stick", () -> new Item(new Item.Properties()));
-	public static final RegistryObject<Item> PO_STICK = ITEMS.register("po_stick", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> TINKYWINKY_ANTENNA = ITEMS.register("tinkywinky_antenna", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> DIPSY_ANTENNA = ITEMS.register("dipsy_antenna", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> LAALAA_ANTENNA = ITEMS.register("laalaa_antenna", () -> new Item(new Item.Properties()));
+	public static final RegistryObject<Item> PO_ANTENNA = ITEMS.register("po_antenna", () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> TINKYWINKY_BAG = ITEMS.register("tinkywinky_bag", TinkyWinkyBagItem::new);
 	public static final RegistryObject<Item> LAALAA_BALL = ITEMS.register("laalaa_ball", LaaLaaBall::new);
 	public static final RegistryObject<Item> BOWL = ITEMS.register("bowl", () -> new Item(new Item.Properties()));
@@ -86,7 +86,7 @@ public class TeletubbiesItems {
 	public static void buildContents(CreativeModeTabEvent.Register event) {
 		event.registerCreativeModeTab(new ResourceLocation(Teletubbies.MODID, "teletubbies_tab"),
 				builder -> builder.title(Component.translatable("item_group." + Teletubbies.MODID))
-						.icon(() -> new ItemStack(PO_STICK.get()))
+						.icon(() -> new ItemStack(PO_ANTENNA.get()))
 						.displayItems((enabledFlags, populator, hasPermissions) -> {
 							populator.accept(FULL_GRASS.get());
 							populator.accept(CONTROL_PANEL.get());
@@ -95,10 +95,10 @@ public class TeletubbiesItems {
 							populator.accept(CUSTARD_MACHINE.get());
 							populator.accept(WINDOW.get());
 
-							populator.accept(TINKYWINKY_STICK.get());
-							populator.accept(DIPSY_STICK.get());
-							populator.accept(LAALAA_STICK.get());
-							populator.accept(PO_STICK.get());
+							populator.accept(TINKYWINKY_ANTENNA.get());
+							populator.accept(DIPSY_ANTENNA.get());
+							populator.accept(LAALAA_ANTENNA.get());
+							populator.accept(PO_ANTENNA.get());
 							populator.accept(TINKYWINKY_BAG.get());
 							populator.accept(LAALAA_BALL.get());
 							populator.accept(BOWL.get());

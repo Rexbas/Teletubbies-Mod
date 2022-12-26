@@ -28,10 +28,10 @@ public class TeletubbiesItemModelProvider extends ItemModelProvider {
 	
 	private void registerItemModels() {
 		ModelFile itemGenerated = getExistingFile(mcLoc("item/generated"));
-		getBuilder("tinkywinky_stick").parent(itemGenerated).texture("layer0", "item/tinkywinky_stick");
-		getBuilder("dipsy_stick").parent(itemGenerated).texture("layer0", "item/dipsy_stick");
-		getBuilder("laalaa_stick").parent(itemGenerated).texture("layer0", "item/laalaa_stick");
-		getBuilder("po_stick").parent(itemGenerated).texture("layer0", "item/po_stick");
+		getBuilder("tinkywinky_antenna").parent(itemGenerated).texture("layer0", "item/tinkywinky_antenna");
+		getBuilder("dipsy_antenna").parent(itemGenerated).texture("layer0", "item/dipsy_antenna");
+		getBuilder("laalaa_antenna").parent(itemGenerated).texture("layer0", "item/laalaa_antenna");
+		getBuilder("po_antenna").parent(itemGenerated).texture("layer0", "item/po_antenna");
 		getBuilder("tinkywinky_bag").parent(itemGenerated).texture("layer0", "item/tinkywinky_bag");
 		getBuilder("bowl").parent(itemGenerated).texture("layer0", "item/bowl");
 		getBuilder("custard").parent(itemGenerated).texture("layer0", "item/custard");
