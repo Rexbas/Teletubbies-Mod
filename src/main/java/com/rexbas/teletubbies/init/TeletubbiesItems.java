@@ -1,23 +1,14 @@
 package com.rexbas.teletubbies.init;
 
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.item.CustardItem;
-import com.rexbas.teletubbies.item.LaaLaaBall;
-import com.rexbas.teletubbies.item.PoScooterItem;
-import com.rexbas.teletubbies.item.TinkyWinkyBagItem;
-import com.rexbas.teletubbies.item.ToastItem;
+import com.rexbas.teletubbies.item.*;
 import com.rexbas.teletubbies.item.armor.DipsyHatItem;
 import com.rexbas.teletubbies.item.armor.NooNooEyesItem;
 import com.rexbas.teletubbies.item.armor.SimpleArmorItem;
 import com.rexbas.teletubbies.item.armor.TutuItem;
-
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,11 +48,11 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> TUTU = ITEMS.register("tutu", TutuItem::new);
 	public static final RegistryObject<Item> NOONOO_EYES = ITEMS.register("noonoo_eyes", NooNooEyesItem::new);
 	public static final RegistryObject<Item> DIPSY_HAT = ITEMS.register("dipsy_hat", DipsyHatItem::new);
-	public static final RegistryObject<Item> TINKYWINKY_BIB = ITEMS.register("tinkywinky_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
-	public static final RegistryObject<Item> DIPSY_BIB = ITEMS.register("dipsy_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
-	public static final RegistryObject<Item> LAALAA_BIB = ITEMS.register("laalaa_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
-	public static final RegistryObject<Item> PO_BIB = ITEMS.register("po_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, EquipmentSlot.CHEST));
-	public static final RegistryObject<Item> PO_HELMET = ITEMS.register("po_helmet", () -> new SimpleArmorItem(ArmorMaterials.IRON, EquipmentSlot.HEAD));
+	public static final RegistryObject<Item> TINKYWINKY_BIB = ITEMS.register("tinkywinky_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE));
+	public static final RegistryObject<Item> DIPSY_BIB = ITEMS.register("dipsy_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE));
+	public static final RegistryObject<Item> LAALAA_BIB = ITEMS.register("laalaa_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE));
+	public static final RegistryObject<Item> PO_BIB = ITEMS.register("po_bib", () -> new SimpleArmorItem(ArmorMaterials.LEATHER, ArmorItem.Type.CHESTPLATE));
+	public static final RegistryObject<Item> PO_HELMET = ITEMS.register("po_helmet", () -> new SimpleArmorItem(ArmorMaterials.IRON, ArmorItem.Type.HELMET));
 	
 	// Spawn Eggs
 	public static final RegistryObject<Item> TINKYWINKY_SPAWN_EGG = ITEMS.register("tinkywinky_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.TINKYWINKY.get(), 0x7E2CD3, 0xFFC9AD, (new Item.Properties())));
@@ -87,52 +78,52 @@ public class TeletubbiesItems {
 		event.registerCreativeModeTab(new ResourceLocation(Teletubbies.MODID, "teletubbies_tab"),
 				builder -> builder.title(Component.translatable("item_group." + Teletubbies.MODID))
 						.icon(() -> new ItemStack(PO_ANTENNA.get()))
-						.displayItems((enabledFlags, populator, hasPermissions) -> {
-							populator.accept(FULL_GRASS.get());
-							populator.accept(CONTROL_PANEL.get());
-							populator.accept(VOICE_TRUMPET.get());
-							populator.accept(TOAST_MACHINE.get());
-							populator.accept(CUSTARD_MACHINE.get());
-							populator.accept(WINDOW.get());
+						.displayItems((params, output) -> {
+							output.accept(FULL_GRASS.get());
+							output.accept(CONTROL_PANEL.get());
+							output.accept(VOICE_TRUMPET.get());
+							output.accept(TOAST_MACHINE.get());
+							output.accept(CUSTARD_MACHINE.get());
+							output.accept(WINDOW.get());
 
-							populator.accept(TINKYWINKY_ANTENNA.get());
-							populator.accept(DIPSY_ANTENNA.get());
-							populator.accept(LAALAA_ANTENNA.get());
-							populator.accept(PO_ANTENNA.get());
-							populator.accept(TINKYWINKY_BAG.get());
-							populator.accept(LAALAA_BALL.get());
-							populator.accept(BOWL.get());
-							populator.accept(CUSTARD.get());
-							populator.accept(TOAST.get());
+							output.accept(TINKYWINKY_ANTENNA.get());
+							output.accept(DIPSY_ANTENNA.get());
+							output.accept(LAALAA_ANTENNA.get());
+							output.accept(PO_ANTENNA.get());
+							output.accept(TINKYWINKY_BAG.get());
+							output.accept(LAALAA_BALL.get());
+							output.accept(BOWL.get());
+							output.accept(CUSTARD.get());
+							output.accept(TOAST.get());
 
-							populator.accept(PO_SCOOTER.get());
+							output.accept(PO_SCOOTER.get());
 
-							populator.accept(TUTU.get());
-							populator.accept(NOONOO_EYES.get());
-							populator.accept(DIPSY_HAT.get());
-							populator.accept(TINKYWINKY_BIB.get());
-							populator.accept(DIPSY_BIB.get());
-							populator.accept(LAALAA_BIB.get());
-							populator.accept(PO_BIB.get());
-							populator.accept(PO_HELMET.get());
+							output.accept(TUTU.get());
+							output.accept(NOONOO_EYES.get());
+							output.accept(DIPSY_HAT.get());
+							output.accept(TINKYWINKY_BIB.get());
+							output.accept(DIPSY_BIB.get());
+							output.accept(LAALAA_BIB.get());
+							output.accept(PO_BIB.get());
+							output.accept(PO_HELMET.get());
 
-							populator.accept(TINKYWINKY_SPAWN_EGG.get());
-							populator.accept(DIPSY_SPAWN_EGG.get());
-							populator.accept(LAALAA_SPAWN_EGG.get());
-							populator.accept(PO_SPAWN_EGG.get());
-							populator.accept(NOONOO_SPAWN_EGG.get());
-							populator.accept(MIMI_SPAWN_EGG.get());
-							populator.accept(DAADAA_SPAWN_EGG.get());
-							populator.accept(PING_SPAWN_EGG.get());
-							populator.accept(BA_SPAWN_EGG.get());
-							populator.accept(RURU_SPAWN_EGG.get());
-							populator.accept(NIN_SPAWN_EGG.get());
-							populator.accept(DUGGLEDEE_SPAWN_EGG.get());
-							populator.accept(UMPIEPUMPIE_SPAWN_EGG.get());
-							populator.accept(TINKYWINKY_ZOMBIE_SPAWN_EGG.get());
-							populator.accept(DIPSY_ZOMBIE_SPAWN_EGG.get());
-							populator.accept(LAALAA_ZOMBIE_SPAWN_EGG.get());
-							populator.accept(PO_ZOMBIE_SPAWN_EGG.get());
+							output.accept(TINKYWINKY_SPAWN_EGG.get());
+							output.accept(DIPSY_SPAWN_EGG.get());
+							output.accept(LAALAA_SPAWN_EGG.get());
+							output.accept(PO_SPAWN_EGG.get());
+							output.accept(NOONOO_SPAWN_EGG.get());
+							output.accept(MIMI_SPAWN_EGG.get());
+							output.accept(DAADAA_SPAWN_EGG.get());
+							output.accept(PING_SPAWN_EGG.get());
+							output.accept(BA_SPAWN_EGG.get());
+							output.accept(RURU_SPAWN_EGG.get());
+							output.accept(NIN_SPAWN_EGG.get());
+							output.accept(DUGGLEDEE_SPAWN_EGG.get());
+							output.accept(UMPIEPUMPIE_SPAWN_EGG.get());
+							output.accept(TINKYWINKY_ZOMBIE_SPAWN_EGG.get());
+							output.accept(DIPSY_ZOMBIE_SPAWN_EGG.get());
+							output.accept(LAALAA_ZOMBIE_SPAWN_EGG.get());
+							output.accept(PO_ZOMBIE_SPAWN_EGG.get());
 						}));
 	}
 }

@@ -1,11 +1,8 @@
 package com.rexbas.teletubbies.item.armor;
 
-import java.util.function.Consumer;
-
 import com.rexbas.teletubbies.Teletubbies;
 import com.rexbas.teletubbies.client.renderer.RenderHandler;
 import com.rexbas.teletubbies.client.renderer.item.model.DipsyHatModel;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
@@ -19,10 +16,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
+import java.util.function.Consumer;
+
 public class DipsyHatItem extends ArmorItem {
 		
 	public DipsyHatItem() {
-		super(ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new Item.Properties());
+		super(ArmorMaterials.LEATHER, ArmorItem.Type.HELMET, new Item.Properties());
 	}
 
 	@Override

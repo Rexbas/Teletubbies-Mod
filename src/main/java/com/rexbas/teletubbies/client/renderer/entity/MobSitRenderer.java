@@ -1,14 +1,8 @@
 package com.rexbas.teletubbies.client.renderer.entity;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
-import org.joml.Matrix4f;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.rexbas.bouncingballs.api.client.renderer.SitRenderer;
-
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -28,6 +22,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import org.joml.Matrix4f;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 @OnlyIn(Dist.CLIENT)
 public class MobSitRenderer<T extends Mob, M extends EntityModel<T> & ArmedModel> extends SitRenderer<T, M> {
@@ -80,11 +78,11 @@ public class MobSitRenderer<T extends Mob, M extends EntityModel<T> & ArmedModel
 		float f2 = (float) (vec3.z - d5);
 		VertexConsumer vertexconsumer = buffers.getBuffer(RenderType.leash());
 		Matrix4f matrix4f = poseStack.last().pose();
-		float f4 = Mth.fastInvSqrt(f * f + f2 * f2) * 0.025F / 2.0F;
+		float f4 = (float) (Mth.fastInvSqrt(f * f + f2 * f2) * 0.025F / 2.0F);
 		float f5 = f2 * f4;
 		float f6 = f * f4;
-		BlockPos blockpos = new BlockPos(entity.getEyePosition(partialRenderTick));
-		BlockPos blockpos1 = new BlockPos(entityLeash.getEyePosition(partialRenderTick));
+		BlockPos blockpos = BlockPos.containing(entity.getEyePosition(partialRenderTick));
+		BlockPos blockpos1 = BlockPos.containing(entityLeash.getEyePosition(partialRenderTick));
 		int i = this.getBlockLightLevel(entity, blockpos);
 		
 		Method m = ObfuscationReflectionHelper.findMethod(EntityRenderer.class, "m_6086_", Entity.class, BlockPos.class); // getBlockLightLevel(T extends Entity, BlockPos)
