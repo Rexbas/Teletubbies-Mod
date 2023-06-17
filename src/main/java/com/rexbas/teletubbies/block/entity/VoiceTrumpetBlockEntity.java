@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class VoiceTrumpetBlockEntity extends BlockEntity {
 	private long delay;
-	private static Random rand = new Random();
+	private static final Random rand = new Random();
 
 	public VoiceTrumpetBlockEntity(BlockPos pos, BlockState state) {
 		super(TeletubbiesBlocks.VOICE_TRUMPET_BLOCK_ENTITY.get(), pos, state);

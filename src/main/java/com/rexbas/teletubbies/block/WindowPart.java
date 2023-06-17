@@ -1,6 +1,7 @@
 package com.rexbas.teletubbies.block;
 
 import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
 
 public enum WindowPart implements StringRepresentable {
 	HORIZONTAL_A("ha"),
@@ -12,12 +13,12 @@ public enum WindowPart implements StringRepresentable {
 
 	private final String name;
 	
-	private WindowPart(String name) {
+	WindowPart(String name) {
 		this.name = name;
 	}
 
 	@Override
-	public String getSerializedName() {
+	public @NotNull String getSerializedName() {
 		return this.name;
 	}
 }

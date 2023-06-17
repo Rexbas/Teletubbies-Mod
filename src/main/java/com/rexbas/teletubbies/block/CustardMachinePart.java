@@ -1,6 +1,7 @@
 package com.rexbas.teletubbies.block;
 
 import net.minecraft.util.StringRepresentable;
+import org.jetbrains.annotations.NotNull;
 
 public enum CustardMachinePart implements StringRepresentable {
 	BASE("base"),
@@ -11,12 +12,12 @@ public enum CustardMachinePart implements StringRepresentable {
 
 	private final String name;
 	
-	private CustardMachinePart(String name) {
+	CustardMachinePart(String name) {
 		this.name = name;
 	}
 
 	@Override
-	public String getSerializedName() {
+	public @NotNull String getSerializedName() {
 		return this.name;
 	}
 }

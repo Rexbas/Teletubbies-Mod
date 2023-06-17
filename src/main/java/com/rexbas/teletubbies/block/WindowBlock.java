@@ -26,6 +26,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -39,7 +40,7 @@ public class WindowBlock extends Block {
 	
 	public WindowBlock() {
 		super(Properties.copy(Blocks.GLASS_PANE));
-		
+
 		this.registerDefaultState(this.stateDefinition.any().setValue(X_AXIS, false).setValue(PART, WindowPart.CENTER).setValue(WATERLOGGED, false));
 	}
 	
@@ -50,7 +51,7 @@ public class WindowBlock extends Block {
     }
 	
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+	public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.getValue(X_AXIS)) {
 			return AABB_X;
 		}
@@ -85,37 +86,37 @@ public class WindowBlock extends Block {
 		BlockPos basePos = getCenterPos(pos, state.getValue(PART), axis);
 		BlockState subblockState = world.getBlockState(basePos);
 		if (subblockState.getBlock() == this && !pos.equals(basePos)) {
-			removePart(world, basePos, subblockState);
+			removePart(world, basePos);
 		}
 		
 		BlockPos subblock = getHA(basePos, axis);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {	
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getHB(basePos, axis);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = basePos.above();
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {	
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getSA(basePos, axis);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getSB(basePos, axis);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}	
 		super.playerWillDestroy(world, pos, state, player);
 	}
@@ -127,42 +128,42 @@ public class WindowBlock extends Block {
 		BlockPos basePos = getCenterPos(pos, state.getValue(PART), axis);
 		BlockState subblockState = world.getBlockState(basePos);
 		if (subblockState.getBlock() == this && !pos.equals(basePos)) {
-			removePart(world, basePos, subblockState);
+			removePart(world, basePos);
 		}
 		
 		BlockPos subblock = getHA(basePos, axis);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {	
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getHB(basePos, axis);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = basePos.above();
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {	
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getSA(basePos, axis);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getSB(basePos, axis);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		super.onBlockExploded(state, world, pos, explosion);
     }
 	
-	private void removePart(Level world, BlockPos pos, BlockState state) {
+	private void removePart(Level world, BlockPos pos) {
 		FluidState fluidState = world.getFluidState(pos);
 	    if (fluidState.getType() == Fluids.WATER) {
 			world.setBlock(pos, fluidState.createLegacyBlock(), 35); 
@@ -196,12 +197,12 @@ public class WindowBlock extends Block {
 	}
 	
 	@Override
-	public FluidState getFluidState(BlockState state) {
+	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+	public @NotNull BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (state.getValue(WATERLOGGED)) {
 			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
@@ -214,7 +215,7 @@ public class WindowBlock extends Block {
 	}
 	
 	@Override
-	public BlockState rotate(BlockState state, Rotation rotation) {
+	public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
 		BlockState newState = state;
 
 		// Fix the axis
@@ -285,35 +286,22 @@ public class WindowBlock extends Block {
 	private BlockPos getCenterPos(BlockPos pos, WindowPart part, Axis axis) {
 		if (part == WindowPart.CENTER) return pos;
 		if (part == WindowPart.VERTICAL) return pos.below();
-		switch (axis) {
-		case Z:
-			switch (part) {
-			case HORIZONTAL_A:
-				return pos.east();
-			case HORIZONTAL_B:
-				return pos.west();
-			case SLANTED_A:
-				return pos.east().below();
-			case SLANTED_B:
-				return pos.west().below();
-			default:
-				return null;
-			}
-		case X:
-			switch (part) {
-			case HORIZONTAL_A:
-				return pos.south();
-			case HORIZONTAL_B:
-				return pos.north();
-			case SLANTED_A:
-				return pos.south().below();
-			case SLANTED_B:
-				return pos.north().below();
-			default:
-				return null;
-			}
-		default:
-			return null;
-		}
+		return switch (axis) {
+			case Z -> switch (part) {
+				case HORIZONTAL_A -> pos.east();
+				case HORIZONTAL_B -> pos.west();
+				case SLANTED_A -> pos.east().below();
+				case SLANTED_B -> pos.west().below();
+				default -> null;
+			};
+			case X -> switch (part) {
+				case HORIZONTAL_A -> pos.south();
+				case HORIZONTAL_B -> pos.north();
+				case SLANTED_A -> pos.south().below();
+				case SLANTED_B -> pos.north().below();
+				default -> null;
+			};
+			default -> null;
+		};
 	}
 }

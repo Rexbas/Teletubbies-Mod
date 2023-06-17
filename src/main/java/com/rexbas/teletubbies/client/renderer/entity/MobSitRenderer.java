@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -32,10 +31,6 @@ public class MobSitRenderer<T extends Mob, M extends EntityModel<T> & ArmedModel
 
 	public MobSitRenderer(EntityRendererProvider.Context context, M model, float shadowRadius, ResourceLocation texture) {
 		super(context, model, shadowRadius, texture);
-	}
-	
-	public MobSitRenderer(LivingEntityRenderer<T, M> livingRenderer, T entity) {
-		super(livingRenderer, entity);
 	}
 	
 	@Override
@@ -69,9 +64,9 @@ public class MobSitRenderer<T extends Mob, M extends EntityModel<T> & ArmedModel
 		Vec3 vec31 = entity.getLeashOffset(partialRenderTick);
 		double d1 = Math.cos(d0) * vec31.z + Math.sin(d0) * vec31.x;
 		double d2 = Math.sin(d0) * vec31.z - Math.cos(d0) * vec31.x;
-		double d3 = Mth.lerp((double) partialRenderTick, entity.xo, entity.getX()) + d1;
-		double d4 = Mth.lerp((double) partialRenderTick, entity.yo, entity.getY()) + vec31.y;
-		double d5 = Mth.lerp((double) partialRenderTick, entity.zo, entity.getZ()) + d2;
+		double d3 = Mth.lerp(partialRenderTick, entity.xo, entity.getX()) + d1;
+		double d4 = Mth.lerp(partialRenderTick, entity.yo, entity.getY()) + vec31.y;
+		double d5 = Mth.lerp(partialRenderTick, entity.zo, entity.getZ()) + d2;
 		poseStack.translate(d1, vec31.y, d2);
 		float f = (float) (vec3.x - d3);
 		float f1 = (float) (vec3.y - d4);

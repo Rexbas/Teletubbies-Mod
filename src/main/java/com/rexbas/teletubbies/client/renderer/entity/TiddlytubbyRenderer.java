@@ -8,6 +8,7 @@ import com.rexbas.teletubbies.entity.baby.TiddlytubbyEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class TiddlytubbyRenderer extends MobRenderer<TiddlytubbyEntity, TiddlytubbyModel<TiddlytubbyEntity>> {
 	private final String name;
@@ -18,7 +19,7 @@ public class TiddlytubbyRenderer extends MobRenderer<TiddlytubbyEntity, Tiddlytu
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(TiddlytubbyEntity entity) {
+	public @NotNull ResourceLocation getTextureLocation(TiddlytubbyEntity entity) {
 		return new ResourceLocation(Teletubbies.MODID, "textures/entity/" + name + ".png");
 	}
 }

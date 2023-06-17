@@ -7,6 +7,7 @@ import net.minecraft.world.item.BowlFoodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
+import org.jetbrains.annotations.NotNull;
 
 public class CustardItem extends BowlFoodItem {
 	
@@ -20,7 +21,7 @@ public class CustardItem extends BowlFoodItem {
 	}
 	
 	@Override
-	public UseAnim getUseAnimation(ItemStack stack) {
+	public @NotNull UseAnim getUseAnimation(ItemStack stack) {
 		return UseAnim.DRINK;
 	}
 }

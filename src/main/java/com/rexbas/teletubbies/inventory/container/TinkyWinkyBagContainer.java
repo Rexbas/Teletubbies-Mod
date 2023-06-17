@@ -13,13 +13,14 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 // https://github.com/Flanks255/simplybackpacks/tree/master/src/main/java/com/flanks255/simplybackpacks
 
 public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 	public final int numRows = 6;
 	private final Inventory playerInventory;
-	public ItemStack bag;
+	public final ItemStack bag;
 	
 	public TinkyWinkyBagContainer(final int id, final Inventory playerInventory, FriendlyByteBuf data) {
 		this(id, playerInventory,
@@ -39,7 +40,7 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 		addBagSlots(handler);
 		addPlayerSlots();
 	}
-	
+
 	private void addBagSlots(TinkyWinkyBagItemHandler handler) {
 		for (int j = 0; j < this.numRows; ++j) {
 			for (int k = 0; k < 9; ++k) {
@@ -63,11 +64,11 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(Player playerIn, int index) {		
+	public @NotNull ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.hasItem()) {
+		if (slot.hasItem()) {
 			
 			IItemHandler handler = bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
 					

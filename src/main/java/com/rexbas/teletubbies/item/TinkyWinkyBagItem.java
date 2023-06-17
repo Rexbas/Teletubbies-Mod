@@ -22,6 +22,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,12 +37,12 @@ public class TinkyWinkyBagItem extends Item {
 	}
 		
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
+	public @NotNull InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
 		ItemStack stack = player.getItemInHand(handIn);
 		if (!world.isClientSide) {
 			player.openMenu(new MenuProvider() {
 				@Override
-				public Component getDisplayName() {
+				public @NotNull Component getDisplayName() {
 					return Component.translatable("item.teletubbies.tinkywinky_bag");
 				}
 				
@@ -81,7 +82,7 @@ public class TinkyWinkyBagItem extends Item {
 			}
 			int remainder = num_items - lines;
 			if (remainder > 0) {
-				tooltip.add(Component.literal("\u00A7oand " + remainder + " more..."));
+				tooltip.add(Component.literal("§oand " + remainder + " more..."));
 			}
 		}
 	}

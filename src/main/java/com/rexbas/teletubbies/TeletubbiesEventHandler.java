@@ -63,10 +63,8 @@ public class TeletubbiesEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
 	public static void updateRidden(PlayerTickEvent event) {
-		if (event.phase == TickEvent.Phase.START && event.player instanceof LocalPlayer) {
-			LocalPlayer player = (LocalPlayer) event.player;
-			if (player.getVehicle() instanceof PoScooterEntity) {
-				PoScooterEntity scooter = (PoScooterEntity) player.getVehicle();
+		if (event.phase == TickEvent.Phase.START && event.player instanceof LocalPlayer player) {
+			if (player.getVehicle() instanceof PoScooterEntity scooter) {
 				scooter.setInput(player.input.left, player.input.right, player.input.up, player.input.down);
 			}
 		}
@@ -74,21 +72,18 @@ public class TeletubbiesEventHandler {
 
 	@SubscribeEvent
 	public static void onEntityJoinWorld(EntityJoinLevelEvent event) {
-		if(event.getEntity() instanceof Zombie) {
-			Zombie zombie = (Zombie) event.getEntity();
+		if(event.getEntity() instanceof Zombie zombie) {
 			zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, TinkyWinkyEntity.class, true));
 			zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, DipsyEntity.class, true));
 			zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, LaaLaaEntity.class, true));
 			zombie.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(zombie, PoEntity.class, true));
 		}
 
-		if (event.getEntity() instanceof Sheep) {
-			Sheep sheep = (Sheep) event.getEntity();
+		if (event.getEntity() instanceof Sheep sheep) {
 			sheep.goalSelector.addGoal(5, new EatFullGrassGoal(sheep));
 		}
 
-		if (event.getEntity() instanceof PoEntity) {
-			PoEntity po = (PoEntity) event.getEntity();
+		if (event.getEntity() instanceof PoEntity po) {
 			if (po.getMainHandItem().getItem() instanceof PoScooterItem) {
 				PoScooterEntity scooter = new PoScooterEntity(event.getLevel(), po.getX(), po.getY(), po.getZ());
 				event.getLevel().addFreshEntity(scooter);
@@ -101,13 +96,12 @@ public class TeletubbiesEventHandler {
 
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public static void onLivingDeathEvent(LivingDeathEvent event) {
-		DamageSource damageSource = (DamageSource) event.getSource();
+		DamageSource damageSource = event.getSource();
 		Level world = event.getEntity().level();
 
 		if (!world.isClientSide()) {
 			if (damageSource.getDirectEntity() instanceof Zombie) {
-				if (event.getEntity() instanceof TeletubbyEntity && world.random.nextInt(100) < Config.COMMON.TRANSFORMATION_PROBABILITY.get()) {
-					TeletubbyEntity teletubby = (TeletubbyEntity) event.getEntity();
+				if (event.getEntity() instanceof TeletubbyEntity teletubby && world.random.nextInt(100) < Config.COMMON.TRANSFORMATION_PROBABILITY.get()) {
 					teletubby.transferToZombie();
 				}
 			}
@@ -120,23 +114,21 @@ public class TeletubbiesEventHandler {
 		@OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
 		public static void BlockColorHandler(RegisterColorHandlersEvent.Block event) {
-			if (TeletubbiesBlocks.FULL_GRASS.get() != null) {
-				event.register((state, reader, pos, tint) -> reader != null
-						&& pos != null ? BiomeColors.getAverageGrassColor(reader, pos)
-						: GrassColor.get(0.5D, 1.0D), TeletubbiesBlocks.FULL_GRASS.get());
-			}
+			TeletubbiesBlocks.FULL_GRASS.get();
+			event.register((state, reader, pos, tint) -> reader != null
+					&& pos != null ? BiomeColors.getAverageGrassColor(reader, pos)
+					: GrassColor.get(0.5D, 1.0D), TeletubbiesBlocks.FULL_GRASS.get());
 		}
 
 		@OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
 		public static void ItemColorHandler(final RegisterColorHandlersEvent.Item event) {
-			if (TeletubbiesItems.FULL_GRASS.get() != null) {
-				final ItemColor colorHandler = (stack, tint) -> {
-					final BlockState state = ((BlockItem) stack.getItem()).getBlock().defaultBlockState();
-					return event.getBlockColors().getColor(state, null, null, tint);
-				};
-				event.register(colorHandler, TeletubbiesItems.FULL_GRASS.get());
-			}
+			TeletubbiesItems.FULL_GRASS.get();
+			final ItemColor colorHandler = (stack, tint) -> {
+				final BlockState state = ((BlockItem) stack.getItem()).getBlock().defaultBlockState();
+				return event.getBlockColors().getColor(state, null, null, tint);
+			};
+			event.register(colorHandler, TeletubbiesItems.FULL_GRASS.get());
 		}
 
 		@OnlyIn(Dist.CLIENT)

@@ -17,12 +17,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class TiddlytubbyModel<T extends TiddlytubbyEntity> extends EntityModel<T> {
-	public ModelPart rightArm;
-	public ModelPart leftArm;
-	public ModelPart rightLeg;
-	public ModelPart leftLeg;
-	public ModelPart head;
-	public ModelPart body;
+	public final ModelPart rightArm;
+	public final ModelPart leftArm;
+	public final ModelPart rightLeg;
+	public final ModelPart leftLeg;
+	public final ModelPart head;
+	public final ModelPart body;
 
 	public TiddlytubbyModel(ModelPart part) {
 		rightArm = part.getChild("rightArm");
@@ -86,13 +86,9 @@ public class TiddlytubbyModel<T extends TiddlytubbyEntity> extends EntityModel<T
 			leftLeg.setPos(2.0F, 21.0F, 5.0F);
 
 			body.xRot = (float) (0.5 * Math.PI);
-			rightLeg.xRot = (float) (0.5 * Math.PI);
-			leftLeg.xRot = (float) (0.5 * Math.PI);
 
 			rightLeg.xRot = (float) (Mth.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount + (0.5 * Math.PI));
 			leftLeg.xRot = (float) (Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount + (0.5 * Math.PI));
-			rightArm.zRot = 0.0F;
-			leftArm.zRot = 0.0F;
 
 			rightArm.xRot = Mth.cos(limbSwing * 0.6662F + (float) Math.PI) * 2.0F * limbSwingAmount * 0.5F;
 			leftArm.xRot = Mth.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F;

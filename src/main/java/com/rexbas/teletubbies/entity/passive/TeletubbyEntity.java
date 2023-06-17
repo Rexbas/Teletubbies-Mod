@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -75,18 +76,14 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
 		int i = this.random.nextInt(15);
 		switch (i) {
-		case 0:
-			ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
-			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
-			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlot.LEGS, stack);
-			break;
-		case 1:
-			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TeletubbiesItems.CUSTARD.get()));
-			break;
-		case 2:
-			this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TeletubbiesItems.TOAST.get()));
-			break;
+			case 0 -> {
+				ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
+				int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
+				stack.setDamageValue(damage);
+				this.setItemSlot(EquipmentSlot.LEGS, stack);
+			}
+			case 1 -> this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TeletubbiesItems.CUSTARD.get()));
+			case 2 -> this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(TeletubbiesItems.TOAST.get()));
 		}
 	}
 	
@@ -99,7 +96,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+	public <T> @NotNull LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
 		if (this.isAlive() && capability == BounceCapability.BOUNCE_CAPABILITY) {
 			IBouncingBall ball = null;
 			if (this.getOffhandItem().getItem() instanceof IBouncingBall) {

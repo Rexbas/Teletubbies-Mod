@@ -16,6 +16,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -28,19 +29,17 @@ public class PoScooterItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		HitResult raytraceresult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.ANY);
-		if (raytraceresult.getType() == HitResult.Type.MISS) {
-			return InteractionResultHolder.pass(itemstack);
-		} else {
+		if (raytraceresult.getType() != HitResult.Type.MISS) {
 			Vec3 vec3d = player.getViewVector(1.0F);
 			List<Entity> list = level.getEntities(player, player.getBoundingBox().expandTowards(vec3d.scale(5.0D)).inflate(1.0D), ENTITY_PREDICATE);
 			if (!list.isEmpty()) {
 				Vec3 vec3d1 = player.getEyePosition(1.0F);
 
 				for (Entity entity : list) {
-					AABB axisalignedbb = entity.getBoundingBox().inflate((double) entity.getPickRadius());
+					AABB axisalignedbb = entity.getBoundingBox().inflate(entity.getPickRadius());
 					if (axisalignedbb.contains(vec3d1)) {
 						return InteractionResultHolder.pass(itemstack);
 					}
@@ -54,7 +53,8 @@ public class PoScooterItem extends Item {
 					entity.setYRot(player.getYRot());
 					if (!level.noCollision(entity, entity.getBoundingBox().inflate(-0.1D))) {
 						return InteractionResultHolder.fail(itemstack);
-					} else {
+					}
+					else {
 						if (!level.isClientSide()) {
 							level.addFreshEntity(entity);
 						}
@@ -68,7 +68,7 @@ public class PoScooterItem extends Item {
 					}
 				}
 			}
-			return InteractionResultHolder.pass(itemstack);
 		}
+		return InteractionResultHolder.pass(itemstack);
 	}
 }

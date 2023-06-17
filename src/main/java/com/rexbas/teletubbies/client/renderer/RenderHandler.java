@@ -42,42 +42,26 @@ public class RenderHandler {
     	
     @SubscribeEvent
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerEntityRenderer(TeletubbiesEntityTypes.TINKYWINKY.get(), (ctx) -> {
-			return new TeletubbyRenderer<>(ctx, 0.95F, new TinkyWinkyModel<>(ctx.bakeLayer(TINKYWINKY_LAYER), false), new ResourceLocation(Teletubbies.MODID, "textures/entity/tinkywinky.png"));
-		});
-		event.registerEntityRenderer(TeletubbiesEntityTypes.DIPSY.get(), (ctx) -> {
-			return new TeletubbyRenderer<>(ctx, 0.9F, new DipsyModel<>(ctx.bakeLayer(DIPSY_LAYER), false), new ResourceLocation(Teletubbies.MODID, "textures/entity/dipsy.png"));
-		});
-		event.registerEntityRenderer(TeletubbiesEntityTypes.LAALAA.get(), (ctx) -> {
-			return new TeletubbyRenderer<>(ctx, 0.85F, new LaaLaaModel<>(ctx.bakeLayer(LAALAA_LAYER), false), new ResourceLocation(Teletubbies.MODID, "textures/entity/laalaa.png"));
-		});
-		event.registerEntityRenderer(TeletubbiesEntityTypes.PO.get(), (ctx) -> {
-			return new TeletubbyRenderer<>(ctx, 0.8F, new PoModel<>(ctx.bakeLayer(PO_LAYER), false), new ResourceLocation(Teletubbies.MODID, "textures/entity/po.png"));
-		});
+		event.registerEntityRenderer(TeletubbiesEntityTypes.TINKYWINKY.get(), (ctx) -> new TeletubbyRenderer<>(ctx, 0.95F, new TinkyWinkyModel<>(ctx.bakeLayer(TINKYWINKY_LAYER), false), new ResourceLocation(Teletubbies.MODID, "textures/entity/tinkywinky.png")));
+		event.registerEntityRenderer(TeletubbiesEntityTypes.DIPSY.get(), (ctx) -> new TeletubbyRenderer<>(ctx, 0.9F, new DipsyModel<>(ctx.bakeLayer(DIPSY_LAYER), false), new ResourceLocation(Teletubbies.MODID, "textures/entity/dipsy.png")));
+		event.registerEntityRenderer(TeletubbiesEntityTypes.LAALAA.get(), (ctx) -> new TeletubbyRenderer<>(ctx, 0.85F, new LaaLaaModel<>(ctx.bakeLayer(LAALAA_LAYER), false), new ResourceLocation(Teletubbies.MODID, "textures/entity/laalaa.png")));
+		event.registerEntityRenderer(TeletubbiesEntityTypes.PO.get(), (ctx) -> new TeletubbyRenderer<>(ctx, 0.8F, new PoModel<>(ctx.bakeLayer(PO_LAYER), false), new ResourceLocation(Teletubbies.MODID, "textures/entity/po.png")));
 
         event.registerEntityRenderer(TeletubbiesEntityTypes.NOONOO.get(), NooNooRenderer::new);
         
-        event.registerEntityRenderer(TeletubbiesEntityTypes.MIMI.get(), (ctx) -> {return new TiddlytubbyRenderer(ctx, "mimi");});
-        event.registerEntityRenderer(TeletubbiesEntityTypes.DAADAA.get(), (ctx) -> {return new TiddlytubbyRenderer(ctx, "daadaa");});
-        event.registerEntityRenderer(TeletubbiesEntityTypes.PING.get(), (ctx) -> {return new TiddlytubbyRenderer(ctx, "ping");});
-        event.registerEntityRenderer(TeletubbiesEntityTypes.BA.get(), (ctx) -> {return new TiddlytubbyRenderer(ctx, "ba");});
-        event.registerEntityRenderer(TeletubbiesEntityTypes.RURU.get(), (ctx) -> {return new TiddlytubbyRenderer(ctx, "ruru");});
-        event.registerEntityRenderer(TeletubbiesEntityTypes.NIN.get(), (ctx) -> {return new TiddlytubbyRenderer(ctx, "nin");});
-        event.registerEntityRenderer(TeletubbiesEntityTypes.DUGGLEDEE.get(), (ctx) -> {return new TiddlytubbyRenderer(ctx, "duggledee");});
-        event.registerEntityRenderer(TeletubbiesEntityTypes.UMPIEPUMPIE.get(), (ctx) -> {return new TiddlytubbyRenderer(ctx, "umpiepumpie");});
+        event.registerEntityRenderer(TeletubbiesEntityTypes.MIMI.get(), (ctx) -> new TiddlytubbyRenderer(ctx, "mimi"));
+        event.registerEntityRenderer(TeletubbiesEntityTypes.DAADAA.get(), (ctx) -> new TiddlytubbyRenderer(ctx, "daadaa"));
+        event.registerEntityRenderer(TeletubbiesEntityTypes.PING.get(), (ctx) -> new TiddlytubbyRenderer(ctx, "ping"));
+        event.registerEntityRenderer(TeletubbiesEntityTypes.BA.get(), (ctx) -> new TiddlytubbyRenderer(ctx, "ba"));
+        event.registerEntityRenderer(TeletubbiesEntityTypes.RURU.get(), (ctx) -> new TiddlytubbyRenderer(ctx, "ruru"));
+        event.registerEntityRenderer(TeletubbiesEntityTypes.NIN.get(), (ctx) -> new TiddlytubbyRenderer(ctx, "nin"));
+        event.registerEntityRenderer(TeletubbiesEntityTypes.DUGGLEDEE.get(), (ctx) -> new TiddlytubbyRenderer(ctx, "duggledee"));
+        event.registerEntityRenderer(TeletubbiesEntityTypes.UMPIEPUMPIE.get(), (ctx) -> new TiddlytubbyRenderer(ctx, "umpiepumpie"));
 
-		event.registerEntityRenderer(TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), (ctx) -> {
-			return new TeletubbyRenderer<>(ctx, 0.95F, new TinkyWinkyModel<>(ctx.bakeLayer(TINKYWINKY_LAYER), true), new ResourceLocation(Teletubbies.MODID, "textures/entity/tinkywinky_zombie.png"));
-		});
-		event.registerEntityRenderer(TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), (ctx) -> {
-			return new TeletubbyRenderer<>(ctx, 0.9F, new DipsyModel<>(ctx.bakeLayer(DIPSY_LAYER), true), new ResourceLocation(Teletubbies.MODID, "textures/entity/dipsy_zombie.png"));
-		});
-		event.registerEntityRenderer(TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), (ctx) -> {
-			return new TeletubbyRenderer<>(ctx, 0.85F, new LaaLaaModel<>(ctx.bakeLayer(LAALAA_LAYER), true), new ResourceLocation(Teletubbies.MODID, "textures/entity/laalaa_zombie.png"));
-		});
-		event.registerEntityRenderer(TeletubbiesEntityTypes.PO_ZOMBIE.get(), (ctx) -> {
-			return new TeletubbyRenderer<>(ctx, 0.8F, new PoModel<>(ctx.bakeLayer(PO_LAYER), true), new ResourceLocation(Teletubbies.MODID, "textures/entity/po_zombie.png"));
-		});
+		event.registerEntityRenderer(TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE.get(), (ctx) -> new TeletubbyRenderer<>(ctx, 0.95F, new TinkyWinkyModel<>(ctx.bakeLayer(TINKYWINKY_LAYER), true), new ResourceLocation(Teletubbies.MODID, "textures/entity/tinkywinky_zombie.png")));
+		event.registerEntityRenderer(TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), (ctx) -> new TeletubbyRenderer<>(ctx, 0.9F, new DipsyModel<>(ctx.bakeLayer(DIPSY_LAYER), true), new ResourceLocation(Teletubbies.MODID, "textures/entity/dipsy_zombie.png")));
+		event.registerEntityRenderer(TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), (ctx) -> new TeletubbyRenderer<>(ctx, 0.85F, new LaaLaaModel<>(ctx.bakeLayer(LAALAA_LAYER), true), new ResourceLocation(Teletubbies.MODID, "textures/entity/laalaa_zombie.png")));
+		event.registerEntityRenderer(TeletubbiesEntityTypes.PO_ZOMBIE.get(), (ctx) -> new TeletubbyRenderer<>(ctx, 0.8F, new PoModel<>(ctx.bakeLayer(PO_LAYER), true), new ResourceLocation(Teletubbies.MODID, "textures/entity/po_zombie.png")));
 
         event.registerEntityRenderer(TeletubbiesEntityTypes.PO_SCOOTER.get(), PoScooterRenderer::new);
     }

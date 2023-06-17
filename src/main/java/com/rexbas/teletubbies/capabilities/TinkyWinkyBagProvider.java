@@ -8,11 +8,12 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class TinkyWinkyBagProvider implements ICapabilityProvider {
 
-	private TinkyWinkyBagItemHandler inventory;
-	private LazyOptional<IItemHandler> instance;
+	private final TinkyWinkyBagItemHandler inventory;
+	private final LazyOptional<IItemHandler> instance;
 
 	public TinkyWinkyBagProvider(ItemStack stack) {
 		inventory = new TinkyWinkyBagItemHandler(stack);
@@ -20,7 +21,7 @@ public class TinkyWinkyBagProvider implements ICapabilityProvider {
 	}
 
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
+	public <T> @NotNull LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
 		inventory.load();
 		return cap == ForgeCapabilities.ITEM_HANDLER ? instance.cast() : LazyOptional.empty();
 	}

@@ -44,8 +44,7 @@ public class DomeJigsawPlacement {
 		if (structurepoolelement == EmptyPoolElement.INSTANCE) {
 			return Optional.empty();
 		} else {
-			BlockPos blockpos = chunkBlockPos;
-			Vec3i vec3i = blockpos.subtract(chunkBlockPos);
+			Vec3i vec3i = chunkBlockPos.subtract(chunkBlockPos);
 			BlockPos blockpos1 = chunkBlockPos.subtract(vec3i);
 			PoolElementStructurePiece poolelementstructurepiece = new PoolElementStructurePiece(structuretemplatemanager, structurepoolelement, blockpos1, structurepoolelement.getGroundLevelDelta(), rotation, structurepoolelement.getBoundingBox(structuretemplatemanager, blockpos1, rotation));
 			BoundingBox boundingbox = poolelementstructurepiece.getBoundingBox();
@@ -59,7 +58,7 @@ public class DomeJigsawPlacement {
 				List<PoolElementStructurePiece> list = Lists.newArrayList();
 				list.add(poolelementstructurepiece);
 
-				AABB aabb = new AABB((double) (i - 1), (double) (i1 - 1), (double) (j - 1), (double) (i + 2), (double) (i1 + 2), (double) (j + 2));
+				AABB aabb = new AABB(i - 1, (i1 - 1), (j - 1), (i + 2), (i1 + 2), (j + 2));
 				VoxelShape voxelshape = Shapes.join(Shapes.create(aabb), Shapes.create(AABB.of(boundingbox)), BooleanOp.ONLY_FIRST);
 				JigsawPlacement.addPieces(context.randomState(), 1, false, chunkgenerator, structuretemplatemanager, levelheightaccessor, worldgenrandom, registry, poolelementstructurepiece, list, voxelshape);
 				list.forEach(p_227237_::addPiece);

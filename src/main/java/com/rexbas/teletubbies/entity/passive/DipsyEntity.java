@@ -28,21 +28,21 @@ public class DipsyEntity extends TeletubbyEntity {
 	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(random, difficulty);
 		int i = this.random.nextInt(10);
-		ItemStack stack = null;
-		int damage = 0;
+		ItemStack stack;
+		int damage;
 		switch (i) {
-		case 0:
-			stack = new ItemStack(TeletubbiesItems.DIPSY_BIB.get());
-			damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
-			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlot.CHEST, stack);
-			break;
-		case 1:
-			stack = new ItemStack(TeletubbiesItems.DIPSY_HAT.get());
-			damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
-			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlot.HEAD, stack);
-			break;
+			case 0 -> {
+				stack = new ItemStack(TeletubbiesItems.DIPSY_BIB.get());
+				damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
+				stack.setDamageValue(damage);
+				this.setItemSlot(EquipmentSlot.CHEST, stack);
+			}
+			case 1 -> {
+				stack = new ItemStack(TeletubbiesItems.DIPSY_HAT.get());
+				damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
+				stack.setDamageValue(damage);
+				this.setItemSlot(EquipmentSlot.HEAD, stack);
+			}
 		}
 	}
 

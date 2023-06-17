@@ -7,7 +7,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -40,6 +39,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -75,33 +75,27 @@ public class ToastMachineBlock extends Block implements EntityBlock {
     }
 	
 	@Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		BlockPos tilePos = state.getValue(BOTTOM) ? pos : pos.below();
 		ToastMachineBlockEntity te = (ToastMachineBlockEntity) world.getBlockEntity(tilePos);
 
 		if (!world.isClientSide && player instanceof ServerPlayer) {
-			NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) te, tilePos);
+			NetworkHooks.openScreen((ServerPlayer) player, te, tilePos);
 		}
 		return InteractionResult.SUCCESS;
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+	public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.getValue(BOTTOM)) {
 			return Shapes.block();
 		}
-		switch(state.getValue(FACING)) {
-		case NORTH:
-			return TOP_AABB_NORTH;
-		case EAST:
-			return TOP_AABB_EAST;
-		case SOUTH:
-			return TOP_AABB_SOUTH;
-		case WEST:
-			return TOP_AABB_WEST;
-		default:
-			return TOP_AABB_NORTH;
-		}
+		return switch (state.getValue(FACING)) {
+			case EAST -> TOP_AABB_EAST;
+			case SOUTH -> TOP_AABB_SOUTH;
+			case WEST -> TOP_AABB_WEST;
+			default -> TOP_AABB_NORTH;
+		};
 	}
 	
 	@Override
@@ -155,12 +149,12 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 	}
 	
 	@Override
-	public FluidState getFluidState(BlockState state) {
+	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+	public @NotNull BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (state.getValue(WATERLOGGED)) {
 			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
@@ -174,8 +168,7 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 	
 	public static boolean isUnderwater(Level world, BlockPos pos) {
 		BlockPos tilePos = world.getBlockState(pos).getValue(BOTTOM) ? pos : pos.below();
-		if (TeletubbiesBlocks.isBlockSurrounded(world, tilePos) && world.getBlockState(tilePos.above()).getValue(WATERLOGGED)) return true;
-		return false;
+		return TeletubbiesBlocks.isBlockSurrounded(world, tilePos) && world.getBlockState(tilePos.above()).getValue(WATERLOGGED);
 	}
 		
 	public boolean hasBlockEntity(BlockState state) {
@@ -208,9 +201,8 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 		if (!world.isClientSide) {
 			BlockPos tilePos = state.getValue(BOTTOM) ? pos : pos.below();
 			
-			if (world.getBlockEntity(tilePos) instanceof ToastMachineBlockEntity) {
-				ToastMachineBlockEntity te = (ToastMachineBlockEntity) world.getBlockEntity(tilePos);
-				
+			if (world.getBlockEntity(tilePos) instanceof ToastMachineBlockEntity te) {
+
 				if (world.hasNeighborSignal(pos)) {
 					te.setPowered(state);
 				}
@@ -240,7 +232,7 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 	}
 	
 	@Override
-	public BlockState rotate(BlockState state, Rotation rotation) {
+	public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
 		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
 }

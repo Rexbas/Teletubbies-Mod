@@ -8,6 +8,7 @@ import com.rexbas.teletubbies.entity.passive.NooNooEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class NooNooRenderer extends MobRenderer<NooNooEntity, NooNooModel> {
 
@@ -16,7 +17,7 @@ public class NooNooRenderer extends MobRenderer<NooNooEntity, NooNooModel> {
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(NooNooEntity entity) {
+	public @NotNull ResourceLocation getTextureLocation(NooNooEntity entity) {
 		return new ResourceLocation(Teletubbies.MODID, "textures/entity/noonoo.png");
 	}
 }

@@ -27,6 +27,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,8 +35,8 @@ import javax.annotation.Nullable;
 public class CustardMachineBlockEntity extends BlockEntity implements MenuProvider {
 
 	private static final int DURATION = (int) TeletubbiesBlocks.secondsToTicks(3);
-	private CustardMachineItemHandler inputHandler = new CustardMachineItemHandler(7);
-	private CustardMachineItemHandler outputHandler = new CustardMachineItemHandler(5);
+	private final CustardMachineItemHandler inputHandler = new CustardMachineItemHandler(7);
+	private final CustardMachineItemHandler outputHandler = new CustardMachineItemHandler(5);
 	private int processTime; // Counting down
 	private boolean isProcessing;
 	private boolean isHoldingBucket;
@@ -176,7 +177,7 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	}
 
 	@Override
-	public CompoundTag getUpdateTag() {
+	public @NotNull CompoundTag getUpdateTag() {
 		CompoundTag nbt = new CompoundTag();
 		this.saveAdditional(nbt);
 		return nbt;
@@ -188,7 +189,7 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	}
 	
 	@Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+    public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
 		if (cap == ForgeCapabilities.ITEM_HANDLER) {
 			if (side == Direction.DOWN) {
 				LazyOptional<IItemHandler> instance = LazyOptional.of(() -> outputHandler);
@@ -203,7 +204,7 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	}
 
 	@Override
-	public Component getDisplayName() {
+	public @NotNull Component getDisplayName() {
 		return Component.translatable("block.teletubbies.custard_machine");
 	}
 }

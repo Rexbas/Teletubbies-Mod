@@ -18,7 +18,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class TeletubbyRenderer<T extends PathfinderMob, M extends TeletubbyModel<T>> extends MobSitRenderer<T, M> {	
 	
-	private float scale;
+	private final float scale;
 		
 	public TeletubbyRenderer(EntityRendererProvider.Context context, float scale, M model, ResourceLocation texture) {
 		super(context, model, 0.5F, texture);

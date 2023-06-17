@@ -18,30 +18,30 @@ public class CustardMachineItemHandler extends ItemStackHandler {
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
     	if (this.stacks.size() == 7) {
-	        switch (slot) {
-	        case 0:
-	        case 1:
-	        case 2:
-	        case 3:
-	            return stack.is(SpecificItemSlot.MILK);
-	        case 4:
-	            return stack.is(SpecificItemSlot.SUGAR);
-	        case 5:
-	            return stack.is(SpecificItemSlot.EGG);
-	        case 6:
-	            return stack.is(SpecificItemSlot.BOWL);
-	        }
+			switch (slot) {
+				case 0, 1, 2, 3 -> {
+					return stack.is(SpecificItemSlot.MILK);
+				}
+				case 4 -> {
+					return stack.is(SpecificItemSlot.SUGAR);
+				}
+				case 5 -> {
+					return stack.is(SpecificItemSlot.EGG);
+				}
+				case 6 -> {
+					return stack.is(SpecificItemSlot.BOWL);
+				}
+			}
     	}
     	else if (this.stacks.size() == 5) {
-    		switch (slot) {
-	        case 0:
-	        case 1:
-	        case 2:
-	        case 3:
-	            return stack.is(TeletubbiesItems.CUSTARD.get());
-	        case 4:
-	            return stack.is(Items.BUCKET);
-	        }
+			switch (slot) {
+				case 0, 1, 2, 3 -> {
+					return stack.is(TeletubbiesItems.CUSTARD.get());
+				}
+				case 4 -> {
+					return stack.is(Items.BUCKET);
+				}
+			}
     	}
     		
         return false;

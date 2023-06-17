@@ -17,12 +17,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class NooNooModel extends EntityModel<NooNooEntity> {
-	public ModelPart feet;
-	public ModelPart body;
-	public ModelPart brush;
-	public ModelPart hose;
-	public ModelPart rightEye;
-	public ModelPart leftEye;
+	public final ModelPart feet;
+	public final ModelPart body;
+	public final ModelPart brush;
+	public final ModelPart hose;
+	public final ModelPart rightEye;
+	public final ModelPart leftEye;
 
 	public NooNooModel(ModelPart part) {		
 		feet = part.getChild("feet");

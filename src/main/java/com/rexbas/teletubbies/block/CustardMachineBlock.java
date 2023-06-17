@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
@@ -41,6 +40,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -89,47 +89,35 @@ public class CustardMachineBlock extends Block implements EntityBlock {
     }
 	
 	@Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	public @NotNull InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		BlockPos tilePos = getBasePos(pos, state.getValue(PART), state.getValue(FACING));
 		CustardMachineBlockEntity be = (CustardMachineBlockEntity) world.getBlockEntity(tilePos);
 
 		if (!world.isClientSide && player instanceof ServerPlayer) {
-			NetworkHooks.openScreen((ServerPlayer) player, (MenuProvider) be, tilePos);
+			NetworkHooks.openScreen((ServerPlayer) player, be, tilePos);
 		}
 		return InteractionResult.SUCCESS;
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+	public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.getValue(PART) == CustardMachinePart.BASE || state.getValue(PART) == CustardMachinePart.BIGBASE || state.getValue(PART) == CustardMachinePart.SMALLBASE) {
 			return Shapes.block();
 		}
 		if (state.getValue(PART) == CustardMachinePart.SMALL) {
-			switch(state.getValue(FACING)) {
-			case NORTH:
-				return SMALLTOWER_AABB_NORTH;
-			case EAST:
-				return SMALLTOWER_AABB_EAST;
-			case SOUTH:
-				return SMALLTOWER_AABB_SOUTH;
-			case WEST:
-				return SMALLTOWER_AABB_WEST;
-			default:
-				return SMALLTOWER_AABB_NORTH;
-			}
+			return switch (state.getValue(FACING)) {
+				case EAST -> SMALLTOWER_AABB_EAST;
+				case SOUTH -> SMALLTOWER_AABB_SOUTH;
+				case WEST -> SMALLTOWER_AABB_WEST;
+				default -> SMALLTOWER_AABB_NORTH;
+			};
 		}
-		switch(state.getValue(FACING)) {
-		case NORTH:
-			return BIGTOWER_AABB_NORTH;
-		case EAST:
-			return BIGTOWER_AABB_EAST;
-		case SOUTH:
-			return BIGTOWER_AABB_SOUTH;
-		case WEST:
-			return BIGTOWER_AABB_WEST;
-		default:
-			return BIGTOWER_AABB_NORTH;
-		}
+		return switch (state.getValue(FACING)) {
+			case EAST -> BIGTOWER_AABB_EAST;
+			case SOUTH -> BIGTOWER_AABB_SOUTH;
+			case WEST -> BIGTOWER_AABB_WEST;
+			default -> BIGTOWER_AABB_NORTH;
+		};
 	}
 	
 	@Override
@@ -155,31 +143,31 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 		BlockPos basePos = getBasePos(pos, state.getValue(PART), facing);
 		BlockState subblockState = world.getBlockState(basePos);
 		if (subblockState.getBlock() == this && !pos.equals(basePos)) {
-			removePart(world, basePos, subblockState);
+			removePart(world, basePos);
 		}
 		
 		BlockPos subblock = getSmallTowerBasePos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {	
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getBigTowerBasePos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getSmallTowerPos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {	
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getBigTowerPos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}		      
 		super.playerWillDestroy(world, pos, state, player);
 	}
@@ -191,36 +179,36 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 		BlockPos basePos = getBasePos(pos, state.getValue(PART), facing);
 		BlockState subblockState = world.getBlockState(basePos);
 		if (subblockState.getBlock() == this && !pos.equals(basePos)) {		      
-			removePart(world, basePos, subblockState);
+			removePart(world, basePos);
 		}
 		
 		BlockPos subblock = getSmallTowerBasePos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		      
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getBigTowerBasePos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		      
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getSmallTowerPos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		      
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		
 		subblock = getBigTowerPos(basePos, facing);
 		subblockState = world.getBlockState(subblock);
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		      
-			removePart(world, subblock, subblockState);
+			removePart(world, subblock);
 		}
 		super.onBlockExploded(state, world, pos, explosion);
     }
-	
-	private void removePart(Level world, BlockPos pos, BlockState state) {
+
+	private void removePart(Level world, BlockPos pos) {
 		FluidState fluidState = world.getFluidState(pos);
 	    if (fluidState.getType() == Fluids.WATER) {
 			world.setBlock(pos, fluidState.createLegacyBlock(), 35); 
@@ -250,12 +238,12 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 	}
 	
 	@Override
-	public FluidState getFluidState(BlockState state) {
+	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+	public @NotNull BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (state.getValue(WATERLOGGED)) {
 			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
@@ -270,14 +258,11 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 	public static boolean isUnderwater(Level world, BlockPos pos) {
 		Direction facing = world.getBlockState(pos).getValue(FACING);
 		BlockPos basePos = getBasePos(pos, world.getBlockState(pos).getValue(PART), facing);
-		if (TeletubbiesBlocks.isBlockSurrounded(world, basePos) &&
+		return TeletubbiesBlocks.isBlockSurrounded(world, basePos) &&
 				TeletubbiesBlocks.isBlockSurrounded(world, getSmallTowerBasePos(basePos, facing)) &&
 				TeletubbiesBlocks.isBlockSurrounded(world, getBigTowerBasePos(basePos, facing)) &&
 				world.getBlockState(getSmallTowerPos(basePos, facing)).getValue(WATERLOGGED) &&
-				world.getBlockState(getBigTowerPos(basePos, facing)).getValue(WATERLOGGED)) { 
-			return true; 
-		}
-		return false;
+				world.getBlockState(getBigTowerPos(basePos, facing)).getValue(WATERLOGGED);
 	}
 	
 	public boolean hasBlockEntity(BlockState state) {
@@ -335,127 +320,78 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 	}
 	
 	@Override
-	public BlockState rotate(BlockState state, Rotation rotation) {
+	public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
 		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
 	
 	public static BlockPos getSmallTowerBasePos(BlockPos base, Direction facing) {
-		switch (facing) {
-		case NORTH:
-			return base.east();
-		case EAST:
-			return base.south();
-		case SOUTH:
-			return base.west();
-		case WEST:
-			return base.north();
-		default:
-			return base.east();		
-		}	
+		return switch (facing) {
+			case EAST -> base.south();
+			case SOUTH -> base.west();
+			case WEST -> base.north();
+			default -> base.east();
+		};
 	}
 	
 	public static BlockPos getBigTowerBasePos(BlockPos base, Direction facing) {
-		switch (facing) {
-		case NORTH:
-			return base.west();
-		case EAST:
-			return base.north();
-		case SOUTH:
-			return base.east();
-		case WEST:
-			return base.south();
-		default:
-			return base.west();		
-		}	
+		return switch (facing) {
+			case EAST -> base.north();
+			case SOUTH -> base.east();
+			case WEST -> base.south();
+			default -> base.west();
+		};
 	}
 	
 	public static BlockPos getSmallTowerPos(BlockPos base, Direction facing) {
-		switch (facing) {
-		case NORTH:
-			return base.east().above();
-		case EAST:
-			return base.south().above();
-		case SOUTH:
-			return base.west().above();
-		case WEST:
-			return base.north().above();
-		default:
-			return base.east().above();		
-		}	
+		return switch (facing) {
+			case EAST -> base.south().above();
+			case SOUTH -> base.west().above();
+			case WEST -> base.north().above();
+			default -> base.east().above();
+		};
 	}
 	
 	public static BlockPos getBigTowerPos(BlockPos base, Direction facing) {
-		switch (facing) {
-		case NORTH:
-			return base.west().above();
-		case EAST:
-			return base.north().above();
-		case SOUTH:
-			return base.east().above();
-		case WEST:
-			return base.south().above();
-		default:
-			return base.west().above();		
-		}	
+		return switch (facing) {
+			case EAST -> base.north().above();
+			case SOUTH -> base.east().above();
+			case WEST -> base.south().above();
+			default -> base.west().above();
+		};
 	}
 	
 	public static BlockPos getBasePos(BlockPos pos, CustardMachinePart part, Direction facing) {
 		if (part == CustardMachinePart.BASE) return pos;
-		switch (facing) {
-		case NORTH:
-			switch (part) {
-			case BIG:
-				return pos.east().below();
-			case BIGBASE:
-				return pos.east();
-			case SMALL:
-				return pos.west().below();
-			case SMALLBASE:
-				return pos.west();
-			default:
-				return null;
-			}
-		case EAST:
-			switch (part) {
-			case BIG:
-				return pos.south().below();
-			case BIGBASE:
-				return pos.south();
-			case SMALL:
-				return pos.north().below();
-			case SMALLBASE:
-				return pos.north();
-			default:
-				return null;
-			}
-		case SOUTH:
-			switch (part) {
-			case BIG:
-				return pos.west().below();
-			case BIGBASE:
-				return pos.west();
-			case SMALL:
-				return pos.east().below();
-			case SMALLBASE:
-				return pos.east();
-			default:
-				return null;
-			}
-		case WEST:
-			switch (part) {
-			case BIG:
-				return pos.north().below();
-			case BIGBASE:
-				return pos.north();
-			case SMALL:
-				return pos.south().below();
-			case SMALLBASE:
-				return pos.south();
-			default:
-				return null;
-			}
-		default:
-			return null;
-		}
+		return switch (facing) {
+			case NORTH -> switch (part) {
+				case BIG -> pos.east().below();
+				case BIGBASE -> pos.east();
+				case SMALL -> pos.west().below();
+				case SMALLBASE -> pos.west();
+				default -> null;
+			};
+			case EAST -> switch (part) {
+				case BIG -> pos.south().below();
+				case BIGBASE -> pos.south();
+				case SMALL -> pos.north().below();
+				case SMALLBASE -> pos.north();
+				default -> null;
+			};
+			case SOUTH -> switch (part) {
+				case BIG -> pos.west().below();
+				case BIGBASE -> pos.west();
+				case SMALL -> pos.east().below();
+				case SMALLBASE -> pos.east();
+				default -> null;
+			};
+			case WEST -> switch (part) {
+				case BIG -> pos.north().below();
+				case BIGBASE -> pos.north();
+				case SMALL -> pos.south().below();
+				case SMALLBASE -> pos.south();
+				default -> null;
+			};
+			default -> null;
+		};
 	}
 }

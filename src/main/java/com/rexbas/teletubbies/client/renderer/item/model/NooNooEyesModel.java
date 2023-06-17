@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class NooNooEyesModel extends HumanoidModel<LivingEntity> {	
-	public ModelPart eyes;
+	public final ModelPart eyes;
 
 	public NooNooEyesModel(ModelPart part) {
 		super(part);

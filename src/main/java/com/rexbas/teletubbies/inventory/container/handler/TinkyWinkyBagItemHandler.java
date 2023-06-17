@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TinkyWinkyBagItemHandler extends ItemStackHandler {
 	
-	private ItemStack stack;
+	private final ItemStack stack;
 	
 	public TinkyWinkyBagItemHandler(ItemStack stack) {
 		super(54);

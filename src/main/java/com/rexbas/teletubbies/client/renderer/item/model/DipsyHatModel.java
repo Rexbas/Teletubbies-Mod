@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class DipsyHatModel extends HumanoidModel<LivingEntity> {	
-	public ModelPart hat;
+	public final ModelPart hat;
 
 	public DipsyHatModel(ModelPart part) {
 		super(part);

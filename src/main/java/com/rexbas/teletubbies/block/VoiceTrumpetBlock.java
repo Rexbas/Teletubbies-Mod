@@ -32,6 +32,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -71,22 +72,16 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
     }
 	
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+	public @NotNull VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.getValue(BOTTOM)) {
 			return BOTTOM_AABB;
 		}
-		switch(state.getValue(FACING)) {
-		case NORTH:
-			return TOP_AABB_NORTH;
-		case EAST:
-			return TOP_AABB_EAST;
-		case SOUTH:
-			return TOP_AABB_SOUTH;
-		case WEST:
-			return TOP_AABB_WEST;
-		default:
-			return TOP_AABB_NORTH;
-		}
+		return switch (state.getValue(FACING)) {
+			case EAST -> TOP_AABB_EAST;
+			case SOUTH -> TOP_AABB_SOUTH;
+			case WEST -> TOP_AABB_WEST;
+			default -> TOP_AABB_NORTH;
+		};
 	}
 	
 	@Override
@@ -142,12 +137,12 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	}
 	
 	@Override
-	public FluidState getFluidState(BlockState state) {
+	public @NotNull FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+	public @NotNull BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (state.getValue(WATERLOGGED)) {
 			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
@@ -161,12 +156,7 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	
 	public boolean isUnderwater(Level world, BlockPos pos) {
 		BlockPos tilePos = world.getBlockState(pos).getValue(BOTTOM) ? pos : pos.below();
-		if (world.getBlockState(tilePos).getValue(WATERLOGGED) && world.getBlockState(tilePos.above()).getValue(WATERLOGGED)) return true;
-		return false;
-	}
-	
-	public boolean hasBlockEntity(BlockState state) {
-		return state.getValue(BOTTOM);
+		return world.getBlockState(tilePos).getValue(WATERLOGGED) && world.getBlockState(tilePos.above()).getValue(WATERLOGGED);
 	}
 	
 	@Nullable
@@ -194,7 +184,7 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
    }
    
 	@Override
-	public BlockState rotate(BlockState state, Rotation rotation) {
+	public @NotNull BlockState rotate(BlockState state, Rotation rotation) {
 		return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
 	}
 }

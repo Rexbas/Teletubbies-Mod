@@ -37,26 +37,23 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 		super.populateDefaultEquipmentSlots(random, difficulty);
 		int i = this.random.nextInt(10);
 		switch (i) {
-		case 0:
-			ItemStack stack = new ItemStack(TeletubbiesItems.TINKYWINKY_BIB.get());
-			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
-			stack.setDamageValue(damage);
-			this.setItemSlot(EquipmentSlot.CHEST, stack);
-			break;
-		case 1:
-			ItemStack bag = new ItemStack(TeletubbiesItems.TINKYWINKY_BAG.get());
-			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-
-			LootParams lootParams = new LootParams.Builder((ServerLevel) level())
-					.withParameter(LootContextParams.ORIGIN, this.position())
-					.withParameter(LootContextParams.THIS_ENTITY, this)
-					.create(LootContextParamSets.GIFT);
-
-			LootTable table = ServerLifecycleHooks.getCurrentServer().getLootData().getLootTable(TinkyWinkyBagItem.LOOTTABLE);
-			handler.fillInventory(table, lootParams);
-
-			this.setItemSlot(EquipmentSlot.MAINHAND, bag);
-			break;
+			case 0 -> {
+				ItemStack stack = new ItemStack(TeletubbiesItems.TINKYWINKY_BIB.get());
+				int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
+				stack.setDamageValue(damage);
+				this.setItemSlot(EquipmentSlot.CHEST, stack);
+			}
+			case 1 -> {
+				ItemStack bag = new ItemStack(TeletubbiesItems.TINKYWINKY_BAG.get());
+				TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+				LootParams lootParams = new LootParams.Builder((ServerLevel) level())
+						.withParameter(LootContextParams.ORIGIN, this.position())
+						.withParameter(LootContextParams.THIS_ENTITY, this)
+						.create(LootContextParamSets.GIFT);
+				LootTable table = ServerLifecycleHooks.getCurrentServer().getLootData().getLootTable(TinkyWinkyBagItem.LOOTTABLE);
+				handler.fillInventory(table, lootParams);
+				this.setItemSlot(EquipmentSlot.MAINHAND, bag);
+			}
 		}
 	}
 

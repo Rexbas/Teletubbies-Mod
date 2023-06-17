@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
@@ -51,7 +52,7 @@ public class PoScooterRenderer extends EntityRenderer<PoScooterEntity> {
 	}
 	
 	@Override
-	public ResourceLocation getTextureLocation(PoScooterEntity entity) {
+	public @NotNull ResourceLocation getTextureLocation(PoScooterEntity entity) {
 		return new ResourceLocation(Teletubbies.MODID, "textures/item/po_scooter.png");
 	}
 }

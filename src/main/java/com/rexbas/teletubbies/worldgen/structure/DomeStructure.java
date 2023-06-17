@@ -33,6 +33,7 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.NotNull;
 
 public class DomeStructure extends Structure {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -94,19 +95,18 @@ public class DomeStructure extends Structure {
     }
 
     @Override
-    public Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
+    public @NotNull Optional<GenerationStub> findGenerationPoint(GenerationContext context) {
 		WorldgenRandom worldgenrandom = context.random();
 		worldgenrandom.setLargeFeatureSeed(context.seed(), context.chunkPos().x, context.chunkPos().z);
 		Rotation rotation = Rotation.getRandom(worldgenrandom);
 
 		Optional<BlockPos> chunkPosition = isFeatureChunk(context, rotation);
-        if (!chunkPosition.isPresent()) {
+        if (chunkPosition.isEmpty()) {
         	return Optional.empty();
         }
     	BlockPos chunkBlockPos = chunkPosition.get();
 
-    	Optional<Structure.GenerationStub> structurePiecesGenerator = DomeJigsawPlacement.addPieces(context, this.startPool, chunkBlockPos, worldgenrandom, rotation);
-        return structurePiecesGenerator;
+		return DomeJigsawPlacement.addPieces(context, this.startPool, chunkBlockPos, worldgenrandom, rotation);
     }
 	
 	@Override
@@ -157,7 +157,7 @@ public class DomeStructure extends Structure {
 	}
 
 	@Override
-	public StructureType<?> type() {
+	public @NotNull StructureType<?> type() {
 		return TeletubbiesWorldGen.DOME_STRUCTURE.get();
 	}
 }

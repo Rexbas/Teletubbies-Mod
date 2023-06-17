@@ -42,17 +42,16 @@ public class FullGrassBlock extends GrassBlock {
 		if (PlantType.PLAINS.equals(type)) {
 			return true;
 		} else if (PlantType.BEACH.equals(type)) {
-			boolean isBeach = true;
 			boolean hasWater = false;
 			for (Direction face : Direction.Plane.HORIZONTAL) {
 				BlockState blockState = world.getBlockState(pos.relative(face));
 				FluidState fluidState = world.getFluidState(pos.relative(face));
-				hasWater |= blockState.is(Blocks.FROSTED_ICE);
+				hasWater = blockState.is(Blocks.FROSTED_ICE);
 				hasWater |= fluidState.is(FluidTags.WATER);
 				if (hasWater)
 					break; // No point continuing.
 			}
-			return isBeach && hasWater;
+			return hasWater;
 		}
 		return false;
 	}
@@ -108,10 +107,10 @@ public class FullGrassBlock extends GrassBlock {
 				BlockPos blockpos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(3) - 1, rand.nextInt(3) - 1);
 				if (canPropagate(blockstate, world, blockpos)) {
 					if (world.getBlockState(blockpos).is(Blocks.DIRT)) {
-						world.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, Boolean.valueOf(world.getBlockState(blockpos.above()).is(Blocks.SNOW))));
+						world.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, world.getBlockState(blockpos.above()).is(Blocks.SNOW)));
 					}
 					else if (Config.COMMON.INVASIVE_GRASS.get() && world.getBlockState(blockpos).is(Blocks.GRASS_BLOCK)) {
-						world.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, Boolean.valueOf(world.getBlockState(blockpos.above()).is(Blocks.SNOW))));
+						world.setBlockAndUpdate(blockpos, blockstate.setValue(SNOWY, world.getBlockState(blockpos.above()).is(Blocks.SNOW)));
 					}
 				}
 			}

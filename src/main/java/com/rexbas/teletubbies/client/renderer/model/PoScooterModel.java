@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class PoScooterModel extends EntityModel<PoScooterEntity> {
-	public ModelPart scooter;
+	public final ModelPart scooter;
 	
 	public PoScooterModel(ModelPart part) {		
 		scooter = part.getChild("scooter");

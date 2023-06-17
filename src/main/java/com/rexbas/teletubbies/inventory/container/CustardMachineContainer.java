@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -66,11 +67,11 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(Player playerIn, int index) {
+	public @NotNull ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 
-		if (slot != null && slot.hasItem()) {
+		if (slot.hasItem()) {
 			
 			IItemHandler inputHandler = this.blockentity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
 			IItemHandler outputHandler = this.blockentity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);

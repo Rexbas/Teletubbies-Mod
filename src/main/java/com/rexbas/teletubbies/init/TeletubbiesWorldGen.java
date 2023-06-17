@@ -20,5 +20,5 @@ public class TeletubbiesWorldGen {
 	
 	// Features
 	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(Registries.FEATURE, Teletubbies.MODID);
-	public static final RegistryObject<VoiceTrumpetFeature> VOICE_TRUMPET_FEATURE = FEATURES.register("voice_trumpet_feature", () -> new VoiceTrumpetFeature());	
+	public static final RegistryObject<VoiceTrumpetFeature> VOICE_TRUMPET_FEATURE = FEATURES.register("voice_trumpet_feature", VoiceTrumpetFeature::new);
 }

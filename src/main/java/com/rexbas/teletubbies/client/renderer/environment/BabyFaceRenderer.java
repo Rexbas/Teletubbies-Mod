@@ -224,10 +224,10 @@ public class BabyFaceRenderer extends OverworldEffects {
 		p_234260_.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
 
 		for (int i = 0; i < 1500; ++i) {
-			double d0 = (double) (randomsource.nextFloat() * 2.0F - 1.0F);
-			double d1 = (double) (randomsource.nextFloat() * 2.0F - 1.0F);
-			double d2 = (double) (randomsource.nextFloat() * 2.0F - 1.0F);
-			double d3 = (double) (0.15F + randomsource.nextFloat() * 0.1F);
+			double d0 = randomsource.nextFloat() * 2.0F - 1.0F;
+			double d1 = randomsource.nextFloat() * 2.0F - 1.0F;
+			double d2 = randomsource.nextFloat() * 2.0F - 1.0F;
+			double d3 = 0.15F + randomsource.nextFloat() * 0.1F;
 			double d4 = d0 * d0 + d1 * d1 + d2 * d2;
 			if (d4 < 1.0D && d4 > 0.01D) {
 				d4 = 1.0D / Math.sqrt(d4);

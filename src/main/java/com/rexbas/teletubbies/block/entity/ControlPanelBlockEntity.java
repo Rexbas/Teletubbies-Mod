@@ -19,13 +19,14 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider {
 
-	private ControlPanelItemHandler inputHandler = new ControlPanelItemHandler();
+	private final ControlPanelItemHandler inputHandler = new ControlPanelItemHandler();
 	
 	public ControlPanelBlockEntity(BlockPos pos, BlockState state) {
 		super(TeletubbiesBlocks.CONTROL_PANEL_BLOCK_ENTITY.get(), pos, state);
@@ -60,7 +61,7 @@ public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider
 	}
 
 	@Override
-	public CompoundTag getUpdateTag() {
+	public @NotNull CompoundTag getUpdateTag() {
 		CompoundTag nbt = new CompoundTag();
 		this.saveAdditional(nbt);
 		return nbt;
@@ -72,7 +73,7 @@ public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider
 	}
 	
 	@Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+    public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
 		if (cap == ForgeCapabilities.ITEM_HANDLER) {
 			// Can empty any ItemHandlers (Bags)
 			if (side == Direction.DOWN) {
@@ -90,7 +91,7 @@ public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider
 	}
 
 	@Override
-	public Component getDisplayName() {
+	public @NotNull Component getDisplayName() {
 		return Component.translatable("block.teletubbies.control_panel");
 	}
 }

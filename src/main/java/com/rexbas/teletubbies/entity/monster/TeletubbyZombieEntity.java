@@ -18,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 public class TeletubbyZombieEntity extends Zombie {
 
@@ -45,7 +46,7 @@ public class TeletubbyZombieEntity extends Zombie {
 	}
 	
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+	public <T> @NotNull LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
 		if (this.isAlive() && capability == BounceCapability.BOUNCE_CAPABILITY) {
 			IBouncingBall ball = null;
 			if (this.getOffhandItem().getItem() instanceof IBouncingBall) {
