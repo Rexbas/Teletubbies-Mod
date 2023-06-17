@@ -1,7 +1,8 @@
 {
-    "pack": {
-        "description": "Teletubbies resources",
-        "forge:server_data_pack_format": 12,
-        "pack_format": 13
-    }
+  "pack": {
+    "description": {
+      "text": "${mod_name} resources"
+    },
+    "pack_format": 15
+  }
 }

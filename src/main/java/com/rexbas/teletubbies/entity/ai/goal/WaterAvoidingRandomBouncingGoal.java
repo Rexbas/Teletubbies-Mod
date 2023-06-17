@@ -2,7 +2,6 @@ package com.rexbas.teletubbies.entity.ai.goal;
 
 import com.rexbas.bouncingballs.api.capability.BounceCapability;
 import com.rexbas.bouncingballs.api.item.BouncingBall;
-
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.item.ItemStack;
@@ -26,12 +25,12 @@ public class WaterAvoidingRandomBouncingGoal extends WaterAvoidingRandomStrollGo
 					ballStack = this.mob.getMainHandItem();
 				}
 	
-		    	if (ballStack != null && !this.mob.level.isClientSide()) {
+		    	if (ballStack != null && !this.mob.level().isClientSide()) {
 		    		BouncingBall ball = (BouncingBall) ballStack.getItem();
 		    			if (ball.canBounce(this.mob)) {
 				    		ball.bounce(this.mob, 1f);
 				    		ball.damageBall(this.mob, ballStack);
-							ball.playBounceSound(this.mob.level, this.mob);
+							ball.playBounceSound(this.mob.level(), this.mob);
 							this.mob.getNavigation().stop();
 			    	}
 		    	}

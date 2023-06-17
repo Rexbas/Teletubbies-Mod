@@ -212,7 +212,7 @@ public class BabyFaceRenderer extends OverworldEffects {
 			this.starBuffer.close();
 		}
 
-		this.starBuffer = new VertexBuffer();
+		this.starBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 		BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = this.drawStars(bufferbuilder);
 		this.starBuffer.bind();
 		this.starBuffer.upload(bufferbuilder$renderedbuffer);
@@ -271,7 +271,7 @@ public class BabyFaceRenderer extends OverworldEffects {
 			this.darkBuffer.close();
 		}
 
-		this.darkBuffer = new VertexBuffer();
+		this.darkBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 		BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = buildSkyDisc(bufferbuilder, -16.0F);
 		this.darkBuffer.bind();
 		this.darkBuffer.upload(bufferbuilder$renderedbuffer);
@@ -285,7 +285,7 @@ public class BabyFaceRenderer extends OverworldEffects {
 			this.skyBuffer.close();
 		}
 
-		this.skyBuffer = new VertexBuffer();
+		this.skyBuffer = new VertexBuffer(VertexBuffer.Usage.STATIC);
 		BufferBuilder.RenderedBuffer bufferbuilder$renderedbuffer = buildSkyDisc(bufferbuilder, 16.0F);
 		this.skyBuffer.bind();
 		this.skyBuffer.upload(bufferbuilder$renderedbuffer);

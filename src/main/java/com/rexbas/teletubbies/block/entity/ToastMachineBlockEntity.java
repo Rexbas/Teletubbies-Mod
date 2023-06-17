@@ -1,8 +1,5 @@
 package com.rexbas.teletubbies.block.entity;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.rexbas.teletubbies.block.ToastMachineBlock;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
@@ -10,7 +7,6 @@ import com.rexbas.teletubbies.init.TeletubbiesSounds;
 import com.rexbas.teletubbies.inventory.container.ToastMachineContainer;
 import com.rexbas.teletubbies.inventory.container.handler.ToastMachineItemHandler;
 import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -24,15 +20,17 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -220,7 +218,7 @@ public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider
 	
 	@Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY && side != Direction.DOWN) {
+		if (cap == ForgeCapabilities.ITEM_HANDLER && side != Direction.DOWN) {
 			LazyOptional<IItemHandler> instance = LazyOptional.of(() -> handler);
 			return instance.cast();
 		}

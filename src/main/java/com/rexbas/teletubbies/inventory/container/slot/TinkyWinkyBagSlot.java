@@ -1,17 +1,16 @@
 package com.rexbas.teletubbies.inventory.container.slot;
 
-import javax.annotation.Nonnull;
-
 import com.rexbas.teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import com.rexbas.teletubbies.item.TinkyWinkyBagItem;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+
+import javax.annotation.Nonnull;
 
 public class TinkyWinkyBagSlot extends SlotItemHandler {
 
@@ -31,7 +30,7 @@ public class TinkyWinkyBagSlot extends SlotItemHandler {
 			}
 		}
 		
-		if (stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).isPresent())
+		if (stack.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent())
             return false;
 		
 		if (stack.hasTag()) {

@@ -4,7 +4,6 @@ import com.rexbas.teletubbies.init.TeletubbiesContainers;
 import com.rexbas.teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import com.rexbas.teletubbies.inventory.container.slot.TinkyWinkyBagSlot;
 import com.rexbas.teletubbies.item.TinkyWinkyBagItem;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +11,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 
 // https://github.com/Flanks255/simplybackpacks/tree/master/src/main/java/com/flanks255/simplybackpacks
@@ -34,7 +33,7 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 		this.playerInventory = playerInventory;
 		this.bag = bag;
 		
-		TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+		TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
         handler.load();
 
 		addBagSlots(handler);
@@ -70,7 +69,7 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 
 		if (slot != null && slot.hasItem()) {
 			
-			IItemHandler handler = bag.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+			IItemHandler handler = bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
 					
             ItemStack slotStack = slot.getItem();
 			itemstack = slotStack.copy();

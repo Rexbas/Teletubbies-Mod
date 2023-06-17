@@ -1,18 +1,17 @@
 package com.rexbas.teletubbies.inventory.container.handler;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import com.google.common.collect.Lists;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.items.ItemStackHandler;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 public class TinkyWinkyBagItemHandler extends ItemStackHandler {
 	
@@ -40,12 +39,11 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
             deserializeNBT(nbt.getCompound("Inventory"));
         }
     }
-    
-	public void fillInventory(LootTable table, LootContext context) {
-		List<ItemStack> list = table.getRandomItems(context);
-		RandomSource rand = context.getRandom();
+
+	public void fillInventory(LootTable table, LootParams lootParams) {
+		List<ItemStack> list = table.getRandomItems(lootParams);
 		List<Integer> list1 = getEmptySlotsRandomized();
-		shuffleItems(list, list1.size(), rand);
+		shuffleItems(list, list1.size(), lootParams.getLevel().getRandom());
 
 		for (ItemStack itemstack : list) {
 			if (list1.isEmpty()) {
@@ -54,7 +52,8 @@ public class TinkyWinkyBagItemHandler extends ItemStackHandler {
 
 			if (itemstack.isEmpty()) {
 				setStackInSlot(list1.remove(list1.size() - 1), ItemStack.EMPTY);
-			} else {
+			}
+			else {
 				setStackInSlot(list1.remove(list1.size() - 1), itemstack);
 			}
 		}

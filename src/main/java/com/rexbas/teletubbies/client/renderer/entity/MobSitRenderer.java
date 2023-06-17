@@ -94,8 +94,8 @@ public class MobSitRenderer<T extends Mob, M extends EntityModel<T> & ArmedModel
 		}
 		
 		int j = getBlockLightLevel;
-		int k = entity.level.getBrightness(LightLayer.SKY, blockpos);
-		int l = entity.level.getBrightness(LightLayer.SKY, blockpos1);
+		int k = entity.level().getBrightness(LightLayer.SKY, blockpos);
+		int l = entity.level().getBrightness(LightLayer.SKY, blockpos1);
 
 		for (int i1 = 0; i1 <= 24; ++i1) {
 			MobRenderer.addVertexPair(vertexconsumer, matrix4f, f, f1, f2, i, j, k, l, 0.025F, 0.025F, f5, f6, i1, false);

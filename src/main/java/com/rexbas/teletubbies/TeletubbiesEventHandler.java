@@ -102,7 +102,7 @@ public class TeletubbiesEventHandler {
 	@SubscribeEvent(priority=EventPriority.NORMAL, receiveCanceled=true)
 	public static void onLivingDeathEvent(LivingDeathEvent event) {
 		DamageSource damageSource = (DamageSource) event.getSource();
-		Level world = event.getEntity().level;
+		Level world = event.getEntity().level();
 
 		if (!world.isClientSide()) {
 			if (damageSource.getDirectEntity() instanceof Zombie) {

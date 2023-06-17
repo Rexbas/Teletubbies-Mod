@@ -1,8 +1,5 @@
 package com.rexbas.teletubbies.block.entity;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.rexbas.teletubbies.block.CustardMachineBlock;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
@@ -10,7 +7,6 @@ import com.rexbas.teletubbies.init.TeletubbiesSounds;
 import com.rexbas.teletubbies.inventory.container.CustardMachineContainer;
 import com.rexbas.teletubbies.inventory.container.handler.CustardMachineItemHandler;
 import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -28,9 +24,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CustardMachineBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -190,7 +189,7 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	
 	@Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if (cap == ForgeCapabilities.ITEM_HANDLER) {
 			if (side == Direction.DOWN) {
 				LazyOptional<IItemHandler> instance = LazyOptional.of(() -> outputHandler);
 				return instance.cast();

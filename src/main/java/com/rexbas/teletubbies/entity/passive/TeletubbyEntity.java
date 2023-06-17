@@ -1,32 +1,18 @@
 package com.rexbas.teletubbies.entity.passive;
 
-import java.util.Arrays;
-
-import javax.annotation.Nullable;
-
 import com.rexbas.bouncingballs.api.capability.BounceCapability;
 import com.rexbas.bouncingballs.api.item.IBouncingBall;
 import com.rexbas.teletubbies.entity.ai.goal.WaterAvoidingRandomBouncingGoal;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier.Builder;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.InteractGoal;
-import net.minecraft.world.entity.ai.goal.PanicGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +21,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+
+import javax.annotation.Nullable;
+import java.util.Arrays;
 
 public abstract class TeletubbyEntity extends PathfinderMob {
 
@@ -132,7 +121,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 	public abstract EntityType<?> getZombie();
 	
 	public void transferToZombie() {
-		Zombie zombie = (Zombie) this.getZombie().create(level);
+		Zombie zombie = (Zombie) this.getZombie().create(level());
 		zombie.copyPosition(this);
 		this.hasTransferredToZombie = true;
 		this.remove(RemovalReason.KILLED);
@@ -144,7 +133,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 			zombie.setCustomNameVisible(this.isCustomNameVisible());
 		}
 
-		level.addFreshEntity(zombie);
-		level.levelEvent(null, 1026, zombie.blockPosition(), 0);
+		level().addFreshEntity(zombie);
+		level().levelEvent(null, 1026, zombie.blockPosition(), 0);
 	}
 }

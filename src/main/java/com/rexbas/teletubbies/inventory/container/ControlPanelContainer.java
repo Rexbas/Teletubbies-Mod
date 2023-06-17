@@ -1,12 +1,9 @@
 package com.rexbas.teletubbies.inventory.container;
 
-import java.util.Objects;
-
 import com.rexbas.teletubbies.block.entity.ControlPanelBlockEntity;
 import com.rexbas.teletubbies.init.TeletubbiesContainers;
 import com.rexbas.teletubbies.inventory.container.handler.ControlPanelItemHandler;
 import com.rexbas.teletubbies.inventory.container.slot.ItemHandlerSlot;
-
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -14,8 +11,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Objects;
 
 public class ControlPanelContainer extends AbstractContainerMenu {
 
@@ -34,7 +33,7 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 		this.playerInventory = playerInventory;
 		this.blockentity = be;
 		
-		ControlPanelItemHandler inputHandler = (ControlPanelItemHandler) be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+		ControlPanelItemHandler inputHandler = (ControlPanelItemHandler) be.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
 		
 		addMachineSlots(inputHandler);
 		addPlayerSlots();
@@ -63,7 +62,7 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 
 		if (slot != null && slot.hasItem()) {
 			
-			IItemHandler handler = this.blockentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
+			IItemHandler handler = this.blockentity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
 			
             ItemStack slotStack = slot.getItem();
 			itemstack = slotStack.copy();
@@ -92,7 +91,7 @@ public class ControlPanelContainer extends AbstractContainerMenu {
 	private static ControlPanelBlockEntity getBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
-		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
+		final BlockEntity tileAtPos = playerInv.player.level().getBlockEntity(data.readBlockPos());
 		if (tileAtPos instanceof ControlPanelBlockEntity) {
 			return (ControlPanelBlockEntity) tileAtPos;
 		}

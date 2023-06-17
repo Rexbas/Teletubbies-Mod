@@ -6,12 +6,10 @@ import com.rexbas.teletubbies.item.armor.DipsyHatItem;
 import com.rexbas.teletubbies.item.armor.NooNooEyesItem;
 import com.rexbas.teletubbies.item.armor.SimpleArmorItem;
 import com.rexbas.teletubbies.item.armor.TutuItem;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.event.CreativeModeTabEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -21,6 +19,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class TeletubbiesItems {
 	
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Teletubbies.MODID);
+	public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Teletubbies.MODID);
 	
 	// Blocks
 	public static final RegistryObject<Item> FULL_GRASS = ITEMS.register("full_grass", () -> new BlockItem(TeletubbiesBlocks.FULL_GRASS.get(), new Item.Properties()));
@@ -72,58 +71,58 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> DIPSY_ZOMBIE_SPAWN_EGG = ITEMS.register("dipsy_zombie_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.DIPSY_ZOMBIE.get(), 0x84CA32, 0x660000, (new Item.Properties())));
 	public static final RegistryObject<Item> LAALAA_ZOMBIE_SPAWN_EGG = ITEMS.register("laalaa_zombie_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.LAALAA_ZOMBIE.get(), 0xDED32C, 0x660000, (new Item.Properties())));
 	public static final RegistryObject<Item> PO_ZOMBIE_SPAWN_EGG = ITEMS.register("po_zombie_spawn_egg", () -> new ForgeSpawnEggItem(() -> TeletubbiesEntityTypes.PO_ZOMBIE.get(), 0xD62828, 0x660000, (new Item.Properties())));
-	
-	@SubscribeEvent
-	public static void buildContents(CreativeModeTabEvent.Register event) {
-		event.registerCreativeModeTab(new ResourceLocation(Teletubbies.MODID, "teletubbies_tab"),
-				builder -> builder.title(Component.translatable("item_group." + Teletubbies.MODID))
-						.icon(() -> new ItemStack(PO_ANTENNA.get()))
-						.displayItems((params, output) -> {
-							output.accept(FULL_GRASS.get());
-							output.accept(CONTROL_PANEL.get());
-							output.accept(VOICE_TRUMPET.get());
-							output.accept(TOAST_MACHINE.get());
-							output.accept(CUSTARD_MACHINE.get());
-							output.accept(WINDOW.get());
 
-							output.accept(TINKYWINKY_ANTENNA.get());
-							output.accept(DIPSY_ANTENNA.get());
-							output.accept(LAALAA_ANTENNA.get());
-							output.accept(PO_ANTENNA.get());
-							output.accept(TINKYWINKY_BAG.get());
-							output.accept(LAALAA_BALL.get());
-							output.accept(BOWL.get());
-							output.accept(CUSTARD.get());
-							output.accept(TOAST.get());
+	public static RegistryObject<CreativeModeTab> TAB = CREATIVE_TABS.register("teletubbies_tab",
+			() -> CreativeModeTab.builder()
+					.title(Component.translatable("item_group." + Teletubbies.MODID))
+					.icon(() -> new ItemStack(PO_ANTENNA.get()))
+					.displayItems((params, output) -> {
+						output.accept(FULL_GRASS.get());
+						output.accept(CONTROL_PANEL.get());
+						output.accept(VOICE_TRUMPET.get());
+						output.accept(TOAST_MACHINE.get());
+						output.accept(CUSTARD_MACHINE.get());
+						output.accept(WINDOW.get());
 
-							output.accept(PO_SCOOTER.get());
+						output.accept(TINKYWINKY_ANTENNA.get());
+						output.accept(DIPSY_ANTENNA.get());
+						output.accept(LAALAA_ANTENNA.get());
+						output.accept(PO_ANTENNA.get());
+						output.accept(TINKYWINKY_BAG.get());
+						output.accept(LAALAA_BALL.get());
+						output.accept(BOWL.get());
+						output.accept(CUSTARD.get());
+						output.accept(TOAST.get());
 
-							output.accept(TUTU.get());
-							output.accept(NOONOO_EYES.get());
-							output.accept(DIPSY_HAT.get());
-							output.accept(TINKYWINKY_BIB.get());
-							output.accept(DIPSY_BIB.get());
-							output.accept(LAALAA_BIB.get());
-							output.accept(PO_BIB.get());
-							output.accept(PO_HELMET.get());
+						output.accept(PO_SCOOTER.get());
 
-							output.accept(TINKYWINKY_SPAWN_EGG.get());
-							output.accept(DIPSY_SPAWN_EGG.get());
-							output.accept(LAALAA_SPAWN_EGG.get());
-							output.accept(PO_SPAWN_EGG.get());
-							output.accept(NOONOO_SPAWN_EGG.get());
-							output.accept(MIMI_SPAWN_EGG.get());
-							output.accept(DAADAA_SPAWN_EGG.get());
-							output.accept(PING_SPAWN_EGG.get());
-							output.accept(BA_SPAWN_EGG.get());
-							output.accept(RURU_SPAWN_EGG.get());
-							output.accept(NIN_SPAWN_EGG.get());
-							output.accept(DUGGLEDEE_SPAWN_EGG.get());
-							output.accept(UMPIEPUMPIE_SPAWN_EGG.get());
-							output.accept(TINKYWINKY_ZOMBIE_SPAWN_EGG.get());
-							output.accept(DIPSY_ZOMBIE_SPAWN_EGG.get());
-							output.accept(LAALAA_ZOMBIE_SPAWN_EGG.get());
-							output.accept(PO_ZOMBIE_SPAWN_EGG.get());
-						}));
-	}
+						output.accept(TUTU.get());
+						output.accept(NOONOO_EYES.get());
+						output.accept(DIPSY_HAT.get());
+						output.accept(TINKYWINKY_BIB.get());
+						output.accept(DIPSY_BIB.get());
+						output.accept(LAALAA_BIB.get());
+						output.accept(PO_BIB.get());
+						output.accept(PO_HELMET.get());
+
+						output.accept(TINKYWINKY_SPAWN_EGG.get());
+						output.accept(DIPSY_SPAWN_EGG.get());
+						output.accept(LAALAA_SPAWN_EGG.get());
+						output.accept(PO_SPAWN_EGG.get());
+						output.accept(NOONOO_SPAWN_EGG.get());
+						output.accept(MIMI_SPAWN_EGG.get());
+						output.accept(DAADAA_SPAWN_EGG.get());
+						output.accept(PING_SPAWN_EGG.get());
+						output.accept(BA_SPAWN_EGG.get());
+						output.accept(RURU_SPAWN_EGG.get());
+						output.accept(NIN_SPAWN_EGG.get());
+						output.accept(DUGGLEDEE_SPAWN_EGG.get());
+						output.accept(UMPIEPUMPIE_SPAWN_EGG.get());
+						output.accept(TINKYWINKY_ZOMBIE_SPAWN_EGG.get());
+						output.accept(DIPSY_ZOMBIE_SPAWN_EGG.get());
+						output.accept(LAALAA_ZOMBIE_SPAWN_EGG.get());
+						output.accept(PO_ZOMBIE_SPAWN_EGG.get());
+					})
+					.build());
+
 }

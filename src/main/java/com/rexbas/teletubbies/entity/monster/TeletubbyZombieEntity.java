@@ -36,13 +36,11 @@ public class TeletubbyZombieEntity extends Zombie {
 	protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(random, difficulty);
 		int i = this.random.nextInt(10);
-		switch (i) {
-		case 0:
+		if (i == 0) {
 			ItemStack stack = new ItemStack(TeletubbiesItems.TUTU.get());
 			int damage = this.random.nextInt(stack.getMaxDamage() - 5 + 1) + 5;
 			stack.setDamageValue(damage);
 			this.setItemSlot(EquipmentSlot.LEGS, stack);
-			break;
 		}
 	}
 	

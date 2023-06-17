@@ -1,9 +1,6 @@
 package com.rexbas.teletubbies.block;
 
-import javax.annotation.Nullable;
-
 import com.rexbas.teletubbies.config.Config;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -16,13 +13,15 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.lighting.LayerLightEngine;
+import net.minecraft.world.level.lighting.BlockLightEngine;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
+
+import javax.annotation.Nullable;
 
 public class FullGrassBlock extends GrassBlock {
 	
@@ -78,13 +77,13 @@ public class FullGrassBlock extends GrassBlock {
 			BlockState southState = world.getBlockState(pos.south());
 			BlockState westState = world.getBlockState(pos.west());
 			BlockState belowState = world.getBlockState(pos.below());
-			
-			int aboveLevel = LayerLightEngine.getLightBlockInto(world, state, pos, aboveState, pos.above(), Direction.UP, aboveState.getLightBlock(world, pos.above()));
-			int northLevel = LayerLightEngine.getLightBlockInto(world, state, pos, northState, pos.north(), Direction.NORTH, northState.getLightBlock(world, pos.north()));
-			int eastLevel = LayerLightEngine.getLightBlockInto(world, state, pos, eastState, pos.east(), Direction.EAST, eastState.getLightBlock(world, pos.east()));
-			int southLevel = LayerLightEngine.getLightBlockInto(world, state, pos, southState, pos.south(), Direction.SOUTH, southState.getLightBlock(world, pos.south()));
-			int westLevel = LayerLightEngine.getLightBlockInto(world, state, pos, westState, pos.west(), Direction.WEST, westState.getLightBlock(world, pos.west()));
-			int belowLevel = LayerLightEngine.getLightBlockInto(world, state, pos, belowState, pos.below(), Direction.DOWN, belowState.getLightBlock(world, pos.below()));
+
+			int aboveLevel = BlockLightEngine.getLightBlockInto(world, state, pos, aboveState, pos.above(), Direction.UP, aboveState.getLightBlock(world, pos.above()));
+			int northLevel = BlockLightEngine.getLightBlockInto(world, state, pos, northState, pos.north(), Direction.NORTH, northState.getLightBlock(world, pos.north()));
+			int eastLevel = BlockLightEngine.getLightBlockInto(world, state, pos, eastState, pos.east(), Direction.EAST, eastState.getLightBlock(world, pos.east()));
+			int southLevel = BlockLightEngine.getLightBlockInto(world, state, pos, southState, pos.south(), Direction.SOUTH, southState.getLightBlock(world, pos.south()));
+			int westLevel = BlockLightEngine.getLightBlockInto(world, state, pos, westState, pos.west(), Direction.WEST, westState.getLightBlock(world, pos.west()));
+			int belowLevel = BlockLightEngine.getLightBlockInto(world, state, pos, belowState, pos.below(), Direction.DOWN, belowState.getLightBlock(world, pos.below()));
 
 			return aboveLevel < world.getMaxLightLevel() || northLevel < world.getMaxLightLevel() || eastLevel < world.getMaxLightLevel() ||
 					southLevel < world.getMaxLightLevel() || westLevel < world.getMaxLightLevel() || belowLevel < world.getMaxLightLevel();

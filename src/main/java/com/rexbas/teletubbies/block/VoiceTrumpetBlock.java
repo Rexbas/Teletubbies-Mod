@@ -1,10 +1,7 @@
 package com.rexbas.teletubbies.block;
 
-import javax.annotation.Nullable;
-
 import com.rexbas.teletubbies.block.entity.VoiceTrumpetBlockEntity;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,11 +27,13 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import javax.annotation.Nullable;
 
 public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -58,7 +57,8 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	protected static final VoxelShape BOTTOM_AABB = Block.box(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
 	
 	public VoiceTrumpetBlock() {
-		super(Properties.of(Material.METAL)
+		super(Properties.of()
+				.mapColor(MapColor.METAL)
 				.strength(3.0f, 5.0f));
 
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BOTTOM, true).setValue(WATERLOGGED, false));

@@ -5,13 +5,7 @@ import com.rexbas.teletubbies.client.gui.screen.inventory.CustardMachineScreen;
 import com.rexbas.teletubbies.client.gui.screen.inventory.TinkyWinkyBagScreen;
 import com.rexbas.teletubbies.client.gui.screen.inventory.ToastMachineScreen;
 import com.rexbas.teletubbies.config.Config;
-import com.rexbas.teletubbies.init.TeletubbiesBlocks;
-import com.rexbas.teletubbies.init.TeletubbiesContainers;
-import com.rexbas.teletubbies.init.TeletubbiesEntityTypes;
-import com.rexbas.teletubbies.init.TeletubbiesItems;
-import com.rexbas.teletubbies.init.TeletubbiesSounds;
-import com.rexbas.teletubbies.init.TeletubbiesWorldGen;
-
+import com.rexbas.teletubbies.init.*;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -36,6 +30,7 @@ public class Teletubbies {
 		TeletubbiesBlocks.BLOCK_ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesEntityTypes.ENTITY_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesItems.ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+		TeletubbiesItems.CREATIVE_TABS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesSounds.SOUNDS.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesWorldGen.STRUCTURE_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
 		TeletubbiesWorldGen.FEATURES.register(FMLJavaModLoadingContext.get().getModEventBus());
@@ -46,9 +41,7 @@ public class Teletubbies {
 	}
 	
 	private void setup(final FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			TeletubbiesEntityTypes.registerPlacement();
-		});
+		event.enqueueWork(TeletubbiesEntityTypes::registerPlacement);
 	}
 
 	private void setupClient(final FMLClientSetupEvent event) {

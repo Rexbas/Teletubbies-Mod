@@ -1,10 +1,7 @@
 package com.rexbas.teletubbies.block;
 
-import javax.annotation.Nullable;
-
 import com.rexbas.teletubbies.block.entity.ToastMachineBlockEntity;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,14 +32,16 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.network.NetworkHooks;
+
+import javax.annotation.Nullable;
 
 public class ToastMachineBlock extends Block implements EntityBlock {	
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -62,9 +61,10 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 	protected static final VoxelShape TOP_AABB_WEST = TeletubbiesBlocks.voxelShapeRotateY(TOP_AABB_NORTH, Math.toRadians(90));
 		
 	public ToastMachineBlock() {
-		super(Properties.of(Material.METAL)
+		super(Properties.of()
+				.mapColor(MapColor.METAL)
 				.strength(3.0f, 5.0f));
-		
+
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BOTTOM, true).setValue(WATERLOGGED, false).setValue(LIT, 0));
 	}
 	
@@ -194,7 +194,7 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (((ToastMachineBlock) state.getBlock()).hasBlockEntity(state) && state.getBlock() != newState.getBlock()) {
-			world.getBlockEntity(pos).getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+			world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
 					popResource(world, pos, h.getStackInSlot(i));
 				}

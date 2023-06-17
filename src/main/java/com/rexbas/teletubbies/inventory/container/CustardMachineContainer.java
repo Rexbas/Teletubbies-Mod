@@ -1,13 +1,10 @@
 package com.rexbas.teletubbies.inventory.container;
 
-import java.util.Objects;
-
 import com.rexbas.teletubbies.block.entity.CustardMachineBlockEntity;
 import com.rexbas.teletubbies.init.TeletubbiesContainers;
 import com.rexbas.teletubbies.inventory.container.handler.CustardMachineItemHandler;
 import com.rexbas.teletubbies.inventory.container.slot.CustardMachineOutputSlot;
 import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
-
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -16,8 +13,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
+
+import java.util.Objects;
 
 public class CustardMachineContainer extends AbstractContainerMenu {
 	
@@ -36,8 +35,8 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 		this.playerInventory = playerInventory;
 		this.blockentity = be;
 		
-		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) be.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).orElse(null);
+		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) be.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) be.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
 		
 		addMachineSlots(inputHandler, outputHandler);
 		addPlayerSlots();
@@ -73,8 +72,8 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 
 		if (slot != null && slot.hasItem()) {
 			
-			IItemHandler inputHandler = this.blockentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElse(null);
-			IItemHandler outputHandler = this.blockentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, Direction.DOWN).orElse(null);
+			IItemHandler inputHandler = this.blockentity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+			IItemHandler outputHandler = this.blockentity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
 			int numSlots = inputHandler.getSlots() + outputHandler.getSlots();
 			
             ItemStack slotStack = slot.getItem();
@@ -104,7 +103,7 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 	private static CustardMachineBlockEntity getBlockEntity(final Inventory playerInv, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInv, "playerInv cannot be null");
 		Objects.requireNonNull(data, "data cannot be null");
-		final BlockEntity tileAtPos = playerInv.player.level.getBlockEntity(data.readBlockPos());
+		final BlockEntity tileAtPos = playerInv.player.level().getBlockEntity(data.readBlockPos());
 		if (tileAtPos instanceof CustardMachineBlockEntity) {
 			return (CustardMachineBlockEntity) tileAtPos;
 		}

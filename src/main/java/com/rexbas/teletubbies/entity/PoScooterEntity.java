@@ -139,14 +139,14 @@ public class PoScooterEntity extends Entity {
 	public boolean hurt(DamageSource source, float amount) {
 		if (this.isInvulnerableTo(source)) {
 			return false;
-		} else if (!this.level.isClientSide() && this.isAlive()) {
+		} else if (!this.level().isClientSide() && this.isAlive()) {
 			this.setHurtDir(-this.getHurtDir());
 			this.setHurtTime(10);
 			this.setDamage(this.getDamage() + amount * 10.0F);
 			this.markHurt();
 			boolean flag = source.getEntity() instanceof Player && ((Player) source.getEntity()).getAbilities().instabuild;
 			if (flag || this.getDamage() > 40.0F) {
-				if (!flag && this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+				if (!flag && this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 					this.spawnAtLocation(TeletubbiesItems.PO_SCOOTER.get());
 				}
 
@@ -199,9 +199,9 @@ public class PoScooterEntity extends Entity {
 
 	@Override
 	public void tick() {
-		if (this.isInWater() && !this.level.isClientSide()) {
+		if (this.isInWater() && !this.level().isClientSide()) {
 			this.ejectPassengers();
-			if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+			if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 				this.spawnAtLocation(TeletubbiesItems.PO_SCOOTER.get());
 			}
 			this.discard();
@@ -253,9 +253,9 @@ public class PoScooterEntity extends Entity {
 		}
 
 		this.checkInsideBlocks();
-		List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate((double)0.2F, (double)-0.01F, (double)0.2F), EntitySelector.pushableBy(this));
+		List<Entity> list = this.level().getEntities(this, this.getBoundingBox().inflate((double)0.2F, (double)-0.01F, (double)0.2F), EntitySelector.pushableBy(this));
 		if (!list.isEmpty()) {
-			boolean flag = !this.level.isClientSide() && !(this.getControllingPassenger() instanceof Player);
+			boolean flag = !this.level().isClientSide() && !(this.getControllingPassenger() instanceof Player);
 
 			for (int j = 0; j < list.size(); ++j) {
 				Entity entity = list.get(j);
@@ -306,9 +306,9 @@ public class PoScooterEntity extends Entity {
 			for (int l1 = i; l1 < j; ++l1) {
 				for (int i2 = i1; i2 < j1; ++i2) {
 					blockpos$mutable.set(l1, k1, i2);
-					FluidState fluidstate = this.level.getFluidState(blockpos$mutable);
+					FluidState fluidstate = this.level().getFluidState(blockpos$mutable);
 					if (fluidstate.is(FluidTags.WATER)) {
-						f = Math.max(f, fluidstate.getHeight(this.level, blockpos$mutable));
+						f = Math.max(f, fluidstate.getHeight(this.level(), blockpos$mutable));
 					}
 
 					if (f >= 1.0F) {
@@ -367,14 +367,17 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	public void positionRider(Entity passenger) {
+	public void positionRider(Entity passenger, Entity.MoveFunction moveFunction) {
 		if (this.hasPassenger(passenger)) {
 			float f1 = (float) ((!this.isAlive() ? (double) 0.01F : this.getPassengersRidingOffset()) + passenger.getMyRidingOffset());
-			Vec3 vec3 = (new Vec3(0.0D, 0.0D, 0.0D)).yRot(-this.getYRot() * ((float)Math.PI / 180F) - ((float)Math.PI / 2F));
-			passenger.setPos(this.getX() + vec3.x, this.getY() + (double)f1, this.getZ() + vec3.z);
+			Vec3 vec3 = (new Vec3(0.0D, 0.0D, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
+			passenger.setPos(this.getX() + vec3.x, this.getY() + (double) f1, this.getZ() + vec3.z);
 			passenger.setYRot(passenger.getYRot() + this.deltaRotation);
 			passenger.setYHeadRot(passenger.getYHeadRot() + this.deltaRotation);
 			this.clampRotation(passenger);
+
+			double d0 = this.getY() + this.getPassengersRidingOffset() + passenger.getMyRidingOffset();
+			moveFunction.accept(passenger, this.getX(), d0, this.getZ());
 		}
 	}
 
@@ -404,7 +407,7 @@ public class PoScooterEntity extends Entity {
 		if (player.isSecondaryUseActive()) {
 			return InteractionResult.PASS;
 		} else {
-			if (!this.level.isClientSide()) {
+			if (!this.level().isClientSide()) {
 				if (this.getControllingPassenger() != null && !(this.getControllingPassenger() instanceof Player)) {
 					this.getControllingPassenger().stopRiding();
 				}
@@ -421,15 +424,15 @@ public class PoScooterEntity extends Entity {
 			if (onGround) {
 				if (this.fallDistance > this.maxFallDistance) {
 					this.causeFallDamage(this.fallDistance, 1.0F, this.damageSources().fall());
-					if (!this.level.isClientSide() && this.isAlive()) {
+					if (!this.level().isClientSide() && this.isAlive()) {
 						this.discard();
-						if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+						if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
 							this.spawnAtLocation(TeletubbiesItems.PO_SCOOTER.get());
 						}
 					}
 				}
 				this.fallDistance = 0.0F;
-			} else if (!this.level.getFluidState(this.blockPosition().below()).is(FluidTags.WATER) && y < 0.0D) {
+			} else if (!this.level().getFluidState(this.blockPosition().below()).is(FluidTags.WATER) && y < 0.0D) {
 				this.fallDistance = (float) ((double) this.fallDistance - y);
 			}
 		}
