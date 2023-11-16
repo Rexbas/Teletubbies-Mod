@@ -13,8 +13,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -36,8 +36,8 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 		this.playerInventory = playerInventory;
 		this.blockentity = be;
 		
-		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) be.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) be.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
+		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) be.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
+		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) be.getCapability(Capabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
 		
 		addMachineSlots(inputHandler, outputHandler);
 		addPlayerSlots();
@@ -73,8 +73,8 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 
 		if (slot.hasItem()) {
 			
-			IItemHandler inputHandler = this.blockentity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
-			IItemHandler outputHandler = this.blockentity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
+			IItemHandler inputHandler = this.blockentity.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
+			IItemHandler outputHandler = this.blockentity.getCapability(Capabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
 			int numSlots = inputHandler.getSlots() + outputHandler.getSlots();
 			
             ItemStack slotStack = slot.getItem();

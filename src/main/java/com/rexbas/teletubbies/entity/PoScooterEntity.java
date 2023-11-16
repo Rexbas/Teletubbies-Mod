@@ -26,9 +26,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -116,13 +116,13 @@ public class PoScooterEntity extends Entity {
 	}
 
 	@Override
-	public double getPassengersRidingOffset() {
+	public float ridingOffset(Entity entity) {
 		if (this.getControllingPassenger() != null) {
 			if (this.getControllingPassenger() instanceof TeletubbyEntity) {
-				return 0.25D;
+				return 0.25F;
 			}
 		}
-		return 0.6D;
+		return 0.85F;
 	}
 
 	@Override
@@ -171,7 +171,7 @@ public class PoScooterEntity extends Entity {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void lerpTo(double x, double y, double z, float yaw, float pitch, int posRotationIncrements, boolean teleport) {
+	public void lerpTo(double x, double y, double z, float yaw, float pitch, int posRotationIncrements) {
 		this.lerpX = x;
 		this.lerpY = y;
 		this.lerpZ = z;
@@ -321,14 +321,14 @@ public class PoScooterEntity extends Entity {
 	@Override
 	public void positionRider(Entity passenger, Entity.MoveFunction moveFunction) {
 		if (this.hasPassenger(passenger)) {
-			float f1 = (float) ((!this.isAlive() ? (double) 0.01F : this.getPassengersRidingOffset()) + passenger.getMyRidingOffset());
+			float f1 = (float) ((!this.isAlive() ? (double) 0.01F : this.ridingOffset(passenger)) + passenger.getMyRidingOffset(passenger));
 			Vec3 vec3 = (new Vec3(0.0D, 0.0D, 0.0D)).yRot(-this.getYRot() * ((float) Math.PI / 180F) - ((float) Math.PI / 2F));
 			passenger.setPos(this.getX() + vec3.x, this.getY() + (double) f1, this.getZ() + vec3.z);
 			passenger.setYRot(passenger.getYRot() + this.deltaRotation);
 			passenger.setYHeadRot(passenger.getYHeadRot() + this.deltaRotation);
 			this.clampRotation(passenger);
 
-			double d0 = this.getY() + this.getPassengersRidingOffset() + passenger.getMyRidingOffset();
+			double d0 = this.getY() + this.ridingOffset(passenger) + passenger.getMyRidingOffset(passenger);
 			moveFunction.accept(passenger, this.getX(), d0, this.getZ());
 		}
 	}

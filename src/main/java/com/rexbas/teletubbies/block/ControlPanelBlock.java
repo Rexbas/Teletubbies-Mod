@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -55,7 +55,7 @@ public class ControlPanelBlock extends Block implements EntityBlock {
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
-			world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+			world.getBlockEntity(pos).getCapability(Capabilities.ITEM_HANDLER).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
 					popResource(world, pos, h.getStackInSlot(i));
 				}

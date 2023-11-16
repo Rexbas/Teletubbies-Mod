@@ -11,8 +11,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -34,7 +34,7 @@ public class ToastMachineContainer extends AbstractContainerMenu {
 		this.playerInventory = playerInventory;
 		this.blockentity = be;
 		
-		ToastMachineItemHandler handler = (ToastMachineItemHandler) be.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+		ToastMachineItemHandler handler = (ToastMachineItemHandler) be.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
 		
 		addMachineSlots(handler);
 		addPlayerSlots();
@@ -63,7 +63,7 @@ public class ToastMachineContainer extends AbstractContainerMenu {
 
 		if (slot.hasItem()) {
 			
-			IItemHandler handler = this.blockentity.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+			IItemHandler handler = this.blockentity.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
 			
             ItemStack slotStack = slot.getItem();
 			itemstack = slotStack.copy();

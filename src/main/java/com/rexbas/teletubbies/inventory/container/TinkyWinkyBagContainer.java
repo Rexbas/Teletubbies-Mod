@@ -11,8 +11,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 // https://github.com/Flanks255/simplybackpacks/tree/master/src/main/java/com/flanks255/simplybackpacks
@@ -34,7 +34,7 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 		this.playerInventory = playerInventory;
 		this.bag = bag;
 		
-		TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+		TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
         handler.load();
 
 		addBagSlots(handler);
@@ -70,7 +70,7 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 
 		if (slot.hasItem()) {
 			
-			IItemHandler handler = bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+			IItemHandler handler = bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
 					
             ItemStack slotStack = slot.getItem();
 			itemstack = slotStack.copy();

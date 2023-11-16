@@ -7,8 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraftforge.items.ItemStackHandler;
-
+import net.neoforged.neoforge.items.ItemStackHandler;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;

@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import com.rexbas.teletubbies.inventory.container.slot.SpecificItemSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class ToastMachineItemHandler extends ItemStackHandler {
 

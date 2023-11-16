@@ -8,8 +8,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class CustardMachineScreen extends AbstractContainerScreen<CustardMachineContainer> {
@@ -22,7 +22,7 @@ public class CustardMachineScreen extends AbstractContainerScreen<CustardMachine
 
     @Override
     public void render(GuiGraphics p_282060_, int p_282533_, int p_281661_, float p_281873_) {
-        this.renderBackground(p_282060_);
+        this.renderBackground(p_282060_, p_282533_, p_281661_, p_281873_);
         super.render(p_282060_, p_282533_, p_281661_, p_281873_);
         this.renderTooltip(p_282060_, p_282533_, p_281661_);
     }

@@ -37,8 +37,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -187,7 +187,7 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (((ToastMachineBlock) state.getBlock()).hasBlockEntity(state) && state.getBlock() != newState.getBlock()) {
-			world.getBlockEntity(pos).getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(h -> {
+			world.getBlockEntity(pos).getCapability(Capabilities.ITEM_HANDLER).ifPresent(h -> {
 				for (int i = 0; i < h.getSlots(); i++) {
 					popResource(world, pos, h.getStackInSlot(i));
 				}

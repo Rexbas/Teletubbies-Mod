@@ -9,13 +9,11 @@ import com.rexbas.teletubbies.item.armor.TutuItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
-import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.registries.RegistryObject;
 
-@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesItems {
 	
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Teletubbies.MODID);
@@ -54,23 +52,23 @@ public class TeletubbiesItems {
 	public static final RegistryObject<Item> PO_HELMET = ITEMS.register("po_helmet", () -> new SimpleArmorItem(ArmorMaterials.IRON, ArmorItem.Type.HELMET));
 	
 	// Spawn Eggs
-	public static final RegistryObject<Item> TINKYWINKY_SPAWN_EGG = ITEMS.register("tinkywinky_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.TINKYWINKY, 0x7E2CD3, 0xFFC9AD, (new Item.Properties())));
-	public static final RegistryObject<Item> DIPSY_SPAWN_EGG = ITEMS.register("dipsy_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.DIPSY, 0x84CA32, 0xFFC9AD, (new Item.Properties())));
-	public static final RegistryObject<Item> LAALAA_SPAWN_EGG = ITEMS.register("laalaa_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.LAALAA, 0xDED32C, 0xFFC9AD, (new Item.Properties())));
-	public static final RegistryObject<Item> PO_SPAWN_EGG = ITEMS.register("po_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.PO, 0xD62828, 0xFFC9AD, (new Item.Properties())));
-	public static final RegistryObject<Item> NOONOO_SPAWN_EGG = ITEMS.register("noonoo_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.NOONOO, 0x0099FF, 0xE166CC, (new Item.Properties())));
-	public static final RegistryObject<Item> MIMI_SPAWN_EGG = ITEMS.register("mimi_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.MIMI, 0x1591B4, 0xC8946A, (new Item.Properties())));
-	public static final RegistryObject<Item> DAADAA_SPAWN_EGG = ITEMS.register("daadaa_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.DAADAA, 0x53AC09, 0xC8946A, (new Item.Properties())));
-	public static final RegistryObject<Item> PING_SPAWN_EGG = ITEMS.register("ping_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.PING, 0xC6419E, 0xC8946A, (new Item.Properties())));
-	public static final RegistryObject<Item> BA_SPAWN_EGG = ITEMS.register("ba_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.BA, 0x062C5E, 0xC8946A, (new Item.Properties())));
-	public static final RegistryObject<Item> RURU_SPAWN_EGG = ITEMS.register("ruru_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.RURU, 0xDA7123, 0xC8946A, (new Item.Properties())));
-	public static final RegistryObject<Item> NIN_SPAWN_EGG = ITEMS.register("nin_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.NIN, 0x9F286E, 0xC8946A, (new Item.Properties())));
-	public static final RegistryObject<Item> DUGGLEDEE_SPAWN_EGG = ITEMS.register("duggledee_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.DUGGLEDEE, 0xB4213E, 0xC8946A, (new Item.Properties())));
-	public static final RegistryObject<Item> UMPIEPUMPIE_SPAWN_EGG = ITEMS.register("umpiepumpie_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.UMPIEPUMPIE, 0xD8BF29, 0xC8946A, (new Item.Properties())));
-	public static final RegistryObject<Item> TINKYWINKY_ZOMBIE_SPAWN_EGG = ITEMS.register("tinkywinky_zombie_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE, 0x7E2CD3, 0x660000, (new Item.Properties())));
-	public static final RegistryObject<Item> DIPSY_ZOMBIE_SPAWN_EGG = ITEMS.register("dipsy_zombie_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.DIPSY_ZOMBIE, 0x84CA32, 0x660000, (new Item.Properties())));
-	public static final RegistryObject<Item> LAALAA_ZOMBIE_SPAWN_EGG = ITEMS.register("laalaa_zombie_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.LAALAA_ZOMBIE, 0xDED32C, 0x660000, (new Item.Properties())));
-	public static final RegistryObject<Item> PO_ZOMBIE_SPAWN_EGG = ITEMS.register("po_zombie_spawn_egg", () -> new ForgeSpawnEggItem(TeletubbiesEntityTypes.PO_ZOMBIE, 0xD62828, 0x660000, (new Item.Properties())));
+	public static final RegistryObject<Item> TINKYWINKY_SPAWN_EGG = ITEMS.register("tinkywinky_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.TINKYWINKY, 0x7E2CD3, 0xFFC9AD, (new Item.Properties())));
+	public static final RegistryObject<Item> DIPSY_SPAWN_EGG = ITEMS.register("dipsy_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.DIPSY, 0x84CA32, 0xFFC9AD, (new Item.Properties())));
+	public static final RegistryObject<Item> LAALAA_SPAWN_EGG = ITEMS.register("laalaa_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.LAALAA, 0xDED32C, 0xFFC9AD, (new Item.Properties())));
+	public static final RegistryObject<Item> PO_SPAWN_EGG = ITEMS.register("po_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.PO, 0xD62828, 0xFFC9AD, (new Item.Properties())));
+	public static final RegistryObject<Item> NOONOO_SPAWN_EGG = ITEMS.register("noonoo_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.NOONOO, 0x0099FF, 0xE166CC, (new Item.Properties())));
+	public static final RegistryObject<Item> MIMI_SPAWN_EGG = ITEMS.register("mimi_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.MIMI, 0x1591B4, 0xC8946A, (new Item.Properties())));
+	public static final RegistryObject<Item> DAADAA_SPAWN_EGG = ITEMS.register("daadaa_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.DAADAA, 0x53AC09, 0xC8946A, (new Item.Properties())));
+	public static final RegistryObject<Item> PING_SPAWN_EGG = ITEMS.register("ping_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.PING, 0xC6419E, 0xC8946A, (new Item.Properties())));
+	public static final RegistryObject<Item> BA_SPAWN_EGG = ITEMS.register("ba_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.BA, 0x062C5E, 0xC8946A, (new Item.Properties())));
+	public static final RegistryObject<Item> RURU_SPAWN_EGG = ITEMS.register("ruru_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.RURU, 0xDA7123, 0xC8946A, (new Item.Properties())));
+	public static final RegistryObject<Item> NIN_SPAWN_EGG = ITEMS.register("nin_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.NIN, 0x9F286E, 0xC8946A, (new Item.Properties())));
+	public static final RegistryObject<Item> DUGGLEDEE_SPAWN_EGG = ITEMS.register("duggledee_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.DUGGLEDEE, 0xB4213E, 0xC8946A, (new Item.Properties())));
+	public static final RegistryObject<Item> UMPIEPUMPIE_SPAWN_EGG = ITEMS.register("umpiepumpie_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.UMPIEPUMPIE, 0xD8BF29, 0xC8946A, (new Item.Properties())));
+	public static final RegistryObject<Item> TINKYWINKY_ZOMBIE_SPAWN_EGG = ITEMS.register("tinkywinky_zombie_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.TINKYWINKY_ZOMBIE, 0x7E2CD3, 0x660000, (new Item.Properties())));
+	public static final RegistryObject<Item> DIPSY_ZOMBIE_SPAWN_EGG = ITEMS.register("dipsy_zombie_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.DIPSY_ZOMBIE, 0x84CA32, 0x660000, (new Item.Properties())));
+	public static final RegistryObject<Item> LAALAA_ZOMBIE_SPAWN_EGG = ITEMS.register("laalaa_zombie_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.LAALAA_ZOMBIE, 0xDED32C, 0x660000, (new Item.Properties())));
+	public static final RegistryObject<Item> PO_ZOMBIE_SPAWN_EGG = ITEMS.register("po_zombie_spawn_egg", () -> new DeferredSpawnEggItem(TeletubbiesEntityTypes.PO_ZOMBIE, 0xD62828, 0x660000, (new Item.Properties())));
 
 	public static RegistryObject<CreativeModeTab> TAB = CREATIVE_TABS.register("teletubbies_tab",
 			() -> CreativeModeTab.builder()

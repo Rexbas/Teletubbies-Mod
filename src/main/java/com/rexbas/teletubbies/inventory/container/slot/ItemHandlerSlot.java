@@ -3,9 +3,9 @@ package com.rexbas.teletubbies.inventory.container.slot;
 import javax.annotation.Nonnull;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class ItemHandlerSlot extends SlotItemHandler {
 	
@@ -15,6 +15,6 @@ public class ItemHandlerSlot extends SlotItemHandler {
 	
     @Override
 	public boolean mayPlace(@Nonnull ItemStack stack) {
-    	return stack.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent();
+    	return stack.getCapability(Capabilities.ITEM_HANDLER).isPresent();
     }
 }

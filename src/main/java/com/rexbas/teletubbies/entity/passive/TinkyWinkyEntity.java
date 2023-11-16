@@ -18,8 +18,8 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 public class TinkyWinkyEntity extends TeletubbyEntity {
 	
@@ -45,7 +45,7 @@ public class TinkyWinkyEntity extends TeletubbyEntity {
 			}
 			case 1 -> {
 				ItemStack bag = new ItemStack(TeletubbiesItems.TINKYWINKY_BAG.get());
-				TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+				TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
 				LootParams lootParams = new LootParams.Builder((ServerLevel) level())
 						.withParameter(LootContextParams.ORIGIN, this.position())
 						.withParameter(LootContextParams.THIS_ENTITY, this)

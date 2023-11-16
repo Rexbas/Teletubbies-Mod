@@ -1,32 +1,28 @@
 package com.rexbas.teletubbies.config;
 
-import java.io.File;
-
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.common.Mod;
+import java.io.File;
 
-@Mod.EventBusSubscriber
 public class Config {
 	
 	public static class Common {		
 		// Entities		
-		public final ForgeConfigSpec.IntValue TRANSFORMATION_PROBABILITY;
+		public final ModConfigSpec.IntValue TRANSFORMATION_PROBABILITY;
 		
 		// Food
-		public final ForgeConfigSpec.IntValue CUSTARD_HUNGER;
-		public final ForgeConfigSpec.DoubleValue CUSTARD_SATURATION;
-		public final ForgeConfigSpec.IntValue TOAST_HUNGER;
-		public final ForgeConfigSpec.DoubleValue TOAST_SATURATION;
+		public final ModConfigSpec.IntValue CUSTARD_HUNGER;
+		public final ModConfigSpec.DoubleValue CUSTARD_SATURATION;
+		public final ModConfigSpec.IntValue TOAST_HUNGER;
+		public final ModConfigSpec.DoubleValue TOAST_SATURATION;
 		
 		// WorldGen
-		public final ForgeConfigSpec.BooleanValue INVASIVE_GRASS;
+		public final ModConfigSpec.BooleanValue INVASIVE_GRASS;
 		
-		public Common(ForgeConfigSpec.Builder builder) {			
+		public Common(ModConfigSpec.Builder builder) {			
 			builder.push("Entities");
 			
 			TRANSFORMATION_PROBABILITY = builder.comment("Chance of Teletubby transforming into zombie Teletubby")
@@ -51,31 +47,31 @@ public class Config {
 	
 	public static class Client {
 		// Rendering
-		public final ForgeConfigSpec.BooleanValue REPLACE_SUN;
+		public final ModConfigSpec.BooleanValue REPLACE_SUN;
 
-		public Client(ForgeConfigSpec.Builder builder) {
+		public Client(ModConfigSpec.Builder builder) {
 			builder.push("Rendering");
 			REPLACE_SUN = builder.define("replace_sun", true);			
 			builder.pop();
 		}
 	}
 	
-	public static final ForgeConfigSpec COMMON_SPEC;
-	public static final ForgeConfigSpec CLIENT_SPEC;
+	public static final ModConfigSpec COMMON_SPEC;
+	public static final ModConfigSpec CLIENT_SPEC;
 	public static final Common COMMON;
 	public static final Client CLIENT;
 	
 	static {
-		final Pair<Common, ForgeConfigSpec> specPairCommon = new ForgeConfigSpec.Builder().configure(Common::new);
+		final Pair<Common, ModConfigSpec> specPairCommon = new ModConfigSpec.Builder().configure(Common::new);
 		COMMON_SPEC = specPairCommon.getRight();
 		COMMON = specPairCommon.getLeft();
 		
-		final Pair<Client, ForgeConfigSpec> specPairClient = new ForgeConfigSpec.Builder().configure(Client::new);
+		final Pair<Client, ModConfigSpec> specPairClient = new ModConfigSpec.Builder().configure(Client::new);
 		CLIENT_SPEC = specPairClient.getRight();
 		CLIENT = specPairClient.getLeft();
 	}
 	
-	public static void loadConfig(ForgeConfigSpec config, String path) {
+	public static void loadConfig(ModConfigSpec config, String path) {
 		final CommentedFileConfig file = CommentedFileConfig.builder(new File(path)).sync().autosave().writingMode(WritingMode.REPLACE).build();
 		file.load();
 		config.setConfig(file);

@@ -3,9 +3,9 @@ package com.rexbas.teletubbies.datagen;
 import com.rexbas.teletubbies.Teletubbies;
 
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class TeletubbiesItemModelProvider extends ItemModelProvider {
 

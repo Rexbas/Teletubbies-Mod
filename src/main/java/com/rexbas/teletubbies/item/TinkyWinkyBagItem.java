@@ -18,10 +18,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -65,8 +65,8 @@ public class TinkyWinkyBagItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		int lines = 0;
-		if (stack.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
-			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) stack.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(null);
+		if (stack.getCapability(Capabilities.ITEM_HANDLER).isPresent()) {
+			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) stack.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
 			
 			int num_items = 0;
 			for (int i = 0; i < handler.getSlots(); i++) {				
