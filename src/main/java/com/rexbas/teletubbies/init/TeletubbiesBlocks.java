@@ -1,22 +1,10 @@
 package com.rexbas.teletubbies.init;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.block.ControlPanelBlock;
-import com.rexbas.teletubbies.block.CustardMachineBlock;
-import com.rexbas.teletubbies.block.FullGrassBlock;
-import com.rexbas.teletubbies.block.ToastMachineBlock;
-import com.rexbas.teletubbies.block.VoiceTrumpetBlock;
-import com.rexbas.teletubbies.block.WindowBlock;
-import com.rexbas.teletubbies.block.entity.ControlPanelBlockEntity;
-import com.rexbas.teletubbies.block.entity.CustardMachineBlockEntity;
-import com.rexbas.teletubbies.block.entity.CustardMachineSlaveBlockEntity;
-import com.rexbas.teletubbies.block.entity.ToastMachineBlockEntity;
-import com.rexbas.teletubbies.block.entity.VoiceTrumpetBlockEntity;
-
+import com.rexbas.teletubbies.block.*;
+import com.rexbas.teletubbies.block.entity.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -26,28 +14,30 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-import net.neoforged.neoforge.registries.RegistryObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class TeletubbiesBlocks {
 
-	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Teletubbies.MODID);
-	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Teletubbies.MODID);
+	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Teletubbies.MODID);
+	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Teletubbies.MODID);
 
 	// Blocks
-	public static final RegistryObject<Block> FULL_GRASS = BLOCKS.register("full_grass", FullGrassBlock::new);
-	public static final RegistryObject<Block> CONTROL_PANEL = BLOCKS.register("control_panel", ControlPanelBlock::new);
-	public static final RegistryObject<Block> VOICE_TRUMPET = BLOCKS.register("voice_trumpet", VoiceTrumpetBlock::new);
-	public static final RegistryObject<Block> TOAST_MACHINE = BLOCKS.register("toast_machine", ToastMachineBlock::new);
-	public static final RegistryObject<Block> CUSTARD_MACHINE = BLOCKS.register("custard_machine", CustardMachineBlock::new);
-	public static final RegistryObject<Block> WINDOW = BLOCKS.register("window", WindowBlock::new);
+	public static final Supplier<Block> FULL_GRASS = BLOCKS.register("full_grass", FullGrassBlock::new);
+	public static final Supplier<Block> CONTROL_PANEL = BLOCKS.register("control_panel", ControlPanelBlock::new);
+	public static final Supplier<Block> VOICE_TRUMPET = BLOCKS.register("voice_trumpet", VoiceTrumpetBlock::new);
+	public static final Supplier<Block> TOAST_MACHINE = BLOCKS.register("toast_machine", ToastMachineBlock::new);
+	public static final Supplier<Block> CUSTARD_MACHINE = BLOCKS.register("custard_machine", CustardMachineBlock::new);
+	public static final Supplier<Block> WINDOW = BLOCKS.register("window", WindowBlock::new);
 
 	// Block Entities
-	public static final RegistryObject<BlockEntityType<?>> CONTROL_PANEL_BLOCK_ENTITY = BLOCK_ENTITIES.register("control_panel_tile", () -> BlockEntityType.Builder.of(ControlPanelBlockEntity::new, CONTROL_PANEL.get()).build(null));
-	public static final RegistryObject<BlockEntityType<?>> VOICE_TRUMPET_BLOCK_ENTITY = BLOCK_ENTITIES.register("voice_trumpet_tile", () -> BlockEntityType.Builder.of(VoiceTrumpetBlockEntity::new, VOICE_TRUMPET.get()).build(null));
-	public static final RegistryObject<BlockEntityType<?>> TOAST_MACHINE_BLOCK_ENTITY = BLOCK_ENTITIES.register("toast_machine_tile", () -> BlockEntityType.Builder.of(ToastMachineBlockEntity::new, TOAST_MACHINE.get()).build(null));
-	public static final RegistryObject<BlockEntityType<?>> CUSTARD_MACHINE_BLOCK_ENTITY = BLOCK_ENTITIES.register("custard_machine_tile", () -> BlockEntityType.Builder.of(CustardMachineBlockEntity::new, CUSTARD_MACHINE.get()).build(null));
-	public static final RegistryObject<BlockEntityType<?>> CUSTARD_MACHINE_SLAVE_BLOCK_ENTITY = BLOCK_ENTITIES.register("custard_machine_slave_tile", () -> BlockEntityType.Builder.of(CustardMachineSlaveBlockEntity::new, CUSTARD_MACHINE.get()).build(null));
+	public static final Supplier<BlockEntityType<?>> CONTROL_PANEL_BLOCK_ENTITY = BLOCK_ENTITIES.register("control_panel_tile", () -> BlockEntityType.Builder.of(ControlPanelBlockEntity::new, CONTROL_PANEL.get()).build(null));
+	public static final Supplier<BlockEntityType<?>> VOICE_TRUMPET_BLOCK_ENTITY = BLOCK_ENTITIES.register("voice_trumpet_tile", () -> BlockEntityType.Builder.of(VoiceTrumpetBlockEntity::new, VOICE_TRUMPET.get()).build(null));
+	public static final Supplier<BlockEntityType<?>> TOAST_MACHINE_BLOCK_ENTITY = BLOCK_ENTITIES.register("toast_machine_tile", () -> BlockEntityType.Builder.of(ToastMachineBlockEntity::new, TOAST_MACHINE.get()).build(null));
+	public static final Supplier<BlockEntityType<?>> CUSTARD_MACHINE_BLOCK_ENTITY = BLOCK_ENTITIES.register("custard_machine_tile", () -> BlockEntityType.Builder.of(CustardMachineBlockEntity::new, CUSTARD_MACHINE.get()).build(null));
+	public static final Supplier<BlockEntityType<?>> CUSTARD_MACHINE_SLAVE_BLOCK_ENTITY = BLOCK_ENTITIES.register("custard_machine_slave_tile", () -> BlockEntityType.Builder.of(CustardMachineSlaveBlockEntity::new, CUSTARD_MACHINE.get()).build(null));
 	
 	// General help functions
 	

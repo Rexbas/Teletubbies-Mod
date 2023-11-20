@@ -7,13 +7,8 @@ import com.rexbas.teletubbies.entity.monster.DipsyZombieEntity;
 import com.rexbas.teletubbies.entity.monster.LaaLaaZombieEntity;
 import com.rexbas.teletubbies.entity.monster.PoZombieEntity;
 import com.rexbas.teletubbies.entity.monster.TinkyWinkyZombieEntity;
-import com.rexbas.teletubbies.entity.passive.DipsyEntity;
-import com.rexbas.teletubbies.entity.passive.LaaLaaEntity;
-import com.rexbas.teletubbies.entity.passive.NooNooEntity;
-import com.rexbas.teletubbies.entity.passive.PoEntity;
-import com.rexbas.teletubbies.entity.passive.TeletubbyEntity;
-import com.rexbas.teletubbies.entity.passive.TinkyWinkyEntity;
-
+import com.rexbas.teletubbies.entity.passive.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -27,34 +22,34 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.ForgeRegistries;
-import net.neoforged.neoforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TeletubbiesEntityTypes {
 
-    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Teletubbies.MODID);
+    public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, Teletubbies.MODID);
 
     // Entity Types    
-    public static final RegistryObject<EntityType<TinkyWinkyEntity>> TINKYWINKY = ENTITY_TYPES.register("tinkywinky", () -> createEntity("tinkywinky", TinkyWinkyEntity::new, MobCategory.CREATURE, 0.6F, 1.9F));
-    public static final RegistryObject<EntityType<DipsyEntity>> DIPSY = ENTITY_TYPES.register("dipsy", () -> createEntity("dipsy", DipsyEntity::new, MobCategory.CREATURE, 0.6F, 1.8F));
-    public static final RegistryObject<EntityType<LaaLaaEntity>> LAALAA = ENTITY_TYPES.register("laalaa", () -> createEntity("laalaa", LaaLaaEntity::new, MobCategory.CREATURE, 0.6F, 1.7F));
-    public static final RegistryObject<EntityType<PoEntity>> PO = ENTITY_TYPES.register("po", () -> createEntity("po", PoEntity::new, MobCategory.CREATURE, 0.6F, 1.6F));
-    public static final RegistryObject<EntityType<NooNooEntity>> NOONOO = ENTITY_TYPES.register("noonoo", () -> createEntity("noonoo", NooNooEntity::new, MobCategory.CREATURE, 1.0F, 1.0F));
-    public static final RegistryObject<EntityType<TiddlytubbyEntity>> MIMI = ENTITY_TYPES.register("mimi", () -> createEntity("mimi", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
-    public static final RegistryObject<EntityType<TiddlytubbyEntity>> DAADAA = ENTITY_TYPES.register("daadaa", () -> createEntity("daadaa", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
-    public static final RegistryObject<EntityType<TiddlytubbyEntity>> PING = ENTITY_TYPES.register("ping", () -> createEntity("ping", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));   
-    public static final RegistryObject<EntityType<TiddlytubbyEntity>> BA = ENTITY_TYPES.register("ba", () -> createEntity("ba", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
-    public static final RegistryObject<EntityType<TiddlytubbyEntity>> RURU = ENTITY_TYPES.register("ruru", () -> createEntity("ruru", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F)); 
-    public static final RegistryObject<EntityType<TiddlytubbyEntity>> NIN = ENTITY_TYPES.register("nin", () -> createEntity("nin", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));  
-    public static final RegistryObject<EntityType<TiddlytubbyEntity>> DUGGLEDEE = ENTITY_TYPES.register("duggledee", () -> createEntity("duggledee", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
-    public static final RegistryObject<EntityType<TiddlytubbyEntity>> UMPIEPUMPIE = ENTITY_TYPES.register("umpiepumpie", () -> createEntity("umpiepumpie", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
-    public static final RegistryObject<EntityType<TinkyWinkyZombieEntity>> TINKYWINKY_ZOMBIE = ENTITY_TYPES.register("tinkywinky_zombie", () -> createEntity("tinkywinky_zombie", TinkyWinkyZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.9F));   
-    public static final RegistryObject<EntityType<DipsyZombieEntity>> DIPSY_ZOMBIE = ENTITY_TYPES.register("dipsy_zombie", () -> createEntity("dipsy_zombie", DipsyZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.8F));
-    public static final RegistryObject<EntityType<LaaLaaZombieEntity>> LAALAA_ZOMBIE = ENTITY_TYPES.register("laalaa_zombie", () -> createEntity("laalaa_zombie", LaaLaaZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.7F));
-    public static final RegistryObject<EntityType<PoZombieEntity>> PO_ZOMBIE = ENTITY_TYPES.register("po_zombie", () -> createEntity("po_zombie", PoZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.6F));
+    public static final Supplier<EntityType<TinkyWinkyEntity>> TINKYWINKY = ENTITY_TYPES.register("tinkywinky", () -> createEntity("tinkywinky", TinkyWinkyEntity::new, MobCategory.CREATURE, 0.6F, 1.9F));
+    public static final Supplier<EntityType<DipsyEntity>> DIPSY = ENTITY_TYPES.register("dipsy", () -> createEntity("dipsy", DipsyEntity::new, MobCategory.CREATURE, 0.6F, 1.8F));
+    public static final Supplier<EntityType<LaaLaaEntity>> LAALAA = ENTITY_TYPES.register("laalaa", () -> createEntity("laalaa", LaaLaaEntity::new, MobCategory.CREATURE, 0.6F, 1.7F));
+    public static final Supplier<EntityType<PoEntity>> PO = ENTITY_TYPES.register("po", () -> createEntity("po", PoEntity::new, MobCategory.CREATURE, 0.6F, 1.6F));
+    public static final Supplier<EntityType<NooNooEntity>> NOONOO = ENTITY_TYPES.register("noonoo", () -> createEntity("noonoo", NooNooEntity::new, MobCategory.CREATURE, 1.0F, 1.0F));
+    public static final Supplier<EntityType<TiddlytubbyEntity>> MIMI = ENTITY_TYPES.register("mimi", () -> createEntity("mimi", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
+    public static final Supplier<EntityType<TiddlytubbyEntity>> DAADAA = ENTITY_TYPES.register("daadaa", () -> createEntity("daadaa", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
+    public static final Supplier<EntityType<TiddlytubbyEntity>> PING = ENTITY_TYPES.register("ping", () -> createEntity("ping", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));   
+    public static final Supplier<EntityType<TiddlytubbyEntity>> BA = ENTITY_TYPES.register("ba", () -> createEntity("ba", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
+    public static final Supplier<EntityType<TiddlytubbyEntity>> RURU = ENTITY_TYPES.register("ruru", () -> createEntity("ruru", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F)); 
+    public static final Supplier<EntityType<TiddlytubbyEntity>> NIN = ENTITY_TYPES.register("nin", () -> createEntity("nin", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));  
+    public static final Supplier<EntityType<TiddlytubbyEntity>> DUGGLEDEE = ENTITY_TYPES.register("duggledee", () -> createEntity("duggledee", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
+    public static final Supplier<EntityType<TiddlytubbyEntity>> UMPIEPUMPIE = ENTITY_TYPES.register("umpiepumpie", () -> createEntity("umpiepumpie", TiddlytubbyEntity::new, MobCategory.CREATURE, 0.5F, 0.8F));
+    public static final Supplier<EntityType<TinkyWinkyZombieEntity>> TINKYWINKY_ZOMBIE = ENTITY_TYPES.register("tinkywinky_zombie", () -> createEntity("tinkywinky_zombie", TinkyWinkyZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.9F));   
+    public static final Supplier<EntityType<DipsyZombieEntity>> DIPSY_ZOMBIE = ENTITY_TYPES.register("dipsy_zombie", () -> createEntity("dipsy_zombie", DipsyZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.8F));
+    public static final Supplier<EntityType<LaaLaaZombieEntity>> LAALAA_ZOMBIE = ENTITY_TYPES.register("laalaa_zombie", () -> createEntity("laalaa_zombie", LaaLaaZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.7F));
+    public static final Supplier<EntityType<PoZombieEntity>> PO_ZOMBIE = ENTITY_TYPES.register("po_zombie", () -> createEntity("po_zombie", PoZombieEntity::new, MobCategory.MONSTER, 0.6F, 1.6F));
     
-    public static final RegistryObject<EntityType<PoScooterEntity>> PO_SCOOTER = ENTITY_TYPES.register("po_scooter",
+    public static final Supplier<EntityType<PoScooterEntity>> PO_SCOOTER = ENTITY_TYPES.register("po_scooter",
             () -> EntityType.Builder.<PoScooterEntity>of(PoScooterEntity::new, MobCategory.MISC)
                     .sized(1.15F, 0.3F)
                     .setCustomClientFactory((entity, world) -> new PoScooterEntity(world))
