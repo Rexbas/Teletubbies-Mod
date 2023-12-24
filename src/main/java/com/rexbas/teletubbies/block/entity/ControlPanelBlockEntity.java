@@ -15,13 +15,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider {
@@ -35,6 +32,16 @@ public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider
 	@Override
 	public AbstractContainerMenu createMenu(final int windowID, final Inventory playerInv, final Player player) {
 		return new ControlPanelContainer(windowID, playerInv, this);
+	}
+
+	public IItemHandler getItemHandler(@Nullable Direction side) {
+		if (side == Direction.DOWN) {
+			IItemHandler bagHandler = inputHandler.getStackInSlot(0).getCapability(Capabilities.ItemHandler.ITEM);
+			if (bagHandler != null) {
+				return bagHandler;
+			}
+		}
+		return this.inputHandler;
 	}
 	
 	@Override
@@ -70,24 +77,6 @@ public class ControlPanelBlockEntity extends BlockEntity implements MenuProvider
 	@Override
 	public void handleUpdateTag(CompoundTag nbt) {
 		this.load(nbt);
-	}
-	
-	@Override
-    public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-		if (cap == Capabilities.ITEM_HANDLER) {
-			// Can empty any ItemHandlers (Bags)
-			if (side == Direction.DOWN) {
-				if (inputHandler.getStackInSlot(0).getCapability(Capabilities.ITEM_HANDLER).isPresent()) {
-					LazyOptional<IItemHandler> bagHandler = inputHandler.getStackInSlot(0).getCapability(Capabilities.ITEM_HANDLER);
-					return bagHandler.cast();
-				}
-			}
-			else {
-				LazyOptional<IItemHandler> instance = LazyOptional.of(() -> inputHandler);
-				return instance.cast();
-			}
-		}
-		return super.getCapability(cap, side);
 	}
 
 	@Override

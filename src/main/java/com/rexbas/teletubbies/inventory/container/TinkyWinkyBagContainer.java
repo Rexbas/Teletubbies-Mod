@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 	public final int numRows = 6;
 	private final Inventory playerInventory;
 	public final ItemStack bag;
-	
+
 	public TinkyWinkyBagContainer(final int id, final Inventory playerInventory, FriendlyByteBuf data) {
 		this(id, playerInventory,
 				playerInventory.player.getMainHandItem().getItem() instanceof TinkyWinkyBagItem
@@ -34,10 +34,12 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 		this.playerInventory = playerInventory;
 		this.bag = bag;
 		
-		TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-        handler.load();
+		TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(Capabilities.ItemHandler.ITEM);
+		if (handler != null) {
+			handler.load();
+			addBagSlots(handler);
+		}
 
-		addBagSlots(handler);
 		addPlayerSlots();
 	}
 
@@ -70,22 +72,24 @@ public class TinkyWinkyBagContainer extends AbstractContainerMenu {
 
 		if (slot.hasItem()) {
 			
-			IItemHandler handler = bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-					
-            ItemStack slotStack = slot.getItem();
-			itemstack = slotStack.copy();
-			if (index < handler.getSlots()) {
-				if (!this.moveItemStackTo(slotStack, handler.getSlots(), this.slots.size(), true)) {
+			IItemHandler handler = bag.getCapability(Capabilities.ItemHandler.ITEM);
+			if (handler != null) {
+				ItemStack slotStack = slot.getItem();
+				itemstack = slotStack.copy();
+				if (index < handler.getSlots()) {
+					if (!this.moveItemStackTo(slotStack, handler.getSlots(), this.slots.size(), true)) {
+						return ItemStack.EMPTY;
+					}
+				}
+				else if (!this.moveItemStackTo(slotStack, 0, handler.getSlots(), false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.moveItemStackTo(slotStack, 0, handler.getSlots(), false)) {
-				return ItemStack.EMPTY;
+
+				if (slotStack.isEmpty())
+					slot.set(ItemStack.EMPTY);
+				else
+					slot.setChanged();
 			}
-			
-			if (slotStack.isEmpty())
-				slot.set(ItemStack.EMPTY);
-			else
-				slot.setChanged();
 		}
 		return itemstack;
 	}

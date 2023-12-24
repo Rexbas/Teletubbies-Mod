@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,10 +33,12 @@ public class ToastMachineContainer extends AbstractContainerMenu {
 		
 		this.playerInventory = playerInventory;
 		this.blockentity = be;
-		
-		ToastMachineItemHandler handler = (ToastMachineItemHandler) be.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-		
-		addMachineSlots(handler);
+
+		ToastMachineItemHandler handler = (ToastMachineItemHandler) be.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, be.getBlockPos(), null);
+		if (handler != null) {
+			addMachineSlots(handler);
+		}
+
 		addPlayerSlots();
 	}
 	
@@ -63,22 +65,24 @@ public class ToastMachineContainer extends AbstractContainerMenu {
 
 		if (slot.hasItem()) {
 			
-			IItemHandler handler = this.blockentity.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-			
-            ItemStack slotStack = slot.getItem();
-			itemstack = slotStack.copy();
-			if (index < handler.getSlots()) {
-				if (!this.moveItemStackTo(slotStack, handler.getSlots(), this.slots.size(), true)) {
+			IItemHandler handler = this.blockentity.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, this.blockentity.getBlockPos(), null);
+			if (handler != null) {
+				ItemStack slotStack = slot.getItem();
+				itemstack = slotStack.copy();
+				if (index < handler.getSlots()) {
+					if (!this.moveItemStackTo(slotStack, handler.getSlots(), this.slots.size(), true)) {
+						return ItemStack.EMPTY;
+					}
+				}
+				else if (!this.moveItemStackTo(slotStack, 0, handler.getSlots(), false)) {
 					return ItemStack.EMPTY;
 				}
-			} else if (!this.moveItemStackTo(slotStack, 0, handler.getSlots(), false)) {
-				return ItemStack.EMPTY;
+
+				if (slotStack.isEmpty())
+					slot.set(ItemStack.EMPTY);
+				else
+					slot.setChanged();
 			}
-			
-			if (slotStack.isEmpty())
-				slot.set(ItemStack.EMPTY);
-			else
-				slot.setChanged();
 		}
 		return itemstack;
 	}

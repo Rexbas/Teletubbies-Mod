@@ -39,7 +39,7 @@ public class WindowBlock extends Block {
 	protected static final VoxelShape AABB_X = TeletubbiesBlocks.voxelShapeRotateY(AABB_Z, Math.toRadians(90));
 	
 	public WindowBlock() {
-		super(Properties.copy(Blocks.GLASS_PANE));
+		super(Properties.ofFullCopy(Blocks.GLASS_PANE));
 
 		this.registerDefaultState(this.stateDefinition.any().setValue(X_AXIS, false).setValue(PART, WindowPart.CENTER).setValue(WATERLOGGED, false));
 	}
@@ -80,7 +80,7 @@ public class WindowBlock extends Block {
 	}
 	
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {	     
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		Axis axis = state.getValue(X_AXIS) ? Axis.X : Axis.Z;
 		
 		BlockPos basePos = getCenterPos(pos, state.getValue(PART), axis);
@@ -118,7 +118,7 @@ public class WindowBlock extends Block {
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
 			removePart(world, subblock);
 		}	
-		super.playerWillDestroy(world, pos, state, player);
+		return super.playerWillDestroy(world, pos, state, player);
 	}
 	
 	@Override

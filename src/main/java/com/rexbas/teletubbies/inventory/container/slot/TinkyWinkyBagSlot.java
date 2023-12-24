@@ -6,9 +6,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+
 import javax.annotation.Nonnull;
 
 public class TinkyWinkyBagSlot extends SlotItemHandler {
@@ -29,7 +30,7 @@ public class TinkyWinkyBagSlot extends SlotItemHandler {
 			}
 		}
 		
-		if (stack.getCapability(Capabilities.ITEM_HANDLER).isPresent())
+		if (stack.getCapability(Capabilities.ItemHandler.ITEM) != null)
             return false;
 		
 		if (stack.hasTag()) {

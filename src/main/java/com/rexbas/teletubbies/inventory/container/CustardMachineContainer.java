@@ -13,7 +13,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,11 +35,13 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 		
 		this.playerInventory = playerInventory;
 		this.blockentity = be;
-		
-		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) be.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) be.getCapability(Capabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
-		
-		addMachineSlots(inputHandler, outputHandler);
+
+		CustardMachineItemHandler inputHandler = (CustardMachineItemHandler) be.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, be.getBlockPos(), null);
+		CustardMachineItemHandler outputHandler = (CustardMachineItemHandler) be.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, be.getBlockPos(), Direction.DOWN);
+		if (inputHandler != null && outputHandler != null) {
+			addMachineSlots(inputHandler, outputHandler);
+		}
+
 		addPlayerSlots();
 	}
 	
@@ -72,11 +74,13 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 		Slot slot = this.slots.get(index);
 
 		if (slot.hasItem()) {
-			
-			IItemHandler inputHandler = this.blockentity.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-			IItemHandler outputHandler = this.blockentity.getCapability(Capabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
+
+			IItemHandler inputHandler = this.blockentity.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, this.blockentity.getBlockPos(), null);
+			IItemHandler outputHandler = this.blockentity.getLevel().getCapability(Capabilities.ItemHandler.BLOCK, this.blockentity.getBlockPos(), Direction.DOWN);
+			if (inputHandler != null && outputHandler != null) {
+
 			int numSlots = inputHandler.getSlots() + outputHandler.getSlots();
-			
+
             ItemStack slotStack = slot.getItem();
 			itemstack = slotStack.copy();
 			if (index < numSlots) {
@@ -86,11 +90,12 @@ public class CustardMachineContainer extends AbstractContainerMenu {
 			} else if (!this.moveItemStackTo(slotStack, 0, numSlots, false)) {
 				return ItemStack.EMPTY;
 			}
-			
+
 			if (slotStack.isEmpty())
 				slot.set(ItemStack.EMPTY);
 			else
 				slot.setChanged();
+			}
 		}
 		return itemstack;
 	}

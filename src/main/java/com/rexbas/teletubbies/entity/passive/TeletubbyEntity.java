@@ -1,11 +1,8 @@
 package com.rexbas.teletubbies.entity.passive;
 
-import com.rexbas.bouncingballs.api.capability.BounceCapability;
-import com.rexbas.bouncingballs.api.item.IBouncingBall;
 import com.rexbas.teletubbies.entity.ai.goal.WaterAvoidingRandomBouncingGoal;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -19,9 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -94,27 +88,7 @@ public abstract class TeletubbyEntity extends PathfinderMob {
 		this.populateDefaultEquipmentSlots(world.getRandom(), difficulty);
 		return spawnData;
 	}
-	
-	@Override
-	public <T> @NotNull LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (this.isAlive() && capability == BounceCapability.BOUNCE_CAPABILITY) {
-			IBouncingBall ball = null;
-			if (this.getOffhandItem().getItem() instanceof IBouncingBall) {
-				ball = (IBouncingBall) this.getOffhandItem().getItem();
-			}
-			else if (this.getMainHandItem().getItem() instanceof IBouncingBall) {
-				ball = (IBouncingBall) this.getMainHandItem().getItem();
-			}
-			
-			// For Teletubbies only if they have a ball in their hands
-			if (ball != null) {
-				return super.getCapability(capability, facing);
-			}
-			return LazyOptional.empty();
-		}
-		return super.getCapability(capability, facing);
-	}
-	
+
 	public abstract EntityType<?> getZombie();
 	
 	public void transferToZombie() {

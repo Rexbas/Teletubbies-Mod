@@ -93,10 +93,10 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 	}
 	
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
-		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();	     
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();
 		BlockState otherState = world.getBlockState(other);
-		
+
 		if (otherState.getBlock() == this) {
 			FluidState fluidState = world.getFluidState(other);
 		    if (fluidState.getType() == Fluids.WATER) {
@@ -106,7 +106,7 @@ public class VoiceTrumpetBlock extends Block implements EntityBlock {
 		    	world.setBlock(other, Blocks.AIR.defaultBlockState(), 35);
 		    }
 		}		      
-		super.playerWillDestroy(world, pos, state, player);
+		return super.playerWillDestroy(world, pos, state, player);
 	}
 	
 	@Override

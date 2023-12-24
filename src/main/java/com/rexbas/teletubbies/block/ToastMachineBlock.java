@@ -37,7 +37,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
@@ -107,9 +108,9 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 	}
 	
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {	     
-		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();	     
-		BlockState otherState = world.getBlockState(other);	      
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+		BlockPos other = state.getValue(BOTTOM) ? pos.above() : pos.below();
+		BlockState otherState = world.getBlockState(other);
 		if (otherState.getBlock() == this) {
 			FluidState fluidState = world.getFluidState(other);
 		    if (fluidState.getType() == Fluids.WATER) {
@@ -119,7 +120,7 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 		    	world.setBlock(other, Blocks.AIR.defaultBlockState(), 35);
 		    }
 		}		      
-		super.playerWillDestroy(world, pos, state, player);
+		return super.playerWillDestroy(world, pos, state, player);
 	}
 	
 	@Override
@@ -183,15 +184,16 @@ public class ToastMachineBlock extends Block implements EntityBlock {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (((ToastMachineBlock) state.getBlock()).hasBlockEntity(state) && state.getBlock() != newState.getBlock()) {
-			world.getBlockEntity(pos).getCapability(Capabilities.ITEM_HANDLER).ifPresent(h -> {
-				for (int i = 0; i < h.getSlots(); i++) {
-					popResource(world, pos, h.getStackInSlot(i));
+			IItemHandler handler = world.getCapability(Capabilities.ItemHandler.BLOCK, pos, state, world.getBlockEntity(pos), null);
+			if (handler != null) {
+				for (int i = 0; i < handler.getSlots(); i++) {
+					popResource(world, pos, handler.getStackInSlot(i));
 				}
-			});
+			}
 			world.removeBlockEntity(pos);
 		}
 	}

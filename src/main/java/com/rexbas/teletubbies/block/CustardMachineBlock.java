@@ -38,7 +38,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 
@@ -137,7 +138,7 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 	}
 	
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		Direction facing = state.getValue(FACING);
 		
 		BlockPos basePos = getBasePos(pos, state.getValue(PART), facing);
@@ -169,7 +170,7 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 		if (subblockState.getBlock() == this && !pos.equals(subblock)) {		
 			removePart(world, subblock);
 		}		      
-		super.playerWillDestroy(world, pos, state, player);
+		return super.playerWillDestroy(world, pos, state, player);
 	}
 	
 	@Override
@@ -283,24 +284,27 @@ public class CustardMachineBlock extends Block implements EntityBlock {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (((CustardMachineBlock) state.getBlock()).hasBlockEntity(state) && state.getBlock() != newState.getBlock() && state.getValue(PART) == CustardMachinePart.BASE) {
-			world.getBlockEntity(pos).getCapability(Capabilities.ITEM_HANDLER).ifPresent(h -> {
-				for (int i = 0; i < h.getSlots(); i++) {
-					popResource(world, pos, h.getStackInSlot(i));
+			IItemHandler inputHandler = world.getCapability(Capabilities.ItemHandler.BLOCK, pos, state, world.getBlockEntity(pos), null);
+			if (inputHandler != null) {
+				for (int i = 0; i < inputHandler.getSlots(); i++) {
+					popResource(world, pos, inputHandler.getStackInSlot(i));
 				}
-			});
-			world.getBlockEntity(pos).getCapability(Capabilities.ITEM_HANDLER, Direction.DOWN).ifPresent(h -> {
-				for (int i = 0; i < h.getSlots(); i++) {
-					popResource(world, pos, h.getStackInSlot(i));
+			}
+
+			IItemHandler outputHandler = world.getCapability(Capabilities.ItemHandler.BLOCK, pos, state, world.getBlockEntity(pos), Direction.DOWN);
+			if (outputHandler != null) {
+				for (int i = 0; i < outputHandler.getSlots(); i++) {
+					popResource(world, pos, outputHandler.getStackInSlot(i));
 				}
-			});
+			}
 			world.removeBlockEntity(pos);
 		}
 	}
-	
+
 	@Override
 	public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
 		return state.getValue(LIT) ? 6 : 0;

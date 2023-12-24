@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.items.ItemStackHandler;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;

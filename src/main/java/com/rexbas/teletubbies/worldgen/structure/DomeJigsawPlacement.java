@@ -1,15 +1,7 @@
 package com.rexbas.teletubbies.worldgen.structure;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.google.common.collect.Lists;
-
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.Vec3i;
+import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.block.Rotation;
@@ -23,11 +15,15 @@ import net.minecraft.world.level.levelgen.structure.pools.EmptyPoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.pools.alias.PoolAliasLookup;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+
+import java.util.List;
+import java.util.Optional;
 
 public class DomeJigsawPlacement {
 
@@ -40,7 +36,7 @@ public class DomeJigsawPlacement {
 		Registry<StructureTemplatePool> registry = registryaccess.registryOrThrow(Registries.TEMPLATE_POOL);
 		StructureTemplatePool structuretemplatepool = startPool.value();
 		StructurePoolElement structurepoolelement = structuretemplatepool.getRandomTemplate(worldgenrandom);
-		
+
 		if (structurepoolelement == EmptyPoolElement.INSTANCE) {
 			return Optional.empty();
 		} else {
@@ -60,7 +56,7 @@ public class DomeJigsawPlacement {
 
 				AABB aabb = new AABB(i - 1, (i1 - 1), (j - 1), (i + 2), (i1 + 2), (j + 2));
 				VoxelShape voxelshape = Shapes.join(Shapes.create(aabb), Shapes.create(AABB.of(boundingbox)), BooleanOp.ONLY_FIRST);
-				JigsawPlacement.addPieces(context.randomState(), 1, false, chunkgenerator, structuretemplatemanager, levelheightaccessor, worldgenrandom, registry, poolelementstructurepiece, list, voxelshape);
+				JigsawPlacement.addPieces(context.randomState(), 1, false, chunkgenerator, structuretemplatemanager, levelheightaccessor, worldgenrandom, registry, poolelementstructurepiece, list, voxelshape, PoolAliasLookup.EMPTY);
 				list.forEach(p_227237_::addPiece);
 			}));
 		}

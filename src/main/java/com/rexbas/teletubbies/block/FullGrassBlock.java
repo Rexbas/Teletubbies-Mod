@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 public class FullGrassBlock extends GrassBlock {
 	
 	public FullGrassBlock() {
-		super(Properties.copy(Blocks.GRASS_BLOCK));
+		super(Properties.ofFullCopy(Blocks.GRASS_BLOCK));
 	}
 	
 	@Override

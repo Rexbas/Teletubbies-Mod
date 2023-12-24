@@ -1,10 +1,7 @@
 package com.rexbas.teletubbies.item;
 
 import com.rexbas.teletubbies.Teletubbies;
-import com.rexbas.teletubbies.capabilities.TinkyWinkyBagProvider;
 import com.rexbas.teletubbies.inventory.container.TinkyWinkyBagContainer;
-import com.rexbas.teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -20,8 +17,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -54,22 +51,16 @@ public class TinkyWinkyBagItem extends Item {
 		}
 		return super.use(world, player, handIn);
 	}
-	
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		return new TinkyWinkyBagProvider(stack);
-	}
-	
+
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		int lines = 0;
-		if (stack.getCapability(Capabilities.ITEM_HANDLER).isPresent()) {
-			TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) stack.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-			
+		IItemHandler handler = stack.getCapability(Capabilities.ItemHandler.ITEM);
+		if (handler != null) {
+
 			int num_items = 0;
-			for (int i = 0; i < handler.getSlots(); i++) {				
+			for (int i = 0; i < handler.getSlots(); i++) {
 				if (handler.getStackInSlot(i).getItem() != Items.AIR) {
 					num_items++;
 					

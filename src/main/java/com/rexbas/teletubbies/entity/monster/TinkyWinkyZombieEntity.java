@@ -15,7 +15,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 public class TinkyWinkyZombieEntity extends TeletubbyZombieEntity {
@@ -37,14 +37,16 @@ public class TinkyWinkyZombieEntity extends TeletubbyZombieEntity {
 			}
 			case 1 -> {
 				ItemStack bag = new ItemStack(TeletubbiesItems.TINKYWINKY_BAG.get());
-				TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(Capabilities.ITEM_HANDLER).orElse(null);
-				LootParams lootParams = new LootParams.Builder((ServerLevel) level())
-						.withParameter(LootContextParams.ORIGIN, this.position())
-						.withParameter(LootContextParams.THIS_ENTITY, this)
-						.create(LootContextParamSets.GIFT);
-				LootTable table = ServerLifecycleHooks.getCurrentServer().getLootData().getLootTable(TinkyWinkyBagItem.LOOTTABLE);
-				handler.fillInventory(table, lootParams);
-				this.setItemSlot(EquipmentSlot.MAINHAND, bag);
+				TinkyWinkyBagItemHandler handler = (TinkyWinkyBagItemHandler) bag.getCapability(Capabilities.ItemHandler.ITEM);
+				if (handler != null) {
+					LootParams lootParams = new LootParams.Builder((ServerLevel) level())
+							.withParameter(LootContextParams.ORIGIN, this.position())
+							.withParameter(LootContextParams.THIS_ENTITY, this)
+							.create(LootContextParamSets.GIFT);
+					LootTable table = ServerLifecycleHooks.getCurrentServer().getLootData().getLootTable(TinkyWinkyBagItem.LOOTTABLE);
+					handler.fillInventory(table, lootParams);
+					this.setItemSlot(EquipmentSlot.MAINHAND, bag);
+				}
 			}
 		}
 	}

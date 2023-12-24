@@ -23,13 +23,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class CustardMachineBlockEntity extends BlockEntity implements MenuProvider {
@@ -146,6 +142,13 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	public boolean isProcessing() {
 		return this.isProcessing;
 	}
+
+	public IItemHandler getItemHandler(@Nullable Direction side) {
+		if (side == Direction.DOWN) {
+			return this.outputHandler;
+		}
+		return this.inputHandler;
+	}
 	
 	@Override
 	public void load(CompoundTag nbt) {
@@ -186,21 +189,6 @@ public class CustardMachineBlockEntity extends BlockEntity implements MenuProvid
 	@Override
 	public void handleUpdateTag(CompoundTag nbt) {
 		this.load(nbt);
-	}
-	
-	@Override
-    public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-		if (cap == Capabilities.ITEM_HANDLER) {
-			if (side == Direction.DOWN) {
-				LazyOptional<IItemHandler> instance = LazyOptional.of(() -> outputHandler);
-				return instance.cast();
-			}
-			else {
-				LazyOptional<IItemHandler> instance = LazyOptional.of(() -> inputHandler);
-				return instance.cast();
-			}
-		}
-		return super.getCapability(cap, side);
 	}
 
 	@Override

@@ -1,11 +1,11 @@
 package com.rexbas.teletubbies.inventory.container.slot;
 
-import javax.annotation.Nonnull;
-
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+
+import javax.annotation.Nonnull;
 
 public class ItemHandlerSlot extends SlotItemHandler {
 	
@@ -15,6 +15,6 @@ public class ItemHandlerSlot extends SlotItemHandler {
 	
     @Override
 	public boolean mayPlace(@Nonnull ItemStack stack) {
-    	return stack.getCapability(Capabilities.ITEM_HANDLER).isPresent();
+    	return stack.getCapability(Capabilities.ItemHandler.ITEM) != null;
     }
 }

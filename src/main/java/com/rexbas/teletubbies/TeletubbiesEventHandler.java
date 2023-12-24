@@ -1,24 +1,24 @@
 package com.rexbas.teletubbies;
 
-import com.rexbas.bouncingballs.api.BouncingBallsAPI;
-import com.rexbas.bouncingballs.api.capability.BounceCapability;
+import com.rexbas.teletubbies.block.entity.ControlPanelBlockEntity;
+import com.rexbas.teletubbies.block.entity.CustardMachineBlockEntity;
+import com.rexbas.teletubbies.block.entity.CustardMachineSlaveBlockEntity;
+import com.rexbas.teletubbies.block.entity.ToastMachineBlockEntity;
 import com.rexbas.teletubbies.client.audio.PoScooterTickableSound;
 import com.rexbas.teletubbies.client.renderer.environment.BabyFaceRenderer;
 import com.rexbas.teletubbies.config.Config;
 import com.rexbas.teletubbies.entity.PoScooterEntity;
 import com.rexbas.teletubbies.entity.ai.goal.EatFullGrassGoal;
-import com.rexbas.teletubbies.entity.monster.TeletubbyZombieEntity;
 import com.rexbas.teletubbies.entity.passive.*;
 import com.rexbas.teletubbies.init.TeletubbiesBlocks;
 import com.rexbas.teletubbies.init.TeletubbiesItems;
+import com.rexbas.teletubbies.inventory.container.handler.TinkyWinkyBagItemHandler;
 import com.rexbas.teletubbies.item.PoScooterItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.Sheep;
@@ -34,9 +34,10 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
-import net.neoforged.neoforge.event.AttachCapabilitiesEvent;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.TickEvent.PlayerTickEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -44,13 +45,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 
 @Mod.EventBusSubscriber(modid = Teletubbies.MODID)
 public class TeletubbiesEventHandler {
-
-	@SubscribeEvent
-	public static void attachtCapability(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof TeletubbyEntity || event.getObject() instanceof TeletubbyZombieEntity) {
-			event.addCapability(new ResourceLocation(BouncingBallsAPI.MODID, "capability.bounce"), new BounceCapability());
-		}
-	}
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
@@ -110,6 +104,28 @@ public class TeletubbiesEventHandler {
 
 	@Mod.EventBusSubscriber(modid = Teletubbies.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class TeletubbiesBus {
+
+		@SubscribeEvent
+		public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+			event.registerItem(Capabilities.ItemHandler.ITEM,
+					(stack, context) -> {
+						TinkyWinkyBagItemHandler handler = new TinkyWinkyBagItemHandler(stack);
+						handler.load();
+						return handler;
+					}, TeletubbiesItems.TINKYWINKY_BAG.get());
+
+			event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TeletubbiesBlocks.CONTROL_PANEL_BLOCK_ENTITY.get(), (blockEntity, side) ->
+					((ControlPanelBlockEntity) blockEntity).getItemHandler(side));
+
+			event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TeletubbiesBlocks.TOAST_MACHINE_BLOCK_ENTITY.get(), (blockEntity, side) ->
+					((ToastMachineBlockEntity) blockEntity).getItemHandler(side));
+
+			event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TeletubbiesBlocks.CUSTARD_MACHINE_BLOCK_ENTITY.get(), (blockEntity, side) ->
+					((CustardMachineBlockEntity) blockEntity).getItemHandler(side));
+
+			event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, TeletubbiesBlocks.CUSTARD_MACHINE_SLAVE_BLOCK_ENTITY.get(), (blockEntity, side) ->
+					((CustardMachineSlaveBlockEntity) blockEntity).getItemHandler(side));
+		}
 
 		@OnlyIn(Dist.CLIENT)
 		@SubscribeEvent

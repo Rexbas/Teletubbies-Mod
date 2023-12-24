@@ -24,13 +24,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
 import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider {
@@ -175,7 +171,14 @@ public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider
 	public boolean isPowered() {
 		return this.powerList != 0;
 	}
-	
+
+	public IItemHandler getItemHandler(@Nullable Direction side) {
+		if (side != Direction.DOWN) {
+			return this.handler;
+		}
+		return null;
+	}
+
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
@@ -215,15 +218,6 @@ public class ToastMachineBlockEntity extends BlockEntity implements MenuProvider
 	@Override
 	public void handleUpdateTag(CompoundTag nbt) {
 		this.load(nbt);
-	}
-	
-	@Override
-    public <T> @NotNull LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-		if (cap == Capabilities.ITEM_HANDLER && side != Direction.DOWN) {
-			LazyOptional<IItemHandler> instance = LazyOptional.of(() -> handler);
-			return instance.cast();
-		}
-		return super.getCapability(cap, side);
 	}
 
 	@Override
